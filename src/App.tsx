@@ -1,24 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Button } from './components/ui/Button';
+import resolveConfig from 'tailwindcss/resolveConfig'
+import tailwindConfig from './tailwind.config.js'
+
+import './assets/ui/index.scss';
+import './App.scss';
+
+const fullConfig = resolveConfig(tailwindConfig)
+
+console.log(fullConfig);
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App p-5">
+      <Button onClick={() => { console.log('click') }}>Button</Button>
     </div>
   );
 }
