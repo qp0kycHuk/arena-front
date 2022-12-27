@@ -1,15 +1,26 @@
-
 .ripple {
   --riple-start-scale: 0;
   --riple-end-scale  : 1.5;
-  position  : absolute !important;
-  background: rgba(0, 0, 0, 0.4);
+  position           : absolute !important;
+  background         : radial-gradient(rgba(0, 0, 0, .1) 0,
+      rgba(0, 0, 0, .2) 40%,
+      rgba(0, 0, 0, .2) calc(60% - 10px),
+      rgba(0, 0, 0, .2) 60%,
+      rgba(0, 0, 0, 0) calc(60% + 10px));
   border-radius : 50%;
   pointer-events: none;
 
   opacity   : 0;
   transform : scale(var(--riple-end-scale));
   transition: .2s;
+}
+
+.ripple--light .ripple {
+  background: radial-gradient(rgba(255, 255, 255, .2) 0,
+      rgba(255, 255, 255, .3) 40%,
+      rgba(255, 255, 255, .3) calc(60% - 10px),
+      rgba(255, 255, 255, .3) 60%,
+      rgba(255, 255, 255, 0) calc(60% + 10px));
 }
 
 .ripple-wrap {
@@ -32,7 +43,7 @@
 
 .ripple.removed {
   --ripple-end-opacity: 0.5;
-  animation: ripple-hide .25s both;
+  animation           : ripple-hide .25s both;
 }
 
 
@@ -41,8 +52,8 @@
     transform: scale(var(--riple-start-scale));
     opacity  : 0;
   }
-  
-  25%{
+
+  25% {
     opacity: var(--ripple-end-opacity);
   }
 

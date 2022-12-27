@@ -6,6 +6,12 @@ export const useRipple = (ref: any) => {
     if (ref.current) {
       ref.current.addEventListener('pointerdown', pointerdownHandler)
     }
+    
+    return () => {
+      if (ref.current) {
+        ref.current.removeEventListener('pointerdown', pointerdownHandler)
+      }
+    }
   }, [ref])
 
   function pointerdownHandler(event: any) {
@@ -65,8 +71,6 @@ export const useRipple = (ref: any) => {
     let isRemoved = false
 
     const leaveHandler = () => {
-      console.log('leaveHandler');
-
       target.style.userSelect = ''
 
       const remove = () => {
@@ -83,10 +87,7 @@ export const useRipple = (ref: any) => {
     }
 
     document.addEventListener('pointerleave', leaveHandler, { once: true })
-    document.addEventListener('pointerup', () => {
-      console.log('pointerup');
-
-    }, { once: true })
+    document.addEventListener('pointerup', leaveHandler, { once: true })
     document.addEventListener('dragend', leaveHandler, { once: true })
     document.addEventListener('pointermove', leaveHandler, { once: true })
   }
