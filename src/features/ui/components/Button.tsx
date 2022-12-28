@@ -4,64 +4,82 @@ import { useRef } from 'react';
 import { useRipple } from '../hooks/useRipple';
 import { Color, Size } from '../types';
 
-type Variant = 'fill' | 'light' | 'contur' | 'link'
+type Variant = 'fill' | 'light' | 'contur' | 'simple'
 
 interface IProps {
   color: Color
   size: Size
   variant: Variant
+  rounded: boolean
+  shadow: boolean
 };
 
 type ButtonProps = IProps & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, keyof IProps>
 
-const BASE_CLASSES = 'flex items-center justify-center rounded-lg px-4 ring-0 font-medium transition overflow-hidden outline-none disabled:pointer-events-none disabled:opacity-50 focus:border-transparent active:translate-y-0.5'
+const baseClasses = 'flex items-center justify-center  ring-0 font-medium transition overflow-hidden outline-none disabled:pointer-events-none disabled:opacity-50 focus:border-transparent active:translate-y-0.5'
 
-const SIZE_CLASSES: Record<Size, string> = {
+const sizeClasses: Record<Size, string> = {
+  xsmall: 'h-7',
   small: 'h-10',
   middle: 'h-12',
   large: 'h-14',
 };
 
-const COLOR_CLASSES: Record<Color, string> = {
-  primary: 'ring-primary'
+const colorClasses: Record<Color, string> = {
+  primary: 'ring-primary',
+  gray: 'ring-gray focus:ring-primary',
 };
 
-const VARIANT_CLASSES: Record<Variant, string> = {
+const variantClasses: Record<Variant, string> = {
   fill: `text-white ring-opacity-10 focus:ring-4 ripple--light active:ring-0`,
   light: `bg-opacity-20 hover:bg-opacity-30 focus:ring-2 active:ring-0`,
-  contur: `ring-1 hover:bg-opacity-10 focus:ring-2 active:ring-1`,
-  link: ` bg-opacity-0 focus:bg-opacity-20 hover:bg-opacity-20`,
+  contur: `border border-opacity-30 ring-0 hover:bg-opacity-10 focus:ring-1 active:ring-0`,
+  simple: `bg-opacity-0 focus:bg-opacity-10 focus:ring-1 active:ring-0 hover:bg-opacity-10`,
 };
 
-const VARIANT_COLOR_CLASSES: Record<Variant, Record<Color, string>> = {
+const variantColorClasses: Record<Variant, Record<Color, string>> = {
   fill: {
-    primary: 'bg-primary hover:bg-primary-600'
+    primary: 'bg-primary hover:bg-primary-600',
+    gray: 'bg-gray hover:bg-gray-600',
   },
   light: {
-    primary: 'text-primary bg-primary'
+    primary: 'text-primary bg-primary',
+    gray: 'text-gray dark:text-white  bg-gray',
   },
   contur: {
-    primary: 'text-primary ring-1 hover:bg-primary'
+    primary: 'text-primary border-primary hover:bg-primary',
+    gray: 'text-gray dark:text-white border-gray focus:border-primary hover:bg-gray',
   },
-  link: {
-    primary: 'text-primary bg-primary'
+  simple: {
+    primary: 'text-primary bg-primary',
+    gray: 'text-gray dark:text-white bg-gray',
   },
 }
 
-export function Button({ children, color, size, variant, ...props }: ButtonProps) {
+export function Button({ children, color, size, variant, rounded, shadow, ...props }: ButtonProps) {
   const ref = useRef(null)
   useRipple(ref)
+  console.log(props.className?.includes('px-'));
+
+  const extraClasses = [
+    rounded ? 'rounded-full' : 'rounded-lg',
+    shadow ? 'shadow-md' : '',
+    props.className?.includes('px-') ? '' : props.className?.includes('pl-') ? '' : 'pl-4',
+    props.className?.includes('px-') ? '' : props.className?.includes('pr-') ? '' : 'pr-4',
+
+  ].join(' ')
 
   return (
     <button
       {...props}
       ref={ref}
       className={[
-        BASE_CLASSES,
-        SIZE_CLASSES[size],
-        VARIANT_COLOR_CLASSES[variant][color],
-        VARIANT_CLASSES[variant],
-        COLOR_CLASSES[color],
+        baseClasses,
+        sizeClasses[size],
+        variantColorClasses[variant][color],
+        variantClasses[variant],
+        colorClasses[color],
+        extraClasses,
         props.className
       ].join(' ')}>
       {children}
@@ -73,4 +91,6 @@ Button.defaultProps = {
   color: 'primary',
   size: 'middle',
   variant: 'fill',
+  rounded: false,
+  shadow: false,
 }

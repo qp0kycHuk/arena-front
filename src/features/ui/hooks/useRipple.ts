@@ -1,21 +1,29 @@
-import { useEffect } from "react"
+import React, { useEffect } from "react"
 
 export const useRipple = (ref: any) => {
 
   useEffect(() => {
-    if (ref.current) {
-      ref.current.addEventListener('pointerdown', pointerdownHandler)
+    const handler = (event: any) => {
+      if (event.path.includes(ref.current)) {
+        console.log('pointerdownHandler');
+
+        pointerdownHandler(event, ref.current)
+      }
     }
-    
+
+    if (ref.current) {
+      ref.current.addEventListener('pointerdown', handler)
+    }
+
     return () => {
       if (ref.current) {
-        ref.current.removeEventListener('pointerdown', pointerdownHandler)
+        ref.current.removeEventListener('pointerdown', handler)
       }
     }
   }, [ref])
 
-  function pointerdownHandler(event: any) {
-    let target = event.target;
+  function pointerdownHandler(event: any, target: any) {
+    // let target = event.target;
     if (getComputedStyle(target).position === 'static') target.style.position = 'relative'
 
     let rect = target.getBoundingClientRect();

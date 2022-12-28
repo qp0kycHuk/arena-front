@@ -7,10 +7,14 @@ import { Login, Projects } from './pages';
 import './App.scss';
 
 const fullConfig = resolveConfig(tailwindConfig)
+console.log(fullConfig);
+
 
 function App() {
   return (
-    <Projects />
+    <div className='flex-grow flex flex-col dark:bg-black'>
+      <Projects />
+    </div>
   );
 }
 

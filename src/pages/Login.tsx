@@ -10,7 +10,7 @@ export function Login(props: ILoginProps) {
 
     return (
         <div className='flex flex-grow bg-cover' style={{ backgroundImage: 'url(' + background + ')' }}>
-            <div className="bg-white m-auto rounded-3xl px-8 py-10 w-[400px]">
+            <div className="bg-white dark:bg-black dark:text-white m-auto rounded-3xl px-8 py-10 w-[400px]">
                 <h1 className='text-2xl text-center font-semibold mb-10'>Авторизация</h1>
 
                 <label className='block'>

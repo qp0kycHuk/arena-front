@@ -11,16 +11,18 @@ interface IProps {
 type InputProps = IProps & Omit<React.InputHTMLAttributes<HTMLInputElement>, keyof IProps>
 
 
-const BASE_CLASSES = 'rounded-lg bg-white px-4 border border-black border-opacity-10 outline-none disabled:pointer-events-none disabled:opacity-50 focus:ring-1'
+const BASE_CLASSES = 'rounded-lg bg-white dark:bg-opacity-5 px-4 border border-black border-opacity-10 outline-none disabled:pointer-events-none disabled:opacity-50 focus:ring-1'
 
 const SIZE_CLASSES: Record<Size, string> = {
+    xsmall: 'h-7',
     small: 'h-10',
     middle: 'h-12',
     large: 'h-14',
 };
 
 const COLOR_CLASSES: Record<Color, string> = {
-    primary: 'focus:border-primary  focus:ring-primary'
+    primary: 'focus:border-primary  focus:ring-primary',
+    gray: 'focus:border-gray  focus:ring-gray',
 };
 
 export function Input({ color, size, ...props }: InputProps) {
