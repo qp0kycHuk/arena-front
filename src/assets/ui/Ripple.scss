@@ -23,15 +23,15 @@
       rgba(255, 255, 255, 0) calc(60% + 10px));
 }
 
-@media (prefers-color-scheme: dark) {
-  .ripple {
-    background: radial-gradient(rgba(255, 255, 255, .1) 0,
-        rgba(255, 255, 255, .2) 40%,
-        rgba(255, 255, 255, .2) calc(60% - 10px),
-        rgba(255, 255, 255, .2) 60%,
-        rgba(255, 255, 255, 0) calc(60% + 10px));
-  }
-}
+// @media (prefers-color-scheme: dark) {
+//   .ripple {
+//     background: radial-gradient(rgba(255, 255, 255, .1) 0,
+//         rgba(255, 255, 255, .2) 40%,
+//         rgba(255, 255, 255, .2) calc(60% - 10px),
+//         rgba(255, 255, 255, .2) 60%,
+//         rgba(255, 255, 255, 0) calc(60% + 10px));
+//   }
+// }
 
 .ripple-wrap {
   position      : absolute !important;

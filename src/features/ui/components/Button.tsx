@@ -16,11 +16,11 @@ interface IProps {
 
 type ButtonProps = IProps & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, keyof IProps>
 
-const baseClasses = 'flex items-center justify-center  ring-0 font-medium transition overflow-hidden outline-none disabled:pointer-events-none disabled:opacity-50 focus:border-transparent active:translate-y-0.5'
+const baseClasses = 'flex items-center ring-0 font-medium transition overflow-hidden outline-none disabled:pointer-events-none disabled:opacity-50 focus:border-transparent active:translate-y-0.5'
 
 const sizeClasses: Record<Size, string> = {
   xsmall: 'h-7',
-  small: 'h-10',
+  small: 'h-[38px]',
   middle: 'h-12',
   large: 'h-14',
 };
@@ -66,6 +66,7 @@ export function Button({ children, color, size, variant, rounded, shadow, ...pro
     shadow ? 'shadow-md' : '',
     props.className?.includes('px-') ? '' : props.className?.includes('pl-') ? '' : 'pl-4',
     props.className?.includes('px-') ? '' : props.className?.includes('pr-') ? '' : 'pr-4',
+    props.className?.includes('justify-') ? '' : 'justify-center',
 
   ].join(' ')
 
