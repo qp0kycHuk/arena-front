@@ -11,7 +11,7 @@ interface IProps {
 type InputProps = IProps & Omit<React.InputHTMLAttributes<HTMLInputElement>, keyof IProps>
 
 
-const BASE_CLASSES = 'rounded-lg bg-white dark:bg-opacity-5 px-4 border border-black border-opacity-10 outline-none disabled:pointer-events-none disabled:opacity-50 focus:ring-1'
+const BASE_CLASSES = 'rounded-lg border border-black border-opacity-10 outline-none disabled:pointer-events-none disabled:opacity-50 focus:ring-1'
 
 const SIZE_CLASSES: Record<Size, string> = {
     xsmall: 'h-7',
@@ -26,6 +26,11 @@ const COLOR_CLASSES: Record<Color, string> = {
 };
 
 export function Input({ color, size, ...props }: InputProps) {
+    const extraClasses = [
+        props.className?.includes('px-') ? '' : props.className?.includes('pl-') ? '' : 'pl-4',
+        props.className?.includes('px-') ? '' : props.className?.includes('pr-') ? '' : 'pr-4',
+        props.className?.includes('bg-') ? '' : 'bg-white dark:bg-opacity-5'
+    ].join(' ')
 
     return (
         <input {...props}
@@ -33,6 +38,7 @@ export function Input({ color, size, ...props }: InputProps) {
                 BASE_CLASSES,
                 COLOR_CLASSES[color],
                 SIZE_CLASSES[size],
+                extraClasses,
                 props.className
             ].join(' ')}
         />

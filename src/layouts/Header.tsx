@@ -14,10 +14,10 @@ export function Header(props: IHeaderProps) {
         <img src={headerLogo} alt="" className='h-[26px]' />
       </div>
       <Button variant='contur' size='small' color='gray'>
-        <BookmarkIcon />
+        <BookmarkIcon className="text-2xl" />
       </Button>
       <Button variant='simple' size='small' className='ml-4 px-3' rounded shadow color='gray'>
-        <ToDownIcon />
+        <ToDownIcon className="text-base" />
         <div className="rounded-full p-1 text-white bg-gray ml-2">
           <UserIcon />
         </div>
