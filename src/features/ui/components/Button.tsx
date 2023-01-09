@@ -41,7 +41,7 @@ const variantClasses: Record<Variant, string> = {
 export function Button({ children, color, size, variant, rounded, shadow, ...props }: ButtonProps) {
   const ref = useRef(null)
   useRipple(ref)
-  
+ 
   const variantColorClasses: Record<Variant, string> = {
     fill: `bg-${color} hover:bg-${color}-600`,
     light: `text-${color} bg-${color}`,
