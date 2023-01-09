@@ -11,7 +11,7 @@ export function MenuButton({ children, isActive, ...props }: IMenuButtonProps) {
             {...props}
             size='small'
             color={isActive ? 'primary' : 'gray'}
-            variant={isActive ? 'light' : 'simple'} >
+            variant={isActive ? 'light' : 'text'} >
             {children}
         </Button>
     );
