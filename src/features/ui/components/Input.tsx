@@ -20,23 +20,20 @@ const SIZE_CLASSES: Record<Size, string> = {
     large: 'h-14',
 };
 
-const COLOR_CLASSES: Record<Color, string> = {
-    primary: 'focus:border-primary  focus:ring-primary',
-    gray: 'focus:border-gray  focus:ring-gray',
-};
+
 
 export function Input({ color, size, ...props }: InputProps) {
     const extraClasses = [
         props.className?.includes('px-') ? '' : props.className?.includes('pl-') ? '' : 'pl-4',
         props.className?.includes('px-') ? '' : props.className?.includes('pr-') ? '' : 'pr-4',
-        props.className?.includes('bg-') ? '' : 'bg-white dark:bg-opacity-5'
+        props.className?.includes('bg-') ? '' : 'bg-white dark:bg-opacity-5',
+        `focus:border-${color}  focus:ring-${color}`
     ].join(' ')
 
     return (
         <input {...props}
             className={[
                 BASE_CLASSES,
-                COLOR_CLASSES[color],
                 SIZE_CLASSES[size],
                 extraClasses,
                 props.className

@@ -21,6 +21,20 @@ module.exports = {
         900: '#0c4b7b',
         DEFAULT: '#199afc'
       },
+      red: {
+        50: '#fdf5f5',
+        100: '#fbeaea',
+        200: '#f5cbcc',
+        300: '#efacad',
+        400: '#e26e6f',
+        500: '#d63031',
+        600: '#c12b2c',
+        700: '#a12425',
+        800: '#801d1d',
+        900: '#691818',
+        500: '#199afc',
+        DEFAULT: '#d63031'
+      },
       gray: {
         50: '#f8f8f9',
         100: '#f0f1f2',
@@ -44,5 +58,15 @@ module.exports = {
       }
     },
   },
+  safelist: [
+    {
+      pattern: /(bg|text|border|ring)-(primary|gray|red)/,
+      variants: ['active', 'hover', 'focus', 'checked', 'peer-checked'],
+    },
+    {
+      pattern: /(bg)-(primary|gray|red)-600/,
+      variants: ['active', 'hover', 'focus', 'checked', 'peer-checked'],
+    },
+  ],
   plugins: [],
 }

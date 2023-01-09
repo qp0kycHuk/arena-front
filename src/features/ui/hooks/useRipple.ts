@@ -5,8 +5,6 @@ export const useRipple = (ref: any) => {
   useEffect(() => {
     const handler = (event: any) => {
       if (event.path.includes(ref.current)) {
-        console.log('pointerdownHandler');
-
         pointerdownHandler(event, ref.current)
       }
     }

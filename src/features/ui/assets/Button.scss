@@ -1,0 +1,9 @@
+.btn {
+  &-primary {
+    --color: theme(colors.primary.DEFAULT)
+  }
+
+  &-gray {
+    --color: theme(colors.gray.DEFAULT)
+  }
+}

@@ -12,7 +12,7 @@ console.log(fullConfig);
 
 function App() {
   return (
-    <div className='flex-grow flex flex-col dark:bg-black'>
+    <div className='flex-grow flex flex-col dark:bg-black text-black dark:text-white'>
       <Projects />
     </div>
   );

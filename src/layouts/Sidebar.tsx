@@ -10,28 +10,28 @@ export function Sidebar(props: ISidebarProps) {
   return (
     <div className='px-4 pt-6 pb-4 rounded-2xl bg-white dark:bg-opacity-5 dark:text-white w-[266px] flex flex-col'>
       <div className="space-y-1">
-        <Button className='w-full' variant='simple' size='small'>
+        <Button className='w-full' variant='text' size='small'>
           <CrownIcon className='mr-2 text-lg text-primary dark:text-white' />
           <div className="mr-auto text-black dark:text-white">Главная</div>
         </Button>
-        <Button className='w-full' variant='simple' size='small'>
+        <Button className='w-full' variant='text' size='small'>
           <UsersIcon className='mr-2 text-lg text-gray dark:text-white' />
           <div className="mr-auto text-black dark:text-white font-normal">Пользователи</div>
         </Button>
-        <Button className='w-full' variant='simple' size='small'>
+        <Button className='w-full' variant='text' size='small'>
           <BriefcaseIcon className='mr-2 text-lg text-gray dark:text-white' />
           <div className="mr-auto text-black dark:text-white font-normal">База знаний</div>
           <ToTopIcon className='ml-auto text-base text-gray dark:text-white' />
         </Button>
-        <Button className='w-full px-8' variant='simple' size='small'>
+        <Button className='w-full px-8' variant='text' size='small'>
           <FoldersIcon className='mr-2 text-lg text-gray dark:text-white' />
           <div className="mr-auto text-black dark:text-white font-normal">Проекты</div>
         </Button>
-        <Button className='w-full px-8' variant='simple' size='small'>
+        <Button className='w-full px-8' variant='text' size='small'>
           <FoldersIcon className='mr-2 text-lg text-gray dark:text-white' />
           <div className="mr-auto text-black dark:text-white font-normal">Дизайн</div>
         </Button>
-        <Button className='w-full px-8' variant='simple' size='small'>
+        <Button className='w-full px-8' variant='text' size='small'>
           <FoldersIcon className='mr-2 text-lg text-gray dark:text-white' />
           <div className="mr-auto text-black dark:text-white font-normal">Проекты за 2022</div>
         </Button>
@@ -47,7 +47,7 @@ export function Sidebar(props: ISidebarProps) {
         <Tag>#Дизайн</Tag>
         <Tag>#Команда</Tag>
       </div>
-      <Button variant='simple' size='small' className='mt-5 -ml-2 -mr-2 w-auto justify-start'>Показать всё</Button>
+      <Button variant='text' size='small' className='mt-5 -ml-2 -mr-2 w-auto justify-start'>Показать всё</Button>
     </div>
   );
 }

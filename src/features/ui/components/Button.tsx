@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { useRipple } from '../hooks/useRipple';
 import { Color, Size } from '../types';
 
-type Variant = 'fill' | 'light' | 'contur' | 'simple'
+type Variant = 'fill' | 'light' | 'contur' | 'text'
 
 interface IProps {
   color: Color
@@ -25,41 +25,29 @@ const sizeClasses: Record<Size, string> = {
   large: 'h-14',
 };
 
-const colorClasses: Record<Color, string> = {
-  primary: 'ring-primary',
-  gray: 'ring-gray focus:ring-primary',
+const colorClasses: PartialRecord<Color, string> = {
+  gray: 'dark:text-white focus:ring-primary focus:border-primary',
 };
 
 const variantClasses: Record<Variant, string> = {
   fill: `text-white ring-opacity-10 focus:ring-4 ripple--light active:ring-0`,
   light: `bg-opacity-20 hover:bg-opacity-30 focus:ring-2 active:ring-0`,
   contur: `border border-opacity-30 ring-0 hover:bg-opacity-10 focus:ring-1 active:ring-0`,
-  simple: `bg-opacity-0 focus:bg-opacity-10 focus:ring-1 active:ring-0 hover:bg-opacity-10`,
+  text: `bg-opacity-0 focus:bg-opacity-10 focus:ring-1 active:ring-0 hover:bg-opacity-10`,
 };
 
-const variantColorClasses: Record<Variant, Record<Color, string>> = {
-  fill: {
-    primary: 'bg-primary hover:bg-primary-600',
-    gray: 'bg-gray hover:bg-gray-600',
-  },
-  light: {
-    primary: 'text-primary bg-primary',
-    gray: 'text-gray dark:text-white  bg-gray',
-  },
-  contur: {
-    primary: 'text-primary border-primary hover:bg-primary',
-    gray: 'text-gray dark:text-white border-gray focus:border-primary hover:bg-gray',
-  },
-  simple: {
-    primary: 'text-primary bg-primary',
-    gray: 'text-gray dark:text-white bg-gray',
-  },
-}
+
 
 export function Button({ children, color, size, variant, rounded, shadow, ...props }: ButtonProps) {
   const ref = useRef(null)
   useRipple(ref)
-  console.log(props.className?.includes('px-'));
+  
+  const variantColorClasses: Record<Variant, string> = {
+    fill: `bg-${color} hover:bg-${color}-600`,
+    light: `text-${color} bg-${color}`,
+    contur: `text-${color} border-${color} hover:bg-${color}`,
+    text: `text-${color} bg-${color}`,
+  }
 
   const extraClasses = [
     rounded ? 'rounded-full' : 'rounded-lg',
@@ -67,6 +55,7 @@ export function Button({ children, color, size, variant, rounded, shadow, ...pro
     props.className?.includes('px-') ? '' : props.className?.includes('pl-') ? '' : 'pl-4',
     props.className?.includes('px-') ? '' : props.className?.includes('pr-') ? '' : 'pr-4',
     props.className?.includes('justify-') ? '' : 'justify-center',
+    `ring-${color}`
 
   ].join(' ')
 
@@ -77,7 +66,7 @@ export function Button({ children, color, size, variant, rounded, shadow, ...pro
       className={[
         baseClasses,
         sizeClasses[size],
-        variantColorClasses[variant][color],
+        variantColorClasses[variant],
         variantClasses[variant],
         colorClasses[color],
         extraClasses,

@@ -8,4 +8,5 @@ export { ReactComponent as BriefcaseIcon } from './briefcase.svg';
 export { ReactComponent as FoldersIcon } from './folders.svg';
 export { ReactComponent as SettingsIcon } from './settings.svg';
 export { ReactComponent as SearchIcon } from './search.svg';
+export { ReactComponent as GalOchkaIcon } from './galOchka.svg';
 export { ReactComponent as AdjustmentsHorizontalIcon } from './adjustments-horizontal.svg';

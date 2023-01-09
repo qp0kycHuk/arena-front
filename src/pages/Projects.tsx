@@ -2,7 +2,7 @@ import * as React from 'react';
 import { PageContainer } from '@layouts/PageContainer';
 import { AdjustmentsHorizontalIcon, BookmarkIcon, SearchIcon, SettingsIcon } from '@assets/icons/stroke';
 import { ReactComponent as FolderIcon } from '@assets/img/folder.svg';
-import { Button, Input } from '@features/ui';
+import { Button, CheckBox, Input } from '@features/ui';
 
 export interface IProjectsProps {
 }
@@ -22,17 +22,17 @@ export function Projects(props: IProjectsProps) {
           </Button>
         </div>
 
-        <div className="relative">
-          <Button variant='simple' color='gray' size='small' className='px-3 absolute left-1 top-1.5'>
+        <div className="relative mb-3">
+          <Button variant='text' color='gray' size='small' className='px-3 absolute left-1 top-1.5'>
             <AdjustmentsHorizontalIcon className="text-2xl" />
           </Button>
           <Input placeholder='Поиск' className='w-full pl-14 bg-gray bg-opacity-10' />
-          <Button variant='simple' color='gray' size='small' className='px-3 absolute right-2 top-1.5'>
+          <Button variant='text' color='gray' size='small' className='px-3 absolute right-2 top-1.5'>
             <SearchIcon className="text-lg" />
           </Button>
         </div>
 
-        <div className="flex items-center mt-7 py-4">
+        <div className="flex items-center py-4">
           <FolderIcon className='text-3xl mr-4' />
           <div className="bg-gray bg-opacity-10 text-gray w-11 text-center py-2 text-xs font-semibold rounded-full mr-4">
             123
@@ -44,7 +44,7 @@ export function Projects(props: IProjectsProps) {
           </div>
         </div>
         <div className="border-t border-gray border-opacity-20"></div>
-        <div className="flex items-center mt-7 py-4">
+        <div className="flex items-center py-4">
           <FolderIcon className='text-3xl mr-4' />
           <div className="bg-gray bg-opacity-10 text-gray w-11 text-center py-2 text-xs font-semibold rounded-full mr-4">
             123
@@ -71,7 +71,7 @@ export function Projects(props: IProjectsProps) {
             <div className="text-xs text-gray">Созд: 04.06.2020</div>
             <div className="text-xs text-gray">Ред: 12.06.2022</div>
           </div>
-          <Button variant='simple' size='small' color='gray' className='px-3 ml-3'>
+          <Button variant='text' size='small' color='gray' className='px-3 ml-3'>
             <BookmarkIcon className="text-2xl" />
           </Button>
         </div>
@@ -90,7 +90,7 @@ export function Projects(props: IProjectsProps) {
             <div className="text-xs text-gray">Созд: 04.06.2020</div>
             <div className="text-xs text-gray">Ред: 12.06.2022</div>
           </div>
-          <Button variant='simple' size='small' color='gray' className='px-3 ml-3'>
+          <Button variant='text' size='small' color='gray' className='px-3 ml-3'>
             <BookmarkIcon className="text-2xl fill-primary text-primary" />
           </Button>
         </div>

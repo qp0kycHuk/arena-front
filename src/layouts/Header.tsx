@@ -2,7 +2,7 @@ import * as React from 'react';
 import headerLogo from '@assets/img/header-logo.png'
 import { BookmarkIcon, ToDownIcon } from '@assets/icons/stroke';
 import { UserIcon } from '@assets/icons/fill';
-import { Button } from '@features/ui';
+import { Button, CheckBox } from '@features/ui';
 
 export interface IHeaderProps {
 }
@@ -13,10 +13,14 @@ export function Header(props: IHeaderProps) {
       <div className="mr-auto">
         <img src={headerLogo} alt="" className='h-[26px]' />
       </div>
+      <CheckBox 
+      onChange={(event) => document.body.classList.toggle('dark', event.currentTarget.checked)} 
+      className='mr-5'
+      label='Dark mode' />
       <Button variant='contur' size='small' color='gray'>
         <BookmarkIcon className="text-2xl" />
       </Button>
-      <Button variant='simple' size='small' className='ml-4 px-3' rounded shadow color='gray'>
+      <Button variant='text' size='small' className='ml-4 px-3' rounded shadow color='gray'>
         <ToDownIcon className="text-base" />
         <div className="rounded-full p-1 text-white bg-gray ml-2">
           <UserIcon />
