@@ -21,7 +21,7 @@ body {
 
 .ProseMirror {
     *+* {
-        margin-top: 1em;
+        margin-top: 0.5em;
     }
 
     pre {
@@ -124,5 +124,9 @@ body {
 
     h4 {
         @apply text-xl
+    }
+
+    img.ProseMirror-selectednode{
+        @apply ring-primary ring-4
     }
 }

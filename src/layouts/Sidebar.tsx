@@ -8,7 +8,7 @@ interface ISidebarProps {
 
 export function Sidebar(props: ISidebarProps) {
   return (
-    <div className='px-4 pt-6 pb-4 rounded-2xl bg-white dark:bg-opacity-5 dark:text-white w-[266px] flex flex-col'>
+    <div className='px-4 pt-6 pb-4 rounded-2xl bg-white dark:bg-opacity-5 dark:text-white min-w-[266px] w-[266px] flex flex-col'>
       <div className="space-y-1">
         <Button className='w-full' variant='text' size='small'>
           <CrownIcon className='mr-2 text-lg text-primary dark:text-white' />

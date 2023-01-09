@@ -30,21 +30,9 @@ export function MenuBar({ editor }: IMenuBarProps) {
             .run()
     }, [editor])
 
-    function tabShift() {
-
-    }
-
 
     return (
         <div className='flex items-center gap-1 flex-wrap mb-5'>
-            <MenuButton
-                onClick={() => editor.chain().focus().shiftTab().run()}>
-                shiftTab &lt;-
-            </MenuButton>
-            <MenuButton
-                onClick={() => editor.chain().focus().addTab().run()}>
-                addTab -&gt;
-            </MenuButton>
             <MenuButton
                 isActive={editor.isActive('heading', { level: 1 })}
                 onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}>
@@ -134,7 +122,7 @@ export function MenuBar({ editor }: IMenuBarProps) {
                 onClick={() => editor.chain().focus().toggleBlockquote().run()}>
                 ©
             </MenuButton>
-            <label>
+            {/* <label>
                 <input
                     type="color"
                     onInput={(event: React.ChangeEvent<HTMLInputElement>) => editor.chain().focus().setColor(event.target.value).run()}
@@ -147,7 +135,7 @@ export function MenuBar({ editor }: IMenuBarProps) {
                     onInput={(event: React.ChangeEvent<HTMLInputElement>) => editor.chain().focus().setHighlight({ color: event.target.value }).run()}
                     value={editor.getAttributes('textStyle').highlight}
                 /> highlight
-            </label>
+            </label> */}
         </div>
     );
 }
