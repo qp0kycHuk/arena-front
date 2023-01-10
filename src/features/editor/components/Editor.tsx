@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEditor, EditorContent } from '@tiptap/react'
+import { useEditor, EditorContent, Editor as EditorClass, ReactNodeViewRenderer } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Underline from '@tiptap/extension-underline'
 import TextStyle from '@tiptap/extension-text-style'
@@ -18,7 +18,11 @@ import html from 'highlight.js/lib/languages/xml'
 import php from 'highlight.js/lib/languages/php'
 
 import { MenuBar } from './MenuBar';
-import { ImagePaste, pasteImageHandler } from '@lib/image-paste';
+import { FilePaste, filePasteHandler } from '@lib/Editor/file-paste-extension';
+import { Button } from '@features/ui';
+import { FileBlockExtension } from '@lib/Editor/file-block-extension';
+import { FileBlock } from './FileBlock';
+import { testContent } from '../data';
 
 lowlight.registerLanguage('html', html)
 lowlight.registerLanguage('css', css)
@@ -28,7 +32,6 @@ lowlight.registerLanguage('php', php)
 
 export interface IEditorProps {
 }
-
 
 
 export function Editor(props: IEditorProps) {
@@ -43,20 +46,19 @@ export function Editor(props: IEditorProps) {
             Highlight.configure({ multicolor: true }),
             Link.configure({ openOnClick: false, }),
             Image.configure({ allowBase64: true, }),
-            ImagePaste.configure({
-                fileMatchRegex: /^image\/(gif|jpe?g|a?png|svg|webp|bmp)/i,
-                disableImagePaste: false,
+            FilePaste.configure({
                 render: () => {
                     return {
-                        onImagePaste: pasteImageHandler,
-                        onImageDrop: pasteImageHandler,
+                        onPaste: filePasteHandler,
+                        onDrop: filePasteHandler,
                     };
                 },
             }),
+            FileBlockExtension.configure({
+                component: FileBlock
+            }),
         ],
-        content: `— У тебя все еще нет сумки? Сейчас она актуальна как никогда.
-        — Избавит тебя от вечно мешающих ключей и монеток в карманах на прогулке
-        — Десятки авторских расцветок, регулируемый ремешок и неубиваемый принт!`,
+        content: testContent,
 
     })
 
@@ -68,6 +70,9 @@ export function Editor(props: IEditorProps) {
         <>
             <MenuBar editor={editor} />
             <EditorContent className='w-full' editor={editor} />
+            <div className="flex mt-10">
+                <Button onClick={() => console.log(editor.getJSON())}>Get JSON</Button>
+            </div>
         </>
     );
 }

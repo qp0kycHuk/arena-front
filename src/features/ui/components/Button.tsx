@@ -5,16 +5,18 @@ import { useRipple } from '../hooks/useRipple';
 import { Color, Size } from '../types';
 
 type Variant = 'fill' | 'light' | 'contur' | 'text'
+type Tag = 'button' | 'div' | 'label'
 
 interface IProps {
   color: Color
   size: Size
   variant: Variant
+  tagName: Tag
   rounded: boolean
   shadow: boolean
 };
 
-type ButtonProps = IProps & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, keyof IProps>
+export type ButtonProps = IProps & Omit<React.ButtonHTMLAttributes<HTMLElement>, keyof IProps>
 
 const baseClasses = 'flex items-center ring-0 font-medium transition overflow-hidden outline-none disabled:pointer-events-none disabled:opacity-50 focus:border-transparent active:translate-y-0.5'
 
@@ -38,10 +40,10 @@ const variantClasses: Record<Variant, string> = {
 
 
 
-export function Button({ children, color, size, variant, rounded, shadow, ...props }: ButtonProps) {
+export function Button({ children, color, size, variant, rounded, shadow, tagName, ...props }: ButtonProps) {
   const ref = useRef(null)
   useRipple(ref)
- 
+
   const variantColorClasses: Record<Variant, string> = {
     fill: `bg-${color} hover:bg-${color}-600`,
     light: `text-${color} bg-${color}`,
@@ -59,8 +61,10 @@ export function Button({ children, color, size, variant, rounded, shadow, ...pro
 
   ].join(' ')
 
+  const ButtonTag = tagName
+
   return (
-    <button
+    <ButtonTag
       {...props}
       ref={ref}
       className={[
@@ -73,7 +77,7 @@ export function Button({ children, color, size, variant, rounded, shadow, ...pro
         props.className
       ].join(' ')}>
       {children}
-    </button >
+    </ButtonTag >
   );
 };
 
@@ -81,6 +85,7 @@ Button.defaultProps = {
   color: 'primary',
   size: 'middle',
   variant: 'fill',
+  tagName: 'button',
   rounded: false,
   shadow: false,
 }
