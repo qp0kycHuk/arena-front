@@ -18,6 +18,7 @@ export function Edit(props: IEditProps) {
             content: article.content
         }
     })
+    
     const titleEditor = useTitleEditor({
         placeholder: 'Введите название статьи',
         config: {
@@ -26,16 +27,14 @@ export function Edit(props: IEditProps) {
     })
 
     return (
-        <PageContainer>
-            <div className="rounded-2xl bg-white dark:bg-opacity-5 dark:text-white p-8 flex-grow relative">
-                <div className="border border-gray border-opacity-30 rounded-2xl">
-                    <div className="px-8 py-6">
-                        <Editor className='mb-8' editor={titleEditor} />
-                        <EditorControl editor={editor} className='-ml-4 -mr-4 sticky top-2 z-10' />
-                        <Editor className='min-h-[260px] flex flex-col' editor={editor} />
-                    </div>
+        <div className="rounded-2xl bg-white dark:bg-opacity-5 dark:text-white p-8 flex-grow relative">
+            <div className="border border-gray border-opacity-30 rounded-2xl">
+                <div className="px-8 py-6">
+                    <Editor className='mb-8' editor={titleEditor} />
+                    <EditorControl editor={editor} className='-ml-4 -mr-4 sticky top-2 z-10' />
+                    <Editor className='min-h-[260px] flex flex-col' editor={editor} />
                 </div>
             </div>
-        </PageContainer>
+        </div>
     );
 }
