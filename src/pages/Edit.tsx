@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { PageContainer } from '@layouts/PageContainer';
-import { Editor, useEditor, useTitleEditor } from '@features/editor';
+import { Editor, EditorControl, useEditor, useTitleEditor } from '@features/editor';
 import { testContent } from '@features/editor/data';
-import { EditorControl } from '@features/editor/components/EditorControl';
 
 export interface IEditProps {
 }
