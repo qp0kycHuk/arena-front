@@ -65,7 +65,6 @@ export const testContent = {
                         {
                             "type": "textStyle",
                             "attrs": {
-                                "color": "rgb(21, 21, 21)"
                             }
                         }
                     ],
@@ -91,7 +90,6 @@ export const testContent = {
                         {
                             "type": "textStyle",
                             "attrs": {
-                                "color": "rgb(21, 21, 21)"
                             }
                         }
                     ],
@@ -112,7 +110,6 @@ export const testContent = {
                         {
                             "type": "textStyle",
                             "attrs": {
-                                "color": "rgb(21, 21, 21)"
                             }
                         }
                     ],
@@ -127,7 +124,6 @@ export const testContent = {
                         {
                             "type": "textStyle",
                             "attrs": {
-                                "color": "rgb(21, 21, 21)"
                             }
                         }
                     ],
@@ -165,7 +161,6 @@ export const testContent = {
                                 {
                                     "type": "textStyle",
                                     "attrs": {
-                                        "color": "rgb(21, 21, 21)"
                                     }
                                 }
                             ],
@@ -180,7 +175,6 @@ export const testContent = {
                                 {
                                     "type": "textStyle",
                                     "attrs": {
-                                        "color": "rgb(21, 21, 21)"
                                     }
                                 }
                             ],
@@ -206,7 +200,6 @@ export const testContent = {
                                 {
                                     "type": "textStyle",
                                     "attrs": {
-                                        "color": "rgb(21, 21, 21)"
                                     }
                                 }
                             ],
@@ -252,7 +245,6 @@ export const testContent = {
                         {
                             "type": "textStyle",
                             "attrs": {
-                                "color": "rgb(21, 21, 21)"
                             }
                         }
                     ],
@@ -282,7 +274,6 @@ export const testContent = {
                         {
                             "type": "textStyle",
                             "attrs": {
-                                "color": "rgb(21, 21, 21)"
                             }
                         }
                     ],
@@ -297,7 +288,6 @@ export const testContent = {
                         {
                             "type": "textStyle",
                             "attrs": {
-                                "color": "rgb(21, 21, 21)"
                             }
                         }
                     ],
@@ -312,7 +302,6 @@ export const testContent = {
                         {
                             "type": "textStyle",
                             "attrs": {
-                                "color": "rgb(21, 21, 21)"
                             }
                         }
                     ],
@@ -347,7 +336,6 @@ export const testContent = {
                         {
                             "type": "textStyle",
                             "attrs": {
-                                "color": "rgb(21, 21, 21)"
                             }
                         }
                     ],
@@ -362,7 +350,6 @@ export const testContent = {
                         {
                             "type": "textStyle",
                             "attrs": {
-                                "color": "rgb(21, 21, 21)"
                             }
                         }
                     ],
@@ -377,7 +364,6 @@ export const testContent = {
                         {
                             "type": "textStyle",
                             "attrs": {
-                                "color": "rgb(21, 21, 21)"
                             }
                         }
                     ],
@@ -400,7 +386,6 @@ export const testContent = {
                         {
                             "type": "textStyle",
                             "attrs": {
-                                "color": "rgb(21, 21, 21)"
                             }
                         }
                     ],
@@ -455,7 +440,6 @@ export const testContent = {
                         {
                             "type": "textStyle",
                             "attrs": {
-                                "color": "rgb(21, 21, 21)"
                             }
                         }
                     ],
@@ -473,7 +457,6 @@ export const testContent = {
                         {
                             "type": "textStyle",
                             "attrs": {
-                                "color": "rgb(21, 21, 21)"
                             }
                         }
                     ],

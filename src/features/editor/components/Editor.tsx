@@ -1,26 +1,18 @@
 import * as React from 'react';
 import { EditorContent, Editor as EditorClass } from '@tiptap/react'
 
-import { MenuBar } from './MenuBar';
-import { Button } from '@features/ui';
-
 interface IEditorProps {
-    editor: EditorClass | null
+    editor: EditorClass | null,
+    className?: string
 }
 
-export function Editor({ editor }: IEditorProps) {
+export function Editor({ editor, className }: IEditorProps) {
 
     if (!editor) {
         return <p>Editor loading...</p>
     }
 
     return (
-        <>
-            <MenuBar editor={editor} />
-            <EditorContent className='w-full' editor={editor} />
-            <div className="flex mt-10">
-                <Button onClick={() => console.log(editor.getJSON())}>Get JSON</Button>
-            </div>
-        </>
+        <EditorContent className={`w-full ${className}`} editor={editor} />
     );
 }

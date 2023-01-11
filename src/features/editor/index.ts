@@ -1,2 +1,2 @@
 export { Editor } from './components/Editor'
-export { useEditor } from './hooks/useEditor'
+export { useEditor, useTitleEditor } from './hooks/useEditor'

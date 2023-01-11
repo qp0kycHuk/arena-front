@@ -20,6 +20,8 @@ body {
 }
 
 .ProseMirror {
+    flex-grow: 1;
+
     &>*+* {
         margin-top: 0.5em;
     }
@@ -106,7 +108,7 @@ body {
     }
 
     blockquote {
-        border-left: 3px solid rgba(13, 13, 13, .1);
+        @apply border-l-4 border-primary;
         padding-left: 1rem;
     }
 
@@ -126,7 +128,17 @@ body {
         @apply text-xl
     }
 
-    img.ProseMirror-selectednode{
+    img.ProseMirror-selectednode {
         @apply ring-primary ring-4
+    }
+
+    // placeholder
+    *.is-empty[data-placeholder]:first-child:before,
+    p.is-editor-empty:first-child:before {
+        @apply text-gray;
+        content: attr(data-placeholder);
+        float: left;
+        height: 0;
+        pointer-events: none;
     }
 }

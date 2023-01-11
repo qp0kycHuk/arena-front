@@ -20,37 +20,42 @@ import { LinkMenu } from './LinkMenu';
 import { ColorMenu } from './ColorMenu';
 import { HighlightMenu } from './HighlightMenu';
 
-interface IMenuBarProps {
-    editor: Editor
+interface IEditorControlProps extends React.HTMLProps<HTMLDivElement> {
+    editor: Editor | null
 }
 
-export function MenuBar({ editor }: IMenuBarProps) {
+export function EditorControl({ editor, className }: IEditorControlProps) {
+    console.log(editor);
+
+    if (!editor) {
+        return null
+    }
 
     return (
-        <div className='flex items-center gap-1 flex-wrap mb-5'>
+        <div className={`flex items-center gap-1 flex-wrap mb-5 rounded-lg py-2 px-4 bg-gray-100 dark:bg-gray-800 ${className}`}>
             <MenuButton
-                title='Полужирный'
+                title='Полужирный Ctrl+B'
                 isActive={editor.isActive('bold')}
                 onClick={() => editor.chain().focus().toggleBold().run()}
                 disabled={!editor.can().chain().focus().toggleBold().run()}>
                 <BoldIcon className="text-2xl" />
             </MenuButton>
             <MenuButton
-                title='Курсивом'
+                title='Курсивом Ctrl+I'
                 isActive={editor.isActive('italic')}
                 onClick={() => editor.chain().focus().toggleItalic().run()}
                 disabled={!editor.can().chain().focus().toggleItalic().run()}>
                 <ItalicIcon className="text-2xl" />
             </MenuButton>
             <MenuButton
-                title='Подчеркнутый'
+                title='Подчеркнутый Ctrl+U'
                 isActive={editor.isActive('underline')}
                 onClick={() => editor.chain().focus().toggleUnderline().run()}
                 disabled={!editor.can().chain().focus().toggleUnderline().run()}>
                 <UnderlineIcon className="text-2xl" />
             </MenuButton>
             <MenuButton
-                title='Перечеркнутый'
+                title='Перечеркнутый Ctrl+Shift+X'
                 isActive={editor.isActive('strike')}
                 onClick={() => editor.chain().focus().toggleStrike().run()}
                 disabled={!editor.can().chain().focus().toggleStrike().run()}>
@@ -64,14 +69,14 @@ export function MenuBar({ editor }: IMenuBarProps) {
 
             <AlignMenu editor={editor} />
             <MenuButton
-                title='Список с маркерами'
+                title='Список с маркерами Ctrl+Shift+8'
                 isActive={editor.isActive('bulletList')}
                 onClick={() => editor.chain().focus().toggleBulletList().run()}
                 disabled={!editor.can().chain().focus().toggleBulletList().run()}>
                 <BulletListIcon className="text-2xl" />
             </MenuButton>
             <MenuButton
-                title='Нумерованный список'
+                title='Нумерованный список Ctrl+Shift+7'
                 isActive={editor.isActive('orderedList')}
                 onClick={() => editor.chain().focus().toggleOrderedList().run()}
                 disabled={!editor.can().chain().focus().toggleOrderedList().run()}>
@@ -88,13 +93,13 @@ export function MenuBar({ editor }: IMenuBarProps) {
                 <VideoIcon className="text-2xl" />
             </MenuButton>
             <MenuButton
-                title='Отменить'
+                title='Отменить Ctrl+Z'
                 onClick={() => editor.chain().focus().undo().run()}
                 disabled={!editor.can().chain().focus().undo().run()}>
                 <ArrowUndoIcon className="text-2xl" />
             </MenuButton>
             <MenuButton
-                title='Отменить отмену'
+                title='Отменить отмену Ctrl+Shift+Z'
                 onClick={() => editor.chain().focus().redo().run()}
                 disabled={!editor.can().chain().focus().redo().run()}>
                 <ArrowRedoIcon className="text-2xl" />
