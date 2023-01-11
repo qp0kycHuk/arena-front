@@ -1,24 +1,24 @@
-import React, { useEffect } from "react"
+import { useEffect } from "react"
 
 export const useRipple = (ref: any) => {
-
+  const $current = ref.current
   useEffect(() => {
     const handler = (event: any) => {
-      if (event.path.includes(ref.current)) {
-        pointerdownHandler(event, ref.current)
+      if (event.path.includes($current)) {
+        pointerdownHandler(event, $current)
       }
     }
 
-    if (ref.current) {
-      ref.current.addEventListener('pointerdown', handler)
+    if ($current) {
+      $current.addEventListener('pointerdown', handler)
     }
 
     return () => {
-      if (ref.current) {
-        ref.current.removeEventListener('pointerdown', handler)
+      if ($current) {
+        $current.removeEventListener('pointerdown', handler)
       }
     }
-  }, [ref])
+  }, [$current])
 
   function pointerdownHandler(event: any, target: any) {
     // let target = event.target;
@@ -31,7 +31,7 @@ export const useRipple = (ref: any) => {
 
     for (const i in rippleWraps) {
       if (!Object.hasOwnProperty.call(rippleWraps, i)) continue
-      if (rippleWraps[i].parentElement == target) rippleWrap = rippleWraps[i]
+      if (rippleWraps[i].parentElement === target) rippleWrap = rippleWraps[i]
     }
 
     if (!rippleWrap) {
@@ -56,7 +56,7 @@ export const useRipple = (ref: any) => {
     if (event.touches) {
       for (const i in event.touches) {
         if (!Object.hasOwnProperty.call(event.touches, i)) continue
-        if (target.contains(event.touches[i].target) || target == event.touches[i].target) {
+        if (target.contains(event.touches[i].target) || target === event.touches[i].target) {
           pageX = event.touches[i].pageX;
           pageY = event.touches[i].pageY;
           break

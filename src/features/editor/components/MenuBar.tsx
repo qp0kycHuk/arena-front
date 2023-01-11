@@ -4,13 +4,11 @@ import { MenuButton } from './MenuButton';
 import {
     ArrowRedoIcon,
     ArrowUndoIcon,
-    BackgroundColorIcon,
     BoldIcon,
     BulletListIcon,
     ItalicIcon,
     OrderedListIcon,
     StrikeThroughIcon,
-    TextColorIcon,
     UnderlineIcon,
     VideoIcon
 } from '@assets/icons/stroke';

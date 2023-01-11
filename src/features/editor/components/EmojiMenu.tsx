@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { Editor } from '@tiptap/react';
-
 import { MenuButton } from './MenuButton';
 import { SmileIcon } from '@assets/icons/stroke';
-import { Menu, MenuItem, MenuTarget } from '@lib/Menu';
+import { Menu, MenuTarget } from '@lib/Menu';
 
 const emojiList = ['🤣', '😎', '😜', '🤡', '🍆', '🐱‍👤', '❤', '🎁', '👌', '👍', '🤝', '🤙'];
 
@@ -24,16 +23,9 @@ export function EmojiMenu({ editor }: IEmojiMenuProps) {
 
             <div className="grid grid-cols-4 px-2 gap-1">
                 {emojiList.map((item) => (
-                    <MenuItem key={item} onClick={(e) => {
-                        editor.chain().focus().insertContent(item).run()
-                        e.stopPropagation = true;
-                        e.keepOpen = true;
-                    }}>
-
-                        <MenuButton className='px-2'>
-                            <span className="text-lg" >{item}</span>
-                        </MenuButton>
-                    </MenuItem>
+                    <MenuButton className='px-2' key={item} onClick={() => editor.chain().focus().insertContent(item).run()}>
+                        <span className="text-lg" >{item}</span>
+                    </MenuButton>
                 ))}
 
             </div>

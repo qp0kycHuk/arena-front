@@ -92,7 +92,6 @@ export const FilePaste = Extension.create<FilePasteOptions>({
   defaultOptions: {},
 
   addProseMirrorPlugins() {
-    const options = this.options;
     const renderer = this.options.render?.();
     const editor = this.editor as Editor;
 
