@@ -15,12 +15,13 @@ body {
     flex-grow: 1;
 }
 
-.ProseMirror a {
-    @apply text-primary underline underline-offset-4;
-}
-
+// editor
 .ProseMirror {
     flex-grow: 1;
+
+    a {
+        @apply text-primary underline underline-offset-4;
+    }
 
     &>*+* {
         margin-top: 0.5em;
@@ -140,5 +141,19 @@ body {
         float: left;
         height: 0;
         pointer-events: none;
+    }
+}
+
+.filedrop {
+    &-target {
+        @apply transition absolute inset-0 pointer-events-none opacity-0 flex;
+
+        &.over-frame {
+            @apply border border-primary bg-primary bg-opacity-10 z-20 pointer-events-auto opacity-100
+        }
+
+        &.over-target {
+            @apply bg-primary bg-opacity-20
+        }
     }
 }

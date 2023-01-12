@@ -3,6 +3,7 @@ import { Extension } from '@tiptap/core';
 import { Editor } from '@tiptap/react';
 import { filterFiles } from '@utils/filterFiles';
 import { Plugin, PluginKey } from 'prosemirror-state';
+import { imageExtention, docExtention } from 'src/const/extentions';
 
 export interface FilePasteOptions {
   render?: () => {
@@ -27,8 +28,8 @@ function dataToFilesArray(data: DataTransferItemList): File[] {
 }
 
 export async function filePasteHandler(files: File[], editor: Editor) {
-  const images = filterFiles(files, /^image\/(gif|jpe?g|a?png|svg|webp|bmp)/i)
-  const documents = filterFiles(files, /^application\/(pdf|docx?)/i)
+  const images = filterFiles(files, [imageExtention.regex])
+  const documents = filterFiles(files, [docExtention.regex])
 
   const insertImages = await pasteImageHandler(images)
   const insertDocs = pasteDocHandler(documents)
