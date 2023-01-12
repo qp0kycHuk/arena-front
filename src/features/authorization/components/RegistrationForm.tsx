@@ -1,6 +1,7 @@
 import { Button, Input } from '@features/ui';
-import * as React from 'react';
 import { Link } from 'react-router-dom';
+import { MaskedInput } from '@features/ui/components/Input';
+import { phoneMask } from '@const/maskExpressions';
 
 interface IRegistrationFormProps {
 }
@@ -11,8 +12,8 @@ export function RegistrationForm(props: IRegistrationFormProps) {
             <h1 className='text-2xl text-center font-semibold mb-10'>Регистрация</h1>
             <div className="space-y-4">
                 <label className='block'>
-                    <div className="text-sm font-medium mb-2">Логин</div>
-                    <Input className='w-full' name="login" required />
+                    <div className="text-sm font-medium mb-2">Телефон</div>
+                    <MaskedInput className='w-full' type='tel' name="login" required mask={phoneMask} />
                 </label>
                 <label className='block'>
                     <div className="text-sm font-medium mb-2">Пароль</div>
