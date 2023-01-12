@@ -2,6 +2,7 @@ import * as React from 'react';
 import { BriefcaseIcon, CrownIcon, FoldersIcon, ToTopIcon, UsersIcon } from '@assets/icons/stroke';
 import { Tag } from '@components/Tag';
 import { Button } from '@features/ui';
+import { Link } from 'react-router-dom';
 
 interface ISidebarProps {
 }
@@ -23,10 +24,12 @@ export function Sidebar(props: ISidebarProps) {
           <div className="mr-auto text-black dark:text-white font-normal">База знаний</div>
           <ToTopIcon className='ml-auto text-base text-gray dark:text-white' />
         </Button>
-        <Button className='w-full px-8' variant='text' size='small'>
-          <FoldersIcon className='mr-2 text-lg text-gray dark:text-white' />
-          <div className="mr-auto text-black dark:text-white font-normal">Проекты</div>
-        </Button>
+        <Link to="/projects">
+          <Button className='w-full px-8' variant='text' size='small'>
+            <FoldersIcon className='mr-2 text-lg text-gray dark:text-white' />
+            <div className="mr-auto text-black dark:text-white font-normal">Проекты</div>
+          </Button>
+        </Link>
         <Button className='w-full px-8' variant='text' size='small'>
           <FoldersIcon className='mr-2 text-lg text-gray dark:text-white' />
           <div className="mr-auto text-black dark:text-white font-normal">Дизайн</div>

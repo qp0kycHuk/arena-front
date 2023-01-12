@@ -1,20 +1,18 @@
 import * as React from 'react';
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
+import { Outlet } from 'react-router-dom';
 
-interface IPageContainerProps extends React.PropsWithChildren {
+interface IMainLayoutProps extends React.PropsWithChildren {
 }
 
-export function PageContainer({ children }: IPageContainerProps) {
+export function MainLayout({ children }: IMainLayoutProps) {
   return (
     <div>
       <Header />
-
       <div className="p-8 flex gap-8 items-start">
         <Sidebar />
-
-        {children}
-
+        <Outlet />
       </div>
     </div>
   );

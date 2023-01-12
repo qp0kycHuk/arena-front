@@ -71,8 +71,6 @@ function pasteDocHandler(files: File[]): any[] {
 export const FilePaste = Extension.create<FilePasteOptions>({
   name: 'filePaste',
 
-  defaultOptions: {},
-
   addProseMirrorPlugins() {
     const renderer = this.options.render?.();
     const editor = this.editor as Editor;

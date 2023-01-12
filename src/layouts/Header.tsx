@@ -3,6 +3,7 @@ import headerLogo from '@assets/img/header-logo.png'
 import { BookmarkIcon, ToDownIcon } from '@assets/icons/stroke';
 import { UserIcon } from '@assets/icons/fill';
 import { Button, CheckBox } from '@features/ui';
+import { Link } from 'react-router-dom';
 
 export interface IHeaderProps {
 }
@@ -13,10 +14,15 @@ export function Header(props: IHeaderProps) {
       <div className="mr-auto">
         <img src={headerLogo} alt="" className='h-[26px]' />
       </div>
-      <CheckBox 
-      onChange={(event) => document.body.classList.toggle('dark', event.currentTarget.checked)} 
-      className='mr-5'
-      label='Dark mode' />
+      <CheckBox
+        onChange={(event) => document.body.classList.toggle('dark', event.currentTarget.checked)}
+        className='mr-5'
+        label='Dark mode' />
+      <Link to="login" className='mx-2'>
+        <Button variant='contur' size='small' color='gray'>
+          Login
+        </Button>
+      </Link>
       <Button variant='contur' size='small' color='gray'>
         <BookmarkIcon className="text-2xl" />
       </Button>
