@@ -1,24 +1,13 @@
-import React from 'react';
-import resolveConfig from 'tailwindcss/resolveConfig'
-import tailwindConfig from './tailwind.config.js'
-import { PageContainer } from '@layouts/PageContainer';
-import { Login, Projects } from './pages';
-import { Edit } from '@pages/Edit';
+// import resolveConfig from 'tailwindcss/resolveConfig'
+// import tailwindConfig from './tailwind.config.js'
+import { RouterProvider } from 'react-router-dom';
+import { router } from './router/index';
 
-
-import './App.scss';
-
-const fullConfig = resolveConfig(tailwindConfig)
-console.log(fullConfig);
-
+// const fullConfig = resolveConfig(tailwindConfig)
 
 function App() {
   return (
-    <div className='flex-grow flex flex-col dark:bg-black text-black dark:text-white'>
-      <PageContainer>
-        <Edit />
-      </PageContainer>
-    </div>
+    <RouterProvider router={router} fallbackElement={'There nothing ('} />
   );
 }
 

@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Extension } from '@tiptap/core';
 import { Editor } from '@tiptap/react';
+import { filterFiles } from '@utils/filterFiles';
 import { Plugin, PluginKey } from 'prosemirror-state';
+import { imageExtention, docExtention } from 'src/const/extentions';
 
 export interface FilePasteOptions {
   render?: () => {
@@ -25,71 +27,49 @@ function dataToFilesArray(data: DataTransferItemList): File[] {
   return arr
 }
 
-export function filterFiles(data: File[], fileMatchRegex?: RegExp): File[] {
-  const arr: File[] = [];
-
-  Array.from(data)
-    .map(item => {
-      if (fileMatchRegex) {
-        return item.type.match(fileMatchRegex) ? item : null
-      } else {
-        return item
-      }
-    })
-    .forEach((item) => {
-      if (item !== null) {
-        arr.push(item)
-      }
-    })
-
-  return arr
-};
-
 export async function filePasteHandler(files: File[], editor: Editor) {
-  const images = filterFiles(files, /^image\/(gif|jpe?g|a?png|svg|webp|bmp)/i)
-  const documents = filterFiles(files, /^application\/(pdf|docx?)/i)
+  const images = filterFiles(files, [imageExtention.regex])
+  const documents = filterFiles(files, [docExtention.regex])
 
   const insertImages = await pasteImageHandler(images)
   const insertDocs = pasteDocHandler(documents)
 
   editor.chain().focus().insertContent([
-      ...insertImages,
-      ...insertDocs,
+    ...insertImages,
+    ...insertDocs,
   ]).run()
 }
 
 async function pasteImageHandler(files: File[]): Promise<any[]> {
   const promise = Promise.all(files.map((file) => new Promise<string | ArrayBuffer | null>((resolve) => {
-      var reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = function () {
-          resolve(reader.result)
-      };
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+      resolve(reader.result)
+    };
   })))
 
   return promise.then((result) => {
-      return result.map((src) => ({
-          type: 'image',
-          attrs: {
-              src: src,
-          },
-      }))
+    return result.map((src) => ({
+      type: 'image',
+      attrs: {
+        src: src,
+      },
+    }))
   })
 }
 
 function pasteDocHandler(files: File[]): any[] {
   return files.map((file) => ({
-      type: 'fileBlock',
-      attrs: {
-          name: file.name,
-      },
+    type: 'fileBlock',
+    attrs: {
+      name: file.name,
+    },
   }))
 }
 
 export const FilePaste = Extension.create<FilePasteOptions>({
   name: 'filePaste',
-
-  defaultOptions: {},
 
   addProseMirrorPlugins() {
     const renderer = this.options.render?.();

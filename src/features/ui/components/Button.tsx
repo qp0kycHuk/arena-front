@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { useRipple } from '../hooks/useRipple';
 import { Color, Size } from '../types';
 
-type Variant = 'fill' | 'light' | 'contur' | 'text'
+type Variant = 'fill' | 'light' | 'contur' | 'text' | 'whitebg'
 type Tag = 'button' | 'div' | 'label'
 
 interface IProps {
@@ -14,11 +14,12 @@ interface IProps {
   tagName: Tag
   rounded: boolean
   shadow: boolean
+  icon: boolean
 };
 
 export type ButtonProps = IProps & Omit<React.ButtonHTMLAttributes<HTMLElement>, keyof IProps>
 
-const baseClasses = 'flex items-center ring-0 font-medium transition overflow-hidden outline-none disabled:pointer-events-none disabled:opacity-50 focus:border-transparent active:translate-y-0.5'
+const baseClasses = 'flex items-center cursor-pointer ring-0 font-medium transition overflow-hidden outline-none disabled:pointer-events-none disabled:opacity-50 focus:border-transparent active:translate-y-0.5'
 
 const sizeClasses: Record<Size, string> = {
   xsmall: 'h-7',
@@ -27,12 +28,20 @@ const sizeClasses: Record<Size, string> = {
   large: 'h-14',
 };
 
+const iconSizeClasses: Record<Size, string> = {
+  xsmall: 'w-7',
+  small: 'w-[38px]',
+  middle: 'w-12',
+  large: 'w-14',
+};
+
 const colorClasses: PartialRecord<Color, string> = {
   gray: 'dark:text-white focus:ring-primary focus:border-primary',
 };
 
 const variantClasses: Record<Variant, string> = {
   fill: `text-white ring-opacity-10 focus:ring-4 ripple--light active:ring-0`,
+  whitebg: `bg-white hover:bg-gray-50  dark:bg-gray-900 dark:hover:bg-gray-800 ring-0 focus:ring-1 active:ring-0`,
   light: `bg-opacity-20 hover:bg-opacity-30 focus:ring-2 active:ring-0`,
   contur: `border border-opacity-30 ring-0 hover:bg-opacity-10 focus:ring-1 active:ring-0`,
   text: `bg-opacity-0 focus:bg-opacity-10 focus:ring-1 active:ring-0 hover:bg-opacity-10`,
@@ -40,12 +49,13 @@ const variantClasses: Record<Variant, string> = {
 
 
 
-export function Button({ children, color, size, variant, rounded, shadow, tagName, ...props }: ButtonProps) {
+export function Button({ children, color, size, variant, rounded, shadow, icon, tagName, ...props }: ButtonProps) {
   const ref = useRef(null)
   useRipple(ref)
 
   const variantColorClasses: Record<Variant, string> = {
     fill: `bg-${color} hover:bg-${color}-600`,
+    whitebg: `text-${color}`,
     light: `text-${color} bg-${color}`,
     contur: `text-${color} border-${color} hover:bg-${color}`,
     text: `text-${color} bg-${color}`,
@@ -54,8 +64,9 @@ export function Button({ children, color, size, variant, rounded, shadow, tagNam
   const extraClasses = [
     rounded ? 'rounded-full' : 'rounded-lg',
     shadow ? 'shadow-md' : '',
-    props.className?.includes('px-') ? '' : props.className?.includes('pl-') ? '' : 'pl-4',
-    props.className?.includes('px-') ? '' : props.className?.includes('pr-') ? '' : 'pr-4',
+    icon ? iconSizeClasses[size] : '',
+    (icon || props.className?.includes('px-')) ? '' : props.className?.includes('pl-') ? '' : 'pl-4',
+    (icon || props.className?.includes('px-')) ? '' : props.className?.includes('pr-') ? '' : 'pr-4',
     props.className?.includes('justify-') ? '' : 'justify-center',
     `ring-${color}`
 
@@ -65,6 +76,7 @@ export function Button({ children, color, size, variant, rounded, shadow, tagNam
 
   return (
     <ButtonTag
+      tabIndex={0}
       {...props}
       ref={ref}
       className={[
@@ -88,4 +100,5 @@ Button.defaultProps = {
   tagName: 'button',
   rounded: false,
   shadow: false,
+  icon: false,
 }

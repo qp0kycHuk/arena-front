@@ -1,8 +1,6 @@
-import * as React from 'react';
-import { PageContainer } from '@layouts/PageContainer';
 import { AdjustmentsHorizontalIcon, BookmarkIcon, SearchIcon, SettingsIcon } from '@assets/icons/stroke';
 import { ReactComponent as FolderIcon } from '@assets/img/folder.svg';
-import { Button, CheckBox, Input } from '@features/ui';
+import { Button, Input } from '@features/ui';
 
 export interface IProjectsProps {
 }

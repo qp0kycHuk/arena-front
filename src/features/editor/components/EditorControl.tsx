@@ -25,8 +25,6 @@ interface IEditorControlProps extends React.HTMLProps<HTMLDivElement> {
 }
 
 export function EditorControl({ editor, className }: IEditorControlProps) {
-    console.log(editor);
-
     if (!editor) {
         return null
     }

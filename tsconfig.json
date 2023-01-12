@@ -29,6 +29,9 @@
       "@utils/*": [
         "src/utils/*"
       ],
+      "@const/*": [
+        "src/const/*"
+      ],
     },
     "target": "es5",
     "lib": [
