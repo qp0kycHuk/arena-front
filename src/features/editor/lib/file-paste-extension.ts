@@ -60,7 +60,7 @@ export async function filePasteHandler(files: File[], editor: Editor) {
 
 async function pasteImageHandler(files: File[]): Promise<any[]> {
   const promise = Promise.all(files.map((file) => new Promise<string | ArrayBuffer | null>((resolve) => {
-      var reader = new FileReader();
+      const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = function () {
           resolve(reader.result)
