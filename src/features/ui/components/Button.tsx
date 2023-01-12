@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { useRipple } from '../hooks/useRipple';
 import { Color, Size } from '../types';
 
-type Variant = 'fill' | 'light' | 'contur' | 'text' | 'white-bg'
+type Variant = 'fill' | 'light' | 'contur' | 'text' | 'whitebg'
 type Tag = 'button' | 'div' | 'label'
 
 interface IProps {
@@ -41,7 +41,7 @@ const colorClasses: PartialRecord<Color, string> = {
 
 const variantClasses: Record<Variant, string> = {
   fill: `text-white ring-opacity-10 focus:ring-4 ripple--light active:ring-0`,
-  ['white-bg']: `bg-white hover:bg-gray-50 dark:bg-black ring-0 focus:ring-1 active:ring-0`,
+  whitebg: `bg-white hover:bg-gray-50  dark:bg-gray-900 dark:hover:bg-gray-800 ring-0 focus:ring-1 active:ring-0`,
   light: `bg-opacity-20 hover:bg-opacity-30 focus:ring-2 active:ring-0`,
   contur: `border border-opacity-30 ring-0 hover:bg-opacity-10 focus:ring-1 active:ring-0`,
   text: `bg-opacity-0 focus:bg-opacity-10 focus:ring-1 active:ring-0 hover:bg-opacity-10`,
@@ -55,7 +55,7 @@ export function Button({ children, color, size, variant, rounded, shadow, icon, 
 
   const variantColorClasses: Record<Variant, string> = {
     fill: `bg-${color} hover:bg-${color}-600`,
-    ['white-bg']: `text-${color}`,
+    whitebg: `text-${color}`,
     light: `text-${color} bg-${color}`,
     contur: `text-${color} border-${color} hover:bg-${color}`,
     text: `text-${color} bg-${color}`,
@@ -76,6 +76,7 @@ export function Button({ children, color, size, variant, rounded, shadow, icon, 
 
   return (
     <ButtonTag
+      tabIndex={0}
       {...props}
       ref={ref}
       className={[
