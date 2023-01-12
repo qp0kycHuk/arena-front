@@ -19,7 +19,7 @@ interface IProps {
 
 export type ButtonProps = IProps & Omit<React.ButtonHTMLAttributes<HTMLElement>, keyof IProps>
 
-const baseClasses = 'flex items-center ring-0 font-medium transition overflow-hidden outline-none disabled:pointer-events-none disabled:opacity-50 focus:border-transparent active:translate-y-0.5'
+const baseClasses = 'flex items-center cursor-pointer ring-0 font-medium transition overflow-hidden outline-none disabled:pointer-events-none disabled:opacity-50 focus:border-transparent active:translate-y-0.5'
 
 const sizeClasses: Record<Size, string> = {
   xsmall: 'h-7',
