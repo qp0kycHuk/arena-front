@@ -1,14 +1,22 @@
 import { AuthLayout } from "@layouts/AuthLayout";
 import { MainLayout } from "@layouts/MainLayout";
-import { Edit, Login, Projects, Registration } from "@pages/index";
+import { Edit, Home, Login, Projects, Registration } from "@pages/index";
 
 import { createBrowserRouter } from "react-router-dom";
 
 export const router = createBrowserRouter([
+    // {
+    //     path: "/",
+    //     element: <Home />
+    // },
     {
         path: "/",
         element: <MainLayout />,
         children: [
+            {
+                path: '',
+                element: <Home />
+            },
             {
                 path: 'projects',
                 element: <Projects />
