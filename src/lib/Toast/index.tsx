@@ -41,7 +41,8 @@ export function ToastContainer(props: ToastContainerProps & React.RefAttributes<
     position="bottom-left"
     theme="colored"
     draggablePercent={25}
-    // hideProgressBar={true}
+    hideProgressBar={true}
+    limit={8}
     closeOnClick
     {...props}
   />
