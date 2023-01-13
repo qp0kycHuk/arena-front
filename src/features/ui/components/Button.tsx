@@ -19,27 +19,27 @@ interface IProps {
 
 export type ButtonProps = IProps & Omit<React.ButtonHTMLAttributes<HTMLElement>, keyof IProps>
 
-const baseClasses = 'flex items-center cursor-pointer ring-0 font-medium transition overflow-hidden outline-none disabled:pointer-events-none disabled:opacity-50 focus:border-transparent active:translate-y-0.5'
+const baseClassNames = 'flex items-center cursor-pointer ring-0 font-medium transition overflow-hidden outline-none disabled:pointer-events-none disabled:opacity-50 focus:border-transparent active:translate-y-0.5'
 
-const sizeClasses: Record<Size, string> = {
+const sizeClassNames: Record<Size, string> = {
   xsmall: 'h-7',
   small: 'h-[38px]',
   middle: 'h-12',
   large: 'h-14',
 };
 
-const iconSizeClasses: Record<Size, string> = {
+const iconSizeClassNames: Record<Size, string> = {
   xsmall: 'min-w-7 w-7',
   small: 'min-w-[38px] w-[38px]',
   middle: 'min-w-12 w-12',
   large: 'min-w-14 w-14',
 };
 
-const colorClasses: PartialRecord<Color, string> = {
+const colorClassNames: PartialRecord<Color, string> = {
   gray: 'dark:text-white focus:ring-primary focus:border-primary',
 };
 
-const variantClasses: Record<Variant, string> = {
+const variantClassNames: Record<Variant, string> = {
   fill: `text-white ring-opacity-10 focus:ring-4 ripple--light active:ring-0`,
   whitebg: `bg-white hover:bg-gray-50  dark:bg-gray-900 dark:hover:bg-gray-800 ring-0 focus:ring-1 active:ring-0`,
   light: `bg-opacity-20 hover:bg-opacity-30 focus:ring-2 active:ring-0`,
@@ -53,7 +53,7 @@ export function Button({ children, color, size, variant, rounded, shadow, icon, 
   const ref = useRef(null)
   useRipple(ref)
 
-  const variantColorClasses: Record<Variant, string> = {
+  const variantColorClassNames: Record<Variant, string> = {
     fill: `bg-${color} hover:bg-${color}-600`,
     whitebg: `text-${color}`,
     light: `text-${color} bg-${color}`,
@@ -61,10 +61,10 @@ export function Button({ children, color, size, variant, rounded, shadow, icon, 
     text: `text-${color} bg-${color}`,
   }
 
-  const extraClasses = [
+  const extraClassNames = [
     rounded ? 'rounded-full' : 'rounded-lg',
     shadow ? 'shadow-md' : '',
-    icon ? iconSizeClasses[size] : '',
+    icon ? iconSizeClassNames[size] : '',
     (icon || props.className?.includes('px-')) ? '' : props.className?.includes('pl-') ? '' : 'pl-4',
     (icon || props.className?.includes('px-')) ? '' : props.className?.includes('pr-') ? '' : 'pr-4',
     props.className?.includes('justify-') ? '' : 'justify-center',
@@ -80,12 +80,12 @@ export function Button({ children, color, size, variant, rounded, shadow, icon, 
       {...props}
       ref={ref}
       className={[
-        baseClasses,
-        sizeClasses[size],
-        variantColorClasses[variant],
-        variantClasses[variant],
-        colorClasses[color],
-        extraClasses,
+        baseClassNames,
+        sizeClassNames[size],
+        variantColorClassNames[variant],
+        variantClassNames[variant],
+        colorClassNames[color],
+        extraClassNames,
         props.className
       ].join(' ')}>
       {children}
