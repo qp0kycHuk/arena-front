@@ -29,10 +29,10 @@ const sizeClasses: Record<Size, string> = {
 };
 
 const iconSizeClasses: Record<Size, string> = {
-  xsmall: 'w-7',
-  small: 'w-[38px]',
-  middle: 'w-12',
-  large: 'w-14',
+  xsmall: 'min-w-7 w-7',
+  small: 'min-w-[38px] w-[38px]',
+  middle: 'min-w-12 w-12',
+  large: 'min-w-14 w-14',
 };
 
 const colorClasses: PartialRecord<Color, string> = {
