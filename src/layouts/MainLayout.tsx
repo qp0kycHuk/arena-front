@@ -8,7 +8,7 @@ interface IMainLayoutProps extends React.PropsWithChildren {
 
 export function MainLayout({ children }: IMainLayoutProps) {
   return (
-    <div>
+    <div className='flex-grow '>
       <Header />
       <div className="p-8 flex gap-8 items-start">
         <Sidebar />
