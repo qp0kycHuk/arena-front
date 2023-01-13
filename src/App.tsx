@@ -2,12 +2,16 @@
 // import tailwindConfig from './tailwind.config.js'
 import { RouterProvider } from 'react-router-dom';
 import { router } from './router/index';
+import { Provider } from 'react-redux';
+import { store } from './store';
 
 // const fullConfig = resolveConfig(tailwindConfig)
 
 function App() {
   return (
-    <RouterProvider router={router} fallbackElement={'There nothing ('} />
+    <Provider store={store}>
+      <RouterProvider router={router} fallbackElement={'There nothing ('} />
+    </Provider>
   );
 }
 

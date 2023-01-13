@@ -4,6 +4,8 @@ import { Edit, Home, Login, Projects, Registration } from "@pages/index";
 
 import { createBrowserRouter } from "react-router-dom";
 
+
+
 export const router = createBrowserRouter([
     // {
     //     path: "/",
@@ -14,7 +16,7 @@ export const router = createBrowserRouter([
         element: <MainLayout />,
         children: [
             {
-                path: '',
+                path: '',                
                 element: <Home />
             },
             {
