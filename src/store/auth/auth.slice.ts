@@ -1,6 +1,7 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { IUser } from './auth.api'
+import { createSlice } from '@reduxjs/toolkit'
+import { IUser, authApi } from './auth.api'
 import { RootState } from '../index'
+
 
 interface IAuthState {
     user: IUser | null
@@ -10,16 +11,18 @@ interface IAuthState {
 const slice = createSlice({
     name: 'auth',
     initialState: { user: null, token: null } as IAuthState,
-    reducers: {
-        setCredentials: (state, action: PayloadAction<IAuthState>) => {
-            state.user = action.payload.user
-            state.token = action.payload.token
-        },
+    reducers: {},
+    extraReducers: (builder) => {
+        builder.addMatcher(
+            authApi.endpoints.login.matchFulfilled,
+            (state, { payload }) => {
+                state.token = payload.token
+                state.user = payload.user
+            }
+        )
     },
 })
 
 export default slice.reducer
-
-export const { setCredentials } = slice.actions
 
 export const getCurrentUser = (state: RootState) => state.auth.user
