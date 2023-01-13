@@ -12,9 +12,9 @@ interface IProps {
 type InputProps = IProps & Omit<React.InputHTMLAttributes<HTMLInputElement>, keyof IProps>
 type MaskedInputProps = IProps & Omit<InputMaskProps, keyof IProps> & { mask: string | (string | RegExp)[] }
 
-const BASE_CLASSES = 'rounded-lg border border-black border-opacity-10 outline-none disabled:pointer-events-none disabled:opacity-50 focus:ring-1'
+const baseClassNames = 'rounded-lg border border-black border-opacity-10 outline-none disabled:pointer-events-none disabled:opacity-50 focus:ring-1'
 
-const SIZE_CLASSES: Record<Size, string> = {
+const sizeClassNames: Record<Size, string> = {
     xsmall: 'h-7',
     small: 'h-10',
     middle: 'h-12',
@@ -22,7 +22,7 @@ const SIZE_CLASSES: Record<Size, string> = {
 };
 
 export function Input({ color, size, ...props }: InputProps) {
-    const extraClasses = [
+    const extraClassNames = [
         props.className?.includes('px-') ? '' : props.className?.includes('pl-') ? '' : 'pl-4',
         props.className?.includes('px-') ? '' : props.className?.includes('pr-') ? '' : 'pr-4',
         props.className?.includes('bg-') ? '' : 'bg-white dark:bg-opacity-5',
@@ -32,9 +32,9 @@ export function Input({ color, size, ...props }: InputProps) {
     return (
         <input {...props}
             className={[
-                BASE_CLASSES,
-                SIZE_CLASSES[size],
-                extraClasses,
+                baseClassNames,
+                sizeClassNames[size],
+                extraClassNames,
                 props.className
             ].join(' ')}
         />
@@ -42,7 +42,7 @@ export function Input({ color, size, ...props }: InputProps) {
 };
 
 export function MaskedInput({ color, size, mask, ...props }: MaskedInputProps) {
-    const extraClasses = [
+    const extraClassNames = [
         props.className?.includes('px-') ? '' : props.className?.includes('pl-') ? '' : 'pl-4',
         props.className?.includes('px-') ? '' : props.className?.includes('pr-') ? '' : 'pr-4',
         props.className?.includes('bg-') ? '' : 'bg-white dark:bg-opacity-5',
@@ -52,9 +52,9 @@ export function MaskedInput({ color, size, mask, ...props }: MaskedInputProps) {
     return (
         <InputMask mask={mask} {...props}
             className={[
-                BASE_CLASSES,
-                SIZE_CLASSES[size],
-                extraClasses,
+                baseClassNames,
+                sizeClassNames[size],
+                extraClassNames,
                 props.className
             ].join(' ')}
         />
