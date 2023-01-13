@@ -19,7 +19,7 @@ export function UploaderFileDrop({ uploader }: IUploaderFileDropProps) {
             draggingOverFrameClassName="over-frame"
             draggingOverTargetClassName="over-target"
             onDrop={dropHandler} >
-            <PlusIcon className="text-4xl text-primary m-auto" />
+            <PlusIcon className="m-auto text-4xl text-primary" />
         </FileDrop>
     );
 }

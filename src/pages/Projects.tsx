@@ -7,8 +7,8 @@ export interface IProjectsProps {
 
 export function Projects(props: IProjectsProps) {
   return (
-    <div className="rounded-2xl bg-white dark:bg-opacity-5 dark:text-white p-8 flex-grow relative">
-      <div className="text-xs opacity-50 absolute left-8 top-6">База знаний / Проекты</div>
+    <div className="relative flex-grow p-8 bg-white rounded-2xl dark:bg-opacity-5 dark:text-white">
+      <div className="absolute text-xs opacity-50 left-8 top-6">База знаний / Проекты</div>
       <div className="flex items-center mb-8">
         <div className="text-2xl font-semibold">Проекты</div>
         <Button variant='contur' color='gray' className='ml-auto'>
@@ -30,8 +30,8 @@ export function Projects(props: IProjectsProps) {
       </div>
 
       <div className="flex items-center py-4">
-        <FolderIcon className='text-3xl mr-4' />
-        <div className="bg-gray bg-opacity-10 text-gray w-11 text-center py-2 text-xs font-semibold rounded-full mr-4">
+        <FolderIcon className='mr-4 text-3xl' />
+        <div className="py-2 mr-4 text-xs font-semibold text-center rounded-full bg-gray bg-opacity-10 text-gray w-11">
           123
         </div>
         <div className="font-semibold">Дирижер сада</div>
@@ -42,8 +42,8 @@ export function Projects(props: IProjectsProps) {
       </div>
       <div className="border-t border-gray border-opacity-20"></div>
       <div className="flex items-center py-4">
-        <FolderIcon className='text-3xl mr-4' />
-        <div className="bg-gray bg-opacity-10 text-gray w-11 text-center py-2 text-xs font-semibold rounded-full mr-4">
+        <FolderIcon className='mr-4 text-3xl' />
+        <div className="py-2 mr-4 text-xs font-semibold text-center rounded-full bg-gray bg-opacity-10 text-gray w-11">
           123
         </div>
         <div className="font-semibold">Дирижер сада</div>
@@ -56,10 +56,10 @@ export function Projects(props: IProjectsProps) {
 
       <div className="flex items-center py-3">
         <div className="w-24 h-[76px] rounded-xl relative overflow-hidden">
-          <img src="img/test.jpg" alt="" className="absolute w-full h-full object-cover" />
+          <img src="img/test.jpg" alt="" className="absolute object-cover w-full h-full" />
         </div>
-        <div className='ml-4 max-w-5xl'>
-          <div className="font-semibold mb-2">Сколько столбцов должно быть в идеальной форме регистрации?</div>
+        <div className='max-w-5xl ml-4'>
+          <div className="mb-2 font-semibold">Сколько столбцов должно быть в идеальной форме регистрации?</div>
           <div className="text-xs text-gray">
             UX — это не только ценные экраны, но и особая оптика: умение смотреть на привычные вещи с непривычного ракурса, находить связи и формулировать рекомендации.В этом тексте я попробую показать вам поездку в такси своими глазами.
           </div>
@@ -75,10 +75,10 @@ export function Projects(props: IProjectsProps) {
       <div className="border-t border-gray border-opacity-20"></div>
       <div className="flex items-center py-3">
         <div className="w-24 h-[76px] rounded-xl relative overflow-hidden">
-          <img src="img/test.jpg" alt="" className="absolute w-full h-full object-cover" />
+          <img src="img/test.jpg" alt="" className="absolute object-cover w-full h-full" />
         </div>
-        <div className='ml-4 max-w-5xl'>
-          <div className="font-semibold mb-2">Сколько столбцов должно быть в идеальной форме регистрации?</div>
+        <div className='max-w-5xl ml-4'>
+          <div className="mb-2 font-semibold">Сколько столбцов должно быть в идеальной форме регистрации?</div>
           <div className="text-xs text-gray">
             UX — это не только ценные экраны, но и особая оптика: умение смотреть на привычные вещи с непривычного ракурса, находить связи и формулировать рекомендации.В этом тексте я попробую показать вам поездку в такси своими глазами.
           </div>

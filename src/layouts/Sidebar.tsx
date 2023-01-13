@@ -9,7 +9,7 @@ interface ISidebarProps {
 
 export function Sidebar(props: ISidebarProps) {
   return (
-    <div className='px-4 pt-6 pb-4 rounded-2xl bg-white dark:bg-opacity-5 dark:text-white min-w-[266px] w-[266px] flex flex-col'>
+    <div className='flex flex-col min-w-[266px] w-[266px] px-4 pt-6 pb-4 bg-white rounded-2xl dark:bg-opacity-5 dark:text-white'>
       <div className="space-y-1">
         <Link to="/">
           <Button className='w-full' variant='text' size='small'>
@@ -19,29 +19,29 @@ export function Sidebar(props: ISidebarProps) {
         </Link>
         <Button className='w-full' variant='text' size='small'>
           <UsersIcon className='mr-2 text-lg text-gray dark:text-white' />
-          <div className="mr-auto text-black dark:text-white font-normal">Пользователи</div>
+          <div className="mr-auto font-normal text-black dark:text-white">Пользователи</div>
         </Button>
         <Button className='w-full' variant='text' size='small'>
           <BriefcaseIcon className='mr-2 text-lg text-gray dark:text-white' />
-          <div className="mr-auto text-black dark:text-white font-normal">База знаний</div>
+          <div className="mr-auto font-normal text-black dark:text-white">База знаний</div>
           <ToTopIcon className='ml-auto text-base text-gray dark:text-white' />
         </Button>
         <Link to="/projects">
           <Button className='w-full px-8' variant='text' size='small'>
             <FoldersIcon className='mr-2 text-lg text-gray dark:text-white' />
-            <div className="mr-auto text-black dark:text-white font-normal">Проекты</div>
+            <div className="mr-auto font-normal text-black dark:text-white">Проекты</div>
           </Button>
         </Link>
         <Button className='w-full px-8' variant='text' size='small'>
           <FoldersIcon className='mr-2 text-lg text-gray dark:text-white' />
-          <div className="mr-auto text-black dark:text-white font-normal">Дизайн</div>
+          <div className="mr-auto font-normal text-black dark:text-white">Дизайн</div>
         </Button>
         <Button className='w-full px-8' variant='text' size='small'>
           <FoldersIcon className='mr-2 text-lg text-gray dark:text-white' />
-          <div className="mr-auto text-black dark:text-white font-normal">Проекты за 2022</div>
+          <div className="mr-auto font-normal text-black dark:text-white">Проекты за 2022</div>
         </Button>
       </div>
-      <div className='border-t border-gray border-opacity-20 mb-5 mt-3'></div>
+      <div className='mt-3 mb-5 border-t border-gray border-opacity-20'></div>
 
       <div className="flex flex-wrap gap-2">
         <Tag>#Figma</Tag>
@@ -52,7 +52,7 @@ export function Sidebar(props: ISidebarProps) {
         <Tag>#Дизайн</Tag>
         <Tag>#Команда</Tag>
       </div>
-      <Button variant='text' size='small' className='mt-5 -ml-2 -mr-2 w-auto justify-start'>Показать всё</Button>
+      <Button variant='text' size='small' className='justify-start w-auto mt-5 -ml-2 -mr-2'>Показать всё</Button>
     </div>
   );
 }

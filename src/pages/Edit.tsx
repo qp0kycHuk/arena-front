@@ -54,11 +54,11 @@ export function Edit(props: IEditProps) {
     })
 
     return (
-        <div className="rounded-2xl bg-white dark:bg-opacity-5 dark:text-white p-8 flex-grow relative">
+        <div className="relative flex-grow p-8 bg-white rounded-2xl dark:bg-opacity-5 dark:text-white">
             <div className="border border-gray border-opacity-30 rounded-2xl">
                 <div className="px-8 py-6">
                     <Editor className='mb-8' editor={titleEditor} />
-                    <EditorControl editor={editor} className='-ml-4 -mr-4 sticky top-2 z-10' />
+                    <EditorControl editor={editor} className='sticky z-10 -ml-4 -mr-4 top-2' />
                     <Editor className='min-h-[260px] flex flex-col' editor={editor} />
                 </div>
                 <div className="border-t border-gray border-opacity-30"></div>

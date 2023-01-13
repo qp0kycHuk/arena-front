@@ -44,20 +44,20 @@ export function LoginForm(props: ILoginFormProps) {
 
     return (
         <form onSubmit={submitHundler} className="bg-white dark:bg-black dark:text-white m-auto rounded-3xl px-8 py-10 w-[400px]">
-            <h1 className='text-2xl text-center font-semibold mb-10'>Авторизация</h1>
+            <h1 className='mb-10 text-2xl font-semibold text-center'>Авторизация</h1>
 
             <label className='block'>
-                <div className="text-sm font-medium mb-2">Логин</div>
+                <div className="mb-2 text-sm font-medium">Логин</div>
                 <MaskedInput mask={phoneMask} className='w-full' name="phone" required onChange={changeHandler} />
             </label>
             <label className='block mt-4'>
-                <div className="text-sm font-medium mb-2">Пароль</div>
+                <div className="mb-2 text-sm font-medium">Пароль</div>
                 <Input className='w-full' name="password" type="password" required onChange={changeHandler} />
             </label>
-            <Button className='mt-7 w-full'>Войти</Button>
+            <Button className='w-full mt-7'>Войти</Button>
             <div className="mt-5 text-center">
                 Я ещё не зарегистрировался <br />
-                <Link to='/registration' className="font-semibold text-primary underline underline-offset-4 decoration-dashed decoration-1">
+                <Link to='/registration' className="font-semibold underline text-primary underline-offset-4 decoration-dashed decoration-1">
                     Зарегистрироваться
                 </Link>
             </div>

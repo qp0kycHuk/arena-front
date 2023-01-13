@@ -10,7 +10,7 @@ export interface IHeaderProps {
 
 export function Header(props: IHeaderProps) {
   return (
-    <header className='flex items-center bg-white dark:bg-opacity-5 px-8 py-2'>
+    <header className='flex items-center px-8 py-2 bg-white dark:bg-opacity-5'>
       <div className="mr-auto">
         <img src={headerLogo} alt="" className='h-[26px]' />
       </div>
@@ -26,9 +26,9 @@ export function Header(props: IHeaderProps) {
       <Button variant='contur' size='small' color='gray'>
         <BookmarkIcon className="text-2xl" />
       </Button>
-      <Button variant='text' size='small' className='ml-4 px-3' rounded shadow color='gray'>
+      <Button variant='text' size='small' className='px-3 ml-4' rounded shadow color='gray'>
         <ToDownIcon className="text-base" />
-        <div className="rounded-full p-1 text-white bg-gray ml-2">
+        <div className="p-1 ml-2 text-white rounded-full bg-gray">
           <UserIcon />
         </div>
       </Button>

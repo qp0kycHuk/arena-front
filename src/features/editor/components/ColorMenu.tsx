@@ -14,9 +14,9 @@ export function ColorMenu({ editor }: IColorMenuProps) {
     return (
         <MenuButton title='Цвет текста' className='relative'>
             <TextColorIcon className="text-2xl" />
-            <label className='block absolute inset-0 cursor-pointer'>
+            <label className='absolute inset-0 block cursor-pointer'>
                 <input
-                    className='opacity-0 absolute inset-0 pointer-events-none'
+                    className='absolute inset-0 opacity-0 pointer-events-none'
                     type="color"
                     onInput={(event: React.ChangeEvent<HTMLInputElement>) => editor.chain().focus().setColor(event.target.value).run()}
                     value={rgb2hex(currentColor)}

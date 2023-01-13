@@ -35,7 +35,7 @@ export function CheckBox({ icon, size, color, label, ...props }: ICheckBoxProps)
             `checked:bg-${color} checked:border-${color}`
           ].join(' ')}
         />
-        <div className="text-white absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity">
+        <div className="absolute text-white transition-opacity -translate-x-1/2 -translate-y-1/2 opacity-0 pointer-events-none top-1/2 left-1/2 peer-checked:opacity-100">
           {icon}
         </div>
         <div ref={circle} className={`bg-gray bg-opacity-0 group-hover:bg-opacity-10 peer-checked:bg-opacity-0 peer-checked:hover:bg-opacity-10 peer-checked:bg-${color} w-12 h-12 rounded-full absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 transition-opacity`}></div>

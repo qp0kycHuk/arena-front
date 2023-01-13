@@ -21,7 +21,7 @@ export function EmojiMenu({ editor }: IEmojiMenuProps) {
                 </MenuButton>
             </MenuTarget>} >
 
-            <div className="grid grid-cols-4 px-2 gap-1">
+            <div className="grid grid-cols-4 gap-1 px-2">
                 {emojiList.map((item) => (
                     <MenuButton className='px-2' key={item} onClick={() => editor.chain().focus().insertContent(item).run()}>
                         <span className="text-lg" >{item}</span>

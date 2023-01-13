@@ -28,7 +28,7 @@ export function AlignMenu({ editor }: IAlignMenuProps) {
                 </MenuButton>
             </MenuTarget>
         }>
-            <div className="flex px-2 gap-1">
+            <div className="flex gap-1 px-2">
                 <MenuButton
                     title='По левому краю'
                     isActive={editor.isActive({ textAlign: 'left' })}

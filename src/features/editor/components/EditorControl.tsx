@@ -30,7 +30,7 @@ export function EditorControl({ editor, className }: IEditorControlProps) {
     }
 
     return (
-        <div className={`flex items-center gap-1 flex-wrap mb-5 rounded-lg py-2 px-4 bg-gray-100 dark:bg-gray-800 ${className}`}>
+        <div className={`flex flex-wrap items-center gap-1 px-4 py-2 mb-5 bg-gray-100 rounded-lg dark:bg-gray-800 ${className}`}>
             <MenuButton
                 title='Полужирный Ctrl+B'
                 isActive={editor.isActive('bold')}

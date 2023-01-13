@@ -12,7 +12,7 @@ export function Uploader({ uploader, children }: IUploaderProps) {
     const isNonMultipleAccept = !(!uploader.multiple && uploader.fileItems.length > 0)
 
     return (
-        <div className='flex gap-3 flex-wrap relative'>
+        <div className='relative flex flex-wrap gap-3'>
             {children ? <div className="w-full">{children}</div> : null}
             {isNonMultipleAccept ? <UploaderFileDrop uploader={uploader} /> : null}
             <UploaderItems uploader={uploader} />

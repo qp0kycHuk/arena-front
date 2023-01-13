@@ -18,10 +18,10 @@ export function DocumentMenu({ editor }: IDocumentMenuProps) {
 
     return (
         <MenuButton title='Файл' className='relative'>
-            <label className='block absolute inset-0 cursor-pointer'>
+            <label className='absolute inset-0 block cursor-pointer'>
                 <input onChange={changeHandler} type="file" multiple
                     accept='application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,text/plain, application/pdf'
-                    className='opacity-0 absolute inset-0 pointer-events-none' />
+                    className='absolute inset-0 opacity-0 pointer-events-none' />
             </label>
             <DocumentIcon className="text-2xl" />
         </MenuButton>

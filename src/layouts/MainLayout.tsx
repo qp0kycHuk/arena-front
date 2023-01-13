@@ -15,7 +15,7 @@ export function MainLayout({ children }: IMainLayoutProps) {
   return (
     <div className='flex-grow '>
       <Header />
-      <div className="p-8 flex gap-8 items-start">
+      <div className="flex items-start gap-8 p-8">
         <Sidebar />
         <Suspense fallback='Loading..'>
           <Outlet />

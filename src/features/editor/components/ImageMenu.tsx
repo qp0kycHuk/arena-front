@@ -17,8 +17,8 @@ export function ImageMenu({ editor }: IImageMenuProps) {
     
     return (
         <MenuButton title='Изображение' className='relative'>
-            <label className='block absolute inset-0 cursor-pointer'>
-                <input onChange={changeHandler} type="file" multiple accept='image/*' className='opacity-0 absolute inset-0 pointer-events-none' />
+            <label className='absolute inset-0 block cursor-pointer'>
+                <input onChange={changeHandler} type="file" multiple accept='image/*' className='absolute inset-0 opacity-0 pointer-events-none' />
             </label>
             <ImageIcon className="text-2xl" />
         </MenuButton>

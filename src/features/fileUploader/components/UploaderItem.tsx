@@ -25,17 +25,17 @@ export function UploaderItem({ item, extention, update, remove }: IUpliaderItemP
 
     return (
         <div className='relative z-10 w-32'>
-            <div className='relative h-24  w-full'>
+            <div className='relative w-full h-24'>
                 {((item.preview || item.src) && isMedia) ?
-                    <img className='w-full h-full rounded-xl object-cover' src={item.preview || item.src} alt="" /> :
-                    <div className="w-full h-full rounded-xl flex bg-primary bg-opacity-10 p-2">
-                        <div className="m-auto max-w-full">
+                    <img className='object-cover w-full h-full rounded-xl' src={item.preview || item.src} alt="" /> :
+                    <div className="flex w-full h-full p-2 rounded-xl bg-primary bg-opacity-10">
+                        <div className="max-w-full m-auto">
                             {isMedia ?
                                 <ImageIcon className="text-3xl text-gray" />
                                 :
                                 <div className='flex flex-col items-center'>
-                                    <DocumentIcon className="text-3xl text-gray mb-2" />
-                                    <div className="text-xs text-center truncate w-full">{item.title}</div>
+                                    <DocumentIcon className="mb-2 text-3xl text-gray" />
+                                    <div className="w-full text-xs text-center truncate">{item.title}</div>
                                 </div>
                             }
                         </div>
@@ -46,7 +46,7 @@ export function UploaderItem({ item, extention, update, remove }: IUpliaderItemP
                 </Button>
             </div>
             {isMedia ?
-                <input type="text" defaultValue={item.title} className='text-xs border-0 max-w-full mt-2' placeholder='Добавить название...' />
+                <input type="text" defaultValue={item.title} className='max-w-full mt-2 text-xs border-0' placeholder='Добавить название...' />
                 : null
             }
         </div>
