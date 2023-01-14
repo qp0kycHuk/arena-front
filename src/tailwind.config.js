@@ -85,11 +85,11 @@ module.exports = {
   },
   safelist: [
     {
-      pattern: /(bg|text|border|ring)-(primary|gray|red|green|yellow)/,
+      pattern: /(bg|text|border|ring)-(primary|gray|red|green|yellow)$/,
       variants: ['active', 'hover', 'focus', 'checked', 'peer-checked'],
     },
     {
-      pattern: /(bg)-(primary|gray|red|green|yellow)-600/,
+      pattern: /(bg)-(primary|gray|red|green|yellow)-600$/,
       variants: ['hover'],
     },
   ],
