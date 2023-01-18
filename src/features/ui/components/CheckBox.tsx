@@ -1,8 +1,8 @@
 import { GalOchkaIcon } from '@assets/icons/stroke';
 import * as React from 'react';
 import { ReactNode, useRef } from 'react';
-import { useRipple } from '../hooks/useRipple';
 import { Color, Size } from '../types';
+import { ripplePointerdownHandler } from '../utils/ripple';
 
 export interface ICheckBoxProps extends React.HTMLAttributes<HTMLInputElement> {
   icon: ReactNode
@@ -21,8 +21,6 @@ const sizeClasses: Record<Size, string> = {
 };
 
 export function CheckBox({ icon, size, color, label, ...props }: ICheckBoxProps) {
-  const circle = useRef(null)
-  useRipple(circle)
 
   return (
     <label className={"inline-flex items-center group cursor-pointer " + props.className} >
@@ -38,7 +36,7 @@ export function CheckBox({ icon, size, color, label, ...props }: ICheckBoxProps)
         <div className="absolute text-white transition-opacity -translate-x-1/2 -translate-y-1/2 opacity-0 pointer-events-none top-1/2 left-1/2 peer-checked:opacity-100">
           {icon}
         </div>
-        <div ref={circle} className={`bg-gray bg-opacity-0 group-hover:bg-opacity-10 peer-checked:bg-opacity-0 peer-checked:hover:bg-opacity-10 peer-checked:bg-${color} w-12 h-12 rounded-full absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 transition-opacity`}></div>
+        <div onPointerDown={ripplePointerdownHandler} className={`bg-gray bg-opacity-0 group-hover:bg-opacity-10 peer-checked:bg-opacity-0 peer-checked:hover:bg-opacity-10 peer-checked:bg-${color} w-12 h-12 rounded-full absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 transition-opacity`}></div>
       </div>
       {label ? <div className="ml-3 select-none">{label}</div> : null}
     </label>

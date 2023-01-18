@@ -1,8 +1,9 @@
 // @flow
 import * as React from 'react';
 import { useRef } from 'react';
-import { useRipple } from '../hooks/useRipple';
+
 import { Color, Size } from '../types';
+import { ripplePointerdownHandler } from '../utils/ripple';
 
 type Variant = 'fill' | 'light' | 'contur' | 'text' | 'whitebg'
 type Tag = 'button' | 'div' | 'label'
@@ -50,8 +51,6 @@ const variantClassNames: Record<Variant, string> = {
 
 
 export function Button({ children, color, size, variant, rounded, shadow, icon, tagName, ...props }: ButtonProps) {
-  const ref = useRef(null)
-  useRipple(ref)
 
   const variantColorClassNames: Record<Variant, string> = {
     fill: `bg-${color} hover:bg-${color}-600`,
@@ -78,7 +77,7 @@ export function Button({ children, color, size, variant, rounded, shadow, icon, 
     <ButtonTag
       tabIndex={0}
       {...props}
-      ref={ref}
+      onPointerDown={ripplePointerdownHandler}
       className={[
         baseClassNames,
         sizeClassNames[size],
