@@ -2,9 +2,10 @@ import { useEffect } from "react"
 
 export const useRipple = (ref: any) => {
   const $current = ref.current
+
   useEffect(() => {
     const handler = (event: any) => {
-      if (event.path.includes($current)) {
+      if (event.path?.includes($current)) {
         pointerdownHandler(event, $current)
       }
     }

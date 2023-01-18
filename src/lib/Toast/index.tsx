@@ -3,6 +3,7 @@ import { Button } from '@features/ui';
 import { CloseButtonProps, ToastContainer as Container, IconProps, ToastContainerProps } from 'react-toastify';
 export { toast } from 'react-toastify';
 
+
 const contextClass = {
   success: "bg-green text-white",
   error: "bg-red text-white",
