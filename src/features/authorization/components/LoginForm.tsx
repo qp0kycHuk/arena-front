@@ -1,6 +1,5 @@
-import { phoneMask } from '@const/maskExpressions';
+import { PhoneInput } from '@components/PhoneInput';
 import { Button, Input } from '@features/ui';
-import { MaskedInput } from '@features/ui/components/Input';
 import axios from 'axios';
 import { FormEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -24,6 +23,7 @@ export function LoginForm(props: ILoginFormProps) {
                     console.log(response);
 
                 })
+                
             const user = await login({
                 phone: '79184284848',
                 password: '12345678'
@@ -48,7 +48,7 @@ export function LoginForm(props: ILoginFormProps) {
 
             <label className='block'>
                 <div className="mb-2 text-sm font-medium">Логин</div>
-                <MaskedInput mask={phoneMask} className='w-full' name="phone" required onChange={changeHandler} />
+                <PhoneInput className='w-full' name="phone" required onChange={changeHandler} />
             </label>
             <label className='block mt-4'>
                 <div className="mb-2 text-sm font-medium">Пароль</div>
