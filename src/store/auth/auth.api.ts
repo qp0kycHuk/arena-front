@@ -28,11 +28,7 @@ export const authApi = taggetRootApi.injectEndpoints({
             query: (credentials) => ({
                 url: LOGIN_ENDPOINT_URL,
                 method: 'POST',
-                body: credentials,
-                headers: {
-                    "Accept": "application/json",
-                    "X-Requested-With": 'XMLHttpRequest'
-                }
+                body: credentials
             }),
             invalidatesTags: [AUTH_TAG]
         }),

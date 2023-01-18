@@ -24,20 +24,11 @@ export function LoginForm(props: ILoginFormProps) {
 
                 })
 
-            // const user = await login({
-            //     phone: '79184284848',
-            //     password: '12345678'
-            // })
-            await axios.post(process.env.REACT_APP_API_URL + 'api/login/', {
+            const user = await login({
                 phone: '79184284848',
                 password: '12345678'
-            }, {
-                headers: {
-                    "Accept": "application/json",
-                    "X-Requested-With": 'XMLHttpRequest'
-                }
             })
-            // console.log(user);
+            console.log(user);
 
         } catch (err) {
             console.log(err);
