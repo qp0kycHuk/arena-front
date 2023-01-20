@@ -16,7 +16,7 @@ export function UploaderLabel({ uploader }: IUploaderLabelProps) {
     return (
         <label className="relative z-10 flex w-32 h-24 transition cursor-pointer bg-primary bg-opacity-10 hover:bg-opacity-20 rounded-xl">
             <input type="file" multiple={uploader.multiple} accept={uploader.extention.accept} onChange={changeHandler} className='absolute inset-0 opacity-0 pointer-events-none' />
-            <Button tagName='div' className='m-auto' variant='whitebg' shadow rounded icon>
+            <Button as='div' className='m-auto' variant='whitebg' shadow rounded icon>
                 <PlusIcon className="text-2xl" />
             </Button>
         </label>

@@ -1,24 +1,22 @@
 // @flow
 import * as React from 'react';
-import { useRef } from 'react';
-
 import { Color, Size } from '../types';
 import { ripplePointerdownHandler } from '../utils/ripple';
 
 type Variant = 'fill' | 'light' | 'contur' | 'text' | 'whitebg'
-type Tag = 'button' | 'div' | 'label'
 
 interface IProps {
-  color: Color
-  size: Size
-  variant: Variant
-  tagName: Tag
-  rounded: boolean
-  shadow: boolean
-  icon: boolean
+  color?: Color
+  size?: Size
+  variant?: Variant
+  as?: React.ElementType
+  rounded?: boolean
+  shadow?: boolean
+  icon?: boolean
 };
 
 export type ButtonProps = IProps & Omit<React.ButtonHTMLAttributes<HTMLElement>, keyof IProps>
+export type ButtonRef = React.ForwardedRef<HTMLElement>
 
 const baseClassNames = 'flex items-center cursor-pointer ring-0 font-medium transition overflow-hidden outline-none disabled:pointer-events-none disabled:opacity-50 focus:border-transparent active:translate-y-0.5'
 
@@ -49,8 +47,17 @@ const variantClassNames: Record<Variant, string> = {
 };
 
 
-
-export function Button({ children, color, size, variant, rounded, shadow, icon, tagName, ...props }: ButtonProps) {
+// It is render function for React.forwardRef
+function ButtonComponent({
+  children,
+  color = 'primary',
+  size = 'middle',
+  variant = 'fill',
+  as: ButtonTag = 'button',
+  rounded = false,
+  shadow = false,
+  icon = false,
+  ...props }: ButtonProps, ref: ButtonRef) {
 
   const variantColorClassNames: Record<Variant, string> = {
     fill: `bg-${color} hover:bg-${color}-600`,
@@ -71,10 +78,9 @@ export function Button({ children, color, size, variant, rounded, shadow, icon, 
 
   ].join(' ')
 
-  const ButtonTag = tagName
-
   return (
     <ButtonTag
+      ref={ref}
       tabIndex={0}
       {...props}
       onPointerDown={ripplePointerdownHandler}
@@ -92,12 +98,6 @@ export function Button({ children, color, size, variant, rounded, shadow, icon, 
   );
 };
 
-Button.defaultProps = {
-  color: 'primary',
-  size: 'middle',
-  variant: 'fill',
-  tagName: 'button',
-  rounded: false,
-  shadow: false,
-  icon: false,
-}
+
+
+export const Button = React.forwardRef(ButtonComponent)

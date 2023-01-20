@@ -1,6 +1,8 @@
-import { AdjustmentsHorizontalIcon, BookmarkIcon, SearchIcon, SettingsIcon } from '@assets/icons/stroke';
+import { AdjustmentsHorizontalIcon, BookmarkIcon, FileTextIcon, FoldersIcon, SearchIcon, SettingsIcon } from '@assets/icons/stroke';
 import { ReactComponent as FolderIcon } from '@assets/img/folder.svg';
 import { Button, Input } from '@features/ui';
+import { Menu } from '@lib/Menu';
+
 
 export interface IProjectsProps {
 }
@@ -14,9 +16,13 @@ export function Projects(props: IProjectsProps) {
         <Button variant='contur' color='gray' className='ml-auto'>
           <SettingsIcon className="text-2xl" />
         </Button>
-        <Button className='ml-4 px-7'>
-          Добавить
-        </Button>
+        <Menu align='end' menuButton={
+          <Button className='ml-4 px-7'> Добавить </Button>
+        }>
+          <Button className='justify-start w-full' size='small' color='gray' variant='text'> <FoldersIcon className="mr-2" /> Папка </Button>
+          <Button className='justify-start w-full' size='small' color='gray' variant='text'> <FileTextIcon className="mr-2" /> Статья </Button>
+
+        </Menu>
       </div>
 
       <div className="relative mb-3">

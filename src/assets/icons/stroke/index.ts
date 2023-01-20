@@ -12,6 +12,7 @@ export { ReactComponent as BulletListIcon } from './bulletList.svg';
 export { ReactComponent as CrossIcon } from './cross.svg';
 export { ReactComponent as CrownIcon } from './crown.svg';
 export { ReactComponent as DocumentIcon } from './document.svg';
+export { ReactComponent as FileTextIcon } from './fileText.svg';
 export { ReactComponent as FoldersIcon } from './folders.svg';
 export { ReactComponent as GalOchkaIcon } from './galOchka.svg';
 export { ReactComponent as ImageIcon } from './image.svg';

@@ -20,9 +20,9 @@ export function AlignMenu({ editor }: IAlignMenuProps) {
     }
 
     return (
-        <Menu align='center' unmountOnClose={true} transition menuButton={
+        <Menu align='center' unmountOnClose={true} menuButton={
             <MenuTarget>
-                <MenuButton title='Выравнивание' tagName="div"
+                <MenuButton title='Выравнивание'
                     disabled={!editor.can().chain().focus().setTextAlign('left').run()}>
                     {activeIcon}
                 </MenuButton>

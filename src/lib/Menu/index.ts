@@ -1,1 +1,0 @@
-export { Menu, MenuItem, MenuButton as MenuTarget } from '@szhsin/react-menu';
