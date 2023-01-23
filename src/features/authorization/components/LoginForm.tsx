@@ -3,13 +3,18 @@ import { Button, Input } from '@features/ui';
 import axios from 'axios';
 import { FormEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ILoginRequest, useLoginMutation } from 'src/store/auth/auth.api';
+import { ILoginRequest, useLazyInitCsrfQuery, useLoginMutation } from 'src/store/auth/auth.api';
 
 interface ILoginFormProps {
 }
 
+interface IServerError {
+    message: string
+}
+
 export function LoginForm(props: ILoginFormProps) {
-    const [login, { isLoading }] = useLoginMutation()
+    const [login, { isLoading, isError, error }] = useLoginMutation()
+    const [initCsrf] = useLazyInitCsrfQuery()
     const [formState, setFormState] = useState<ILoginRequest>({
         phone: '',
         password: '',
@@ -18,17 +23,13 @@ export function LoginForm(props: ILoginFormProps) {
     async function submitHundler(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
         try {
-            await axios.get(process.env.REACT_APP_API_URL + 'sanctum/csrf-cookie')
-                .then((response) => {
-                    console.log(response);
-
-                })
+            await initCsrf(true)
 
             const user = await login({
-                phone: '79184284848',
-                password: '12345678'
+                phone: formState.phone.replace(/\D/g, ''),
+                password: formState.password,
             })
-            console.log(user);
+
 
         } catch (err) {
             console.log(err);
@@ -42,10 +43,21 @@ export function LoginForm(props: ILoginFormProps) {
         }
     }
 
+    let errorMessage = '';
+
+
+    if (error && ('data' in error)) {
+        errorMessage = (error.data as IServerError).message
+    }
+
     return (
         <form onSubmit={submitHundler} className="bg-white dark:bg-black dark:text-white m-auto rounded-3xl px-8 py-10 w-[400px]">
             <h1 className='mb-10 text-2xl font-semibold text-center'>Авторизация</h1>
-
+            {errorMessage ?
+                <div className="bg-red bg-opacity-10 text-red rounded p-4 text-sm font-semibold mb-4">{errorMessage}</div>
+                :
+                null
+            }
             <label className='block'>
                 <div className="mb-2 text-sm font-medium">Логин</div>
                 <PhoneInput className='w-full' name="phone" required onChange={changeHandler} />

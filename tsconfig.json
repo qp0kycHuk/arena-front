@@ -32,6 +32,9 @@
       "@const/*": [
         "src/const/*"
       ],
+      "@store/*": [
+        "src/store/*"
+      ],
     },
     "target": "es5",
     "lib": [

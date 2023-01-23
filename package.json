@@ -29,6 +29,7 @@
     "@types/react-dom": "^18.0.10",
     "axios": "^1.2.2",
     "classnames": "^2.3.2",
+    "js-cookie": "^3.0.1",
     "localforage": "^1.10.0",
     "lowlight": "^2.8.0",
     "match-sorter": "^6.3.1",
@@ -70,6 +71,7 @@
   "devDependencies": {
     "@craco/craco": "^7.0.0",
     "@craco/types": "^7.0.0",
+    "@types/js-cookie": "^3.0.2",
     "@types/react-input-mask": "^3.0.2",
     "autoprefixer": "^10.4.13",
     "postcss": "^8.4.20",
