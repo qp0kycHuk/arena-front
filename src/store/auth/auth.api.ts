@@ -16,6 +16,7 @@ export interface IRegisterRequest {
 
 const LOGIN_ENDPOINT_URL = 'api/login'
 const REGISTER_ENDPOINT_URL = 'api/register'
+const LOGOUT_ENDPOINT_URL = 'api/logout'
 const USER_ENDPOINT_URL = 'api/user'
 const CSRF_ENDPOINT_URL = 'sanctum/csrf-cookie'
 const AUTH_TAG = 'Auth'
@@ -45,6 +46,13 @@ export const authApi = taggetRootApi.injectEndpoints({
             }),
             invalidatesTags: [AUTH_TAG]
         }),
+        logout: builder.mutation({
+            query: () => ({
+                url: LOGOUT_ENDPOINT_URL,
+                method: 'POST',
+            }),
+            invalidatesTags: [AUTH_TAG]
+        }),
         user: builder.query<IUser, any>({
             query: () => ({
                 url: USER_ENDPOINT_URL,
@@ -57,6 +65,7 @@ export const authApi = taggetRootApi.injectEndpoints({
 export const { 
     useLoginMutation, 
     useRegisterMutation,
+    useLogoutMutation,
     useInitCsrfQuery, 
     useLazyInitCsrfQuery, 
     useUserQuery } = authApi

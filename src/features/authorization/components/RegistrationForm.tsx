@@ -37,7 +37,7 @@ export function RegistrationForm(props: IRegistrationFormProps) {
         event.preventDefault()
         setLoading(true)
         try {
-            await initCsrf(true)
+            await initCsrf(null)
             await register({
                 ...formState,
                 phone: getUnmaskedPhone(formState.phone),

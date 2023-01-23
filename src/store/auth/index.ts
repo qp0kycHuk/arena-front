@@ -1,7 +1,8 @@
 import authReducer from './auth.slice'
 export {
-    useLoginMutation,
+    useLoginMutation, 
     useRegisterMutation,
+    useLogoutMutation,
     useInitCsrfQuery,
     useLazyInitCsrfQuery,
     useUserQuery

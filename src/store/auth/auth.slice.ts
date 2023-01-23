@@ -50,9 +50,10 @@ const slice = createSlice({
                 state.isLogedIn = Cookies.get(process.env.REACT_APP_CSRF_COOKIE_NAME as string) ? true : false
             }
         )
-
-        builder.addMatcher(authApi.endpoints.register.matchRejected, logoutHandler)
+        
         builder.addMatcher(authApi.endpoints.login.matchRejected, logoutHandler)
+        builder.addMatcher(authApi.endpoints.register.matchRejected, logoutHandler)
+        builder.addMatcher(authApi.endpoints.logout.matchFulfilled, logoutHandler)
         builder.addMatcher(authApi.endpoints.user.matchRejected, logoutHandler)
 
         builder.addMatcher(
