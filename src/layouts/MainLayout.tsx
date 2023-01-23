@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Sidebar } from './Sidebar';
-import { Header } from './Header';
+import { Header } from './Header/Header';
 import { Suspense } from 'react';
 import { PrivateOutlet } from './PrivateOutlet';
 

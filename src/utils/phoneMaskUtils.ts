@@ -5,8 +5,8 @@ export function getUnmaskedValue(value: string): string {
     return value.replace(/\D/g, '')
 }
 
-export function getMaskedValue(value: string): string {
-    const numberValue = value.replace(/\D/g, '')
+export function getMaskedValue(value: string | number = ''): string {
+    const numberValue = value.toString().replace(/\D/g, '')
 
     if (!numberValue) {
         return ''
