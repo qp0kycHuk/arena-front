@@ -16,6 +16,7 @@ module.exports = {
             '@utils': resolvePath('./src/utils'),
             '@const': resolvePath('./src/const'),
             '@store': resolvePath('./src/store'),
+            '@models': resolvePath('./src/models'),
         }
     },
 }

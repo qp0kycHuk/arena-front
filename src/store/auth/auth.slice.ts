@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie'
 import { createSlice } from '@reduxjs/toolkit'
-import { IUser, authApi } from './auth.api'
+import { authApi } from './auth.api'
+import { IUser } from '@models/User'
 
 
 interface IAuthState {

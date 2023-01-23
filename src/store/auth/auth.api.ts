@@ -1,10 +1,5 @@
+import { IUser } from '@models/User'
 import { rootApi } from '../api'
-
-export interface IUser {
-    id: string
-    name: string
-    email: string
-}
 
 export interface ILoginRequest {
     phone: string

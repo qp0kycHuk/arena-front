@@ -35,6 +35,9 @@
       "@store/*": [
         "src/store/*"
       ],
+      "@models/*": [
+        "src/models/*"
+      ],
     },
     "target": "es5",
     "lib": [
