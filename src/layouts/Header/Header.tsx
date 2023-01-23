@@ -5,6 +5,7 @@ import { UserIcon } from '@assets/icons/fill';
 import { Button, CheckBox } from '@features/ui';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@store/auth';
+import { HeaderUser } from './HeaderUser';
 
 export interface IHeaderProps {
 }
@@ -26,12 +27,7 @@ export function Header(props: IHeaderProps) {
         <BookmarkIcon className="text-2xl" />
       </Button>
       {auth.isLogedIn ?
-        <Button variant='text' size='small' className='px-3 ml-4' rounded shadow color='gray'>
-          <ToDownIcon className="text-base" />
-          <div className="p-1 ml-2 text-white rounded-full bg-gray">
-            <UserIcon />
-          </div>
-        </Button>
+        <HeaderUser />
         :
         <Link to="login" className='mx-2'>
           <Button variant='contur' size='small' color='gray'>
