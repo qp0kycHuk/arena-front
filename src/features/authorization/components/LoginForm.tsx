@@ -1,4 +1,4 @@
-import { FormEvent, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PhoneInput } from '@components/PhoneInput';
 import { Spiner } from '@components/Spiner';
@@ -10,10 +10,9 @@ import { ILoginRequest, useLazyInitCsrfQuery, useLoginMutation } from '@store/au
 interface ILoginFormProps {
 }
 
-interface IServerError {
-    message: string
-}
-const initialFormState = {
+
+
+const initialFormState:ILoginRequest = {
     phone: '',
     password: '',
 }
@@ -34,13 +33,12 @@ export function LoginForm(props: ILoginFormProps) {
     }, [error]);
 
 
-    async function submitHundler(event: FormEvent<HTMLFormElement>) {
+    async function submitHundler(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
         setLoading(true)
         try {
             await initCsrf(true)
-
-            const user = await login({
+            await login({
                 phone: getUnmaskedPhone(formState.phone),
                 password: formState.password,
             })
@@ -55,7 +53,7 @@ export function LoginForm(props: ILoginFormProps) {
         <form onSubmit={submitHundler} className="bg-white dark:bg-black dark:text-white m-auto rounded-3xl px-8 py-10 w-[400px]">
             <h1 className='mb-10 text-2xl font-semibold text-center'>Авторизация</h1>
             {errorMessage && !loading ?
-                <div className="bg-red bg-opacity-10 text-red rounded p-4 text-sm font-semibold mb-4">{errorMessage}</div>
+                <div className="p-4 mb-4 text-sm font-semibold rounded bg-red bg-opacity-10 text-red">{errorMessage}</div>
                 :
                 null
             }

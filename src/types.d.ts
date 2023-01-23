@@ -7,3 +7,6 @@ interface IExtention {
     regex: RegExp
 }
 
+interface IServerError {
+    message: string
+}

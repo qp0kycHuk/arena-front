@@ -38,21 +38,22 @@ const slice = createSlice({
         )
 
         builder.addMatcher(
-            authApi.endpoints.login.matchFulfilled,
+            authApi.endpoints.register.matchFulfilled,
             (state) => {
                 state.isLogedIn = Cookies.get(process.env.REACT_APP_CSRF_COOKIE_NAME as string) ? true : false
             }
         )
 
         builder.addMatcher(
-            authApi.endpoints.login.matchRejected,
-            logoutHandler
+            authApi.endpoints.login.matchFulfilled,
+            (state) => {
+                state.isLogedIn = Cookies.get(process.env.REACT_APP_CSRF_COOKIE_NAME as string) ? true : false
+            }
         )
 
-        builder.addMatcher(
-            authApi.endpoints.user.matchRejected,
-            logoutHandler
-        )
+        builder.addMatcher(authApi.endpoints.register.matchRejected, logoutHandler)
+        builder.addMatcher(authApi.endpoints.login.matchRejected, logoutHandler)
+        builder.addMatcher(authApi.endpoints.user.matchRejected, logoutHandler)
 
         builder.addMatcher(
             authApi.endpoints.user.matchFulfilled,
