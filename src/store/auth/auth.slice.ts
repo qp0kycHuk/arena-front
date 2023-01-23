@@ -1,8 +1,6 @@
 import Cookies from 'js-cookie'
 import { createSlice } from '@reduxjs/toolkit'
 import { IUser, authApi } from './auth.api'
-import { RootState, useAppSelector } from '../index'
-import { useMemo } from 'react'
 
 
 interface IAuthState {
@@ -15,6 +13,15 @@ const initialState: IAuthState = {
     user: null,
     token: Cookies.get(process.env.REACT_APP_CSRF_COOKIE_NAME as string) || null,
     isLogedIn: Cookies.get(process.env.REACT_APP_CSRF_COOKIE_NAME as string) ? true : false
+}
+
+function logoutHandler(state: IAuthState) {
+    state.user = null
+    state.isLogedIn = false
+    state.token = null
+
+    Cookies.remove(process.env.REACT_APP_CSRF_COOKIE_NAME as string)
+    Cookies.remove(process.env.REACT_APP_CSRF_COOKIE_NAME as string)
 }
 
 const slice = createSlice({
@@ -38,10 +45,12 @@ const slice = createSlice({
 
         builder.addMatcher(
             authApi.endpoints.login.matchRejected,
-            (state) => {
-                state.isLogedIn = false
-                state.token = null
-            }
+            logoutHandler
+        )
+
+        builder.addMatcher(
+            authApi.endpoints.user.matchRejected,
+            logoutHandler
         )
 
         builder.addMatcher(
