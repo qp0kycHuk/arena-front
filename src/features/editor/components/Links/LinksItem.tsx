@@ -21,11 +21,11 @@ export function LinksItem({ link, updateLink, removeLink }: ILinksItemProps) {
     <div className='flex gap-4 items-center'>
       <div>
         <div className="text-sm mb-2 font-medium">Заголовок</div>
-        <Input className='w-96' required name='text' value={link.text} onChange={changeHandler} />
+        <Input className='w-96' name='text' value={link.text} onChange={changeHandler} />
       </div>
       <div>
         <div className="text-sm mb-2 font-medium">Ссылка</div>
-        <Input className='w-96' required name='url' value={link.url} onChange={changeHandler} />
+        <Input className='w-96' name='url' value={link.url} onChange={changeHandler} />
       </div>
       {
         (link.text || link.url) &&
