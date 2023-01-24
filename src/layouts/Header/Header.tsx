@@ -13,7 +13,7 @@ export function Header(props: IHeaderProps) {
   const auth = useAuth()
 
   return (
-    <header className='flex items-center px-8 py-2 bg-white dark:bg-opacity-5 sticky top-0 z-20'>
+    <header className='flex items-center px-8 py-2 bg-white dark:bg-opacity-5 sticky top-0 z-20 shadow-sm'>
       <div className="mr-auto">
         <img src={headerLogo} alt="" className='h-[26px]' />
       </div>
