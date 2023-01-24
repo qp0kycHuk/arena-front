@@ -146,6 +146,14 @@ body {
     }
 }
 
+.width-placeholder[data-placeholder]:empty:before {
+    @apply text-gray;
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+}
+
 .filedrop {
     &-target {
         @apply transition absolute inset-0 pointer-events-none opacity-0 flex;

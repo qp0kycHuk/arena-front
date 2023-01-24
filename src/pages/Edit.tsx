@@ -12,16 +12,16 @@ interface IEditProps {
 const article = {
     title: 'Название статьи',
     content: testContent,
-    anons: {
-        id: getRandomUUID(),
-        src: 'https://sun2-12.userapi.com/impg/lYOgQO94bRux0SIqvLVwem5xE2cpb1rn1_4Uag/CVdyE82tCFo.jpg?size=512x768&quality=96&sign=175b02044120b5b2bf5b4a63d079d7d9&type=album',
-    },
+    // anons: {
+    //     id: getRandomUUID(),
+    //     src: 'https://sun2-12.userapi.com/impg/lYOgQO94bRux0SIqvLVwem5xE2cpb1rn1_4Uag/CVdyE82tCFo.jpg?size=512x768&quality=96&sign=175b02044120b5b2bf5b4a63d079d7d9&type=album',
+    // },
     images: [
-        {
-            id: getRandomUUID(),
-            src: 'https://sun2-9.userapi.com/impg/InXUsszuMHSRmtzzQ-Md7haF-mc0h8WA5xHhGg/h9QccwYrYpA.jpg?size=1080x1350&quality=95&sign=6c34e3483e3efeb06be54d73a04ee1f9&c_uniq_tag=ceOj9zkcwEIlQpmqrlAnxHq-SqkYsZLgdb4GkdbrZhY&type=album',
-            title: 'Подпись к картинке'
-        }
+        // {
+        //     id: getRandomUUID(),
+        //     src: 'https://sun2-9.userapi.com/impg/InXUsszuMHSRmtzzQ-Md7haF-mc0h8WA5xHhGg/h9QccwYrYpA.jpg?size=1080x1350&quality=95&sign=6c34e3483e3efeb06be54d73a04ee1f9&c_uniq_tag=ceOj9zkcwEIlQpmqrlAnxHq-SqkYsZLgdb4GkdbrZhY&type=album',
+        //     title: 'Подпись к картинке'
+        // }
     ]
 }
 
@@ -33,15 +33,8 @@ export function Edit(props: IEditProps) {
         }
     })
 
-    const titleEditor = useTitleEditor({
-        placeholder: 'Введите название статьи',
-        config: {
-            // content: article.title
-        }
-    })
-
     const anonsUploader = useUploader({
-        initialFiles: [article.anons],
+        // initialFiles: [article.anons],
         multiple: false
     })
 
@@ -57,7 +50,7 @@ export function Edit(props: IEditProps) {
         <div className="relative flex-grow p-8 bg-white rounded-2xl dark:bg-opacity-5 dark:text-white">
             <div className="border border-gray border-opacity-30 rounded-2xl">
                 <div className="px-8 py-6">
-                    <Editor className='mb-8' editor={titleEditor} />
+                    <div className='text-3xl width-placeholder mb-8' contentEditable data-placeholder='Введите название статьи'></div>
                     <EditorControl editor={editor} className='sticky z-10 -ml-4 -mr-4 top-2' />
                     <Editor className='min-h-[260px] flex flex-col' editor={editor} />
                 </div>
