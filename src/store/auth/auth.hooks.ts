@@ -4,7 +4,7 @@ import { ILoginRequest, IRegisterRequest, useLazyInitCsrfQuery, useLoginMutation
 
 export function useAuth() {
     const auth = useAppSelector((state) => state.auth)
-    return useMemo(() => (auth), [auth.token, auth.isLogedIn, auth.user])
+    return useMemo(() => (auth), [auth])
 }
 
 // TODO add types
