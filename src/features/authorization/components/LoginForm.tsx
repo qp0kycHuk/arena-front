@@ -1,52 +1,37 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { ILoginRequest, useLogin } from '@store/auth';
+import { useForm } from '@hooks/useForm';
+import { useErrorMessage } from '@hooks/useErrorMessage';
 import { PhoneInput } from '@components/PhoneInput';
 import { Spiner } from '@components/Spiner';
 import { Button, Input } from '@features/ui';
-import { useForm } from '@hooks/useForm';
 import { getUnmaskedValue as getUnmaskedPhone } from '@utils/phoneMaskUtils';
-import { ILoginRequest, useLazyInitCsrfQuery, useLoginMutation } from '@store/auth';
 
-interface ILoginFormProps {
-}
+interface ILoginFormProps { }
 
-
-
-const initialFormState:ILoginRequest = {
+const initialFormState: ILoginRequest = {
     phone: '',
     password: '',
 }
 
 export function LoginForm(props: ILoginFormProps) {
-    const [login, { error }] = useLoginMutation()
-    const [initCsrf] = useLazyInitCsrfQuery()
-    const [loading, setLoading] = useState(false)
-
     const [formState, changeHandler] = useForm<ILoginRequest>(initialFormState)
-
-    let errorMessage = useMemo(() => {
-        if (error && ('data' in error)) {
-            return (error.data as IServerError).message
-        } else {
-            return null
-        }
-    }, [error]);
-
+    const [login, { error }] = useLogin()
+    const [loading, setLoading] = useState(false)
+    const errorMessage = useErrorMessage(error);
 
     async function submitHundler(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
         setLoading(true)
         try {
-            await initCsrf(true)
             await login({
                 phone: getUnmaskedPhone(formState.phone),
                 password: formState.password,
             })
+        } catch (err) { }
 
-        } catch (err) {
-        }
         setLoading(false)
-
     }
 
     return (
@@ -54,8 +39,7 @@ export function LoginForm(props: ILoginFormProps) {
             <h1 className='mb-10 text-2xl font-semibold text-center'>Авторизация</h1>
             {errorMessage && !loading ?
                 <div className="p-4 mb-4 text-sm font-semibold rounded bg-red bg-opacity-10 text-red">{errorMessage}</div>
-                :
-                null
+                : null
             }
             <label className='block'>
                 <div className="mb-2 text-sm font-medium">Логин</div>

@@ -1,9 +1,11 @@
 import { UserIcon } from '@assets/icons/fill';
 import { ToDownIcon } from '@assets/icons/stroke';
 import { Spiner } from '@components/Spiner';
+import { SERVER_ERROR_MESSAGE } from '@const/Text';
 import { Button } from '@features/ui';
 import { Menu } from '@lib/Menu';
-import { useLazyInitCsrfQuery, useLogoutMutation, useUserQuery } from '@store/auth';
+import { toast } from '@lib/Toast';
+import { useLazyInitCsrfQuery, useLogout, useLogoutMutation, useUserQuery } from '@store/auth';
 import { getMaskedValue as getMaskedPhone } from '@utils/phoneMaskUtils';
 import * as React from 'react';
 import { useState } from 'react';
@@ -13,14 +15,16 @@ interface IHeaderUserProps {
 
 export function HeaderUser(props: IHeaderUserProps) {
     const { data: user } = useUserQuery(null)
-    const [initCsrf] = useLazyInitCsrfQuery()
-    const [logout] = useLogoutMutation()
+    const [logout] = useLogout()
     const [loading, setLoading] = useState(false)
 
     async function logoutHandler() {
         setLoading(true)
-        await initCsrf(null)
-        await logout(null)
+        try {
+            await logout()
+        } catch (error) {
+            toast.error(SERVER_ERROR_MESSAGE)
+        }
         setLoading(false)
     }
 

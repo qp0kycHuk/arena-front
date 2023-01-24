@@ -1,6 +1,6 @@
 import authReducer from './auth.slice'
 export {
-    useLoginMutation, 
+    useLoginMutation,
     useRegisterMutation,
     useLogoutMutation,
     useInitCsrfQuery,
@@ -9,5 +9,5 @@ export {
 } from './auth.api'
 export type { ILoginRequest, IRegisterRequest } from './auth.api'
 export default authReducer
-export { useAuth } from './auth.hooks'
+export { useAuth, useLogout, useLogin, useRegistration } from './auth.hooks'
 

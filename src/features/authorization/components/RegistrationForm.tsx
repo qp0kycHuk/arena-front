@@ -1,14 +1,14 @@
-import { Button, Input } from '@features/ui';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { PhoneInput } from '@components/PhoneInput';
-import { IRegisterRequest, useLazyInitCsrfQuery, useRegisterMutation } from '@store/auth';
-import { useMemo, useState } from 'react';
+import { IRegisterRequest, useRegistration } from '@store/auth';
 import { useForm } from '@hooks/useForm';
-import { getUnmaskedValue as getUnmaskedPhone } from '@utils/phoneMaskUtils';
+import { useErrorMessage } from '@hooks/useErrorMessage';
+import { PhoneInput } from '@components/PhoneInput';
 import { Spiner } from '@components/Spiner';
+import { Button, Input } from '@features/ui';
+import { getUnmaskedValue as getUnmaskedPhone } from '@utils/phoneMaskUtils';
 
-interface IRegistrationFormProps {
-}
+interface IRegistrationFormProps { }
 
 const initialFormState: IRegisterRequest = {
     phone: '',
@@ -19,34 +19,21 @@ const initialFormState: IRegisterRequest = {
 }
 
 export function RegistrationForm(props: IRegistrationFormProps) {
-    const [register, { error }] = useRegisterMutation()
-    const [initCsrf] = useLazyInitCsrfQuery()
-    const [loading, setLoading] = useState(false)
-
     const [formState, changeHandler] = useForm<IRegisterRequest>(initialFormState)
-
-    let errorMessage = useMemo(() => {
-        if (error && ('data' in error)) {
-            return (error.data as IServerError).message
-        } else {
-            return null
-        }
-    }, [error]);
+    const [register, { error }] = useRegistration()
+    const [loading, setLoading] = useState(false)
+    const errorMessage = useErrorMessage(error);
 
     async function submitHundler(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
         setLoading(true)
         try {
-            await initCsrf(null)
             await register({
                 ...formState,
                 phone: getUnmaskedPhone(formState.phone),
             })
-
-        } catch (err) {
-        }
+        } catch (err) { }
         setLoading(false)
-
     }
 
     return (
@@ -54,8 +41,7 @@ export function RegistrationForm(props: IRegistrationFormProps) {
             <h1 className='mb-10 text-2xl font-semibold text-center'>Регистрация</h1>
             {errorMessage && !loading ?
                 <div className="p-4 mb-4 text-sm font-semibold rounded bg-red bg-opacity-10 text-red">{errorMessage}</div>
-                :
-                null
+                : null
             }
             <div className="space-y-4">
                 <label className='block'>
