@@ -82,6 +82,7 @@ function ButtonComponent({
     <ButtonTag
       ref={ref}
       tabIndex={0}
+      type="button"
       {...props}
       onPointerDown={ripplePointerdownHandler}
       className={[

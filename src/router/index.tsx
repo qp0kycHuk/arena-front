@@ -33,6 +33,11 @@ export const router = createBrowserRouter([
                 path: 'articles/create/',
                 element: <Edit />,
             },
+            {
+                path: 'articles/edit/:id',
+                
+                element: <Edit />,
+            },
 
         ]
     },

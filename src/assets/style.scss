@@ -136,7 +136,7 @@ body {
     }
 
     // placeholder
-    *.is-empty[data-placeholder]:first-child:before,
+    *.is-emptyis-editor-empty[data-placeholder]:first-child:before,
     p.is-editor-empty:first-child:before {
         @apply text-gray;
         content: attr(data-placeholder);

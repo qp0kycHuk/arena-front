@@ -22,7 +22,7 @@ import html from 'highlight.js/lib/languages/xml'
 import php from 'highlight.js/lib/languages/php'
 
 
-import { FileBlock } from '../components/FileBlock'
+import { FileBlock } from '../components/TextEditor/FileBlock'
 import { FilePaste, filePasteHandler } from '../lib/file-paste-extension'
 import { FileBlockExtension } from '../lib/file-block-extension'
 

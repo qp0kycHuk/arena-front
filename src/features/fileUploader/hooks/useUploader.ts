@@ -9,7 +9,7 @@ interface IUploaderParams {
     multiple?: boolean
 }
 
-export function useUploader({ initialFiles, extention, multiple = true }: IUploaderParams): IUplodaer {
+export function useUploader({ initialFiles = [], extention = imageExtention, multiple = true }: IUploaderParams): IUplodaer {
     const [fileItems, setFileItems] = useState<IFileItem[]>(initialFiles || []);
 
     const addItems = useCallback((items: File[]) => {

@@ -1,11 +1,10 @@
 import * as React from 'react';
-import headerLogo from '@assets/img/header-logo.png'
-import { BookmarkIcon, ToDownIcon } from '@assets/icons/stroke';
-import { UserIcon } from '@assets/icons/fill';
-import { Button, CheckBox } from '@features/ui';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@store/auth';
+import { Button, CheckBox } from '@features/ui';
 import { HeaderUser } from './HeaderUser';
+import { BookmarkIcon } from '@assets/icons/stroke';
+import headerLogo from '@assets/img/header-logo.png'
 
 export interface IHeaderProps {
 }
@@ -14,7 +13,7 @@ export function Header(props: IHeaderProps) {
   const auth = useAuth()
 
   return (
-    <header className='flex items-center px-8 py-2 bg-white dark:bg-opacity-5'>
+    <header className='flex items-center px-8 py-2 bg-white dark:bg-opacity-5 sticky top-0 z-20'>
       <div className="mr-auto">
         <img src={headerLogo} alt="" className='h-[26px]' />
       </div>

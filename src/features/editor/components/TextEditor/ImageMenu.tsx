@@ -2,7 +2,7 @@ import { Editor } from '@tiptap/react';
 import * as React from 'react';
 import { MenuButton } from './MenuButton';
 import { ImageIcon } from '@assets/icons/stroke';
-import { filePasteHandler } from '../lib/file-paste-extension';
+import { filePasteHandler } from '../../lib/file-paste-extension';
 
 export interface IImageMenuProps {
     editor: Editor
