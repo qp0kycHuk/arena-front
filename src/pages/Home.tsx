@@ -1,3 +1,4 @@
+import { ArticleItem } from "@features/articles";
 import { Button } from "@features/ui";
 import { toast } from "@lib/Toast";
 import { useGetQuery } from "@store/articles";
@@ -6,14 +7,13 @@ import { useGetQuery } from "@store/articles";
 interface IHomeProps { }
 
 export function Home(props: IHomeProps) {
-    const { data } = useGetQuery(null)
+    const { data: articles } = useGetQuery(null)
+    console.log(articles);
 
-    return (<div>
+
+    return (<div className="relative flex-grow p-8 bg-white rounded-2xl dark:bg-opacity-5 dark:text-white">
         <h1 className="text-lg">Home page</h1>
-        <div className="flex mt-10 gap-3">
-            <pre>
-                {JSON.stringify(data || {}, null, 2)}
-            </pre>
-        </div>
+        {articles?.map((article) => <ArticleItem article={article} key={article.id} />)}
+
     </div>);
 };

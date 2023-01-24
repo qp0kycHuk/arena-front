@@ -1,0 +1,29 @@
+import { BookmarkIcon } from '@assets/icons/stroke';
+import { Button } from '@features/ui';
+import { IArticle } from '@models/Article';
+import * as React from 'react';
+
+interface IArticleItemProps {
+    article: IArticle
+}
+
+export function ArticleItem({ article }: IArticleItemProps) {
+    return (
+        <div className="flex items-center py-3 w-full">
+            <div className="w-24 h-[76px] rounded-xl relative overflow-hidden">
+                <img src={article.image || '/img/test.jpg'} alt="" className="absolute object-cover w-full h-full" />
+            </div>
+            <div className='max-w-5xl ml-4'>
+                <div className="mb-2 font-semibold">{article.name}</div>
+                <div className="text-xs text-gray max-w-md">{article.excerpt}</div>
+            </div>
+            <div className="ml-auto text-right whitespace-nowrap">
+                <div className="text-xs text-gray">Созд: {new Date(article.created_at).toLocaleDateString()}</div>
+                <div className="text-xs text-gray">Ред: {new Date(article.updated_at).toLocaleDateString()}</div>
+            </div>
+            <Button variant='text' size='small' color='gray' className='px-3 ml-3'>
+                <BookmarkIcon className="text-2xl fill-primary text-primary" />
+            </Button>
+        </div>
+    );
+}

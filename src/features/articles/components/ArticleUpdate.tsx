@@ -30,7 +30,5 @@ export function ArticleUpdate({ articleId }: IArticleUpdateProps) {
             <ArticleEdit onSubmit={onSubmit} article={article} />
             : 'Loading..'
         }
-
-    </>
-    );
+    </>);
 }

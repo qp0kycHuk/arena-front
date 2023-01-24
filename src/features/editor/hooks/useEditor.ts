@@ -37,10 +37,12 @@ interface IOptions {
     config?: Partial<EditorOptions> | undefined
     placeholder?: string
 }
+
 const defaultOptions = {
     config: {},
     placeholder: 'Type here'
 }
+
 export function useEditor(options?: IOptions) {
     const { config, placeholder } = options || defaultOptions
 
