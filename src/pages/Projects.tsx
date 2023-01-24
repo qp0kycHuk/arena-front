@@ -2,6 +2,7 @@ import { AdjustmentsHorizontalIcon, BookmarkIcon, FileTextIcon, FoldersIcon, Sea
 import { ReactComponent as FolderIcon } from '@assets/img/folder.svg';
 import { Button, Input } from '@features/ui';
 import { Menu } from '@lib/Menu';
+import { Link } from 'react-router-dom';
 
 
 export interface IProjectsProps {
@@ -20,7 +21,9 @@ export function Projects(props: IProjectsProps) {
           <Button className='ml-4 px-7'> Добавить </Button>
         }>
           <Button className='justify-start w-full' size='small' color='gray' variant='text'> <FoldersIcon className="mr-2" /> Папка </Button>
+          <Link to="/articles/create">
           <Button className='justify-start w-full' size='small' color='gray' variant='text'> <FileTextIcon className="mr-2" /> Статья </Button>
+          </Link>
 
         </Menu>
       </div>
@@ -62,7 +65,7 @@ export function Projects(props: IProjectsProps) {
 
       <div className="flex items-center py-3">
         <div className="w-24 h-[76px] rounded-xl relative overflow-hidden">
-          <img src="img/test.jpg" alt="" className="absolute object-cover w-full h-full" />
+          <img src="/img/test.jpg" alt="" className="absolute object-cover w-full h-full" />
         </div>
         <div className='max-w-5xl ml-4'>
           <div className="mb-2 font-semibold">Сколько столбцов должно быть в идеальной форме регистрации?</div>
@@ -81,7 +84,7 @@ export function Projects(props: IProjectsProps) {
       <div className="border-t border-gray border-opacity-20"></div>
       <div className="flex items-center py-3">
         <div className="w-24 h-[76px] rounded-xl relative overflow-hidden">
-          <img src="img/test.jpg" alt="" className="absolute object-cover w-full h-full" />
+          <img src="/img/test.jpg" alt="" className="absolute object-cover w-full h-full" />
         </div>
         <div className='max-w-5xl ml-4'>
           <div className="mb-2 font-semibold">Сколько столбцов должно быть в идеальной форме регистрации?</div>

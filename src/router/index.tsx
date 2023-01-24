@@ -4,7 +4,9 @@ import { Edit, Home, Login, Projects, Registration } from "@pages/index";
 
 import { createBrowserRouter } from "react-router-dom";
 
+export const routesPath = {
 
+}
 
 export const router = createBrowserRouter([
     // {
@@ -16,17 +18,22 @@ export const router = createBrowserRouter([
         element: <MainLayout />,
         children: [
             {
-                path: '',                
+                path: '',
                 element: <Home />
             },
             {
-                path: 'projects',
+                path: 'projects/',
                 element: <Projects />
             },
             {
-                path: 'edit',
-                element: <Edit />
+                path: 'articles/',
+                element: <Projects />,
             },
+            {
+                path: 'articles/create/',
+                element: <Edit />,
+            },
+
         ]
     },
     {
