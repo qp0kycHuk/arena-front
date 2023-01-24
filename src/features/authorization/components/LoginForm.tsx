@@ -49,7 +49,7 @@ export function LoginForm(props: ILoginFormProps) {
                 <div className="mb-2 text-sm font-medium">Пароль</div>
                 <Input className='w-full' name="password" type="password" required onChange={changeHandler} />
             </label>
-            <Button className='w-full mt-7' disabled={loading}>
+            <Button type='submit' className='w-full mt-7' disabled={loading}>
                 {loading ? <Spiner /> : 'Войти'}
             </Button>
             <div className="mt-5 text-center">

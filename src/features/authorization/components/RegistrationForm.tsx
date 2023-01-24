@@ -65,7 +65,7 @@ export function RegistrationForm(props: IRegistrationFormProps) {
                     <Input className='w-full' type='password' required onChange={changeHandler} name="password_confirmation" />
                 </label>
             </div>
-            <Button className='w-full mt-7' disabled={loading}>
+            <Button type='submit' className='w-full mt-7' disabled={loading}>
                 {loading ? <Spiner /> : 'Зарегистрироваться'}
             </Button>
             <div className="mt-5 text-center">
