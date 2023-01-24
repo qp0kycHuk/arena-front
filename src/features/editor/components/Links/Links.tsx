@@ -1,24 +1,21 @@
-import { useState } from 'react';
-import { Button, Input } from '@features/ui';
+import { Button } from '@features/ui';
+import { LinksItem } from './LinksItem';
+import { ILinksController } from '../../hooks/useLinks';
 
 interface ILinksProps {
+    controller: ILinksController
 }
 
-export function Links(props: ILinksProps) {
-    const [links, setLinks] = useState([])
+export function Links({ controller }: ILinksProps) {
+
     return (
-        <>
-            <div className='flex gap-4'>
-                <div>
-                    <div className="text-sm mb-2 font-medium">Заголовок</div>
-                    <Input className='w-96' />
-                </div>
-                <div>
-                    <div className="text-sm mb-2 font-medium">Ссылка</div>
-                    <Input className='w-96' />
-                </div>
+        <div>
+            <div className="space-y-4">
+                {controller.links.map((link) => (
+                    <LinksItem removeLink={controller.removeLink} updateLink={controller.updateLink} link={link} key={link.id || link.key} />
+                ))}
             </div>
-            <Button variant='text' className='mt-2'>Добавить ссылку</Button>
-        </>
+            <Button disabled={!controller.isAccessAdd} onClick={controller.addLink} variant='text' className='mt-2'>Добавить ссылку</Button>
+        </div>
     );
 }

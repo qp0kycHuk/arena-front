@@ -3,6 +3,7 @@ import { Spiner } from '@components/Spiner';
 import { videoExtention } from '@const/extentions';
 import { Editor, EditorControl, useEditor } from '@features/editor';
 import { Links } from '@features/editor/components/Links/Links';
+import { useLinks } from '@features/editor/hooks/useLinks';
 import { Uploader, useUploader } from '@features/fileUploader';
 import { Button } from '@features/ui';
 import { IArticle } from '@models/Article';
@@ -46,6 +47,8 @@ export function ArticleEdit({ onSubmit, article }: IArticleEditProps) {
     // const videoUploader = useUploader({
     //     extention: videoExtention,
     // })
+
+    const linksController = useLinks();
 
     async function submitHandler(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
@@ -102,10 +105,10 @@ export function ArticleEdit({ onSubmit, article }: IArticleEditProps) {
                         <div className="font-semibold">Видео</div>
                     </Uploader>
                 </div> */}
-                {/* <div className="border-t border-gray border-opacity-30"></div>
+                <div className="border-t border-gray border-opacity-30"></div>
                 <div className="px-8 py-6">
-                    <Links></Links>
-                </div> */}
+                    <Links controller={linksController}></Links>
+                </div>
             </div>
             <div className="flex mt-8 gap-4">
                 <Button type='submit' disabled={loading}>{loading ? <Spiner /> : 'Сохранить'}</Button>
