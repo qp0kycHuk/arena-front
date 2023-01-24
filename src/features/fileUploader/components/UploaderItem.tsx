@@ -21,7 +21,7 @@ export function UploaderItem({ item, extention, update, remove }: IUpliaderItemP
                     update(item, { preview: result?.toString() })
                 })
         }
-    }, [isMedia, item, update])
+    }, [])
 
     return (
         <div className='relative z-10 w-32'>

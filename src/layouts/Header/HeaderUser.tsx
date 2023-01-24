@@ -1,14 +1,13 @@
-import { UserIcon } from '@assets/icons/fill';
-import { ToDownIcon } from '@assets/icons/stroke';
-import { Spiner } from '@components/Spiner';
-import { SERVER_ERROR_MESSAGE } from '@const/Text';
-import { Button } from '@features/ui';
+import { useState } from 'react';
 import { Menu } from '@lib/Menu';
 import { toast } from '@lib/Toast';
-import { useLazyInitCsrfQuery, useLogout, useLogoutMutation, useUserQuery } from '@store/auth';
+import { useLogout, useUserQuery } from '@store/auth';
+import { Spiner } from '@components/Spiner';
+import { Button } from '@features/ui';
+import { ToDownIcon } from '@assets/icons/stroke';
+import { UserIcon } from '@assets/icons/fill';
 import { getMaskedValue as getMaskedPhone } from '@utils/phoneMaskUtils';
-import * as React from 'react';
-import { useState } from 'react';
+import { SERVER_ERROR_MESSAGE } from '@const/Text';
 
 interface IHeaderUserProps {
 }

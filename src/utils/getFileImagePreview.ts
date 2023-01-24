@@ -34,8 +34,8 @@ function getVideoPreview(file: File, seekTo = 0.0) {
 
             videoPlayer.addEventListener('seeked', () => {
                 const canvas = document.createElement("canvas");
-                canvas.width = videoPlayer.videoWidth;
-                canvas.height = videoPlayer.videoHeight;
+                canvas.width = videoPlayer.videoWidth / 2;
+                canvas.height = videoPlayer.videoHeight / 2;
 
                 const ctx = canvas.getContext("2d");
                 if (!ctx) {
@@ -45,6 +45,8 @@ function getVideoPreview(file: File, seekTo = 0.0) {
 
                 ctx.drawImage(videoPlayer, 0, 0, canvas.width, canvas.height);
                 resolve(ctx.canvas.toDataURL());
+                canvas.remove()
+                videoPlayer.remove()
             });
         });
     });

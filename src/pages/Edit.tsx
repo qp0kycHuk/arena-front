@@ -1,13 +1,10 @@
-import { Editor, EditorControl, useEditor, useTitleEditor } from '@features/editor';
+import { Editor, EditorControl, useEditor} from '@features/editor';
 import { testContent } from '@features/editor/data';
 import { Uploader } from '@features/fileUploader/components/Uploader';
 import { useUploader } from '@features/fileUploader/hooks/useUploader';
-import { getRandomUUID } from '@lib/uniqueId';
 import { videoExtention } from '@const/extentions';
 
-interface IEditProps {
-
-}
+interface IEditProps { }
 
 const article = {
     title: 'Название статьи',
@@ -45,6 +42,9 @@ export function Edit(props: IEditProps) {
     const videoUploader = useUploader({
         extention: videoExtention,
     })
+
+    console.log('render');
+    
 
     return (
         <div className="relative flex-grow p-8 bg-white rounded-2xl dark:bg-opacity-5 dark:text-white">
