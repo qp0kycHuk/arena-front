@@ -14,7 +14,7 @@ export function Uploader({ uploader, children }: IUploaderProps) {
     return (
         <div className='relative flex flex-wrap gap-3'>
             {children ? <div className="w-full">{children}</div> : null}
-            {isNonMultipleAccept ? <UploaderFileDrop uploader={uploader} /> : null}
+            <UploaderFileDrop uploader={uploader} />
             <UploaderItems uploader={uploader} />
             {isNonMultipleAccept ? <UploaderLabel uploader={uploader} /> : null}
         </div>

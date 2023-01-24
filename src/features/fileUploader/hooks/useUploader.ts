@@ -18,7 +18,7 @@ export function useUploader({ initialFiles, extention, multiple = true }: IUploa
         console.log(newItems);
 
         setFileItems((prevItems) => [
-            ...prevItems,
+            ...(multiple ? prevItems : []),
             ...(multiple ? newItems : newItems[0] ? [newItems[0]] : [])
         ])
     }, [extention, multiple])
