@@ -83,4 +83,4 @@ export const articlesApi = taggetRootApi.injectEndpoints({
     }),
 })
 
-export const { useGetQuery, useGetByIdQuery, useCreateMutation, useUpdateMutation } = articlesApi
+export const { useGetQuery, useGetByIdQuery, useLazyGetByIdQuery, useCreateMutation, useUpdateMutation } = articlesApi

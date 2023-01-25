@@ -16,6 +16,11 @@ const initialState: IAuthState = {
     isLogedIn: Cookies.get(process.env.REACT_APP_CSRF_COOKIE_NAME as string) ? true : false
 }
 
+function authHandler(state: IAuthState){
+    state.token = Cookies.get(process.env.REACT_APP_CSRF_COOKIE_NAME as string) || null
+    state.isLogedIn = state.token ? true : false
+}
+
 function logoutHandler(state: IAuthState) {
     state.user = null
     state.isLogedIn = false
@@ -37,19 +42,8 @@ const slice = createSlice({
             }
         )
 
-        builder.addMatcher(
-            authApi.endpoints.register.matchFulfilled,
-            (state) => {
-                state.isLogedIn = Cookies.get(process.env.REACT_APP_CSRF_COOKIE_NAME as string) ? true : false
-            }
-        )
-
-        builder.addMatcher(
-            authApi.endpoints.login.matchFulfilled,
-            (state) => {
-                state.isLogedIn = Cookies.get(process.env.REACT_APP_CSRF_COOKIE_NAME as string) ? true : false
-            }
-        )
+        builder.addMatcher( authApi.endpoints.register.matchFulfilled,authHandler )
+        builder.addMatcher( authApi.endpoints.login.matchFulfilled,authHandler)
         
         builder.addMatcher(authApi.endpoints.login.matchRejected, logoutHandler)
         builder.addMatcher(authApi.endpoints.register.matchRejected, logoutHandler)

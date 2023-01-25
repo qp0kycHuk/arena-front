@@ -1,9 +1,10 @@
+import { RootState } from './../index';
 import { useMemo } from "react"
 import { useAppSelector } from "../index"
 import { ILoginRequest, IRegisterRequest, useLazyInitCsrfQuery, useLoginMutation, useLogoutMutation, useRegisterMutation } from "./auth.api"
 
 export function useAuth() {
-    const auth = useAppSelector((state) => state.auth)
+    const auth = useAppSelector((state: RootState) => state.auth)
     return useMemo(() => (auth), [auth])
 }
 

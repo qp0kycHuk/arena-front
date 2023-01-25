@@ -19,6 +19,7 @@ export { ReactComponent as ImageIcon } from './image.svg';
 export { ReactComponent as InsertLinkIcon } from './insertLink.svg';
 export { ReactComponent as ItalicIcon } from './italic.svg';
 export { ReactComponent as OrderedListIcon } from './orderedList.svg';
+export { ReactComponent as PencilIcon } from './pencil.svg';
 export { ReactComponent as PlusIcon } from './plus.svg';
 export { ReactComponent as SearchIcon } from './search.svg';
 export { ReactComponent as SettingsIcon } from './settings.svg';

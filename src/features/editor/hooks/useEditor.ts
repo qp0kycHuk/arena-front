@@ -43,6 +43,23 @@ const defaultOptions = {
     placeholder: 'Type here'
 }
 
+export const editorExtensions = [
+    StarterKit.configure({
+        codeBlock: false,
+    }),
+    Underline,
+    TextStyle,
+    Color,
+    CodeBlockLowlight.configure({ lowlight, }),
+    TextAlign.configure({ types: ['heading', 'paragraph'], }),
+    Highlight.configure({ multicolor: true }),
+    Link.configure({ openOnClick: false, }),
+    Image.configure({ allowBase64: true, }),
+    FileBlockExtension.configure({
+        component: FileBlock
+    }),
+]
+
 export function useEditor(options?: IOptions) {
     const { config, placeholder } = options || defaultOptions
 

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ICreateRequest, IUpdateRequest, useGetByIdQuery, useUpdateMutation } from '@store/articles/';
 import { toast } from '@lib/Toast';
 import { ArticleRedactor } from './ArticleRedactor';
-import { ARTICLE_ERROR_UPDATE, ARTICLE_SUCCESS_UPDATE } from '../const/Text';
+import { ARTICLE_ERROR_UPDATE, ARTICLE_SUCCESS_UPDATE } from '../../const/Text';
 
 interface IArticleUpdateProps {
     articleId: string | number

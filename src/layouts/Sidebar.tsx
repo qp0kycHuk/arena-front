@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BriefcaseIcon, CrownIcon, FoldersIcon, ToTopIcon, UsersIcon } from '@assets/icons/stroke';
+import { BriefcaseIcon, CrownIcon, DocumentIcon, FoldersIcon, ToTopIcon, UsersIcon } from '@assets/icons/stroke';
 import { Tag } from '@components/Tag';
 import { Button } from '@features/ui';
 import { Link } from 'react-router-dom';
@@ -21,6 +21,12 @@ export function Sidebar(props: ISidebarProps) {
           <UsersIcon className='mr-2 text-lg text-gray dark:text-white' />
           <div className="mr-auto font-normal text-black dark:text-white">Пользователи</div>
         </Button>
+        <Link to="/articles/">
+          <Button className='w-full' variant='text' size='small'>
+            <DocumentIcon className='mr-2 text-lg text-gray dark:text-white' />
+            <div className="mr-auto font-normal text-black dark:text-white">Статьи</div>
+          </Button>
+        </Link>
         <Button className='w-full' variant='text' size='small'>
           <BriefcaseIcon className='mr-2 text-lg text-gray dark:text-white' />
           <div className="mr-auto font-normal text-black dark:text-white">База знаний</div>

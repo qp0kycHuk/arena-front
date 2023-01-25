@@ -1,6 +1,7 @@
 import { AuthLayout } from "@layouts/AuthLayout";
 import { MainLayout } from "@layouts/MainLayout";
-import { Edit, Home, Login, Projects, Registration } from "@pages/index";
+import { ArticleList } from "@pages/ArticleList";
+import { ArticleEdit, ArticleView, Home, Login, Projects, Registration } from "@pages/index";
 
 import { createBrowserRouter } from "react-router-dom";
 
@@ -27,16 +28,20 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'articles/',
-                element: <Projects />,
+                element: <ArticleList />,
+            },
+            {
+                path: 'articles/:id',
+                element: <ArticleView />,
             },
             {
                 path: 'articles/create/',
-                element: <Edit />,
+                element: <ArticleEdit />,
             },
             {
                 path: 'articles/edit/:id',
                 
-                element: <Edit />,
+                element: <ArticleEdit />,
             },
 
         ]
