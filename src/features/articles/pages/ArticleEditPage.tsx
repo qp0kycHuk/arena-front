@@ -3,9 +3,9 @@ import { ArticleEdit as EditComponent } from '@features/articles';
 import { Button } from '@features/ui';
 import { ToLeftIcon } from '@assets/icons/stroke';
 
-interface IEditProps { }
+interface IArticleEditPageProps { }
 
-export function ArticleEdit(props: IEditProps) {
+export function ArticleEditPage(props: IArticleEditPageProps) {
     const { id } = useParams()
 
     return (

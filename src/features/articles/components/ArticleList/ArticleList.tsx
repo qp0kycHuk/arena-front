@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ArticleItem } from './ArticleItem';
+import { ArticleItem } from '../ArticleItem/ArticleItem';
 import { useGetQuery } from '@store/articles';
 import { SettingsIcon, FoldersIcon, FileTextIcon } from '@assets/icons/stroke';
 import { Button, Menu } from '@features/ui';
@@ -35,7 +35,8 @@ export function ArticleList(props: IArticleListProps) {
                     <Link to={"/articles/" + article.id}>
                         <ArticleItem article={article} />
                     </Link>
-                </div>)}
+                </div>
+            )}
         </div>
 
     );

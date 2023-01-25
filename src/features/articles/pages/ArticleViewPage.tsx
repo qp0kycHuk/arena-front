@@ -1,10 +1,10 @@
 import { ArticleView as ViewComponent } from '@features/articles';
 import { useParams } from 'react-router-dom';
 
-export interface IArticleViewProps {
+export interface IArticleViewPageProps {
 }
 
-export function ArticleView(props: IArticleViewProps) {
+export function ArticleViewPage(props: IArticleViewPageProps) {
     const { id } = useParams()
 
     return (<>

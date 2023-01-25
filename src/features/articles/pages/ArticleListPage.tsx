@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { ArticleList as ListComponent } from '@features/articles'
 
-interface IArticleListProps {
+interface IArticleListPageProps {
 }
 
-export function ArticleList (props: IArticleListProps) {
+export function ArticleListPage (props: IArticleListPageProps) {
   return (
     <div className="relative flex-grow p-8 bg-white rounded-2xl dark:bg-opacity-5 dark:text-white" >
       <ListComponent />

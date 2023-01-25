@@ -1,8 +1,8 @@
+import { RouteObject, createBrowserRouter } from "react-router-dom";
+import { ArticleEditPage, ArticleViewPage, ArticleListPage, Home, Login, Projects, Registration } from "@pages/index";
 import { AuthLayout } from "@layouts/AuthLayout";
 import { MainLayout } from "@layouts/MainLayout";
-import { ArticleEdit, ArticleView, ArticleList, Home, Login, Projects, Registration } from "@pages/index";
 
-import { RouteObject, createBrowserRouter } from "react-router-dom";
 
 export const routesPath = {}
 
@@ -25,20 +25,19 @@ const config: RouteObject[] = [
             },
             {
                 path: 'articles/',
-                element: <ArticleList />,
+                element: <ArticleListPage />,
             },
             {
                 path: 'articles/:id',
-                element: <ArticleView />,
+                element: <ArticleViewPage />,
             },
             {
                 path: 'articles/create/',
-                element: <ArticleEdit />,
+                element: <ArticleEditPage />,
             },
             {
                 path: 'articles/edit/:id',
-
-                element: <ArticleEdit />,
+                element: <ArticleEditPage />,
             },
 
         ]
