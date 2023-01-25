@@ -12,11 +12,6 @@ export function Home(props: IHomeProps) {
 
 
     return (<div className="relative flex-grow p-8 bg-white rounded-2xl dark:bg-opacity-5 dark:text-white">
-        {articles?.map((article, index) =>
-            <div key={article.id}>
-                {index > 0 && <div className="border-t border-gray border-opacity-20"></div>}
-                <ArticleItem article={article} />
-            </div>)}
-
+        <div className="text-3xl font-semibold">Home page</div>
     </div>);
 };

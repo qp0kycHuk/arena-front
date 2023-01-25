@@ -78,7 +78,15 @@ export const articlesApi = taggetRootApi.injectEndpoints({
             transformResponse: (response: IItemResponse) => {
                 return response.item
             },
-            invalidatesTags: (result, error, { id }) => [{ type: ARTICLES_TAG, id }],
+            // invalidatesTags: (result, error, { id }) => [{ type: ARTICLES_TAG, id }],
+            async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
+                try {
+                    const { data: updatedArticle } = await queryFulfilled
+                    dispatch(articlesApi.util.updateQueryData('getById', id, (draft) => {
+                        Object.assign(draft, updatedArticle)
+                    }))
+                } catch { }
+            },
         }),
     }),
 })

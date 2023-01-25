@@ -1,5 +1,4 @@
 import { ArticleView as ViewComponent } from '@features/articles';
-import * as React from 'react';
 import { useParams } from 'react-router-dom';
 
 export interface IArticleViewProps {

@@ -3,6 +3,7 @@ import { ICreateRequest, IUpdateRequest, useGetByIdQuery, useUpdateMutation } fr
 import { toast } from '@lib/Toast';
 import { ArticleRedactor } from './ArticleRedactor';
 import { ARTICLE_ERROR_UPDATE, ARTICLE_SUCCESS_UPDATE } from '../../const/Text';
+import { useNavigate } from 'react-router-dom';
 
 interface IArticleUpdateProps {
     articleId: string | number
@@ -11,6 +12,7 @@ interface IArticleUpdateProps {
 export function ArticleUpdate({ articleId }: IArticleUpdateProps) {
     const [update] = useUpdateMutation()
     const { data: article } = useGetByIdQuery(articleId)
+    const navigate = useNavigate();
 
     async function onSubmit(formData: ICreateRequest) {
         const data = {
@@ -20,6 +22,7 @@ export function ArticleUpdate({ articleId }: IArticleUpdateProps) {
         try {
             await update(data as IUpdateRequest)
             toast.success(ARTICLE_SUCCESS_UPDATE)
+            navigate('/articles/' + article?.id)
         } catch (error) {
             toast.error(ARTICLE_ERROR_UPDATE)
         }

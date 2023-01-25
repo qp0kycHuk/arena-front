@@ -1,5 +1,6 @@
-import { useEditor as useEditorConfig, EditorOptions } from '@tiptap/react'
-import Document from '@tiptap/extension-document'
+import { useMemo } from 'react'
+import { useEditor as useEditorConfig, EditorOptions, generateHTML, JSONContent } from '@tiptap/react'
+import { Node } from '@tiptap/core'
 import StarterKit from '@tiptap/starter-kit'
 import Underline from '@tiptap/extension-underline'
 import TextStyle from '@tiptap/extension-text-style'
@@ -9,18 +10,15 @@ import Link from '@tiptap/extension-link'
 import TextAlign from '@tiptap/extension-text-align'
 import Image from '@tiptap/extension-image'
 import Placeholder from '@tiptap/extension-placeholder'
-import Heading from '@tiptap/extension-heading'
-import Text from '@tiptap/extension-text'
-import HardBreak from '@tiptap/extension-hard-break'
 // code highlight
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import { lowlight } from 'lowlight'
+import { toHtml } from 'hast-util-to-html'
 import css from 'highlight.js/lib/languages/css'
 import js from 'highlight.js/lib/languages/javascript'
 import ts from 'highlight.js/lib/languages/typescript'
 import html from 'highlight.js/lib/languages/xml'
 import php from 'highlight.js/lib/languages/php'
-
 
 import { FileBlock } from '../components/TextEditor/FileBlock'
 import { FilePaste, filePasteHandler } from '../lib/file-paste-extension'
@@ -43,6 +41,32 @@ const defaultOptions = {
     placeholder: 'Type here'
 }
 
+const LowlightCustom = Node.create({
+    name: 'lowlightcustom',
+    group: 'block',
+    atom: true,
+    addAttributes() {
+        return {
+            content: {
+                default: '',
+            },
+        }
+    },
+    renderHTML({ HTMLAttributes }) {
+        const lowlighted = lowlight.highlightAuto(HTMLAttributes.content);
+        const html = toHtml(lowlighted)
+
+        const pre = document.createElement('pre')
+        const code = document.createElement('code')
+        code.innerHTML = html
+        pre.appendChild(code)
+
+        return {
+            dom: pre,
+        }
+    },
+})
+
 export const editorExtensions = [
     StarterKit.configure({
         codeBlock: false,
@@ -58,6 +82,7 @@ export const editorExtensions = [
     FileBlockExtension.configure({
         component: FileBlock
     }),
+    LowlightCustom
 ]
 
 export function useEditor(options?: IOptions) {
@@ -95,23 +120,33 @@ export function useEditor(options?: IOptions) {
 }
 
 
-export function useTitleEditor(options?: IOptions) {
-    const { config, placeholder } = options || defaultOptions
 
-    const CustomDocument = Document.extend({
-        content: 'heading',
-    })
+export function useGenerateHtml(content: string = ''): string {
+    const html = useMemo(() => {
+        try {
+            const json: JSONContent = content ? JSON.parse(content) : null
+            if (json?.content) {
+                json.content = json.content.map((item: any) => {
+                    if (item.type === 'codeBlock') {
+                        const content = item.content.map(({ text }: any) => text).join('\n');
 
-    return useEditorConfig({
-        extensions: [
-            CustomDocument,
-            HardBreak,
-            Text,
-            Heading.configure({ levels: [2], }),
-            Placeholder.configure({
-                placeholder: placeholder,
-            }),
-        ],
-        ...config
-    })
+                        return {
+                            type: 'lowlightcustom',
+                            attrs: { content }
+                        }
+                    }
+
+                    return item
+                })
+            }
+
+            return json ? generateHTML(json, editorExtensions) : ''
+        } catch (error) {
+            console.log(error);
+
+            return content ? content : ''
+        }
+    }, [content]);
+
+    return html
 }

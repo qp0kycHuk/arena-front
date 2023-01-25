@@ -1,7 +1,6 @@
 import { AuthLayout } from "@layouts/AuthLayout";
 import { MainLayout } from "@layouts/MainLayout";
-import { ArticleList } from "@pages/ArticleList";
-import { ArticleEdit, ArticleView, Home, Login, Projects, Registration } from "@pages/index";
+import { ArticleEdit, ArticleView, ArticleList, Home, Login, Projects, Registration } from "@pages/index";
 
 import { createBrowserRouter } from "react-router-dom";
 
@@ -40,7 +39,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'articles/edit/:id',
-                
+
                 element: <ArticleEdit />,
             },
 
