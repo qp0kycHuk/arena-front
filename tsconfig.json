@@ -29,9 +29,6 @@
       "@utils/*": [
         "src/utils/*"
       ],
-      "@const/*": [
-        "src/const/*"
-      ],
       "@store/*": [
         "src/store/*"
       ],

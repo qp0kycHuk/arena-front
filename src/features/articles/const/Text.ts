@@ -1,4 +1,4 @@
-import { TRY_AGAIN } from "@const/Text"
+import { TRY_AGAIN } from "@utils/const/text"
 
 export const ARTICLE_SUCCESS_CREATE = 'Сохранено!'
 export const ARTICLE_SUCCESS_UPDATE = 'Сохранено!'

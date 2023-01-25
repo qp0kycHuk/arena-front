@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Extension } from '@tiptap/core';
 import { Editor } from '@tiptap/react';
-import { filterFiles } from '@utils/filterFiles';
 import { Plugin, PluginKey } from 'prosemirror-state';
-import { imageExtention, docExtention } from 'src/const/extentions';
+import { filterFiles } from '@utils/index';
+import { imageExtention, docExtention } from '@utils/const/extentions';
 
 export interface FilePasteOptions {
   render?: () => {

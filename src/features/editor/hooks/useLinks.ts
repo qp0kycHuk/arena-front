@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { getRandomUUID } from "@utils/index"
 
 export interface ILink {
     id?: string
@@ -17,7 +18,7 @@ export interface ILinksController {
 
 export function createEmptyLink(): ILink {
     return {
-        key: crypto.randomUUID(),
+        key: getRandomUUID(),
         text: '',
         url: ''
     }

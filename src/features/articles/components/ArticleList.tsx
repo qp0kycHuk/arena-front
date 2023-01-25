@@ -2,8 +2,7 @@ import * as React from 'react';
 import { ArticleItem } from './ArticleItem';
 import { useGetQuery } from '@store/articles';
 import { SettingsIcon, FoldersIcon, FileTextIcon } from '@assets/icons/stroke';
-import { Button } from '@features/ui';
-import { Menu } from '@lib/Menu';
+import { Button, Menu } from '@features/ui';
 import { Link } from 'react-router-dom';
 
 interface IArticleListProps {

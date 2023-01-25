@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Button } from '@features/ui';
 import { CrossIcon, DocumentIcon, ImageIcon } from '@assets/icons/stroke';
-import { getFilePreview } from '@utils/getFileImagePreview';
+import { getFilePreview } from '@utils/index';
 
 interface IUpliaderItemProps {
     item: IFileItem

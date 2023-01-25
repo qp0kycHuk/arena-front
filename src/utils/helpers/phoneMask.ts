@@ -1,11 +1,11 @@
 const phoneRegexp = /(7|8)?(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/
 const phoneCompleteRegexp = /(7|8)\d{10}$/
 
-export function getUnmaskedValue(value: string): string {
+export function getUnmaskedPhoneValue(value: string): string {
     return value.replace(/\D/g, '')
 }
 
-export function getMaskedValue(value: string | number = ''): string {
+export function getMaskedPhoneValue(value: string | number = ''): string {
     const numberValue = value.toString().replace(/\D/g, '')
 
     if (!numberValue) {
@@ -26,7 +26,7 @@ export function getMaskedValue(value: string | number = ''): string {
     return maskedValue
 }
 
-export function isComplete(value: string): boolean {
+export function isPhoneComplete(value: string): boolean {
     const numberValue = value.replace(/\D/g, '')
     console.log(numberValue);
 

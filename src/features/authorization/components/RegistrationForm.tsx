@@ -6,7 +6,7 @@ import { useErrorMessage } from '@hooks/useErrorMessage';
 import { PhoneInput } from '@components/PhoneInput';
 import { Spiner } from '@components/Spiner';
 import { Button, Input } from '@features/ui';
-import { getUnmaskedValue as getUnmaskedPhone } from '@utils/phoneMaskUtils';
+import { getUnmaskedPhoneValue } from '@utils/index';
 
 interface IRegistrationFormProps { }
 
@@ -30,7 +30,7 @@ export function RegistrationForm(props: IRegistrationFormProps) {
         try {
             await register({
                 ...formState,
-                phone: getUnmaskedPhone(formState.phone),
+                phone: getUnmaskedPhoneValue(formState.phone),
             })
         } catch (err) { }
         setLoading(false)

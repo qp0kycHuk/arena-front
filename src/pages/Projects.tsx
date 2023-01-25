@@ -1,7 +1,6 @@
 import { AdjustmentsHorizontalIcon, BookmarkIcon, FileTextIcon, FoldersIcon, SearchIcon, SettingsIcon } from '@assets/icons/stroke';
 import { ReactComponent as FolderIcon } from '@assets/img/folder.svg';
-import { Button, Input } from '@features/ui';
-import { Menu } from '@lib/Menu';
+import { Button, Input, Menu } from '@features/ui';
 import { Link } from 'react-router-dom';
 
 
@@ -22,7 +21,7 @@ export function Projects(props: IProjectsProps) {
         }>
           <Button className='justify-start w-full' size='small' color='gray' variant='text'> <FoldersIcon className="mr-2" /> Папка </Button>
           <Link to="/articles/create">
-          <Button className='justify-start w-full' size='small' color='gray' variant='text'> <FileTextIcon className="mr-2" /> Статья </Button>
+            <Button className='justify-start w-full' size='small' color='gray' variant='text'> <FileTextIcon className="mr-2" /> Статья </Button>
           </Link>
 
         </Menu>

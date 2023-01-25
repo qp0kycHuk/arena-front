@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Editor } from '@tiptap/react';
 import { MenuButton } from './MenuButton';
 import { AlignCenterIcon, AlignLeftIcon, AlignRightIcon } from '@assets/icons/stroke';
-import { Menu, MenuTarget } from '@lib/Menu';
+import { Menu, MenuTarget } from '@features/ui';
 
 export interface IAlignMenuProps {
     editor: Editor

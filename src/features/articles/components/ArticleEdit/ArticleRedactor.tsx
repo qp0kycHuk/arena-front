@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useMemo, useRef, useState } from 'react';
 import { useUserQuery } from '@store/auth';
 import type { ICreateRequest, IUpdateRequest } from '@store/articles';
-import { videoExtention } from '@const/extentions';
+import { videoExtention } from '@utils/const/extentions';
 import { Editor, EditorControl, useEditor } from '@features/editor';
 import { Links } from '@features/editor/components/Links/Links';
 import { useLinks } from '@features/editor/hooks/useLinks';

@@ -14,7 +14,6 @@ module.exports = {
             '@lib': resolvePath('./src/lib'),
             '@pages': resolvePath('./src/pages'),
             '@utils': resolvePath('./src/utils'),
-            '@const': resolvePath('./src/const'),
             '@store': resolvePath('./src/store'),
             '@models': resolvePath('./src/models'),
         }

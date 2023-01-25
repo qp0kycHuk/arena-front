@@ -1,4 +1,4 @@
-import { imageExtention, videoExtention } from "@const/extentions";
+import { imageExtention, videoExtention } from "@utils/const/extentions";
 
 export async function getFilePreview(file: File): Promise<string | null> {
     if (file.type.match(videoExtention.regex)) {
@@ -11,7 +11,6 @@ export async function getFilePreview(file: File): Promise<string | null> {
 
     return null
 }
-
 
 function getVideoPreview(file: File, seekTo = 0.0) {
     return new Promise<string>((resolve, reject) => {
@@ -70,3 +69,31 @@ function getImagePreview(file: File) {
 
     })
 }
+
+export function filterFiles(data: File[], fileMatchRegex?: RegExp[]): File[] {
+    const arr: File[] = [];
+    console.log(data, fileMatchRegex);
+
+    data.map(item => {
+        if (fileMatchRegex && fileMatchRegex.length > 0) {
+            for (let i = 0; i < fileMatchRegex.length; i++) {
+                const regExp = fileMatchRegex[i];
+
+                if (item.type.match(regExp)) {
+                    return item
+                }
+            }
+
+            return null
+        } else {
+            return item
+        }
+    })
+        .forEach((item) => {
+            if (item !== null) {
+                arr.push(item)
+            }
+        })
+
+    return arr
+};

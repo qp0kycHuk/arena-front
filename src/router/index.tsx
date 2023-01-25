@@ -2,13 +2,11 @@ import { AuthLayout } from "@layouts/AuthLayout";
 import { MainLayout } from "@layouts/MainLayout";
 import { ArticleEdit, ArticleView, ArticleList, Home, Login, Projects, Registration } from "@pages/index";
 
-import { createBrowserRouter } from "react-router-dom";
+import { RouteObject, createBrowserRouter } from "react-router-dom";
 
-export const routesPath = {
+export const routesPath = {}
 
-}
-
-export const router = createBrowserRouter([
+const config: RouteObject[] = [
     // {
     //     path: "/",
     //     element: <Home />
@@ -59,5 +57,6 @@ export const router = createBrowserRouter([
             },
         ]
     },
+]
 
-])
+export const router = createBrowserRouter(config)

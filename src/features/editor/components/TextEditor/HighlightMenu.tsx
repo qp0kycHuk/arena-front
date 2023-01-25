@@ -2,7 +2,7 @@ import * as React from 'react';
 import { MenuButton } from './MenuButton';
 import { BackgroundColorIcon } from '@assets/icons/stroke';
 import { Editor } from '@tiptap/react';
-import { rgb2hex } from '@utils/colors';
+import { rgb2hex } from '@utils/helpers/colors';
 
 export interface IHighlightMenuProps {
     editor: Editor

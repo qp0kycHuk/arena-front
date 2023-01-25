@@ -6,7 +6,7 @@ import { useErrorMessage } from '@hooks/useErrorMessage';
 import { PhoneInput } from '@components/PhoneInput';
 import { Spiner } from '@components/Spiner';
 import { Button, Input } from '@features/ui';
-import { getUnmaskedValue as getUnmaskedPhone } from '@utils/phoneMaskUtils';
+import { getUnmaskedPhoneValue } from '@utils/index';
 
 interface ILoginFormProps { }
 
@@ -26,7 +26,7 @@ export function LoginForm(props: ILoginFormProps) {
         setLoading(true)
         try {
             await login({
-                phone: getUnmaskedPhone(formState.phone),
+                phone: getUnmaskedPhoneValue(formState.phone),
                 password: formState.password,
             })
         } catch (err) { }

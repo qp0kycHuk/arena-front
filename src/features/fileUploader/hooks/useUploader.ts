@@ -1,6 +1,5 @@
-import { imageExtention } from "@const/extentions";
-import { getRandomUUID } from "@lib/uniqueId";
-import { filterFiles } from "@utils/filterFiles";
+import { imageExtention } from "@utils/const/extentions";
+import { filterFiles,getRandomUUID } from "@utils/index";
 import { useCallback, useState } from "react";
 
 interface IUploaderParams {

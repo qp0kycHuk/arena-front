@@ -1,8 +1,7 @@
-import * as React from 'react';
-import { Editor } from '@tiptap/react';
+import type { Editor } from '@tiptap/react';
 import { MenuButton } from './MenuButton';
 import { SmileIcon } from '@assets/icons/stroke';
-import { Menu, MenuTarget } from '@lib/Menu';
+import { Menu, MenuTarget } from '@features/ui';
 
 
 const emojiList = ['🤣', '😎', '😜', '🤡', '🍆', '🐱‍👤', '❤', '🎁', '👌', '👍', '🤝', '🤙'];
