@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ICreateRequest, useCreateMutation } from '@store/articles/';
 import { toast } from '@lib/Toast';
-import { ArticleEdit } from './ArticleEdit';
+import { ArticleRedactor } from './ArticleRedactor';
 import { ARTICLE_SUCCESS_UPDATE, ARTICLE_ERROR_UPDATE } from '../const/Text';
 import { useNavigate } from 'react-router-dom';
 
@@ -25,6 +25,6 @@ export function ArticleCreate(props: IArticleCreateProps) {
     }
 
     return (
-        <ArticleEdit onSubmit={onSubmit} />
+        <ArticleRedactor onSubmit={onSubmit} />
     );
 }

@@ -13,12 +13,12 @@ import { useUserQuery } from '@store/auth';
 import * as React from 'react';
 import { useRef, useState } from 'react';
 
-interface IArticleEditProps {
+interface IArticleRedactorProps {
     article?: IArticle
     onSubmit: (data: ICreateRequest | IUpdateRequest) => void
 }
 
-export function ArticleEdit({ onSubmit, article }: IArticleEditProps) {
+export function ArticleRedactor({ onSubmit, article }: IArticleRedactorProps) {
     const { data: user } = useUserQuery(null)
     const titleRef = useRef<HTMLDivElement>(null);
     const [loading, setLoading] = useState(false)
