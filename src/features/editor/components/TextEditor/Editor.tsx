@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { EditorContent, Editor as EditorClass } from '@tiptap/react'
+import { EditorContent } from '@tiptap/react'
+import type { Editor as EditorClass } from '@tiptap/react'
 
 interface IEditorProps {
     editor: EditorClass | null,

@@ -1,9 +1,7 @@
 import { DocumentIcon } from '@assets/icons/stroke';
 import { NodeViewWrapper } from '@tiptap/react';
-import * as React from 'react';
 
-export interface IFileBlockProps {
-}
+interface IFileBlockProps { }
 
 export function FileBlock(props: any) {
     return (

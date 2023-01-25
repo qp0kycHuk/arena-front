@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Editor } from '@tiptap/react';
 import { useCallback } from 'react';
 import { MenuButton } from './MenuButton';
 import { InsertLinkIcon } from '@assets/icons/stroke';
+import type { Editor } from '@tiptap/react';
 
 interface ILinkMenuProps {
     editor: Editor

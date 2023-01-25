@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { MenuButton } from './MenuButton';
 import { TextColorIcon } from '@assets/icons/stroke';
-import { Editor } from '@tiptap/react';
+import type { Editor } from '@tiptap/react';
 import { rgb2hex } from '@utils/helpers/colors';
 
 export interface IColorMenuProps {

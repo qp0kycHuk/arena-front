@@ -1,8 +1,8 @@
-import { Editor } from '@tiptap/react';
 import * as React from 'react';
 import { MenuButton } from './MenuButton';
 import { ImageIcon } from '@assets/icons/stroke';
 import { filePasteHandler } from '../../lib/file-paste-extension';
+import type { Editor } from '@tiptap/react';
 
 export interface IImageMenuProps {
     editor: Editor
@@ -14,7 +14,7 @@ export function ImageMenu({ editor }: IImageMenuProps) {
             filePasteHandler(Array.from(event.target.files), editor);
         }
     }
-    
+
     return (
         <MenuButton title='Изображение' className='relative'>
             <label className='absolute inset-0 block cursor-pointer'>
