@@ -3,6 +3,7 @@ import { Sidebar } from './Sidebar';
 import { Header } from './Header/Header';
 import { Suspense } from 'react';
 import { PrivateOutlet } from './PrivateOutlet';
+import { PagePreloader } from '@components/PagePreloader/PagePreloader';
 
 interface IMainLayoutProps extends React.PropsWithChildren {
 }
@@ -17,7 +18,7 @@ export function MainLayout({ children }: IMainLayoutProps) {
       <Header />
       <div className="flex items-start gap-8 p-8">
         <Sidebar />
-        <Suspense fallback='Loading..'>
+        <Suspense fallback={<PagePreloader />}>
           <PrivateOutlet />
         </Suspense>
       </div>

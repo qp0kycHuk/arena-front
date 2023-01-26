@@ -1,0 +1,60 @@
+.wrapper {
+    padding-top: 50px;
+    padding-right: 200px;
+    padding-left: 50px;
+    overflow: hidden;
+}
+
+.bar {
+    position: relative;
+    height: 2px;
+    width: 500px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.circle {
+    position: absolute;
+    top: -30px;
+    margin-left: -30px;
+    height: 60px;
+    width: 60px;
+    left: 0;
+    border-radius: 30%;
+    animation: move 5s infinite;
+}
+
+.text {
+    position: absolute;
+    top: -20px;
+    right: -85px;
+    line-height: 1;
+    text-transform: uppercase;
+    
+    font-family: helvetica, sans-serif;
+    font-weight: bold;
+}
+
+@keyframes move {
+    0% {
+        left: 0;
+    }
+
+    50% {
+        left: 100%;
+        transform: rotate(450deg);
+        width: 150px;
+        height: 150px;
+    }
+
+    75% {
+        left: 100%;
+        transform: rotate(450deg);
+        width: 150px;
+        height: 150px;
+    }
+
+    100% {
+        right: 100%;
+    }
+}
