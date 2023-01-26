@@ -1,3 +1,10 @@
+/**
+ * convert hex color format to rgb
+ * @example "#000" -> "rgb(0, 0, 0)" 
+ * @export
+ * @param {?string} [c] color in hex format
+ * @returns {string} color in rgba format
+ */
 export function hex2rgb(c?: string): string {
     if (!c) {
         return 'rgb(0, 0, 0)';
@@ -10,6 +17,13 @@ export function hex2rgb(c?: string): string {
         c
 }
 
+/**
+ * convert rgb color format to hex
+ * @example "rgb(0, 0, 0)"  -> "#000"
+ * @export
+ * @param {?string} [rgb] color in rgba format
+ * @returns {string} color in hex format
+ */
 export function rgb2hex(rgb?: string): string {
     if (!rgb) {
         return '#000000'

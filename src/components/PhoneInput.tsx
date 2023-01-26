@@ -3,8 +3,7 @@ import { MaskedInput } from './MaskedInput';
 import { getMaskedPhoneValue, isPhoneComplete } from '@utils/index';
 
 
-interface IPhoneInputProps extends InputProps {
-}
+interface IPhoneInputProps extends InputProps { }
 
 export function PhoneInput({ ...props }: IPhoneInputProps) {
     return (

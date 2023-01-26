@@ -1,5 +1,13 @@
 import { imageExtention, videoExtention } from "@utils/const/extentions";
 
+/**
+ * generate data image preview for images or video files
+ *
+ * @export
+ * @async
+ * @param {File} file
+ * @returns {(Promise<string | null>)}
+ */
 export async function getFilePreview(file: File): Promise<string | null> {
     if (file.type.match(videoExtention.regex)) {
         return await getVideoPreview(file)
@@ -12,6 +20,15 @@ export async function getFilePreview(file: File): Promise<string | null> {
     return null
 }
 
+/**
+ * generate data image preview for video files
+ *
+ * @export
+ * @async
+ * @param {File} file
+ * @param {number} seekTo sec of frame to screenshot video
+ * @returns {(Promise<string | null>)}
+ */
 function getVideoPreview(file: File, seekTo = 0.0) {
     return new Promise<string>((resolve, reject) => {
         // load the file to a video player
@@ -51,6 +68,14 @@ function getVideoPreview(file: File, seekTo = 0.0) {
     });
 }
 
+/**
+ * generate data image preview for images files
+ *
+ * @export
+ * @async
+ * @param {File} file
+ * @returns {(Promise<string | null>)}
+ */
 function getImagePreview(file: File) {
     return new Promise<string>((resolve, reject) => {
         const reader = new FileReader();
@@ -70,9 +95,18 @@ function getImagePreview(file: File) {
     })
 }
 
+
+/**
+ * filter array of files by file type
+ * @date 26.01.2023 - 16:22:56
+ *
+ * @export
+ * @param {File[]} data
+ * @param {?RegExp[]} [fileMatchRegex] regexp for file type
+ * @returns {File[]}
+ */
 export function filterFiles(data: File[], fileMatchRegex?: RegExp[]): File[] {
     const arr: File[] = [];
-    console.log(data, fileMatchRegex);
 
     data.map(item => {
         if (fileMatchRegex && fileMatchRegex.length > 0) {

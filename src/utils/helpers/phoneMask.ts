@@ -1,10 +1,26 @@
 const phoneRegexp = /(7|8)?(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/
 const phoneCompleteRegexp = /(7|8)\d{10}$/
 
+/**
+ * Get unmasked phone
+ * @example "+7 (999) 999 - 99 - 99" -> "79999999999"
+ *
+ * @export
+ * @param {string} value
+ * @returns {string}
+ */
 export function getUnmaskedPhoneValue(value: string): string {
     return value.replace(/\D/g, '')
 }
 
+/**
+ * Get masked phone value
+ * @example "79999999999" -> "+7 (999) 999 - 99 - 99"
+ *
+ * @export
+ * @param {(string | number)} [value='']
+ * @returns {string}
+ */
 export function getMaskedPhoneValue(value: string | number = ''): string {
     const numberValue = value.toString().replace(/\D/g, '')
 
@@ -26,9 +42,15 @@ export function getMaskedPhoneValue(value: string | number = ''): string {
     return maskedValue
 }
 
+/**
+ * Check complete phone string
+ *
+ * @export
+ * @param {string} value
+ * @returns {boolean}
+ */
 export function isPhoneComplete(value: string): boolean {
     const numberValue = value.replace(/\D/g, '')
-    console.log(numberValue);
 
     return phoneCompleteRegexp.test(numberValue)
 }
