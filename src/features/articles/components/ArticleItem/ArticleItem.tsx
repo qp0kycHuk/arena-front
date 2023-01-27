@@ -9,13 +9,13 @@ interface IArticleItemProps {
 
 export function ArticleItem({ article }: IArticleItemProps) {
     return (
-        <div className="flex items-center py-3 w-full">
+        <div className="flex items-center px-4 py-3 -mx-4 rounded-2xl hover:bg-primary hover:bg-opacity-10">
             <div className="w-24 h-[76px] rounded-xl relative overflow-hidden">
                 <img src={article.image || '/img/test.jpg'} alt="" className="absolute object-cover w-full h-full" />
             </div>
             <div className='max-w-5xl ml-4'>
                 <div className="mb-2 font-semibold">{article.name}</div>
-                <div className="text-xs text-gray max-w-md">{article.excerpt}</div>
+                <div className="max-w-md text-xs text-gray">{article.excerpt}</div>
             </div>
             <div className="ml-auto text-right whitespace-nowrap">
                 <div className="text-xs text-gray">Созд: {new Date(article.created_at).toLocaleDateString()}</div>
