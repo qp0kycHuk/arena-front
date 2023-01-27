@@ -85,7 +85,9 @@ export const articlesApi = taggetRootApi.injectEndpoints({
                     dispatch(articlesApi.util.updateQueryData('getById', id, (draft) => {
                         Object.assign(draft, updatedArticle)
                     }))
-                } catch { }
+                } catch (error) {
+
+                }
             },
         }),
     }),

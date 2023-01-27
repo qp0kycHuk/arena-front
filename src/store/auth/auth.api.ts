@@ -56,7 +56,7 @@ export const authApi = taggetRootApi.injectEndpoints({
         user: builder.query<IUser, any>({
             query: () => ({
                 url: USER_ENDPOINT_URL,
-            })
+            }),
         }),
 
     }),

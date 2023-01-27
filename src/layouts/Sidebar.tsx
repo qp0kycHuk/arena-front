@@ -9,7 +9,7 @@ interface ISidebarProps {
 
 export function Sidebar(props: ISidebarProps) {
   return (
-    <div className='flex flex-col min-w-[266px] w-[266px] px-4 pt-6 pb-4 bg-white rounded-2xl dark:bg-opacity-5 dark:text-white'>
+    <div className='flex flex-col min-w-[266px] w-[266px] px-4 pt-6 pb-4 bg-white rounded-2xl dark:bg-opacity-5 dark:text-white sticky top-16'>
       <div className="space-y-1">
         <Link to="/">
           <Button className='w-full' variant='text' size='small'>
