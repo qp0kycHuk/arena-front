@@ -4,6 +4,7 @@ import { useGetQuery } from '@store/articles';
 import { SettingsIcon, FoldersIcon, FileTextIcon } from '@assets/icons/stroke';
 import { Button, Menu } from '@features/ui';
 import { Link } from 'react-router-dom';
+import { Search } from '@components/Search/Search';
 
 interface IArticleListProps {
 }
@@ -29,12 +30,14 @@ export function ArticleList(props: IArticleListProps) {
                 </Menu>
             </div>
 
+            <Search className='mb-4' />
+
             {articles?.map((article, index) =>
                 <div key={article.id}>
-                    {index > 0 && <div className="border-t border-gray border-opacity-20"></div>}
-                    <Link to={"/articles/" + article.id}>
+                    <Link className='peer' to={"/articles/" + article.id}>
                         <ArticleItem article={article} />
                     </Link>
+                    <div className="border-t border-gray border-opacity-20 peer-hover:opacity-0"></div>
                 </div>
             )}
         </div>

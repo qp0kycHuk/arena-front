@@ -27,15 +27,7 @@ export function Projects(props: IProjectsProps) {
         </Menu>
       </div>
 
-      <div className="relative mb-3">
-        <Button variant='text' color='gray' size='small' className='px-3 absolute left-1 top-1.5'>
-          <AdjustmentsHorizontalIcon className="text-2xl" />
-        </Button>
-        <Input placeholder='Поиск' className='w-full pl-14 bg-gray bg-opacity-10' />
-        <Button variant='text' color='gray' size='small' className='px-3 absolute right-2 top-1.5'>
-          <SearchIcon className="text-lg" />
-        </Button>
-      </div>
+      
 
       <div className="flex items-center py-4">
         <FolderIcon className='mr-4 text-3xl' />
