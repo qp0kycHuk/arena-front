@@ -37,12 +37,12 @@ export function ArticleRedactor({ onSubmit, article }: IArticleRedactorProps) {
         }
     })
 
-    // const anonsUploader = useUploader({
-    //     // initialFiles: [article.anons],
-    //     multiple: false
-    // })
+    const anonsUploader = useUploader({
+        // initialFiles: [article.anons],
+        multiple: false
+    })
 
-    // const imageUploader = useUploader({})
+    const imageUploader = useUploader({})
 
     // const videoUploader = useUploader({
     //     extention: videoExtention,
@@ -85,7 +85,7 @@ export function ArticleRedactor({ onSubmit, article }: IArticleRedactorProps) {
                     <EditorControl editor={editor} className='sticky z-10 -ml-4 -mr-4 top-2' />
                     <Editor className='min-h-[260px] flex flex-col' editor={editor} />
                 </div>
-                {/* <div className="border-t border-gray border-opacity-30"></div>
+                <div className="border-t border-gray border-opacity-30"></div>
                  <div className="px-8 py-6">
                     <Uploader uploader={anonsUploader} >
                         <div className="font-semibold">Анонсовое изображение</div>
@@ -97,7 +97,7 @@ export function ArticleRedactor({ onSubmit, article }: IArticleRedactorProps) {
                         <div className="font-semibold">Дополнительные изображения</div>
                     </Uploader>
                 </div>
-                <div className="border-t border-gray border-opacity-30"></div>
+                {/* <div className="border-t border-gray border-opacity-30"></div>
                 <div className="px-8 py-6">
                     <Uploader uploader={videoUploader} >
                         <div className="font-semibold">Видео</div>
