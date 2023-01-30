@@ -21,7 +21,7 @@ export interface IUpdateRequest extends ICreateRequest {
 }
 
 const ARTICLES_TAG: 'articles' = 'articles'
-const ROOT_ENDPOINT_URL = 'api/articles'
+const ROOT_ENDPOINT_URL = '/api/articles'
 
 const taggetRootApi = rootApi.enhanceEndpoints({ addTagTypes: [ARTICLES_TAG] });
 
