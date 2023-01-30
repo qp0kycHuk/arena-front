@@ -14,7 +14,6 @@ export function useUploader({ initialFiles = [], extention = imageExtention, mul
     const addItems = useCallback((items: File[]) => {
         const newItems = filterFiles(items, extention ? [extention.regex] : [])
             .map((file) => ({ key: getRandomUUID(), file, title: file.name }))
-        console.log(newItems);
 
         setFileItems((prevItems) => [
             ...(multiple ? prevItems : []),
