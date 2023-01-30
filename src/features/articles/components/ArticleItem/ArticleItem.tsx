@@ -11,7 +11,7 @@ export function ArticleItem({ article }: IArticleItemProps) {
     return (
         <div className="flex items-center px-4 py-3 -mx-4 rounded-2xl hover:bg-primary hover:bg-opacity-10">
             <div className="w-24 h-[76px] rounded-xl relative overflow-hidden">
-                <img src={article.image || '/img/test.jpg'} alt="" className="absolute object-cover w-full h-full" />
+                <img src={article.image_src || '/img/test.jpg'} alt="" className="absolute object-cover w-full h-full" />
             </div>
             <div className='max-w-5xl ml-4'>
                 <div className="mb-2 font-semibold">{article.name}</div>

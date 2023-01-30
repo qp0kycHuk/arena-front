@@ -17,7 +17,7 @@ export function ArticleViewImage({ article, isLoading }: IArticleViewImageProps)
 
     return (
         <div className={imageClassName}>
-            <img src={article?.image || '/img/test.jpg'} alt="" className='object-cover w-full h-full' />
+            <img src={article?.image_src || '/img/test.jpg'} alt="" className='object-cover w-full h-full' />
         </div>
     );
 }
