@@ -119,7 +119,17 @@ export function useEditor(options?: IOptions) {
     })
 }
 
+export function useInitialContent(content?: string, dependeties: any[] = []) {
+    const initialContent = useMemo(() => {
+        try {
+            return content ? JSON.parse(content) : ''
+        } catch (error) {
+            return content ? content : ''
+        }
+    }, dependeties);
 
+    return initialContent
+}
 
 export function useGenerateHtml(content: string = ''): string {
     const html = useMemo(() => {
@@ -142,8 +152,6 @@ export function useGenerateHtml(content: string = ''): string {
 
             return json ? generateHTML(json, editorExtensions) : ''
         } catch (error) {
-            console.log(error);
-
             return content ? content : ''
         }
     }, [content]);

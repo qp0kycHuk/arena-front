@@ -3,7 +3,7 @@ import { useMemo, useRef, useState } from 'react';
 import { useUserQuery } from '@store/auth';
 import type { ICreateRequest, IUpdateRequest } from '@store/articles';
 import { videoExtention } from '@utils/const/extentions';
-import { Editor, EditorControl, useEditor } from '@features/editor';
+import { Editor, EditorControl, useEditor, useInitialContent } from '@features/editor';
 import { Links } from '@features/editor/components/Links/Links';
 import { useLinks } from '@features/editor/hooks/useLinks';
 import { Uploader, useUploader } from '@features/fileUploader';
@@ -21,19 +21,12 @@ export function ArticleRedactor({ onSubmit, article }: IArticleRedactorProps) {
     const titleRef = useRef<HTMLDivElement>(null);
     const [loading, setLoading] = useState(false)
 
-    const initialContent = useMemo(() => {
-        try {
-            return article?.content ? JSON.parse(article.content) : ''
-        } catch (error) {
-            return article?.content ? article.content : ''
-        }
-    }, [article]);
-
+    const initialEditorContent = useInitialContent(article?.content, [article]);
 
     const editor = useEditor({
         placeholder: 'Напишите статью...',
         config: {
-            content: initialContent
+            content: initialEditorContent
         }
     })
 
@@ -43,6 +36,8 @@ export function ArticleRedactor({ onSubmit, article }: IArticleRedactorProps) {
     })
 
     const imageUploader = useUploader({})
+
+    console.log(imageUploader.fileItems);
 
     // const videoUploader = useUploader({
     //     extention: videoExtention,
@@ -79,14 +74,14 @@ export function ArticleRedactor({ onSubmit, article }: IArticleRedactorProps) {
             <div className="text-[26px] font-semibold mb-7">Новая статья</div>
             <div className="border border-gray border-opacity-30 rounded-2xl">
                 <div className="px-8 py-6">
-                    <div ref={titleRef} className='text-3xl width-placeholder mb-8'
+                    <div ref={titleRef} className='mb-8 text-3xl width-placeholder'
                         contentEditable data-placeholder='Введите название статьи'
                         dangerouslySetInnerHTML={{ __html: article?.name || '' }} ></div>
                     <EditorControl editor={editor} className='sticky z-10 -ml-4 -mr-4 top-2' />
                     <Editor className='min-h-[260px] flex flex-col' editor={editor} />
                 </div>
                 <div className="border-t border-gray border-opacity-30"></div>
-                 <div className="px-8 py-6">
+                <div className="px-8 py-6">
                     <Uploader uploader={anonsUploader} >
                         <div className="font-semibold">Анонсовое изображение</div>
                     </Uploader>
@@ -108,7 +103,7 @@ export function ArticleRedactor({ onSubmit, article }: IArticleRedactorProps) {
                     <Links controller={linksController}></Links>
                 </div>
             </div>
-            <div className="flex mt-8 gap-4">
+            <div className="flex gap-4 mt-8">
                 <Button type='submit' disabled={loading}>{loading ? <Spiner /> : 'Сохранить'}</Button>
                 <Button variant='light'>Отмена</Button>
             </div>
