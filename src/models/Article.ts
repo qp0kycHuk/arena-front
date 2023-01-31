@@ -1,4 +1,5 @@
 import { ICategory } from "./Category";
+import { IFile } from "./File";
 import { ITag } from "./Tag";
 
 export interface IArticle {
@@ -13,5 +14,5 @@ export interface IArticle {
     image_src: string
     categories: ICategory[]
     tags: ITag[]
-    files: any[]
+    files: IFile[]
 }

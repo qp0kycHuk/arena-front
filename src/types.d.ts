@@ -2,13 +2,13 @@
 type ExtentionType = 'image' | 'doc' | 'video'
 
 interface IExtention {
-    type: ExtentionType
-    accept: string
-    regex: RegExp
+  type: ExtentionType
+  accept: string
+  regex: RegExp
 }
 
 interface IServerError {
-    message: string
+  message: string
 }
 
 declare module "*.png";
@@ -24,3 +24,25 @@ declare module '*.module.scss' {
 type PartialRecord<K extends keyof any, T> = {
   [P in K]?: T;
 };
+
+
+interface IListResponse<T> {
+  items: T[]
+}
+
+interface IItemResponse<T> {
+  item: T
+}
+
+interface IResultWithError {
+  error: FetchBaseQueryError | SerializedError
+}
+
+interface TypedFormData<T> extends FormData {
+  append(name: T | '_method', value: string | Blob, fileName?: string): void
+  delete(name: T): void
+  get(name: T): FormDataEntryValue | null
+  getAll(name: T): FormDataEntryValue[]
+  has(name: T): boolean
+  set(name: T, value: string | Blob, fileName?: string): void
+}

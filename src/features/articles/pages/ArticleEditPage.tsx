@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { ArticleEdit as EditComponent } from '@features/articles';
+import { ArticleEdit } from '@features/articles';
 import { Button } from '@features/ui';
 import { ToLeftIcon } from '@assets/icons/stroke';
 
@@ -15,7 +15,7 @@ export function ArticleEditPage(props: IArticleEditPageProps) {
                 Назад
             </Button>
 
-            <EditComponent articleId={id} />
+            <ArticleEdit articleId={id} />
         </div>
     );
 }

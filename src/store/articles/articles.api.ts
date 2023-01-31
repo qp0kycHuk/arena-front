@@ -1,24 +1,10 @@
 import { IArticle } from '@models/Article';
 import { rootApi } from '../api'
 
-interface IListResponse {
-    items: IArticle[]
-}
 
-interface IItemResponse {
-    item: IArticle
-}
+export type ICreateRequest = TypedFormData<'user_id' | 'content' | 'excerpt' | 'name' | 'image'>
+export type IUpdateRequest = TypedFormData<'id' | 'user_id' | 'content' | 'excerpt' | 'name' | 'image'>
 
-export interface ICreateRequest {
-    user_id: number
-    content: string
-    excerpt: string
-    name: string
-}
-
-export interface IUpdateRequest extends ICreateRequest {
-    id: number | string
-}
 
 const ARTICLES_TAG: 'articles' = 'articles'
 const ROOT_ENDPOINT_URL = '/api/articles'
@@ -32,7 +18,7 @@ export const articlesApi = taggetRootApi.injectEndpoints({
                 url: ROOT_ENDPOINT_URL,
 
             }),
-            transformResponse: (response: IListResponse) => {
+            transformResponse: (response: IListResponse<IArticle>) => {
                 return response.items
             },
             providesTags: (result) => {
@@ -50,7 +36,7 @@ export const articlesApi = taggetRootApi.injectEndpoints({
             query: (id) => ({
                 url: ROOT_ENDPOINT_URL + '/' + id,
             }),
-            transformResponse: (response: IItemResponse) => {
+            transformResponse: (response: IItemResponse<IArticle>) => {
                 return response.item
             },
             providesTags: (result, error, id) => [{ type: ARTICLES_TAG, id }],
@@ -61,28 +47,28 @@ export const articlesApi = taggetRootApi.injectEndpoints({
                 method: 'post',
                 body
             }),
-            transformResponse: (response: IItemResponse) => {
+            transformResponse: (response: IItemResponse<IArticle>) => {
                 return response.item
             },
             invalidatesTags: [{ type: ARTICLES_TAG, id: 'LIST' }]
         }),
         update: builder.mutation<IArticle, IUpdateRequest>({
-            query: (body) => ({
-                url: ROOT_ENDPOINT_URL + '/' + body.id,
-                method: 'put',
-                body: {
-                    ...body,
-                    _method: 'PUT'
+            query: (formData) => {
+                formData.append('_method', 'PUT')
+                return {
+                    url: ROOT_ENDPOINT_URL + '/' + formData.get('id'),
+                    method: 'put',
+                    body: formData
                 }
-            }),
-            transformResponse: (response: IItemResponse) => {
+            },
+            transformResponse: (response: IItemResponse<IArticle>) => {
                 return response.item
             },
             // invalidatesTags: (result, error, { id }) => [{ type: ARTICLES_TAG, id }],
-            async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
+            async onQueryStarted({ ...patch }, { dispatch, queryFulfilled }) {
                 try {
                     const { data: updatedArticle } = await queryFulfilled
-                    dispatch(articlesApi.util.updateQueryData('getById', id, (draft) => {
+                    dispatch(articlesApi.util.updateQueryData('getById', updatedArticle.id, (draft) => {
                         Object.assign(draft, updatedArticle)
                     }))
                 } catch (error) {

@@ -1,25 +1,37 @@
 import { imageExtention } from "@utils/const/extentions";
-import { filterFiles,getRandomUUID } from "@utils/index";
-import { useCallback, useState } from "react";
+import { filterFiles, getRandomUUID } from "@utils/index";
+import { useCallback, useEffect } from "react";
 
 interface IUploaderParams {
     initialFiles?: IFileItem[]
     extention?: IExtention
     multiple?: boolean
+    onChange?: (fileItems: IFileItem[]) => any
+    onRemove?: (fileItem: IFileItem) => any
+    // onChange?: (fileItems: IFileItem[]) => any
 }
 
-export function useUploader({ initialFiles = [], extention = imageExtention, multiple = true }: IUploaderParams): IUplodaer {
-    const [fileItems, setFileItems] = useState<IFileItem[]>(initialFiles || []);
+export function useUploader({
+    initialFiles = [],
+    extention = imageExtention,
+    multiple = true,
+    onChange,
+    onRemove }: IUploaderParams): IUplodaer {
+
+    const fileItems = initialFiles
+
+    useEffect(() => {
+        // setFileItems(initialFiles || [])
+    }, [initialFiles])
 
     const addItems = useCallback((items: File[]) => {
         const newItems = filterFiles(items, extention ? [extention.regex] : [])
             .map((file) => ({ key: getRandomUUID(), file, title: file.name }))
 
-        setFileItems((prevItems) => [
-            ...(multiple ? prevItems : []),
+        onChange?.([
             ...(multiple ? newItems : newItems[0] ? [newItems[0]] : [])
         ])
-    }, [extention, multiple])
+    }, [extention, multiple, onChange])
 
     const updateItem = useCallback((item: IFileItem, data: Partial<IFileItem>) => {
         const changedItem = {
@@ -27,16 +39,12 @@ export function useUploader({ initialFiles = [], extention = imageExtention, mul
             ...data
         }
 
-        setFileItems((prevItems) => {
-            return prevItems.map((el) => el === item ? changedItem : el)
-        })
+        onChange?.(fileItems.map((el) => el === item ? changedItem : el))
     }, [])
 
     const removeItem = useCallback((item: IFileItem) => {
-        setFileItems((prevItems) => {
-            return prevItems.filter((el) => el !== item)
-        })
-    }, [])
+        onRemove?.(item)
+    }, [onRemove])
 
     return {
         extention: extention || imageExtention,

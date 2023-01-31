@@ -1,6 +1,6 @@
 
 interface IFileItem {
-    id?: string
+    id?: string | number
     key?: string
     src?: string
     preview?: string

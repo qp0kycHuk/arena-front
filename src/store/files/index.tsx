@@ -1,0 +1,1 @@
+export { useUploadMutation, useRemoveMutation } from './files.api'
