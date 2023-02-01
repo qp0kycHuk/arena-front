@@ -10,7 +10,7 @@ import { articlesApi } from '@store/articles/articles.api';
 import { useNavigate } from 'react-router-dom';
 import { IFile } from '@models/File';
 
-export interface IArticleEditImagesProps {
+export interface IArticleEditVideosProps {
     article?: IArticle
     getFormData(): ICreateRequest
     onStartTransition?(): void
@@ -18,11 +18,11 @@ export interface IArticleEditImagesProps {
 }
 
 // control upload and remove images
-export function ArticleEditImages({
+export function ArticleEditVideos({
     article,
     getFormData,
     onStartTransition,
-    onEndTransition }: IArticleEditImagesProps
+    onEndTransition }: IArticleEditVideosProps
 ) {
     const dispatch = useAppDispatch()
     const { createDraftArticle } = useArticleControl()
@@ -30,7 +30,7 @@ export function ArticleEditImages({
     const [remove] = useRemoveMutation()
     const navigate = useNavigate();
 
-    const initialImageFiles = useMemo(() => {
+    const initialVideoFiles = useMemo(() => {
         return article?.files.map((item) => ({
             id: item.id,
             src: process.env.REACT_APP_API_URL + item.src,
@@ -39,12 +39,12 @@ export function ArticleEditImages({
     }, [article])
 
     const imageUploader = useUploader({
-        initialFiles: initialImageFiles,
-        onChange: uploadImages,
-        onRemove: removeImage
+        initialFiles: initialVideoFiles,
+        onChange: uploadVideos,
+        onRemove: removeVideo
     })
 
-    async function uploadImages(fileItems: IFileItem[]) {
+    async function uploadVideos(fileItems: IFileItem[]) {
         let currentArticle = article
         onStartTransition?.()
 
@@ -113,7 +113,7 @@ export function ArticleEditImages({
         onEndTransition?.()
     }
 
-    async function removeImage(fileItem: IFileItem) {
+    async function removeVideo(fileItem: IFileItem) {
         if (!article) return
         onStartTransition?.()
 

@@ -38,6 +38,10 @@ interface IResultWithError {
   error: FetchBaseQueryError | SerializedError
 }
 
+interface IResultWithData<T> {
+  data: T;
+}
+
 interface TypedFormData<T> extends FormData {
   append(name: T | '_method', value: string | Blob, fileName?: string): void
   delete(name: T): void

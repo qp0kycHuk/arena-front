@@ -1,3 +1,4 @@
+import { ImageIcon } from '@assets/icons/stroke';
 import { IArticle } from '@models/Article';
 import * as React from 'react';
 
@@ -8,6 +9,7 @@ interface IArticleViewImageProps {
 
 export function ArticleViewImage({ article, isLoading }: IArticleViewImageProps) {
     const imageClassName = 'self-start h-20 mr-6 overflow-hidden rounded-xl w-28'
+    const imageSrc = article?.image_src ? (process.env.REACT_APP_API_URL + article.image_src) : ''
 
     if (!article || isLoading) {
         return (
@@ -15,9 +17,15 @@ export function ArticleViewImage({ article, isLoading }: IArticleViewImageProps)
         )
     }
 
+    if (!imageSrc) {
+        return (<div className={imageClassName + ' flex bg-gray bg-opacity-10'}>
+            <ImageIcon className="text-3xl text-gray m-auto" />
+        </div>)
+    }
+
     return (
         <div className={imageClassName}>
-            <img src={article?.image_src || '/img/test.jpg'} alt="" className='object-cover w-full h-full' />
+            <img src={imageSrc} alt="" className='object-cover w-full h-full' />
         </div>
     );
 }

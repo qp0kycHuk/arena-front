@@ -3,7 +3,7 @@ import { rootApi } from '../api'
 
 
 export type ICreateRequest = TypedFormData<'user_id' | 'content' | 'excerpt' | 'name' | 'image'>
-export type IUpdateRequest = TypedFormData<'id' | 'user_id' | 'content' | 'excerpt' | 'name' | 'image'>
+export type IUpdateRequest = TypedFormData<'id' | 'user_id' | 'content' | 'excerpt' | 'name' | 'image' | 'image_delete'>
 
 
 const ARTICLES_TAG: 'articles' = 'articles'
@@ -39,13 +39,14 @@ export const articlesApi = taggetRootApi.injectEndpoints({
             transformResponse: (response: IItemResponse<IArticle>) => {
                 return response.item
             },
-            providesTags: (result, error, id) => [{ type: ARTICLES_TAG, id }],
+            providesTags: (result, error, id) => [{ type: ARTICLES_TAG, id: id.toString() }],
+
         }),
         create: builder.mutation<IArticle, ICreateRequest>({
-            query: (body) => ({
+            query: (formData) => ({
                 url: ROOT_ENDPOINT_URL,
                 method: 'post',
-                body
+                body: formData
             }),
             transformResponse: (response: IItemResponse<IArticle>) => {
                 return response.item
@@ -57,23 +58,26 @@ export const articlesApi = taggetRootApi.injectEndpoints({
                 formData.append('_method', 'PUT')
                 return {
                     url: ROOT_ENDPOINT_URL + '/' + formData.get('id'),
-                    method: 'put',
+                    method: 'post',
                     body: formData
                 }
             },
             transformResponse: (response: IItemResponse<IArticle>) => {
                 return response.item
             },
-            // invalidatesTags: (result, error, { id }) => [{ type: ARTICLES_TAG, id }],
-            async onQueryStarted({ ...patch }, { dispatch, queryFulfilled }) {
+            async onQueryStarted(formData, { dispatch, queryFulfilled }) {
                 try {
                     const { data: updatedArticle } = await queryFulfilled
-                    dispatch(articlesApi.util.updateQueryData('getById', updatedArticle.id, (draft) => {
+                    dispatch(articlesApi.util.updateQueryData('getById', updatedArticle.id.toString(), (draft) => {
                         Object.assign(draft, updatedArticle)
                     }))
-                } catch (error) {
-
-                }
+                    dispatch(articlesApi.util.updateQueryData('get', null, (draft) => {
+                        const index = draft.findIndex((item) => item.id === updatedArticle.id)
+                        if(draft[index]){
+                            draft[index] = updatedArticle
+                        }
+                    }))
+                } catch (error) { }
             },
         }),
     }),

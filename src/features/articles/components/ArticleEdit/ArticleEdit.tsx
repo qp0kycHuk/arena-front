@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useUserQuery } from '@store/auth';
-import { ICreateRequest, useArticleControl, useGetByIdQuery } from '@store/articles';
+import { ICreateRequest, IUpdateRequest, useArticleControl, useGetByIdQuery } from '@store/articles';
 import { videoExtention } from '@utils/const/extentions';
 import { Editor, EditorControl, useEditor, useInitialContent } from '@features/editor';
 import { Links } from '@features/editor/components/Links/Links';
@@ -16,6 +16,8 @@ import { ARTICLE_ERROR_CREATE, ARTICLE_ERROR_UPDATE, ARTICLE_SUCCESS_CREATE, ART
 
 import { ArticleEditImages } from './ArticleEdit.Images';
 import { ArticleEditAnons } from './ArticleEdit.Anons';
+import { getErrorMessage } from '@hooks/useErrorMessage';
+import axios from 'axios';
 
 interface IArticleEditProps {
     articleId?: string | number
@@ -28,8 +30,7 @@ export function ArticleEdit({ articleId }: IArticleEditProps) {
     const { data: user } = useUserQuery(null)
     const {
         createDraftArticle,
-        updateArticle,
-        createArticle
+        upsertArticle
     } = useArticleControl()
 
     const navigate = useNavigate();
@@ -56,6 +57,10 @@ export function ArticleEdit({ articleId }: IArticleEditProps) {
 
         formData.append('user_id', user.id.toString())
 
+        if (article) {
+            (formData as IUpdateRequest).append('id', article.id.toString())
+        }
+
         return formData
     }
 
@@ -70,8 +75,18 @@ export function ArticleEdit({ articleId }: IArticleEditProps) {
         const formData = getFormData()
 
         setLoading(true)
-        // await onSubmit(formData as ICreateRequest)
+        const result = await upsertArticle(formData)
         setLoading(false)
+
+        const errorMessage = getErrorMessage((result as IResultWithError)?.error)
+
+        if (errorMessage) {
+            toast.error(errorMessage)
+            return
+        }
+
+        let updatedArticle = (result as IResultWithData<IArticle>).data
+        navigate('/articles/' + updatedArticle.id)
     }
 
     return (
@@ -81,7 +96,12 @@ export function ArticleEdit({ articleId }: IArticleEditProps) {
                 <div className="px-8 py-6">
                     <div ref={titleRef} className='mb-8 text-3xl width-placeholder'
                         contentEditable data-placeholder='Введите название статьи'
-                        dangerouslySetInnerHTML={{ __html: article?.name || '' }} ></div>
+                        dangerouslySetInnerHTML={{ __html: article?.name || '' }}
+                        onInput={() => {
+                            if (titleRef.current) {
+                                titleRef.current.innerHTML = titleRef.current.textContent || ''
+                            }
+                        }} ></div>
                     <EditorControl editor={editor} className='sticky z-10 -ml-4 -mr-4 top-2' />
                     <Editor className='min-h-[260px] flex flex-col' editor={editor} />
                 </div>
@@ -92,13 +112,6 @@ export function ArticleEdit({ articleId }: IArticleEditProps) {
                         getFormData={getFormData}
                         onStartTransition={() => { setLoading(true) }}
                         onEndTransition={() => { setLoading(false) }}
-                        onUpload={(currentArticle) => {
-                            if (articleId) {
-                                refetchArticle()
-                            } else {
-                                navigate('/articles/edit/' + currentArticle.id)
-                            }
-                        }}
                     />
                 </div>
                 <div className="border-t border-gray border-opacity-30"></div>
@@ -108,13 +121,6 @@ export function ArticleEdit({ articleId }: IArticleEditProps) {
                         getFormData={getFormData}
                         onStartTransition={() => { setLoading(true) }}
                         onEndTransition={() => { setLoading(false) }}
-                        onUpload={(currentArticle) => {
-                            if (articleId) {
-                                refetchArticle()
-                            } else {
-                                navigate('/articles/edit/' + currentArticle.id)
-                            }
-                        }}
                     />
                 </div>
                 {/* <div className="border-t border-gray border-opacity-30"></div>
