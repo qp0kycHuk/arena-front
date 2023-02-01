@@ -15,7 +15,7 @@ export function ArticleEditPage(props: IArticleEditPageProps) {
                 Назад
             </Button>
 
-            <ArticleEdit articleId={id} />
+            <ArticleEdit articleId={id?.toString()} />
         </div>
     );
 }

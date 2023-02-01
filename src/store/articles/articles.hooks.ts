@@ -1,5 +1,4 @@
-import { IArticle } from "@models/Article"
-import { ICreateRequest, IUpdateRequest, articlesApi, useCreateMutation, useUpdateMutation } from "./articles.api"
+import { ICreateRequest, IUpdateRequest, useCreateMutation, useUpdateMutation } from "./articles.api"
 
 export function useArticleControl() {
     const [create] = useCreateMutation()

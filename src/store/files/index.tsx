@@ -1,1 +1,2 @@
-export { useUploadMutation, useRemoveMutation } from './files.api'
+export { useRemoveMutation, useUploadMutation } from './files.api'
+export type { IUploadRequest } from './files.api'

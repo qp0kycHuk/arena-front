@@ -1,8 +1,4 @@
-import { useGenerateHtml } from '@features/editor';
 import { useGetByIdQuery } from '@store/articles';
-import { BookmarkIcon, PencilIcon } from '@assets/icons/stroke';
-import { Button } from '@features/ui';
-import { Link } from 'react-router-dom';
 import { ArticleViewImage } from './ArticleView.Image';
 import { ArticleViewTitle } from './ArticleView.Title';
 import { ArticleViewBody } from './ArticleView.Body';

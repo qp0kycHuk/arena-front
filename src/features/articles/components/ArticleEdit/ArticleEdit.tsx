@@ -1,47 +1,35 @@
 import * as React from 'react';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useUserQuery } from '@store/auth';
 import { ICreateRequest, IUpdateRequest, useArticleControl, useGetByIdQuery } from '@store/articles';
-import { videoExtention } from '@utils/const/extentions';
-import { Editor, EditorControl, useEditor, useInitialContent } from '@features/editor';
-import { Links } from '@features/editor/components/Links/Links';
-import { useLinks } from '@features/editor/hooks/useLinks';
-import { Uploader, useUploader } from '@features/fileUploader';
+import { Editor, EditorControl, useEditor, useInitialContent, Links, useLinks } from '@features/editor';
 import { Button } from '@features/ui';
 import { Spiner } from '@components/Spiner';
 import { IArticle } from '@models/Article';
-import { useNavigate } from 'react-router-dom';
 import { toast } from '@lib/Toast';
-import { ARTICLE_ERROR_CREATE, ARTICLE_ERROR_UPDATE, ARTICLE_SUCCESS_CREATE, ARTICLE_SUCCESS_UPDATE } from '../../const/Text';
-
+import { getErrorMessage } from '@hooks/useErrorMessage';
 import { ArticleEditImages } from './ArticleEdit.Images';
 import { ArticleEditAnons } from './ArticleEdit.Anons';
-import { getErrorMessage } from '@hooks/useErrorMessage';
-import axios from 'axios';
 
 interface IArticleEditProps {
     articleId?: string | number
 }
 
+// TODO links, editor images, editor files
+
 export function ArticleEdit({ articleId }: IArticleEditProps) {
-    const { data: article, refetch: refetchArticle } = useGetByIdQuery(articleId || '')
-    const [loading, setLoading] = useState(false)
-    const titleRef = useRef<HTMLDivElement>(null);
+    const { data: article } = useGetByIdQuery(articleId || '')
     const { data: user } = useUserQuery(null)
-    const {
-        createDraftArticle,
-        upsertArticle
-    } = useArticleControl()
-
+    const { upsertArticle } = useArticleControl()
     const navigate = useNavigate();
+    const titleRef = useRef<HTMLDivElement>(null);
+    const [loading, setLoading] = useState(false)
 
-    const {
-        editor,
-        anonsUploader,
-        videoUploader,
-        linksController,
-    } = useArticleEdit(article)
+    const { editor, linksController } = useArticleEdit(article)
 
+    // create form data from edit component states
+    // name, editor
     function getFormData(): ICreateRequest {
         const formData: ICreateRequest = new FormData()
         formData.append('name', titleRef.current?.textContent || '')
@@ -85,7 +73,7 @@ export function ArticleEdit({ articleId }: IArticleEditProps) {
             return
         }
 
-        let updatedArticle = (result as IResultWithData<IArticle>).data
+        const updatedArticle = (result as IResultWithData<IArticle>).data
         navigate('/articles/' + updatedArticle.id)
     }
 
@@ -100,10 +88,17 @@ export function ArticleEdit({ articleId }: IArticleEditProps) {
                         onInput={() => {
                             if (titleRef.current) {
                                 titleRef.current.innerHTML = titleRef.current.textContent || ''
+                                const selection = window.getSelection();  
+                                const range = document.createRange();  
+                                selection?.removeAllRanges();  
+                                range.selectNodeContents(titleRef.current);  
+                                range.collapse(false);  
+                                selection?.addRange(range);  
+                                titleRef.current.focus();
                             }
                         }} ></div>
                     <EditorControl editor={editor} className='sticky z-10 -ml-4 -mr-4 top-2' />
-                    <Editor className='min-h-[260px] flex flex-col' editor={editor} />
+                    <Editor editor={editor} className='min-h-[260px] flex flex-col' />
                 </div>
                 <div className="border-t border-gray border-opacity-30"></div>
                 <div className="px-8 py-6">
@@ -142,7 +137,6 @@ export function ArticleEdit({ articleId }: IArticleEditProps) {
     );
 }
 
-
 function useArticleEdit(article?: IArticle) {
     const initialEditorContent = useInitialContent(article?.content, [article]);
 
@@ -153,26 +147,10 @@ function useArticleEdit(article?: IArticle) {
         }
     })
 
-    const anonsUploader = useUploader({
-        // initialFiles: [article.anons],
-        multiple: false
-    })
-
-
-
-
-
-    const videoUploader = useUploader({
-        extention: videoExtention,
-    })
-
     const linksController = useLinks();
 
     return {
         editor,
-        anonsUploader,
-        // imageUploader,
-        videoUploader,
         linksController,
     }
 }

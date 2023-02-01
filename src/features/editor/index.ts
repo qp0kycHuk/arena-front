@@ -1,3 +1,5 @@
+export { Links } from './components/Links/Links'
 export { Editor } from './components/TextEditor/Editor'
 export { EditorControl } from './components/TextEditor/EditorControl'
 export { useEditor, useGenerateHtml, useInitialContent } from './hooks/useEditor'
+export { useLinks } from './hooks/useLinks'
