@@ -1,10 +1,8 @@
-export { ArticleEdit } from './components/ArticleEdit/ArticleEdit'
-export { ArticleRedactor } from './components/ArticleEdit/ArticleRedactor'
-export { ArticleUpdate } from './components/ArticleEdit/ArticleUpdate'
-export { ArticleCreate } from './components/ArticleEdit/ArticleCreate'
 export { ArticleItem } from './components/ArticleItem/ArticleItem'
 export { ArticleView } from './components/ArticleView/ArticleView'
 export { ArticleList } from './components/ArticleList/ArticleList'
+
+export { ArticleEdit } from './components/ArticleEdit/ArticleEdit'
 
 export { ArticleViewPage } from './pages/ArticleViewPage'
 export { ArticleListPage } from './pages/ArticleListPage'

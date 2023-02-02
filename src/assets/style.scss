@@ -65,7 +65,7 @@ body {
         .hljs-name {
             color: #f92672;
         }
-
+        .xml.hljs-tag.hljs-name,
         .hljs-code {
             color: #66d9ef;
         }
@@ -81,7 +81,7 @@ body {
             color: #bf79db;
         }
 
-        .hljs-string,
+        .xml.hljs-tag.hljs-attr,
         .hljs-bullet,
         .hljs-subst,
         .hljs-title,
@@ -179,8 +179,6 @@ body {
 .width-placeholder[data-placeholder]:empty:before {
     @apply text-gray;
     content: attr(data-placeholder);
-    float: left;
-    height: 0;
     pointer-events: none;
 }
 

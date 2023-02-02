@@ -1,13 +1,10 @@
-import { useGenerateHtml } from '@features/editor';
 import { useGetByIdQuery } from '@store/articles';
-import { BookmarkIcon, PencilIcon } from '@assets/icons/stroke';
-import { Button } from '@features/ui';
-import { Link } from 'react-router-dom';
 import { ArticleViewImage } from './ArticleView.Image';
 import { ArticleViewTitle } from './ArticleView.Title';
 import { ArticleViewBody } from './ArticleView.Body';
 import { ArticleViewDates } from './ArticleView.Dates';
 import { ArticleViewButtons } from './ArticleView.Buttons';
+import { ArticleViewImages } from './ArticleView.Images';
 
 interface IArticleViewProps {
     articleId: string | number
@@ -25,6 +22,7 @@ export function ArticleView({ articleId }: IArticleViewProps) {
                     <ArticleViewTitle article={article} />
                 </div>
                 <ArticleViewBody article={article} />
+                <ArticleViewImages article={article} />
             </div>
             <div className='min-w-[266px] w-[266px] py-8 px-6 border-l border-gray border-opacity-30'>
                 <ArticleViewButtons article={article} />

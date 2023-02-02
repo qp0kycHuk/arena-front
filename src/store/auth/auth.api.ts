@@ -14,11 +14,11 @@ export interface IRegisterRequest {
     password_confirmation: string
 }
 
-const LOGIN_ENDPOINT_URL = 'api/login'
-const REGISTER_ENDPOINT_URL = 'api/register'
-const LOGOUT_ENDPOINT_URL = 'api/logout'
-const USER_ENDPOINT_URL = 'api/user'
-const CSRF_ENDPOINT_URL = 'sanctum/csrf-cookie'
+const LOGIN_ENDPOINT_URL = '/api/login'
+const REGISTER_ENDPOINT_URL = '/api/register'
+const LOGOUT_ENDPOINT_URL = '/api/logout'
+const USER_ENDPOINT_URL = '/api/user'
+const CSRF_ENDPOINT_URL = '/sanctum/csrf-cookie'
 const AUTH_TAG = 'Auth'
 
 const taggetRootApi = rootApi.enhanceEndpoints({ addTagTypes: [AUTH_TAG] });
@@ -55,7 +55,7 @@ export const authApi = taggetRootApi.injectEndpoints({
         }),
         user: builder.query<IUser, any>({
             query: () => ({
-                url: USER_ENDPOINT_URL,
+                url: USER_ENDPOINT_URL, 
             }),
         }),
 

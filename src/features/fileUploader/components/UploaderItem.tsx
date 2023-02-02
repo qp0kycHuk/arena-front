@@ -13,16 +13,6 @@ interface IUpliaderItemProps {
 export function UploaderItem({ item, extention, update, remove }: IUpliaderItemProps) {
     const isMedia = extention?.type === 'image' || extention?.type === 'video'
 
-
-    useEffect(() => {
-        if (!item.src && item.file && isMedia) {
-            getFilePreview(item.file)
-                .then((result) => {
-                    update(item, { preview: result?.toString() })
-                })
-        }
-    }, [])
-
     return (
         <div className='relative z-10 w-32'>
             <div className='relative w-full h-24'>
