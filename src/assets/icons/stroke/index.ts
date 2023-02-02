@@ -15,6 +15,7 @@ export { ReactComponent as DocumentIcon } from './document.svg';
 export { ReactComponent as FileTextIcon } from './fileText.svg';
 export { ReactComponent as FoldersIcon } from './folders.svg';
 export { ReactComponent as GalOchkaIcon } from './galOchka.svg';
+export { ReactComponent as HashIcon } from './hash.svg';
 export { ReactComponent as ImageIcon } from './image.svg';
 export { ReactComponent as InsertLinkIcon } from './insertLink.svg';
 export { ReactComponent as ItalicIcon } from './italic.svg';
