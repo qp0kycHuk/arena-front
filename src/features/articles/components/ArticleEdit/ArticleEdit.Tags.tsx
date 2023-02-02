@@ -85,6 +85,13 @@ export function ArticleEditTags({
                             className={getUnputClassNames({ borderless: true, className: 'w-36' })}
                             placeholder='Напишите тэг...'
                             displayValue={() => name}
+                            onKeyUp={(event:React.KeyboardEvent) => {
+                                if(event.code === 'Enter'){
+                                    event.preventDefault()
+                                    event.stopPropagation()
+                                    addTagRequest()
+                                }
+                            }}
                             onChange={(event) => {
                                 setName(event.target.value)
                                 setOpen(true)
