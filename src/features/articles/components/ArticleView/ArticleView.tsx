@@ -31,7 +31,7 @@ export function ArticleView({ articleId }: IArticleViewProps) {
                     <ArticleViewDates article={article} />
                 </div>
                 <div className="flex flex-wrap gap-2">
-                    {article?.tags.map((tag) => <Tag>#{tag.name}</Tag>)}
+                    {article?.tags.map((tag) => <Tag key={tag.id}>#{tag.name}</Tag>)}
                 </div>
             </div>
         </div>
