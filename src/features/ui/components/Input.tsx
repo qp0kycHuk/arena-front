@@ -4,12 +4,13 @@ import { Color, Size } from '../types';
 import classnames from 'classnames'
 
 interface IProps {
-    color: Color
-    size: Size
+    color?: Color
+    size?: Size
     borderless?: boolean
 };
 
 export type InputProps = IProps & Omit<React.InputHTMLAttributes<HTMLInputElement>, keyof IProps>
+export type InputRef = React.ForwardedRef<HTMLInputElement>
 
 const baseClassNames = 'rounded-lg  outline-none disabled:pointer-events-none disabled:opacity-50 '
 
@@ -20,27 +21,43 @@ const sizeClassNames: Record<Size, string> = {
     large: 'h-14',
 };
 
-export function Input({ color, size, borderless, ...props }: InputProps) {
+export function InputComponent({
+    color = 'primary',
+    size = 'middle',
+    borderless = false,
+    ...props }: InputProps,
+    ref: InputRef
+) {
 
     return (
-        <input {...props}
-            className={classnames(
-                baseClassNames,
-                sizeClassNames[size],
-                props.className,
-                {
-                    ['pl-4']: !props.className?.includes('pl-') && !props.className?.includes('px-'),
-                    ['pr-4']: !props.className?.includes('pr-') && !props.className?.includes('px-'),
-                    ['bg-white dark:bg-opacity-5']: !props.className?.includes('bg-'),
-                    ['border border-black border-opacity-10 focus:ring-1']: !borderless,
-                    [`focus:border-${color}  focus:ring-${color}`]: !borderless
-                }
-            )}
+        <input {...props} ref={ref}
+            className={getUnputClassNames({
+                color,
+                size,
+                borderless,
+                ...props
+            })}
         />
     );
 };
 
-Input.defaultProps = {
-    color: 'primary',
-    size: 'middle',
+export function getUnputClassNames({
+    color = 'primary',
+    size = 'middle',
+    borderless = false,
+    ...props }: InputProps) {
+    return classnames(
+        baseClassNames,
+        sizeClassNames[size],
+        props.className,
+        {
+            ['pl-4']: !props.className?.includes('pl-') && !props.className?.includes('px-'),
+            ['pr-4']: !props.className?.includes('pr-') && !props.className?.includes('px-'),
+            ['bg-white dark:bg-opacity-5']: !props.className?.includes('bg-'),
+            ['border border-black border-opacity-10 focus:ring-1']: !borderless,
+            [`focus:border-${color}  focus:ring-${color}`]: !borderless
+        }
+    )
 }
+
+export const Input = React.forwardRef(InputComponent)
