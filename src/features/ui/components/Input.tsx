@@ -1,16 +1,17 @@
 // @flow
 import * as React from 'react';
 import { Color, Size } from '../types';
+import classnames from 'classnames'
 
 interface IProps {
     color: Color
     size: Size
-
+    borderless?: boolean
 };
 
 export type InputProps = IProps & Omit<React.InputHTMLAttributes<HTMLInputElement>, keyof IProps>
 
-const baseClassNames = 'rounded-lg border border-black border-opacity-10 outline-none disabled:pointer-events-none disabled:opacity-50 focus:ring-1'
+const baseClassNames = 'rounded-lg  outline-none disabled:pointer-events-none disabled:opacity-50 '
 
 const sizeClassNames: Record<Size, string> = {
     xsmall: 'h-7',
@@ -19,22 +20,22 @@ const sizeClassNames: Record<Size, string> = {
     large: 'h-14',
 };
 
-export function Input({ color, size, ...props }: InputProps) {
-    const extraClassNames = [
-        props.className?.includes('px-') ? '' : props.className?.includes('pl-') ? '' : 'pl-4',
-        props.className?.includes('px-') ? '' : props.className?.includes('pr-') ? '' : 'pr-4',
-        props.className?.includes('bg-') ? '' : 'bg-white dark:bg-opacity-5',
-        `focus:border-${color}  focus:ring-${color}`
-    ].join(' ')
+export function Input({ color, size, borderless, ...props }: InputProps) {
 
     return (
         <input {...props}
-            className={[
+            className={classnames(
                 baseClassNames,
                 sizeClassNames[size],
-                extraClassNames,
-                props.className
-            ].join(' ')}
+                props.className,
+                {
+                    ['pl-4']: !props.className?.includes('pl-') && !props.className?.includes('px-'),
+                    ['pr-4']: !props.className?.includes('pr-') && !props.className?.includes('px-'),
+                    ['bg-white dark:bg-opacity-5']: !props.className?.includes('bg-'),
+                    ['border border-black border-opacity-10 focus:ring-1']: !borderless,
+                    [`focus:border-${color}  focus:ring-${color}`]: !borderless
+                }
+            )}
         />
     );
 };
