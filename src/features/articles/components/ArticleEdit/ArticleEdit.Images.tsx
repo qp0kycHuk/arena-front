@@ -40,40 +40,37 @@ export function ArticleEditImages({
 
     const imageUploader = useUploader({
         initialFiles: initialImageFiles,
-        onChange: uploadImages,
+        onChange: changeHandler,
         onRemove: removeImage
     })
 
-    async function uploadImages(fileItems: IFileItem[]) {
-        let currentArticle = article
+    async function changeHandler(fileItems: IFileItem[]) {
+        const files = fileItems.map((item) => (item as Required<IFileItem>).file)
         onStartTransition?.()
+        uploadImages(files, article)
+        onEndTransition?.()
+    }
+
+    async function uploadImages(files: File[], article?: IArticle) {
+        // check files
+        if (!files.length) return;
+        let currentArticle = article
 
         // Create draft article if article not exist
         if (!article) {
             const createDraftResult = await createDraftArticle(getFormData())
             currentArticle = (createDraftResult as { data: IArticle; }).data
-
             const errorMessage = getErrorMessage((createDraftResult as IResultWithError)?.error)
 
             if (errorMessage) {
                 toast.error(errorMessage)
-                onEndTransition?.()
                 return
             }
         }
 
         if (!currentArticle) {
             toast.error('currentArticle is undefined')
-            onEndTransition?.()
             return
-        }
-
-        // check files
-        const files = fileItems.map((item) => (item as Required<IFileItem>).file)
-
-        if (!files.length) {
-            onEndTransition?.()
-            return;
         }
 
         // create form data
@@ -89,7 +86,6 @@ export function ArticleEditImages({
         const errorMessage = getErrorMessage((result as IResultWithError)?.error)
 
         if (errorMessage) {
-            onEndTransition?.()
             toast.error(errorMessage)
             return
         }
@@ -109,8 +105,6 @@ export function ArticleEditImages({
         if (!article) {
             navigate('/articles/edit/' + currentArticle.id)
         }
-
-        onEndTransition?.()
     }
 
     async function removeImage(fileItem: IFileItem) {
@@ -151,3 +145,5 @@ export function ArticleEditImages({
         </Uploader>
     );
 }
+
+

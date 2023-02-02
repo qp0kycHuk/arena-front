@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Extension } from '@tiptap/core';
-import { Editor } from '@tiptap/react';
+import type { Editor } from '@tiptap/react';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { filterFiles } from '@utils/index';
 import { imageExtention, docExtention } from '@utils/const/extentions';

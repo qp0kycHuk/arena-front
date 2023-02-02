@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useEditor as useEditorConfig, EditorOptions, generateHTML, JSONContent } from '@tiptap/react'
+import { useEditor as useEditorConfig, EditorOptions, generateHTML, JSONContent, Editor } from '@tiptap/react'
 import { Node } from '@tiptap/core'
 import StarterKit from '@tiptap/starter-kit'
 import Underline from '@tiptap/extension-underline'
@@ -21,7 +21,7 @@ import html from 'highlight.js/lib/languages/xml'
 import php from 'highlight.js/lib/languages/php'
 
 import { FileBlock } from '../components/TextEditor/FileBlock'
-import { FilePaste, filePasteHandler } from '../lib/file-paste-extension'
+import { FilePaste } from '../lib/file-paste-extension'
 import { FileBlockExtension } from '../lib/file-block-extension'
 
 lowlight.registerLanguage('html', html)
@@ -33,7 +33,8 @@ lowlight.registerLanguage('php', php)
 
 interface IOptions {
     config?: Partial<EditorOptions> | undefined
-    placeholder?: string
+    placeholder?: string,
+    filePasteHandler: (files: File[], editor: Editor) => void
 }
 
 const defaultOptions = {
@@ -104,8 +105,8 @@ export function useEditor(options?: IOptions) {
             FilePaste.configure({
                 render: () => {
                     return {
-                        onPaste: filePasteHandler,
-                        onDrop: filePasteHandler,
+                        onPaste: options?.filePasteHandler,
+                        onDrop: options?.filePasteHandler,
                     };
                 },
             }),
@@ -115,8 +116,7 @@ export function useEditor(options?: IOptions) {
             Placeholder.configure({ placeholder: placeholder, }),
         ],
         ...config
-
-    })
+    }, [options])
 }
 
 export function useInitialContent(content?: string, dependeties: any[] = []) {

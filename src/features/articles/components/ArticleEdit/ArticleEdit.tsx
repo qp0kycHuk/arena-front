@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUserQuery } from '@store/auth';
 import { ICreateRequest, IUpdateRequest, useArticleControl, useGetByIdQuery } from '@store/articles';
@@ -13,7 +13,10 @@ import { ArticleEditImages } from './ArticleEdit.Images';
 import { ArticleEditAnons } from './ArticleEdit.Anons';
 import { ArticleEditTags } from './ArticleEdit.Tags';
 import { EntityId } from '@reduxjs/toolkit';
-
+import { filterFiles } from '@utils/index';
+import { docExtention, imageExtention } from '@utils/const/extentions';
+import { ArticleEditEditor } from './ArticleEdit.Editor';
+import type { Editor as EditorType } from '@tiptap/react';
 
 interface IArticleEditProps {
     articleId?: string | number
@@ -32,17 +35,22 @@ export function ArticleEdit({ articleId }: IArticleEditProps) {
     const loadingStart = () => setLoading(true)
     const loadingEnd = () => setLoading(false)
 
-    const { editor, linksController } = useArticleEdit(article)
+    const editorRef = useRef<EditorType>(null)
+
+    console.log(editorRef);
+
+
+    const linksController = useLinks();
 
     // create form data from edit component states
     // name, editor
-    function getFormData(): ICreateRequest {
+    const getFormData = useCallback((): ICreateRequest => {
         const formData: ICreateRequest = new FormData()
         formData.append('name', titleRef.current?.textContent || '')
 
-        if (editor) {
-            formData.append('content', JSON.stringify(editor.getJSON()))
-            formData.append('excerpt', editor.getText().substring(0, 100))
+        if (editorRef.current) {
+            formData.append('content', JSON.stringify(editorRef.current.getJSON()))
+            formData.append('excerpt', editorRef.current.getText().substring(0, 100))
         }
 
         if (!user) {
@@ -60,7 +68,7 @@ export function ArticleEdit({ articleId }: IArticleEditProps) {
         })
 
         return formData
-    }
+    }, [titleRef, article, addedTags])
 
     async function submitHandler(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
@@ -72,9 +80,9 @@ export function ArticleEdit({ articleId }: IArticleEditProps) {
 
         const formData = getFormData()
 
-        setLoading(true)
+        loadingStart()
         const result = await upsertArticle(formData)
-        setLoading(false)
+        loadingEnd()
 
         const errorMessage = getErrorMessage((result as IResultWithError)?.error)
 
@@ -86,6 +94,8 @@ export function ArticleEdit({ articleId }: IArticleEditProps) {
         const updatedArticle = (result as IResultWithData<IArticle>).data
         navigate('/articles/' + updatedArticle.id)
     }
+
+
 
     return (
         <form className="" onSubmit={submitHandler}>
@@ -107,8 +117,14 @@ export function ArticleEdit({ articleId }: IArticleEditProps) {
                                 titleRef.current.focus();
                             }
                         }} ></div>
-                    <EditorControl editor={editor} className='sticky z-10 -ml-4 -mr-4 top-2' />
-                    <Editor editor={editor} className='min-h-[260px] flex flex-col' />
+
+                    <ArticleEditEditor
+                        ref={editorRef}
+                        article={article}
+                        getFormData={getFormData}
+                        onStartTransition={() => { setLoading(true) }}
+                        onEndTransition={() => { setLoading(false) }}
+                    />
                 </div>
                 <div className="border-t border-gray border-opacity-30"></div>
                 <div className="px-8 py-6">
@@ -155,20 +171,4 @@ export function ArticleEdit({ articleId }: IArticleEditProps) {
     );
 }
 
-function useArticleEdit(article?: IArticle) {
-    const initialEditorContent = useInitialContent(article?.content, [article]);
 
-    const editor = useEditor({
-        placeholder: 'Напишите статью...',
-        config: {
-            content: initialEditorContent
-        }
-    })
-
-    const linksController = useLinks();
-
-    return {
-        editor,
-        linksController,
-    }
-}
