@@ -2,8 +2,10 @@ import { IArticle } from '@models/Article';
 import { rootApi } from '../api'
 
 
-export type ICreateRequest = TypedFormData<'user_id' | 'content' | 'excerpt' | 'name' | 'image'>
-export type IUpdateRequest = TypedFormData<'id' | 'user_id' | 'content' | 'excerpt' | 'name' | 'image' | 'image_delete'>
+type CreateParams = 'user_id' | 'content' | 'excerpt' | 'name' | 'image' | 'tags[]'
+type UpdateParams = CreateParams | 'id'| 'image_delete'
+export type ICreateRequest = TypedFormData<CreateParams>
+export type IUpdateRequest = TypedFormData<UpdateParams>
 
 
 const ARTICLES_TAG: 'articles' = 'articles'
@@ -14,10 +16,12 @@ const taggetRootApi = rootApi.enhanceEndpoints({ addTagTypes: [ARTICLES_TAG] });
 export const articlesApi = taggetRootApi.injectEndpoints({
     endpoints: (builder) => ({
         get: builder.query<IArticle[], null>({
-            query: () => ({
-                url: ROOT_ENDPOINT_URL,
+            query: () => {
+                return {
+                    url: ROOT_ENDPOINT_URL,
 
-            }),
+                }
+            },
             transformResponse: (response: IListResponse<IArticle>) => {
                 return response.items
             },
