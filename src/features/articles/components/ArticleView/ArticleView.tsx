@@ -5,6 +5,7 @@ import { ArticleViewBody } from './ArticleView.Body';
 import { ArticleViewDates } from './ArticleView.Dates';
 import { ArticleViewButtons } from './ArticleView.Buttons';
 import { ArticleViewImages } from './ArticleView.Images';
+import { Tag } from '@components/Tag';
 
 interface IArticleViewProps {
     articleId: string | number
@@ -28,7 +29,9 @@ export function ArticleView({ articleId }: IArticleViewProps) {
                 <ArticleViewButtons article={article} />
                 <div className="my-8">
                     <ArticleViewDates article={article} />
-
+                </div>
+                <div className="flex flex-wrap gap-2">
+                    {article?.tags.map((tag) => <Tag>#{tag.name}</Tag>)}
                 </div>
             </div>
         </div>

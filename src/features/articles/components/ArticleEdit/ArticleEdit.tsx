@@ -11,6 +11,9 @@ import { toast } from '@lib/Toast';
 import { getErrorMessage } from '@hooks/useErrorMessage';
 import { ArticleEditImages } from './ArticleEdit.Images';
 import { ArticleEditAnons } from './ArticleEdit.Anons';
+import { ArticleEditTags } from './ArticleEdit.Tags';
+import { EntityId } from '@reduxjs/toolkit';
+
 
 interface IArticleEditProps {
     articleId?: string | number
@@ -24,7 +27,10 @@ export function ArticleEdit({ articleId }: IArticleEditProps) {
     const { upsertArticle } = useArticleControl()
     const navigate = useNavigate();
     const titleRef = useRef<HTMLDivElement>(null);
+    const [addedTags, setAddedTags] = useState<EntityId[]>(article?.tags.map((tag) => tag.id) || [])
     const [loading, setLoading] = useState(false)
+    const loadingStart = () => setLoading(true)
+    const loadingEnd = () => setLoading(false)
 
     const { editor, linksController } = useArticleEdit(article)
 
@@ -48,6 +54,10 @@ export function ArticleEdit({ articleId }: IArticleEditProps) {
         if (article) {
             (formData as IUpdateRequest).append('id', article.id.toString())
         }
+
+        addedTags.forEach((tagId) => {
+            formData.append('tags[]', tagId.toString())
+        })
 
         return formData
     }
@@ -88,12 +98,12 @@ export function ArticleEdit({ articleId }: IArticleEditProps) {
                         onInput={() => {
                             if (titleRef.current) {
                                 titleRef.current.innerHTML = titleRef.current.textContent || ''
-                                const selection = window.getSelection();  
-                                const range = document.createRange();  
-                                selection?.removeAllRanges();  
-                                range.selectNodeContents(titleRef.current);  
-                                range.collapse(false);  
-                                selection?.addRange(range);  
+                                const selection = window.getSelection();
+                                const range = document.createRange();
+                                selection?.removeAllRanges();
+                                range.selectNodeContents(titleRef.current);
+                                range.collapse(false);
+                                selection?.addRange(range);
                                 titleRef.current.focus();
                             }
                         }} ></div>
@@ -105,8 +115,8 @@ export function ArticleEdit({ articleId }: IArticleEditProps) {
                     <ArticleEditAnons
                         article={article}
                         getFormData={getFormData}
-                        onStartTransition={() => { setLoading(true) }}
-                        onEndTransition={() => { setLoading(false) }}
+                        onStartTransition={loadingStart}
+                        onEndTransition={loadingEnd}
                     />
                 </div>
                 <div className="border-t border-gray border-opacity-30"></div>
@@ -127,6 +137,14 @@ export function ArticleEdit({ articleId }: IArticleEditProps) {
                 <div className="border-t border-gray border-opacity-30"></div>
                 <div className="px-8 py-6">
                     <Links controller={linksController}></Links>
+                </div>
+                <div className="border-t border-gray border-opacity-30"></div>
+                <div className="px-8 py-6">
+                    <ArticleEditTags
+                        addedTags={addedTags}
+                        setAddedTags={setAddedTags}
+                        onStartTransition={loadingStart}
+                        onEndTransition={loadingEnd} />
                 </div>
             </div>
             <div className="flex gap-4 mt-8">

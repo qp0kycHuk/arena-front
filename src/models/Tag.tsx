@@ -1,4 +1,6 @@
+import { EntityId } from "@reduxjs/toolkit"
+
 export interface ITag {
-    id: number
+    id: EntityId
     name: string
 }
