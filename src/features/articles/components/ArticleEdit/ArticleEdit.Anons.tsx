@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ICreateRequest, IUpdateRequest, useArticleControl } from '@store/articles';
 import { articlesApi } from '@store/articles/articles.api';
@@ -7,20 +7,14 @@ import { getErrorMessage } from '@hooks/useErrorMessage';
 import { toast } from '@lib/Toast';
 import { useAppDispatch } from '@store/index';
 import { IArticle } from '@models/Article';
+import { ArticleEditContext, useArticleEditMainContext, useArticleEditUtilsContext } from './ArticleEdit.Context';
 
-export interface IArticleEditAnonsProps {
-    article?: IArticle
-    getFormData(): ICreateRequest
-    onStartTransition?(): void
-    onEndTransition?(): void
-}
+export interface IArticleEditAnonsProps { }
 
-export function ArticleEditAnons({
-    article,
-    getFormData,
-    onStartTransition,
-    onEndTransition }: IArticleEditAnonsProps
-) {
+export function ArticleEditAnons({ }: IArticleEditAnonsProps) {
+    const { article } = useArticleEditMainContext()
+    const { loadingStart, loadingEnd, getFormData } = useArticleEditUtilsContext()
+    
     const dispatch = useAppDispatch()
     const { upsertArticle, createDraftArticle } = useArticleControl()
     const navigate = useNavigate();
@@ -39,12 +33,12 @@ export function ArticleEditAnons({
     })
 
     async function uploadImages(fileItems: IFileItem[]) {
-        onStartTransition?.()
+        loadingStart()
 
         const anons = fileItems[0]?.file
 
         if (!anons) {
-            onEndTransition?.()
+            loadingEnd()
             return;
         }
 
@@ -58,12 +52,12 @@ export function ArticleEditAnons({
             navigate('/articles/edit/' + updatedArticle.id)
         }
 
-        onEndTransition?.()
+        loadingEnd()
     }
 
     async function removeImage() {
         if (!article) return
-        onStartTransition?.()
+        loadingStart()
 
         const formData: IUpdateRequest = getFormData()
         formData.append('image_delete', '1')
@@ -85,7 +79,7 @@ export function ArticleEditAnons({
             patchResult.undo()
         }
 
-        onEndTransition?.()
+        loadingEnd()
     }
 
     // create draft if no exist or update article
@@ -101,7 +95,7 @@ export function ArticleEditAnons({
 
         if (errorMessage) {
             toast.error(errorMessage)
-            onEndTransition?.()
+            loadingEnd()
             return
         }
 

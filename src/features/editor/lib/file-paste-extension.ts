@@ -4,11 +4,13 @@ import type { Editor } from '@tiptap/react';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { filterFiles } from '@utils/index';
 import { imageExtention, docExtention } from '@utils/const/extentions';
+import { IFile } from '@models/File';
+
 
 export interface FilePasteOptions {
   render?: () => {
-    onPaste?: (files: File[], editor: Editor) => void;
-    onDrop?: (files: File[], editor: Editor) => void;
+    onPaste?: (files: File[], editor: Editor, slice: any, view: any) => void;
+    onDrop?: (files: File[], editor: Editor, slice: any, view: any) => void;
 
   };
 }
@@ -68,45 +70,65 @@ function pasteDocHandler(files: File[]): any[] {
   }))
 }
 
-export const FilePaste = Extension.create<FilePasteOptions>({
-  name: 'filePaste',
+interface IImageNode {
+  src: string
+}
 
+interface IFilePastePluginProps {
+  upload: UploadImagesFunc
+}
+
+export const FilePasteExtention = Extension.create({
+  name: 'FilePasteExtention',
   addProseMirrorPlugins() {
-    const renderer = this.options.render?.();
-    const editor = this.editor as Editor;
-
     return [
-      new Plugin({
-        key: new PluginKey('pasteHandler'),
-        props: {
-          handlePaste(view, event, slice) {
-            if (renderer?.onPaste && event.clipboardData?.items?.length) {
-              const files = dataToFilesArray(event.clipboardData.items);
+      FilePastePlugin({ upload: this.options.uploadFunction })
+    ]
+  }
+})
 
-              if (files.length) {
-                renderer.onPaste(files, editor);
+export const FilePastePlugin = ({ upload }: IFilePastePluginProps) => {
+  return new Plugin({
+    key: new PluginKey('pasteHandler'),
+    props: {
+      handlePaste(view, event, slice) {
+        const hasFiles = event.clipboardData?.files?.length;
 
-                return true;
-              }
-            }
-            return false;
-          },
+        if (!hasFiles) {
+          return false
+        }
 
-          handleDrop(view, event: DragEvent) {
-            if (event.dataTransfer?.files?.length && renderer?.onDrop) {
-              const files = dataToFilesArray(event.dataTransfer.items);
+        event.preventDefault();
 
-              if (files.length) {
-                renderer.onDrop(files, editor);
+        const files = Array.from(event.clipboardData.files);
 
-                return true;
-              }
-            }
+        console.log(files);
 
-            return false;
-          },
-        },
-      }),
-    ];
-  },
-});
+        const coordinates = view.posAtCoords(view.coordsAtPos(
+          view.state.selection.from
+        ));
+
+        if (!coordinates || !upload) {
+          return
+        }
+
+
+        upload(files, (nodes) => {
+          nodes?.forEach((item) => {
+            const { schema } = view.state;
+            const node = schema.nodes.image.create(item);
+            const transaction = view.state.tr.insert(coordinates.pos, node);
+            view.dispatch(transaction)
+          })
+        })
+
+        return true;
+
+      },
+
+      handleDrop(view, event: DragEvent, slice) {
+
+      },
+    },
+  })
+}

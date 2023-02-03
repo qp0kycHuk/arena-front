@@ -10,8 +10,9 @@ import Link from '@tiptap/extension-link'
 import TextAlign from '@tiptap/extension-text-align'
 import Image from '@tiptap/extension-image'
 import Placeholder from '@tiptap/extension-placeholder'
-// code highlight
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
+// code highlight
+
 import { lowlight } from 'lowlight'
 import { toHtml } from 'hast-util-to-html'
 import css from 'highlight.js/lib/languages/css'
@@ -21,8 +22,9 @@ import html from 'highlight.js/lib/languages/xml'
 import php from 'highlight.js/lib/languages/php'
 
 import { FileBlock } from '../components/TextEditor/FileBlock'
-import { FilePaste } from '../lib/file-paste-extension'
 import { FileBlockExtension } from '../lib/file-block-extension'
+import { FilePasteExtention } from '../lib/file-paste-extension'
+import { IFile } from '@models/File'
 
 lowlight.registerLanguage('html', html)
 lowlight.registerLanguage('css', css)
@@ -33,13 +35,14 @@ lowlight.registerLanguage('php', php)
 
 interface IOptions {
     config?: Partial<EditorOptions> | undefined
-    placeholder?: string,
-    filePasteHandler: (files: File[], editor: Editor) => void
+    placeholder?: string
+    uploadFunction?(files: File[]): Promise<IFile[] | undefined>
 }
 
 const defaultOptions = {
     config: {},
-    placeholder: 'Type here'
+    placeholder: 'Type here',
+    uploadFunction: undefined
 }
 
 const LowlightCustom = Node.create({
@@ -86,8 +89,8 @@ export const editorExtensions = [
     LowlightCustom
 ]
 
-export function useEditor(options?: IOptions) {
-    const { config, placeholder } = options || defaultOptions
+export function useEditor(options?: IOptions, deps?: any[]) {
+    const { config, placeholder, uploadFunction } = options || defaultOptions
 
     return useEditorConfig({
         extensions: [
@@ -102,21 +105,14 @@ export function useEditor(options?: IOptions) {
             Highlight.configure({ multicolor: true }),
             Link.configure({ openOnClick: false, }),
             Image.configure({ allowBase64: true, }),
-            FilePaste.configure({
-                render: () => {
-                    return {
-                        onPaste: options?.filePasteHandler,
-                        onDrop: options?.filePasteHandler,
-                    };
-                },
-            }),
             FileBlockExtension.configure({
                 component: FileBlock
             }),
             Placeholder.configure({ placeholder: placeholder, }),
         ],
+
         ...config
-    }, [options])
+    }, [config, ...(deps || [])])
 }
 
 export function useInitialContent(content?: string, dependeties: any[] = []) {
@@ -126,7 +122,7 @@ export function useInitialContent(content?: string, dependeties: any[] = []) {
         } catch (error) {
             return content ? content : ''
         }
-    }, dependeties);
+    }, dependeties || []);
 
     return initialContent
 }

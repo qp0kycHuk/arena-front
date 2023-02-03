@@ -1,34 +1,22 @@
-import { useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useContext, useMemo } from 'react';
 import { useAppDispatch } from '@store/index';
-import { ICreateRequest, useArticleControl } from '@store/articles';
 import { articlesApi } from '@store/articles/articles.api';
-import { IUploadRequest, useRemoveMutation, useUploadMutation } from '@store/files';
+import { useRemoveMutation } from '@store/files';
 import { Uploader, useUploader } from '@features/fileUploader';
 import { getErrorMessage } from '@hooks/useErrorMessage';
 import { toast } from '@lib/Toast';
-import { IArticle } from '@models/Article';
-import { IFile } from '@models/File';
+import { ArticleEditContext, ArticleEditMainContext, useArticleEditMainContext, useArticleEditUtilsContext } from './ArticleEdit.Context';
 
-export interface IArticleEditImagesProps {
-    article?: IArticle
-    getFormData(): ICreateRequest
-    onStartTransition?(): void
-    onEndTransition?(): void
-}
+export interface IArticleEditImagesProps { }
 
 // control upload and remove images
-export function ArticleEditImages({
-    article,
-    getFormData,
-    onStartTransition,
-    onEndTransition }: IArticleEditImagesProps
-) {
+export function ArticleEditImages({ }: IArticleEditImagesProps) {
+    const { uploadImages } = useContext(ArticleEditContext)
+    const { article } = useArticleEditMainContext()
+    const { loadingStart, loadingEnd, getFormData } = useArticleEditUtilsContext()
+    
     const dispatch = useAppDispatch()
-    const { createDraftArticle } = useArticleControl()
-    const [upload] = useUploadMutation()
     const [remove] = useRemoveMutation()
-    const navigate = useNavigate();
 
     const initialImageFiles = useMemo(() => {
         return article?.files.map((item) => ({
@@ -46,70 +34,14 @@ export function ArticleEditImages({
 
     async function changeHandler(fileItems: IFileItem[]) {
         const files = fileItems.map((item) => (item as Required<IFileItem>).file)
-        onStartTransition?.()
-        uploadImages(files, article)
-        onEndTransition?.()
-    }
-
-    async function uploadImages(files: File[], article?: IArticle) {
-        // check files
-        if (!files.length) return;
-        let currentArticle = article
-
-        // Create draft article if article not exist
-        if (!article) {
-            const createDraftResult = await createDraftArticle(getFormData())
-            currentArticle = (createDraftResult as { data: IArticle; }).data
-            const errorMessage = getErrorMessage((createDraftResult as IResultWithError)?.error)
-
-            if (errorMessage) {
-                toast.error(errorMessage)
-                return
-            }
-        }
-
-        if (!currentArticle) {
-            toast.error('currentArticle is undefined')
-            return
-        }
-
-        // create form data
-        const formData: IUploadRequest = new FormData()
-        formData.append('entity', 'article',)
-        formData.append('entity_id', currentArticle.id.toString())
-        files.forEach((file) => {
-            formData.append('files[]', file)
-        })
-
-        // upload files
-        const result = await upload(formData)
-        const errorMessage = getErrorMessage((result as IResultWithError)?.error)
-
-        if (errorMessage) {
-            toast.error(errorMessage)
-            return
-        }
-
-        // change article state manualy 
-        // for no refetch article
-        // because article state separately files api
-        dispatch(articlesApi.util.updateQueryData('getById', currentArticle.id.toString(), (draft) => {
-            Object.assign(draft, {
-                files: [
-                    ...draft.files,
-                    ...(result as IResultWithData<IFile[]>).data
-                ]
-            })
-        }))
-
-        if (!article) {
-            navigate('/articles/edit/' + currentArticle.id)
-        }
+        loadingStart()
+        await uploadImages(files)
+        loadingEnd()
     }
 
     async function removeImage(fileItem: IFileItem) {
         if (!article) return
-        onStartTransition?.()
+        loadingStart()
 
         const formData = new FormData()
         formData.append('id', (fileItem as Required<IFileItem>).id.toString())
@@ -122,6 +54,7 @@ export function ArticleEditImages({
         // because article state separately files api
         const patchResult = dispatch(articlesApi.util.updateQueryData('getById', article.id.toString(), (draft) => {
             Object.assign(draft, {
+                ...Object.fromEntries(getFormData()),
                 files: article.files.filter((item) => item.id !== fileItem.id)
             })
         }))
@@ -131,12 +64,12 @@ export function ArticleEditImages({
 
         if (errorMessage) {
             toast.error(errorMessage)
-            onEndTransition?.()
+            loadingEnd()
             patchResult.undo()
             return
         }
 
-        onEndTransition?.()
+        loadingEnd()
     }
 
     return (

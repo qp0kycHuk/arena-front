@@ -17,6 +17,10 @@ import { filterFiles } from '@utils/index';
 import { docExtention, imageExtention } from '@utils/const/extentions';
 import { ArticleEditEditor } from './ArticleEdit.Editor';
 import type { Editor as EditorType } from '@tiptap/react';
+import { ArticleEditContext, ArticleEditContextProvider, ArticleEditMainContext, useArticleEditMainContext } from './ArticleEdit.Context';
+import { useContext } from 'react';
+import { ArticleEditTitle } from './ArticleEdit.Title';
+import { ArticleEditLinks } from './ArticleEdit.Links';
 
 interface IArticleEditProps {
     articleId?: string | number
@@ -25,124 +29,25 @@ interface IArticleEditProps {
 // TODO links, editor images, editor files
 
 export function ArticleEdit({ articleId }: IArticleEditProps) {
-    const { data: article } = useGetByIdQuery(articleId || '')
-    const { data: user } = useUserQuery(null)
-    const { upsertArticle } = useArticleControl()
-    const navigate = useNavigate();
-    const titleRef = useRef<HTMLDivElement>(null);
-    const [addedTags, setAddedTags] = useState<EntityId[]>(article?.tags.map((tag) => tag.id) || [])
-    const [loading, setLoading] = useState(false)
-    const loadingStart = () => setLoading(true)
-    const loadingEnd = () => setLoading(false)
-
-    const editorRef = useRef<EditorType>(null)
-
-    console.log(editorRef);
-
-
-    const linksController = useLinks();
-
-    // create form data from edit component states
-    // name, editor
-    const getFormData = useCallback((): ICreateRequest => {
-        const formData: ICreateRequest = new FormData()
-        formData.append('name', titleRef.current?.textContent || '')
-
-        if (editorRef.current) {
-            formData.append('content', JSON.stringify(editorRef.current.getJSON()))
-            formData.append('excerpt', editorRef.current.getText().substring(0, 100))
-        }
-
-        if (!user) {
-            throw new Error('user is undefined')
-        }
-
-        formData.append('user_id', user.id.toString())
-
-        if (article) {
-            (formData as IUpdateRequest).append('id', article.id.toString())
-        }
-
-        addedTags.forEach((tagId) => {
-            formData.append('tags[]', tagId.toString())
-        })
-
-        return formData
-    }, [titleRef, article, addedTags])
-
-    async function submitHandler(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault()
-
-        if (!titleRef.current?.textContent) {
-            titleRef.current?.focus()
-            return;
-        }
-
-        const formData = getFormData()
-
-        loadingStart()
-        const result = await upsertArticle(formData)
-        loadingEnd()
-
-        const errorMessage = getErrorMessage((result as IResultWithError)?.error)
-
-        if (errorMessage) {
-            toast.error(errorMessage)
-            return
-        }
-
-        const updatedArticle = (result as IResultWithData<IArticle>).data
-        navigate('/articles/' + updatedArticle.id)
-    }
-
-
+    const { submitHandler } = useContext(ArticleEditContext)
+    const { loading } = useArticleEditMainContext()
 
     return (
+
         <form className="" onSubmit={submitHandler}>
             <div className="text-[26px] font-semibold mb-7">Новая статья</div>
             <div className="border border-gray border-opacity-30 rounded-2xl">
                 <div className="px-8 py-6">
-                    <div ref={titleRef} className='mb-8 text-3xl width-placeholder'
-                        contentEditable data-placeholder='Введите название статьи'
-                        dangerouslySetInnerHTML={{ __html: article?.name || '' }}
-                        onInput={() => {
-                            if (titleRef.current) {
-                                titleRef.current.innerHTML = titleRef.current.textContent || ''
-                                const selection = window.getSelection();
-                                const range = document.createRange();
-                                selection?.removeAllRanges();
-                                range.selectNodeContents(titleRef.current);
-                                range.collapse(false);
-                                selection?.addRange(range);
-                                titleRef.current.focus();
-                            }
-                        }} ></div>
-
-                    <ArticleEditEditor
-                        ref={editorRef}
-                        article={article}
-                        getFormData={getFormData}
-                        onStartTransition={() => { setLoading(true) }}
-                        onEndTransition={() => { setLoading(false) }}
-                    />
+                    <ArticleEditTitle />
+                    <ArticleEditEditor />
                 </div>
                 <div className="border-t border-gray border-opacity-30"></div>
                 <div className="px-8 py-6">
-                    <ArticleEditAnons
-                        article={article}
-                        getFormData={getFormData}
-                        onStartTransition={loadingStart}
-                        onEndTransition={loadingEnd}
-                    />
+                    <ArticleEditAnons />
                 </div>
                 <div className="border-t border-gray border-opacity-30"></div>
                 <div className="px-8 py-6">
-                    <ArticleEditImages
-                        article={article}
-                        getFormData={getFormData}
-                        onStartTransition={() => { setLoading(true) }}
-                        onEndTransition={() => { setLoading(false) }}
-                    />
+                    <ArticleEditImages />
                 </div>
                 {/* <div className="border-t border-gray border-opacity-30"></div>
                 <div className="px-8 py-6">
@@ -152,15 +57,11 @@ export function ArticleEdit({ articleId }: IArticleEditProps) {
                 </div> */}
                 <div className="border-t border-gray border-opacity-30"></div>
                 <div className="px-8 py-6">
-                    <Links controller={linksController}></Links>
+                    <ArticleEditLinks />
                 </div>
                 <div className="border-t border-gray border-opacity-30"></div>
                 <div className="px-8 py-6">
-                    <ArticleEditTags
-                        addedTags={addedTags}
-                        setAddedTags={setAddedTags}
-                        onStartTransition={loadingStart}
-                        onEndTransition={loadingEnd} />
+                    <ArticleEditTags />
                 </div>
             </div>
             <div className="flex gap-4 mt-8">
@@ -168,6 +69,7 @@ export function ArticleEdit({ articleId }: IArticleEditProps) {
                 <Button variant='light'>Отмена</Button>
             </div>
         </form>
+
     );
 }
 

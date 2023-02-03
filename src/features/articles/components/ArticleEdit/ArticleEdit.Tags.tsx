@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { EntityId } from '@reduxjs/toolkit';
 import { useCreateTagMutation, useGetTagsQuery, ICreateRequest } from '@store/tag';
 import { Tag } from '@components/Tag';
@@ -8,21 +8,14 @@ import { toast } from '@lib/Toast';
 import { Combobox, Transition } from '@headlessui/react'
 import { CrossIcon, HashIcon } from '@assets/icons/stroke';
 import { ITag } from '@models/Tag';
+import { ArticleEditContext, useArticleEditUtilsContext } from './ArticleEdit.Context';
 
-interface IArticleEditTagsProps {
-    onStartTransition?(): void
-    onEndTransition?(): void
-    addedTags: EntityId[],
-    setAddedTags: React.Dispatch<React.SetStateAction<EntityId[]>>
-}
+interface IArticleEditTagsProps { }
 
-export function ArticleEditTags({
-    onStartTransition,
-    onEndTransition,
-    addedTags,
-    setAddedTags,
-}: IArticleEditTagsProps
-) {
+export function ArticleEditTags({ }: IArticleEditTagsProps) {
+    const { addedTags, setAddedTags } = useContext(ArticleEditContext)
+    const { loadingStart, loadingEnd } = useArticleEditUtilsContext()
+    
     const { data: tags } = useGetTagsQuery(null)
     const [create] = useCreateTagMutation()
     const [name, setName] = useState<string>('')
@@ -37,14 +30,14 @@ export function ArticleEditTags({
 
     function addTag(id?: EntityId) {
         if (!id || addedTags?.includes(id)) return
-        setAddedTags((prev) => [...(prev || []), id])
+        setAddedTags?.((prev) => [...(prev || []), id])
         setOpen(false)
         setName('')
     }
 
     function removeTag(id?: EntityId) {
         if (!id) return
-        setAddedTags((prev) => prev?.filter((itemId) => itemId !== id))
+        setAddedTags?.((prev) => prev?.filter((itemId) => itemId !== id))
     }
 
     async function addTagRequest(id?: EntityId) {
@@ -60,9 +53,9 @@ export function ArticleEditTags({
         const formData: ICreateRequest = new FormData()
         formData.append('name', name.trim())
 
-        onStartTransition?.()
+        loadingStart()
         const result = await create(formData)
-        onEndTransition?.()
+        loadingEnd()
         const errorMessage = getErrorMessage((result as IResultWithError)?.error)
 
         if (errorMessage) {
@@ -85,8 +78,8 @@ export function ArticleEditTags({
                             className={getUnputClassNames({ borderless: true, className: 'w-36' })}
                             placeholder='Напишите тэг...'
                             displayValue={() => name}
-                            onKeyUp={(event:React.KeyboardEvent) => {
-                                if(event.code === 'Enter'){
+                            onKeyUp={(event: React.KeyboardEvent) => {
+                                if (event.code === 'Enter') {
                                     event.preventDefault()
                                     event.stopPropagation()
                                     addTagRequest()
