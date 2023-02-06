@@ -22,7 +22,35 @@ interface IArticleEditEditorProps { }
 export type ArticleEditEditorRef = React.ForwardedRef<EditorType | null>
 
 export function ArticleEditEditor({ }: IArticleEditEditorProps) {
-    const { editor, filePasteHandler } = useArticleEditEditorContext()
+    const { editor, uploadImages } = useArticleEditEditorContext()
+    const { loadingStart, loadingEnd } = useArticleEditUtilsContext()
+
+    const filePasteHandler = useCallback(async (event: React.ClipboardEvent) => {
+        const files = Array.from(event.clipboardData.files)
+        const images = filterFiles(files, [imageExtention.regex])
+        // const documents = filterFiles(files, [docExtention.regex])
+
+
+        loadingStart()
+        await uploadImages(images, async (uploadedFiles) => {
+
+            if (!uploadedFiles) return
+
+            const insertImages = uploadedFiles.map((item) => ({
+                type: 'image',
+                attrs: {
+                    src: process.env.REACT_APP_API_URL + item.src,
+                },
+            }))
+
+            await editor?.chain().focus().insertContent([
+                ...insertImages,
+                // ...insertDocs,
+            ]).run()
+        })
+
+        loadingEnd()
+    }, [uploadImages, editor])
 
     return (
         <div>

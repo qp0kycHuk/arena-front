@@ -46,11 +46,11 @@ export function ArticleEditAnons({ }: IArticleEditAnonsProps) {
         formData.append('image', anons)
 
         const updatedArticle = await updateOrCreate(formData)
-        if (!updatedArticle) return
+        // if (!updatedArticle) return
 
-        if (!article) {
-            navigate('/articles/edit/' + updatedArticle.id)
-        }
+        // if (!article) {
+        //     navigate('/articles/edit/' + updatedArticle.id)
+        // }
 
         loadingEnd()
     }
@@ -75,9 +75,9 @@ export function ArticleEditAnons({ }: IArticleEditAnonsProps) {
         }))
 
         const updatedArticle = await updateOrCreate(formData)
-        if (!updatedArticle) {
-            patchResult.undo()
-        }
+        // if (!updatedArticle) {
+        //     patchResult.undo()
+        // }
 
         loadingEnd()
     }
@@ -91,16 +91,16 @@ export function ArticleEditAnons({ }: IArticleEditAnonsProps) {
             result = await createDraftArticle(formData)
         }
 
-        const errorMessage = getErrorMessage((result as IResultWithError)?.error)
+        // const errorMessage = getErrorMessage((result as IResultWithError)?.error)
 
-        if (errorMessage) {
-            toast.error(errorMessage)
-            loadingEnd()
-            return
-        }
+        // if (errorMessage) {
+        //     toast.error(errorMessage)
+        //     loadingEnd()
+        //     return
+        // }
 
-        const updatedArticle = (result as IResultWithData<IArticle>).data
-        return updatedArticle
+        // const updatedArticle = (result as IResultWithData<IArticle>).data
+        // return updatedArticle
     }
 
     return (

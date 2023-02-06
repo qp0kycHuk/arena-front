@@ -1,6 +1,6 @@
 import { IArticle } from "@models/Article";
 import { EntityId } from "@reduxjs/toolkit";
-import { ICreateRequest, IUpdateRequest, useArticleControl, useGetByIdQuery } from "@store/articles";
+import { ICreateRequest, IUpdateRequest, useArticleControl } from "@store/articles";
 import { useUserQuery } from "@store/auth";
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import type { Editor as EditorType } from '@tiptap/react';
@@ -16,6 +16,8 @@ import { articlesApi } from "@store/articles/articles.api";
 import { IFile } from "@models/File";
 import { useAppDispatch } from "@store/index";
 import { FilePastePlugin } from "@features/editor/lib/file-paste-extension";
+import { updateArticle } from "@store/articles/articles.thunk";
+import { useFetchArticleById } from "@store/articles/articles.slice";
 
 
 
@@ -27,7 +29,7 @@ interface IArticleMainContextValue {
 interface IArticleEditorContextValue {
     editor: EditorType | null
     uploadImages: UploadImagesFunc
-    filePasteHandler(event: React.ClipboardEvent): any
+    // filePasteHandler(event: React.ClipboardEvent): any
 }
 
 interface IArticleUtilsContextValue {
@@ -69,8 +71,9 @@ export function ArticleEditContextProvider({
     const { createDraftArticle, upsertArticle } = useArticleControl()
     const [upload] = useUploadMutation()
     const [remove] = useRemoveMutation()
+    const dispatch = useAppDispatch()
 
-    const { data: article } = useGetByIdQuery(articleId || '')
+    const article = useFetchArticleById(articleId || '')
     const titleRef = useRef<HTMLDivElement>(null);
     const [addedTags, setAddedTags] = useState<EntityId[]>(article?.tags.map((tag) => tag.id) || [])
     const linksController = useLinks();
@@ -123,7 +126,7 @@ export function ArticleEditContextProvider({
         })
 
         return formData
-    }, [titleRef, article, addedTags, editor])
+    }, [titleRef, article, addedTags, editor, user])
 
     const submitHandler = useCallback(async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -136,18 +139,17 @@ export function ArticleEditContextProvider({
         const formData = getFormData()
 
         loadingStart()
-        const result = await upsertArticle(formData)
+        const { payload: updatedArticle } = await upsertArticle(formData)
         loadingEnd()
 
-        const errorMessage = getErrorMessage((result as IResultWithError)?.error)
+        // const errorMessage = getErrorMessage((result as IResultWithError)?.error)
 
-        if (errorMessage) {
-            toast.error(errorMessage)
-            return
-        }
+        // if (errorMessage) {
+        //     toast.error(errorMessage)
+        //     return
+        // }
 
-        const updatedArticle = (result as IResultWithData<IArticle>).data
-        navigate('/articles/' + updatedArticle.id)
+        navigate('/articles/' + (updatedArticle as IArticle).id)
     }, [getFormData])
 
     const uploadImages: UploadImagesFunc = useCallback(async (files, beforeUpdate) => {
@@ -156,16 +158,16 @@ export function ArticleEditContextProvider({
         let currentArticle = article
 
         // Create draft article if article not exist
-        if (!article) {
-            const createDraftResult = await createDraftArticle(getFormData())
-            currentArticle = (createDraftResult as { data: IArticle; }).data
-            const errorMessage = getErrorMessage((createDraftResult as IResultWithError)?.error)
+        // if (!article) {
+        //     const createDraftResult = await createDraftArticle(getFormData())
+        //     currentArticle = (createDraftResult as { data: IArticle; }).data
+        //     const errorMessage = getErrorMessage((createDraftResult as IResultWithError)?.error)
 
-            if (errorMessage) {
-                toast.error(errorMessage)
-                return
-            }
-        }
+        //     if (errorMessage) {
+        //         toast.error(errorMessage)
+        //         return
+        //     }
+        // }
 
         if (!currentArticle) {
             toast.error('currentArticle is undefined')
@@ -191,18 +193,27 @@ export function ArticleEditContextProvider({
 
         await beforeUpdate?.((result as IResultWithData<IFile[]>).data)
 
+        const patchResult = dispatch(articlesApi.util.updateQueryData('getById', currentArticle.id.toString(), (draft) => {
+            Object.assign(draft, {
+                ...Object.fromEntries(getFormData()),
+                files: [
+                    ...(currentArticle?.files || [])
+                ]
+            })
+        }))
+
         // change article state manualy 
         // for no refetch article
         // because article state separately files api
-        loadingStart()
-        const updateResult = await upsertArticle(getFormData())
-        loadingEnd()
-        const updateErrorMessage = getErrorMessage((result as IResultWithError)?.error)
+        // loadingStart()
+        // const updateResult = await upsertArticle(getFormData())
+        // loadingEnd()
+        // const updateErrorMessage = getErrorMessage((result as IResultWithError)?.error)
 
-        if (updateErrorMessage) {
-            toast.error(updateErrorMessage)
-            return
-        }
+        // if (updateErrorMessage) {
+        // toast.error(updateErrorMessage)
+        // return
+        // }
 
         if (!article) {
             navigate('/articles/edit/' + currentArticle.id)
@@ -211,37 +222,12 @@ export function ArticleEditContextProvider({
         return (result as IResultWithData<IFile[]>).data
     }, [getFormData, article])
 
-    const filePasteHandler = useCallback(async (event: React.ClipboardEvent) => {
-        const files = Array.from(event.clipboardData.files)
-        const images = filterFiles(files, [imageExtention.regex])
-        // const documents = filterFiles(files, [docExtention.regex])
 
-
-        loadingStart()
-        await uploadImages(images, async (uploadedFiles) => {
-
-            if (!uploadedFiles) return
-
-            const insertImages = uploadedFiles.map((item) => ({
-                type: 'image',
-                attrs: {
-                    src: process.env.REACT_APP_API_URL + item.src,
-                },
-            }))
-
-            await editor?.chain().focus().insertContent([
-                ...insertImages,
-                // ...insertDocs,
-            ]).run()
-        })
-
-        loadingEnd()
-    }, [uploadImages, editor])
 
     return (
         <ArticleEditMainContext.Provider value={{ article, loading, }}>
             <ArticleEditUtilsContext.Provider value={{ loadingStart, loadingEnd, getFormData }}>
-                <ArticleEditEditorContext.Provider value={{ editor, uploadImages, filePasteHandler }}>
+                <ArticleEditEditorContext.Provider value={{ editor, uploadImages }}>
                     <ArticleEditContext.Provider value={{
                         addedTags,
                         titleRef,

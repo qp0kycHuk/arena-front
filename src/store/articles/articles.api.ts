@@ -15,27 +15,7 @@ const taggetRootApi = rootApi.enhanceEndpoints({ addTagTypes: [ARTICLES_TAG] });
 
 export const articlesApi = taggetRootApi.injectEndpoints({
     endpoints: (builder) => ({
-        get: builder.query<IArticle[], null>({
-            query: () => {
-                return {
-                    url: ROOT_ENDPOINT_URL,
 
-                }
-            },
-            transformResponse: (response: IListResponse<IArticle>) => {
-                return response.items
-            },
-            providesTags: (result) => {
-                if (result) {
-                    return [
-                        ...result.map(({ id }) => ({ type: ARTICLES_TAG, id })),
-                        { type: ARTICLES_TAG, id: 'LIST' },
-                    ]
-                }
-
-                return [{ type: ARTICLES_TAG, id: 'LIST' }]
-            }
-        }),
         getById: builder.query<IArticle, number | string>({
             query: (id) => ({
                 url: ROOT_ENDPOINT_URL + '/' + id,
@@ -75,16 +55,16 @@ export const articlesApi = taggetRootApi.injectEndpoints({
                     dispatch(articlesApi.util.updateQueryData('getById', updatedArticle.id.toString(), (draft) => {
                         Object.assign(draft, updatedArticle)
                     }))
-                    dispatch(articlesApi.util.updateQueryData('get', null, (draft) => {
-                        const index = draft.findIndex((item) => item.id === updatedArticle.id)
-                        if(draft[index]){
-                            draft[index] = updatedArticle
-                        }
-                    }))
+                    // dispatch(articlesApi.util.updateQueryData('get', null, (draft) => {
+                    //     const index = draft.findIndex((item) => item.id === updatedArticle.id)
+                    //     if(draft[index]){
+                    //         draft[index] = updatedArticle
+                    //     }
+                    // }))
                 } catch (error) { }
             },
         }),
     }),
 })
 
-export const { useGetQuery, useGetByIdQuery, useLazyGetByIdQuery, useCreateMutation, useUpdateMutation } = articlesApi
+export const {  useGetByIdQuery, useLazyGetByIdQuery, useCreateMutation, useUpdateMutation } = articlesApi
