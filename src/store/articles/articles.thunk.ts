@@ -49,7 +49,12 @@ export const fetchArticleById = createAsyncThunk<IArticle, EntityId>(
         try {
             const response = await articlesApi().fetchById(id)
             const item = response.data.item
-            return item
+            if (item) {
+                return item
+            } else {
+                return rejectWithValue({ message: 'Non - existent' })
+
+            }
         } catch (err) {
             return rejectWithValue(err)
         }

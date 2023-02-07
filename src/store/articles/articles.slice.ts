@@ -1,3 +1,4 @@
+import { toast } from '@lib/Toast';
 import { IArticle } from './../../models/Article';
 import { RootState, useAppDispatch, useAppSelector } from './../index';
 import { EntityId, PayloadAction, createSlice } from "@reduxjs/toolkit";
@@ -24,9 +25,17 @@ export const articleSlice = createSlice({
             .addCase(createArticle.fulfilled, articlesEntityAdapter.upsertOne)
             .addCase(updateArticle.fulfilled, articlesEntityAdapter.upsertOne)
 
+        builder
+            .addCase(fetchArticles.rejected, showThunkError)
+            .addCase(fetchArticleById.rejected, showThunkError)
+            .addCase(createArticle.rejected, showThunkError)
+            .addCase(updateArticle.rejected, showThunkError)
     },
 })
 
+function showThunkError(state: any, action: any) {
+    toast.error(action.payload.message)
+}
 
 export const {
     selectEntities,

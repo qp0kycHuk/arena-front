@@ -141,7 +141,7 @@ export function ArticleEditContextProvider({
         loadingStart()
         const { payload: updatedArticle } = await upsertArticle(formData)
         loadingEnd()
-        
+
 
         // const errorMessage = getErrorMessage((result as IResultWithError)?.error)
 
@@ -149,8 +149,9 @@ export function ArticleEditContextProvider({
         //     toast.error(errorMessage)
         //     return
         // }
-
-        navigate('/articles/' + (updatedArticle as IArticle).id)
+        if ((updatedArticle as IArticle).id) {
+            navigate('/articles/' + (updatedArticle as IArticle).id)
+        }
     }, [getFormData])
 
     const uploadImages: UploadImagesFunc = useCallback(async (files, beforeUpdate) => {
