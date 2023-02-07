@@ -14,7 +14,7 @@ export interface IArticleEditAnonsProps { }
 export function ArticleEditAnons({ }: IArticleEditAnonsProps) {
     const { article } = useArticleEditMainContext()
     const { loadingStart, loadingEnd, getFormData } = useArticleEditUtilsContext()
-    
+
     const dispatch = useAppDispatch()
     const { upsertArticle, createDraftArticle } = useArticleControl()
     const navigate = useNavigate();
@@ -85,22 +85,16 @@ export function ArticleEditAnons({ }: IArticleEditAnonsProps) {
     // create draft if no exist or update article
     async function updateOrCreate(formData: ICreateRequest) {
         let result
+        
         if (article) {
             result = await upsertArticle(formData)
         } else {
             result = await createDraftArticle(formData)
         }
 
-        // const errorMessage = getErrorMessage((result as IResultWithError)?.error)
+        const updatedArticle = result.payload as IArticle
 
-        // if (errorMessage) {
-        //     toast.error(errorMessage)
-        //     loadingEnd()
-        //     return
-        // }
-
-        // const updatedArticle = (result as IResultWithData<IArticle>).data
-        // return updatedArticle
+        return updatedArticle
     }
 
     return (

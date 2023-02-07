@@ -6,6 +6,7 @@ import { Uploader, useUploader } from '@features/fileUploader';
 import { getErrorMessage } from '@hooks/useErrorMessage';
 import { toast } from '@lib/Toast';
 import { ArticleEditContext, ArticleEditMainContext, useArticleEditMainContext, useArticleEditUtilsContext } from './ArticleEdit.Context';
+import { articleSlice } from '@store/articles/articles.slice';
 
 export interface IArticleEditImagesProps { }
 
@@ -13,8 +14,8 @@ export interface IArticleEditImagesProps { }
 export function ArticleEditImages({ }: IArticleEditImagesProps) {
     const { uploadImages } = useContext(ArticleEditContext)
     const { article } = useArticleEditMainContext()
-    const { loadingStart, loadingEnd, getFormData } = useArticleEditUtilsContext()
-    
+    const { loadingStart, loadingEnd } = useArticleEditUtilsContext()
+
     const dispatch = useAppDispatch()
     const [remove] = useRemoveMutation()
 
@@ -41,7 +42,7 @@ export function ArticleEditImages({ }: IArticleEditImagesProps) {
 
     async function removeImage(fileItem: IFileItem) {
         if (!article) return
-        loadingStart()
+
 
         const formData = new FormData()
         formData.append('id', (fileItem as Required<IFileItem>).id.toString())
@@ -52,24 +53,21 @@ export function ArticleEditImages({ }: IArticleEditImagesProps) {
         // for interface changed before request fullfiled
         // for no refetch article
         // because article state separately files api
-        const patchResult = dispatch(articlesApi.util.updateQueryData('getById', article.id.toString(), (draft) => {
-            Object.assign(draft, {
-                ...Object.fromEntries(getFormData()),
-                files: article.files.filter((item) => item.id !== fileItem.id)
-            })
+        dispatch(articleSlice.actions.updateArticle({
+            ...article,
+            files: article.files.filter((item) => item.id !== fileItem.id)
         }))
 
+        loadingStart()
         const result = await remove(formData)
-        const errorMessage = getErrorMessage((result as IResultWithError)?.error)
+        loadingEnd()
 
+        const errorMessage = getErrorMessage((result as IResultWithError)?.error)
         if (errorMessage) {
             toast.error(errorMessage)
-            loadingEnd()
-            patchResult.undo()
             return
         }
 
-        loadingEnd()
     }
 
     return (

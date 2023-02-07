@@ -17,7 +17,7 @@ import { IFile } from "@models/File";
 import { useAppDispatch } from "@store/index";
 import { FilePastePlugin } from "@features/editor/lib/file-paste-extension";
 import { updateArticle } from "@store/articles/articles.thunk";
-import { useFetchArticleById } from "@store/articles/articles.slice";
+import { articleSlice, useFetchArticleById } from "@store/articles/articles.slice";
 
 
 
@@ -141,6 +141,7 @@ export function ArticleEditContextProvider({
         loadingStart()
         const { payload: updatedArticle } = await upsertArticle(formData)
         loadingEnd()
+        
 
         // const errorMessage = getErrorMessage((result as IResultWithError)?.error)
 
@@ -158,16 +159,10 @@ export function ArticleEditContextProvider({
         let currentArticle = article
 
         // Create draft article if article not exist
-        // if (!article) {
-        //     const createDraftResult = await createDraftArticle(getFormData())
-        //     currentArticle = (createDraftResult as { data: IArticle; }).data
-        //     const errorMessage = getErrorMessage((createDraftResult as IResultWithError)?.error)
-
-        //     if (errorMessage) {
-        //         toast.error(errorMessage)
-        //         return
-        //     }
-        // }
+        if (!article) {
+            const createDraftResult = await createDraftArticle(getFormData())
+            currentArticle = createDraftResult.payload as IArticle
+        }
 
         if (!currentArticle) {
             toast.error('currentArticle is undefined')
@@ -193,27 +188,15 @@ export function ArticleEditContextProvider({
 
         await beforeUpdate?.((result as IResultWithData<IFile[]>).data)
 
-        const patchResult = dispatch(articlesApi.util.updateQueryData('getById', currentArticle.id.toString(), (draft) => {
-            Object.assign(draft, {
-                ...Object.fromEntries(getFormData()),
-                files: [
-                    ...(currentArticle?.files || [])
-                ]
-            })
+
+        dispatch(articleSlice.actions.updateArticle({
+            ...currentArticle,
+            files: [
+                ...(currentArticle?.files || []),
+                ...(result as IResultWithData<IFile[]>).data
+            ]
         }))
 
-        // change article state manualy 
-        // for no refetch article
-        // because article state separately files api
-        // loadingStart()
-        // const updateResult = await upsertArticle(getFormData())
-        // loadingEnd()
-        // const updateErrorMessage = getErrorMessage((result as IResultWithError)?.error)
-
-        // if (updateErrorMessage) {
-        // toast.error(updateErrorMessage)
-        // return
-        // }
 
         if (!article) {
             navigate('/articles/edit/' + currentArticle.id)
@@ -221,8 +204,6 @@ export function ArticleEditContextProvider({
 
         return (result as IResultWithData<IFile[]>).data
     }, [getFormData, article])
-
-
 
     return (
         <ArticleEditMainContext.Provider value={{ article, loading, }}>
