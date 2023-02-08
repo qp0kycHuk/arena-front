@@ -1,23 +1,18 @@
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { IArticle } from "@models/Article";
 import { EntityId } from "@reduxjs/toolkit";
 import { ICreateRequest, IUpdateRequest, useArticleControl } from "@store/articles";
 import { useUserQuery } from "@store/auth";
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import type { Editor as EditorType } from '@tiptap/react';
 import { useNavigate } from "react-router-dom";
 import { getErrorMessage } from "@hooks/useErrorMessage";
 import { toast } from "@lib/Toast";
 import { useEditor, useInitialContent, useLinks } from "@features/editor";
 import { ILinksController } from "@features/editor/hooks/useLinks";
-import { filterFiles } from "@utils/index";
-import { imageExtention } from "@utils/const/extentions";
 import { IUploadRequest, useRemoveMutation, useUploadMutation } from "@store/files";
-import { articlesApi } from "@store/articles/articles.api";
 import { IFile } from "@models/File";
-import { useAppDispatch } from "@store/index";
-import { FilePastePlugin } from "@features/editor/lib/file-paste-extension";
-import { updateArticle } from "@store/articles/articles.thunk";
-import { articleSlice, useFetchArticleById } from "@store/articles/articles.slice";
+import { useFetchArticleById } from "@store/articles/articles.slice";
+import { log } from "console";
 
 
 
@@ -29,7 +24,6 @@ interface IArticleMainContextValue {
 interface IArticleEditorContextValue {
     editor: EditorType | null
     uploadImages: UploadImagesFunc
-    // filePasteHandler(event: React.ClipboardEvent): any
 }
 
 interface IArticleUtilsContextValue {
@@ -45,6 +39,7 @@ interface IArticleEditContextValue {
     linksController: ILinksController
     submitHandler(event: React.FormEvent<HTMLFormElement>): Promise<void>
     uploadImages: UploadImagesFunc
+    removeImage(fileItem: IFileItem): void
 }
 
 
@@ -68,15 +63,14 @@ export function ArticleEditContextProvider({
 ) {
     const { data: user } = useUserQuery(null)
     const navigate = useNavigate();
-    const { createDraftArticle, upsertArticle } = useArticleControl()
+    const { createDraftArticle, upsertArticle, manualUpdateArticle } = useArticleControl()
     const [upload] = useUploadMutation()
     const [remove] = useRemoveMutation()
-    const dispatch = useAppDispatch()
 
     const article = useFetchArticleById(articleId || '')
-    const titleRef = useRef<HTMLDivElement>(null);
+    const titleRef = useRef<HTMLDivElement>(null)
     const [addedTags, setAddedTags] = useState<EntityId[]>(article?.tags.map((tag) => tag.id) || [])
-    const linksController = useLinks();
+    const linksController = useLinks()
     const [loading, setLoading] = useState(false)
     const loadingStart = useCallback(() => setLoading(true), [])
     const loadingEnd = useCallback(() => setLoading(false), [])
@@ -139,16 +133,9 @@ export function ArticleEditContextProvider({
         const formData = getFormData()
 
         loadingStart()
-        const { payload: updatedArticle } = await upsertArticle(formData)
+        const updatedArticle = await upsertArticle(formData)
         loadingEnd()
 
-
-        // const errorMessage = getErrorMessage((result as IResultWithError)?.error)
-
-        // if (errorMessage) {
-        //     toast.error(errorMessage)
-        //     return
-        // }
         if ((updatedArticle as IArticle).id) {
             navigate('/articles/' + (updatedArticle as IArticle).id)
         }
@@ -161,8 +148,7 @@ export function ArticleEditContextProvider({
 
         // Create draft article if article not exist
         if (!article) {
-            const createDraftResult = await createDraftArticle(getFormData())
-            currentArticle = createDraftResult.payload as IArticle
+            currentArticle = await createDraftArticle(getFormData())
         }
 
         if (!currentArticle) {
@@ -189,14 +175,13 @@ export function ArticleEditContextProvider({
 
         await beforeUpdate?.((result as IResultWithData<IFile[]>).data)
 
-
-        dispatch(articleSlice.actions.updateArticle({
+        manualUpdateArticle({
             ...currentArticle,
             files: [
                 ...(currentArticle?.files || []),
                 ...(result as IResultWithData<IFile[]>).data
             ]
-        }))
+        })
 
 
         if (!article) {
@@ -205,6 +190,40 @@ export function ArticleEditContextProvider({
 
         return (result as IResultWithData<IFile[]>).data
     }, [getFormData, article])
+
+    const removeImage = useCallback(async (fileItem: IFileItem) => {
+        if (!article) return
+
+
+        const formData = new FormData()
+        formData.append('id', (fileItem as Required<IFileItem>).id.toString())
+        formData.append('entity_id', article.id.toString())
+        formData.append('entity', 'article')
+
+        // change article state manualy 
+        // for interface changed before request fullfiled
+        // for no refetch article
+        // because article state separately files api
+        const editorJson = filterEditorContent(editor?.getJSON(), (item: any) => {
+            return !(item.type === 'image' && item.attrs.src === fileItem.src)
+        })
+        manualUpdateArticle({
+            ...article,
+            content: editorJson,
+            files: article.files.filter((item) => item.id !== fileItem.id)
+        })
+
+        loadingStart()
+        const result = await remove(formData)
+        loadingEnd()
+
+        const errorMessage = getErrorMessage((result as IResultWithError)?.error)
+        if (errorMessage) {
+            toast.error(errorMessage)
+            return
+        }
+
+    }, [article])
 
     return (
         <ArticleEditMainContext.Provider value={{ article, loading, }}>
@@ -216,7 +235,8 @@ export function ArticleEditContextProvider({
                         setAddedTags,
                         submitHandler,
                         linksController,
-                        uploadImages
+                        uploadImages,
+                        removeImage
                     }}>
                         {children}
                     </ArticleEditContext.Provider>
@@ -226,3 +246,10 @@ export function ArticleEditContextProvider({
     );
 }
 
+function filterEditorContent(editorJson: any, filterFn: (item: any) => boolean) {
+    if (editorJson.content?.length > 0) {
+        editorJson.content = editorJson.content.filter(filterFn)
+        editorJson.content.forEach((item: any) => filterEditorContent(item, filterFn))
+    }
+    return editorJson
+}

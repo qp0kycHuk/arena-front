@@ -1,6 +1,8 @@
+import { IArticle } from '@models/Article';
 import { useAppDispatch } from './../index';
 import { ICreateRequest, IUpdateRequest, useCreateMutation, useUpdateMutation } from "./articles.api"
 import { createArticle as create, updateArticle as update } from './articles.thunk';
+import { articleSlice } from './articles.slice';
 
 export function useArticleControl() {
     const dispatch = useAppDispatch()
@@ -10,18 +12,18 @@ export function useArticleControl() {
             formData.append('name', '__DRAFT__')
         }
 
-        const result = await dispatch(create(formData))
-        return result
+        const action = await dispatch(create(formData))
+        return action.payload as IArticle
     }
 
     async function updateArticle(formData: IUpdateRequest) {
-        const result = await dispatch(update(formData))
-        return result
+        const action = await dispatch(update(formData))
+        return action.payload as IArticle
     }
 
     async function createArticle(formData: ICreateRequest) {
-        const result = await dispatch(create(formData))
-        return result
+        const action = await dispatch(create(formData))
+        return action.payload as IArticle
     }
 
     async function upsertArticle(formData: ICreateRequest | IUpdateRequest) {
@@ -32,10 +34,15 @@ export function useArticleControl() {
         }
     }
 
+    function manualUpdateArticle(updated: IArticle) {
+        dispatch(articleSlice.actions.updateArticle(updated))
+    }
+
     return {
         upsertArticle,
         createDraftArticle,
         updateArticle,
-        createArticle
+        createArticle,
+        manualUpdateArticle
     }
 }

@@ -33,7 +33,7 @@ export function articlesApi() {
 
     async function update(formData: IUpdateRequest): Promise<AxiosResponse<IItemResponse<IArticle>, any>> {
         formData.append('_method', 'PUT')
-        return await api.post(ROOT_ENDPOINT_URL + '/12' + formData.get('id'), formData)
+        return await api.post(ROOT_ENDPOINT_URL + '/' + formData.get('id'), formData)
     }
 
     async function fetchById(id: EntityId) {

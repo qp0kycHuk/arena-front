@@ -12,7 +12,7 @@ export interface IArticleEditImagesProps { }
 
 // control upload and remove images
 export function ArticleEditImages({ }: IArticleEditImagesProps) {
-    const { uploadImages } = useContext(ArticleEditContext)
+    const { uploadImages, removeImage } = useContext(ArticleEditContext)
     const { article } = useArticleEditMainContext()
     const { loadingStart, loadingEnd } = useArticleEditUtilsContext()
 
@@ -40,35 +40,7 @@ export function ArticleEditImages({ }: IArticleEditImagesProps) {
         loadingEnd()
     }
 
-    async function removeImage(fileItem: IFileItem) {
-        if (!article) return
 
-
-        const formData = new FormData()
-        formData.append('id', (fileItem as Required<IFileItem>).id.toString())
-        formData.append('entity_id', article.id.toString())
-        formData.append('entity', 'article')
-
-        // change article state manualy 
-        // for interface changed before request fullfiled
-        // for no refetch article
-        // because article state separately files api
-        dispatch(articleSlice.actions.updateArticle({
-            ...article,
-            files: article.files.filter((item) => item.id !== fileItem.id)
-        }))
-
-        loadingStart()
-        const result = await remove(formData)
-        loadingEnd()
-
-        const errorMessage = getErrorMessage((result as IResultWithError)?.error)
-        if (errorMessage) {
-            toast.error(errorMessage)
-            return
-        }
-
-    }
 
     return (
         <Uploader uploader={imageUploader} >
