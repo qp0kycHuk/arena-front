@@ -1,6 +1,6 @@
 import { IArticle } from '@models/Article';
 import { useAppDispatch } from './../index';
-import { ICreateRequest, IUpdateRequest, useCreateMutation, useUpdateMutation } from "./articles.api"
+import { ICreateRequest, IUpdateRequest } from "./articles.api"
 import { createArticle as create, updateArticle as update } from './articles.thunk';
 import { articleSlice } from './articles.slice';
 

@@ -1,13 +1,4 @@
 
-interface IFileItem {
-    id?: string | number
-    key?: string
-    src?: string
-    preview?: string
-    title?: string
-    file?: File
-    extention?: IExtention
-}
 
 interface IUplodaer {
     extention: IExtention

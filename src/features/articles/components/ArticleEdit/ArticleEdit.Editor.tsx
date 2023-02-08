@@ -1,19 +1,13 @@
+import { useCallback, useMemo } from "react";
 import { Editor, EditorControl, useEditor, useInitialContent } from "@features/editor";
-import { getErrorMessage } from "@hooks/useErrorMessage";
-import { toast } from "@lib/Toast";
-import { IArticle } from "@models/Article";
-import { IFile } from "@models/File";
-import { ICreateRequest, useArticleControl } from "@store/articles";
-import { articlesApi } from "@store/articles/articles.api";
-import { IUploadRequest, useRemoveMutation, useUploadMutation } from "@store/files";
-import { useAppDispatch } from "@store/index";
-import { docExtention, imageExtention } from "@utils/const/extentions";
+import { imageExtention } from "@utils/const/extentions";
 import { filterFiles } from "@utils/index";
-import { useCallback, useContext, useMemo, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import type { Editor as EditorType } from '@tiptap/react';
+import type { EditorEvents, Editor as EditorType } from '@tiptap/react';
 import React from "react";
-import { ArticleEditContext, useArticleEditEditorContext, useArticleEditUtilsContext } from "./ArticleEdit.Context";
+import { useArticleEditMainContext } from "./ArticleEdit.Context";
+import { IOptions } from "@features/editor/hooks/useEditor";
+import { getFileItems } from "@utils/helpers/files";
+import { useDebouncedCallback } from "use-debounce";
 
 // TODO try remove duplicate with ArticleEditImages component
 
@@ -22,35 +16,55 @@ interface IArticleEditEditorProps { }
 export type ArticleEditEditorRef = React.ForwardedRef<EditorType | null>
 
 export function ArticleEditEditor({ }: IArticleEditEditorProps) {
-    const { editor, uploadImages } = useArticleEditEditorContext()
-    const { loadingStart, loadingEnd } = useArticleEditUtilsContext()
+    const { article, update } = useArticleEditMainContext()
+    const initialEditorContent = useInitialContent(article?.content, [article?.id]);
+
+    const updateHandler = useCallback((props: EditorEvents['update']) => {
+        update({
+            content: JSON.stringify(props.editor.getJSON())
+        })
+    }, [update])
+
+    const debouncedUpdateHandler = useDebouncedCallback(updateHandler, 800)
+
+    const options: IOptions = useMemo(() => {
+        return {
+            placeholder: 'Напишите статью...',
+            config: {
+                content: initialEditorContent,
+                onUpdate: debouncedUpdateHandler
+            }
+        } as IOptions
+    }, [initialEditorContent])
+
+
+    const editor = useEditor(options)
 
     const filePasteHandler = useCallback(async (event: React.ClipboardEvent) => {
         const files = Array.from(event.clipboardData.files)
         const images = filterFiles(files, [imageExtention.regex])
+        // TODO add paste files
         // const documents = filterFiles(files, [docExtention.regex])
 
+        const pastedFileItems = await getFileItems(images)
 
-        loadingStart()
-        await uploadImages(images, async (uploadedFiles) => {
+        const insertImages = pastedFileItems.map((item) => ({
+            type: 'image',
+            attrs: {
+                src: item.src,
+            },
+        }))
 
-            if (!uploadedFiles) return
+        editor?.chain().focus().insertContent(insertImages || []).run()
 
-            const insertImages = uploadedFiles.map((item) => ({
-                type: 'image',
-                attrs: {
-                    src: process.env.REACT_APP_API_URL + item.src,
-                },
-            }))
-
-            await editor?.chain().focus().insertContent([
-                ...insertImages,
-                // ...insertDocs,
-            ]).run()
+        update({
+            files: [
+                ...(article?.files || []),
+                ...pastedFileItems
+            ]
         })
 
-        loadingEnd()
-    }, [uploadImages, editor])
+    }, [editor])
 
     return (
         <div>

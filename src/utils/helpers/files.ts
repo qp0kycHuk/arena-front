@@ -1,4 +1,5 @@
 import { imageExtention, videoExtention } from "@utils/const/extentions";
+import { getRandomUUID } from "./uniqueId";
 
 /**
  * generate data image preview for images or video files
@@ -131,3 +132,16 @@ export function filterFiles(data: File[], fileMatchRegex?: RegExp[]): File[] {
 
     return arr
 };
+
+
+export async function getFileItems(files: File[]) {
+    return await Promise.all(files.map(async (file) => {
+        const dataUrl = await getFilePreview(file)
+
+        return {
+            id: getRandomUUID(),
+            src: dataUrl || '',
+            file
+        }
+    }))
+}

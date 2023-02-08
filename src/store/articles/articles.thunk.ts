@@ -2,7 +2,7 @@
 import { IArticle } from './../../models/Article';
 import { EntityId, createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
-import { IUpdateRequest, articlesApi } from 'src/api/articles';
+import {  IUpdateRequest, articlesApi } from '@store/articles/articles.api';
 
 export const fetchArticles = createAsyncThunk<IArticle[]>(
     'articles/fetch',

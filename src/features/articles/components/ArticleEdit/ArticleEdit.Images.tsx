@@ -1,49 +1,58 @@
-import { useContext, useMemo } from 'react';
-import { useAppDispatch } from '@store/index';
-import { articlesApi } from '@store/articles/articles.api';
-import { useRemoveMutation } from '@store/files';
+import { useMemo } from 'react';
 import { Uploader, useUploader } from '@features/fileUploader';
-import { getErrorMessage } from '@hooks/useErrorMessage';
 import { toast } from '@lib/Toast';
-import { ArticleEditContext, ArticleEditMainContext, useArticleEditMainContext, useArticleEditUtilsContext } from './ArticleEdit.Context';
-import { articleSlice } from '@store/articles/articles.slice';
+import { ArticleEditContext, useArticleEditMainContext, useArticleEditUtilsContext } from './ArticleEdit.Context';
+import { getFilePreview, getRandomUUID } from '@utils/index';
+import { getFileItems } from '@utils/helpers/files';
+
 
 export interface IArticleEditImagesProps { }
 
 // control upload and remove images
 export function ArticleEditImages({ }: IArticleEditImagesProps) {
-    const { uploadImages, removeImage } = useContext(ArticleEditContext)
-    const { article } = useArticleEditMainContext()
+    // const { uploadImages, removeImage } = useContext(ArticleEditContext)
+    const { article, update } = useArticleEditMainContext()
     const { loadingStart, loadingEnd } = useArticleEditUtilsContext()
 
-    const dispatch = useAppDispatch()
-    const [remove] = useRemoveMutation()
 
-    const initialImageFiles = useMemo(() => {
-        return article?.files.map((item) => ({
+    const fileItems = useMemo(() => {
+        return article?.files?.map((item) => ({
             id: item.id,
-            src: process.env.REACT_APP_API_URL + item.src,
+            src: item.src,
             title: item.name
         }))
     }, [article])
 
-    const imageUploader = useUploader({
-        initialFiles: initialImageFiles,
-        onChange: changeHandler,
-        onRemove: removeImage
-    })
+
 
     async function changeHandler(fileItems: IFileItem[]) {
         const files = fileItems.map((item) => (item as Required<IFileItem>).file)
+
         loadingStart()
-        await uploadImages(files)
+        const updatedFiles = await getFileItems(files)
         loadingEnd()
+
+        update({
+            files: [
+                ...(article?.files || []),
+                ...updatedFiles
+            ]
+        })
+    }
+
+    function removeHandler(fileItem: IFileItem) {
+        update({
+            files: article?.files?.filter((item) => item.id !== fileItem.id)
+        })
     }
 
 
 
     return (
-        <Uploader uploader={imageUploader} >
+        <Uploader
+            fileItems={fileItems}
+            onChange={changeHandler}
+            onRemove={removeHandler} >
             <div className="font-semibold">Дополнительные изображения</div>
         </Uploader>
     );

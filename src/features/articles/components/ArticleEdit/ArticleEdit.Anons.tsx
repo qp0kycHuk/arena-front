@@ -1,61 +1,51 @@
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ICreateRequest, IUpdateRequest, useArticleControl } from '@store/articles';
+import { useArticleControl } from '@store/articles';
 import { Uploader, useUploader } from '@features/fileUploader';
 import { useArticleEditMainContext, useArticleEditUtilsContext } from './ArticleEdit.Context';
+import { getFilePreview, getRandomUUID } from '@utils/index';
+import { ICreateRequest } from '@store/articles/articles.api';
 
 export interface IArticleEditAnonsProps { }
 
 export function ArticleEditAnons({ }: IArticleEditAnonsProps) {
-    const { article } = useArticleEditMainContext()
+    const { article, update } = useArticleEditMainContext()
     const { loadingStart, loadingEnd, getFormData } = useArticleEditUtilsContext()
     const { upsertArticle, createDraftArticle } = useArticleControl()
     const navigate = useNavigate();
 
-    const initialImageFiles = useMemo(() => article?.image ? ([{
+    const fileItems = useMemo(() => article?.image_src ? ([{
         id: article?.id,
-        src: process.env.REACT_APP_API_URL + article?.image_src,
-        title: article?.image,
+        src: article?.image_src,
+        // title: article?.image,
     }]) : [], [article])
+    console.log(article);
 
-    const anonsUploader = useUploader({
-        initialFiles: initialImageFiles,
-        multiple: false,
-        onChange: uploadImages,
-        onRemove: removeImage
-    })
 
-    async function uploadImages(fileItems: IFileItem[]) {
-        const anons = fileItems[0]?.file
+    async function changeHandler(fileItems: IFileItem[]) {
+        const file = fileItems[0]?.file
 
-        if (!anons) {
+        if (!file) {
             return;
         }
 
-        const formData: ICreateRequest = getFormData()
-        formData.append('image', anons)
-        loadingStart()
-        const updatedArticle = await updateOrCreate(formData)
-        loadingEnd()
+        const dataUrl = await getFilePreview(file)
 
-        if (!updatedArticle) return
-
-        if (!article) {
-            navigate('/articles/edit/' + updatedArticle.id)
-        }
-
+        update({
+            anons: file,
+            image_src: dataUrl || '',
+            image_delete: false
+        })
     }
 
     async function removeImage() {
-        if (!article) return
+        if (!article?.id) return
 
-        const formData: IUpdateRequest = getFormData()
-        formData.append('image_delete', '1')
-        formData.append('id', article.id.toString())
-
-        loadingStart()
-        const updatedArticle = await updateOrCreate(formData)
-        loadingEnd()
+        update({
+            anons: undefined,
+            image_src: undefined,
+            image_delete: true
+        })
     }
 
     // create draft if no exist or update article
@@ -68,7 +58,11 @@ export function ArticleEditAnons({ }: IArticleEditAnonsProps) {
     }
 
     return (
-        <Uploader uploader={anonsUploader} >
+        <Uploader
+            multiple={false}
+            fileItems={fileItems}
+            onChange={changeHandler}
+        >
             <div className="font-semibold">Анонсовое изображение</div>
         </Uploader>
     );

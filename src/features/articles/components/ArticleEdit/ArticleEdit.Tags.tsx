@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { EntityId } from '@reduxjs/toolkit';
 import { useCreateTagMutation, useGetTagsQuery, ICreateRequest } from '@store/tag';
 import { Tag } from '@components/Tag';
@@ -8,14 +8,22 @@ import { toast } from '@lib/Toast';
 import { Combobox, Transition } from '@headlessui/react'
 import { CrossIcon, HashIcon } from '@assets/icons/stroke';
 import { ITag } from '@models/Tag';
-import { ArticleEditContext, useArticleEditUtilsContext } from './ArticleEdit.Context';
+import { ArticleEditContext, useArticleEditMainContext, useArticleEditUtilsContext } from './ArticleEdit.Context';
 
 interface IArticleEditTagsProps { }
 
 export function ArticleEditTags({ }: IArticleEditTagsProps) {
-    const { addedTags, setAddedTags } = useContext(ArticleEditContext)
+    const { article, update } = useArticleEditMainContext()
+    // const [addedTags, setAddedTags] = useState<EntityId[]>(article?.tags?.map((tag) => tag.id) || [])
     const { loadingStart, loadingEnd } = useArticleEditUtilsContext()
-    
+    const addedIds = article?.tags?.map((tag) => tag.id) || []
+
+    useEffect(() => {
+        if (addedIds.length === 0) {
+            // setAddedTags(article?.tags?.map((tag) => tag.id) || [])
+        }
+    }, [article])
+
     const { data: tags } = useGetTagsQuery(null)
     const [create] = useCreateTagMutation()
     const [name, setName] = useState<string>('')
@@ -23,32 +31,43 @@ export function ArticleEditTags({ }: IArticleEditTagsProps) {
     const inputRef = useRef<HTMLInputElement>(null)
 
     // filter tags ids for combobox
-    const tagsWithoutAddedIds = tags?.ids.filter((id) => !addedTags?.includes(id))
+    const tagsWithoutAddedIds = name ? tags?.ids.filter((id) => !addedIds?.includes(id)) : []
     const tagsFilteredByName = tagsWithoutAddedIds?.filter((id) => {
         return tags?.entities[id]?.name.toLowerCase().trim().includes(name.toLowerCase().trim())
     })
 
-    function addTag(id?: EntityId) {
-        if (!id || addedTags?.includes(id)) return
-        setAddedTags?.((prev) => [...(prev || []), id])
+    function addTag(tag?: ITag) {
+        // if (!id || addedIds?.includes(id)) return
+        // const addedTag = 
+        if (!tag) return
+
+        update({
+            tags: [
+                ...(article?.tags || []),
+                tag
+            ]
+        })
+
         setOpen(false)
         setName('')
     }
 
     function removeTag(id?: EntityId) {
         if (!id) return
-        setAddedTags?.((prev) => prev?.filter((itemId) => itemId !== id))
+
+        update({
+            tags: article?.tags?.filter((tag) => tag.id !== id)
+        })
     }
 
     async function addTagRequest(id?: EntityId) {
-        if (id) return addTag(id)
+        if (id) return addTag(tags?.entities[id])
         if (name.trim().length === 0) return inputRef.current?.focus()
-
 
         const existingTag = Object.values(tags?.entities || {})
             .find((tag) => tag?.name.toLowerCase().trim() === name?.toLowerCase().trim())
 
-        if (existingTag) return addTag(existingTag.id)
+        if (existingTag) return addTag(existingTag)
 
         const formData: ICreateRequest = new FormData()
         formData.append('name', name.trim())
@@ -63,7 +82,7 @@ export function ArticleEditTags({ }: IArticleEditTagsProps) {
             return
         }
         const newTag = (result as IResultWithData<ITag>).data
-        addTag(newTag.id)
+        addTag(newTag)
     }
 
     return (
@@ -71,7 +90,7 @@ export function ArticleEditTags({ }: IArticleEditTagsProps) {
             <HashIcon className="text-2xl mr-1 text-gray" />
             <div className="relative mr-1">
                 {/* TODO move Combobox to @features/ui  */}
-                <Combobox value={name} onChange={(id) => addTag(id)}>
+                <Combobox value={name} onChange={(id) => addTag(tags?.entities[id])}>
                     <div className="relative">
                         <Combobox.Input
                             ref={inputRef}
@@ -102,8 +121,7 @@ export function ArticleEditTags({ }: IArticleEditTagsProps) {
                         >
                             <Combobox.Options className="absolute ml-1 max-h-60 left-full top-1/2 -translate-y-1/2 w-full overflow-auto rounded-md bg-white py-1 shadow-md focus:outline-none z-10">
                                 {tagsFilteredByName?.map((id) => (
-                                    <Combobox.Option
-                                        key={id}
+                                    <Combobox.Option key={id}
                                         className={({ active }) =>
                                             `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? 'bg-primary text-white' : ''}`
                                         }
@@ -120,7 +138,7 @@ export function ArticleEditTags({ }: IArticleEditTagsProps) {
             <Button variant='text' onClick={() => addTagRequest()}>Добавить</Button>
 
             <div className="flex ml-auto gap-2">
-                {addedTags?.map((id) => (
+                {addedIds?.map((id) => (
                     <Tag key={id} onClick={() => removeTag(id)}>
                         {tags?.entities[id]?.name} <CrossIcon className="ml-2" />
                     </Tag>

@@ -33,7 +33,7 @@ lowlight.registerLanguage('ts', ts)
 lowlight.registerLanguage('php', php)
 
 
-interface IOptions {
+export interface IOptions {
     config?: Partial<EditorOptions> | undefined
     placeholder?: string
     uploadFunction?(files: File[]): Promise<IFile[] | undefined>

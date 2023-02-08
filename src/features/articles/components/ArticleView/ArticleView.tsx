@@ -1,4 +1,3 @@
-import { useGetByIdQuery } from '@store/articles';
 import { ArticleViewImage } from './ArticleView.Image';
 import { ArticleViewTitle } from './ArticleView.Title';
 import { ArticleViewBody } from './ArticleView.Body';
