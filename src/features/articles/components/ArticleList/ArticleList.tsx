@@ -2,18 +2,35 @@ import { useEffect } from 'react';
 import { ArticleItem } from '../ArticleItem/ArticleItem';
 import { SettingsIcon, FoldersIcon, FileTextIcon } from '@assets/icons/stroke';
 import { Button, Menu } from '@features/ui';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { Search } from '@components/Search/Search';
 import { useAppDispatch, useAppSelector } from '@store/index';
 import { fetchArticles } from '@store/articles/articles.thunk';
 import { articlesEntityAdapter } from '@store/articles/articles.adapter';
-import {  useFetchArticles } from '@store/articles/articles.hooks';
+import { useFetchArticles } from '@store/articles/articles.hooks';
+import { useDebouncedCallback } from 'use-debounce';
 
 interface IArticleListProps {
 }
+const SEARCH_QUERY_NAME = 's'
 
 export function ArticleList(props: IArticleListProps) {
     const articles = useFetchArticles()
+    let [searchParams, setSearchParams] = useSearchParams();
+
+    const searchedArticles = articles.filter((article) => {
+        const searchString = searchParams.get(SEARCH_QUERY_NAME)
+        if (searchString) {
+            return article.name.toLowerCase().includes(searchString.toLowerCase())
+        }
+        return true
+    })
+
+    const changeHandler: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+        setSearchParams({ [SEARCH_QUERY_NAME]: event.target.value })
+
+    }
+    const debouncedChangeHandler = useDebouncedCallback(changeHandler, 800)
 
     return (
         <div>
@@ -33,9 +50,12 @@ export function ArticleList(props: IArticleListProps) {
                 </Menu>
             </div>
 
-            <Search className='mb-4' />
+            <Search
+                onChange={debouncedChangeHandler}
+                initialValue={searchParams.get(SEARCH_QUERY_NAME) || ''}
+                className='mb-4' />
 
-            {articles?.map((article, index) =>
+            {searchedArticles?.map((article, index) =>
                 <div key={article.id}>
                     <Link className='peer' to={"/articles/" + article.id}>
                         <ArticleItem article={article} />
