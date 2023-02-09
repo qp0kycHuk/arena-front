@@ -5,7 +5,7 @@ import { ArticleViewDates } from './ArticleView.Dates';
 import { ArticleViewButtons } from './ArticleView.Buttons';
 import { ArticleViewImages } from './ArticleView.Images';
 import { Tag } from '@components/Tag';
-import { useFetchArticleById } from '@store/articles/articles.slice';
+import { useFetchArticleById } from '@store/articles/articles.hooks';
 import { EntityId } from '@reduxjs/toolkit';
 
 interface IArticleViewProps {

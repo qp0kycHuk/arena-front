@@ -8,13 +8,13 @@ interface IArticleItemProps {
 }
 
 export function ArticleItem({ article }: IArticleItemProps) {
-    const imageSrc = article?.image_src ? (process.env.REACT_APP_API_URL + article.image_src) : ''
+    const imageSrc = article?.image_src ? article.image_src : ''
 
     return (
         <div className="flex items-center px-4 py-3 -mx-4 rounded-2xl hover:bg-primary hover:bg-opacity-10">
             <div className="w-24 h-[76px] rounded-xl relative overflow-hidden flex bg-gray bg-opacity-10">
                 {imageSrc && <img src={imageSrc} alt="" className="absolute object-cover w-full h-full" />}
-                {!imageSrc && <ImageIcon className="text-3xl text-gray m-auto" />}
+                {!imageSrc && <ImageIcon className="m-auto text-3xl text-gray" />}
             </div>
             <div className='max-w-5xl ml-4'>
                 <div className="mb-2 font-semibold">{article.name}</div>

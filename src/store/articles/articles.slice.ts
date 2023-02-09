@@ -43,28 +43,6 @@ export const {
     selectById,
 } = articlesEntityAdapter.getSelectors<RootState>(({ articles }) => articles)
 
-export const useFetchArticles = () => {
-    const articles = useAppSelector(selectAll)
-    const dispatch = useAppDispatch()
 
-    useEffect(() => {
-        dispatch(fetchArticles())
-    }, [])
-
-    return articles
-}
-
-export const useFetchArticleById = (id: EntityId) => {
-    const article = useAppSelector((state) => selectById(state, id))
-    const dispatch = useAppDispatch()
-
-    useEffect(() => {
-        if (id) {
-            dispatch(fetchArticleById(id))
-        }
-    }, [id])
-
-    return article
-}
 
 export default articleSlice.reducer

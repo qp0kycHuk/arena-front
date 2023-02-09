@@ -1,8 +1,10 @@
 import { IArticle } from '@models/Article';
-import { useAppDispatch } from './../index';
+import { useAppDispatch, useAppSelector } from './../index';
 import { ICreateRequest, IUpdateRequest } from "./articles.api"
-import { createArticle as create, updateArticle as update } from './articles.thunk';
-import { articleSlice } from './articles.slice';
+import { createArticle as create, fetchArticleById, fetchArticles, updateArticle as update } from './articles.thunk';
+import { articleSlice, selectAll, selectById } from './articles.slice';
+import { useEffect } from 'react';
+import { EntityId } from '@reduxjs/toolkit';
 
 export function useArticleControl() {
     const dispatch = useAppDispatch()
@@ -45,4 +47,28 @@ export function useArticleControl() {
         createArticle,
         manualUpdateArticle
     }
+}
+
+export const useFetchArticles = () => {
+    const articles = useAppSelector(selectAll)
+    const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        dispatch(fetchArticles())
+    }, [])
+
+    return articles
+}
+
+export const useFetchArticleById = (id: EntityId) => {
+    const article = useAppSelector((state) => selectById(state, id))
+    const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        if (id) {
+            dispatch(fetchArticleById(id))
+        }
+    }, [id])
+
+    return article
 }

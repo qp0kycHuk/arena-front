@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { getErrorMessage } from "@hooks/useErrorMessage";
 import { toast } from "@lib/Toast";
 import { IUploadRequest, useRemoveMutation, useUploadMutation } from "@store/files";
-import { useFetchArticleById } from "@store/articles/articles.slice";
+import { useFetchArticleById } from "@store/articles/articles.hooks";
 import { ICreateRequest, IUpdateRequest } from "@store/articles/articles.api";
 
 

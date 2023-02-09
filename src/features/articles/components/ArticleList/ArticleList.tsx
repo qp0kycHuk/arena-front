@@ -7,7 +7,7 @@ import { Search } from '@components/Search/Search';
 import { useAppDispatch, useAppSelector } from '@store/index';
 import { fetchArticles } from '@store/articles/articles.thunk';
 import { articlesEntityAdapter } from '@store/articles/articles.adapter';
-import { selectAll, useFetchArticles } from '@store/articles/articles.slice';
+import {  useFetchArticles } from '@store/articles/articles.hooks';
 
 interface IArticleListProps {
 }
