@@ -65,6 +65,9 @@ body {
         .hljs-name {
             color: #f92672;
         }
+
+       
+        .xml .hljs-tag .hljs-name,
         .xml.hljs-tag.hljs-name,
         .hljs-code {
             color: #66d9ef;
@@ -81,6 +84,7 @@ body {
             color: #bf79db;
         }
 
+        .xml .hljs-tag .hljs-attr,
         .xml.hljs-tag.hljs-attr,
         .hljs-bullet,
         .hljs-subst,
