@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useArticleControl } from '@store/articles';
-import { Uploader, useUploader } from '@features/fileUploader';
+import { Uploader } from '@features/fileUploader';
 import { useArticleEditMainContext, useArticleEditUtilsContext } from './ArticleEdit.Context';
 import { getFilePreview, getRandomUUID } from '@utils/index';
 import { ICreateRequest } from '@store/articles/articles.api';

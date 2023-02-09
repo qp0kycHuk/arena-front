@@ -1,13 +1,17 @@
 import * as React from 'react';
 import { ArticleList as ListComponent } from '@features/articles'
+import { PageContent } from '@layouts/PageContent';
+import { useDocumentTitle } from '@hooks/useDocumentTitle';
 
 interface IArticleListPageProps {
 }
 
-export function ArticleListPage (props: IArticleListPageProps) {
+export function ArticleListPage(props: IArticleListPageProps) {
+  useDocumentTitle('Статьи')
+  
   return (
-    <div className="relative flex-grow p-8 bg-white rounded-2xl dark:bg-opacity-5 dark:text-white" >
+    <PageContent className='p-8'>
       <ListComponent />
-    </div>
+    </PageContent>
   );
 }
