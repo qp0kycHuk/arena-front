@@ -1,16 +1,19 @@
-import * as React from 'react';
+import { useEffect } from 'react';
 import { ArticleItem } from '../ArticleItem/ArticleItem';
-import { useGetQuery } from '@store/articles';
 import { SettingsIcon, FoldersIcon, FileTextIcon } from '@assets/icons/stroke';
 import { Button, Menu } from '@features/ui';
 import { Link } from 'react-router-dom';
 import { Search } from '@components/Search/Search';
+import { useAppDispatch, useAppSelector } from '@store/index';
+import { fetchArticles } from '@store/articles/articles.thunk';
+import { articlesEntityAdapter } from '@store/articles/articles.adapter';
+import {  useFetchArticles } from '@store/articles/articles.hooks';
 
 interface IArticleListProps {
 }
 
 export function ArticleList(props: IArticleListProps) {
-    const { data: articles } = useGetQuery(null)
+    const articles = useFetchArticles()
 
     return (
         <div>

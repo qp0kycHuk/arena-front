@@ -1,9 +1,48 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { toast } from '@lib/Toast';
+import { IArticle } from './../../models/Article';
+import { RootState, useAppDispatch, useAppSelector } from './../index';
+import { EntityId, PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { createArticle, fetchArticleById, fetchArticles, updateArticle } from "./articles.thunk";
+import { articlesEntityAdapter } from "./articles.adapter";
+import { useEffect } from 'react';
 
-const slice = createSlice({
+
+export const articleSlice = createSlice({
     name: 'articles',
-    initialState: {},
-    reducers: {},
+    initialState: articlesEntityAdapter.getInitialState(),
+    reducers: {
+        updateArticle(state, action: PayloadAction<IArticle>) {
+            articlesEntityAdapter.updateOne(state, {
+                id: action.payload.id,
+                changes: action.payload
+            })
+        }
+    },
+    extraReducers(builder) {
+        builder
+            .addCase(fetchArticles.fulfilled, articlesEntityAdapter.setAll)
+            .addCase(fetchArticleById.fulfilled, articlesEntityAdapter.upsertOne)
+            .addCase(createArticle.fulfilled, articlesEntityAdapter.upsertOne)
+            .addCase(updateArticle.fulfilled, articlesEntityAdapter.upsertOne)
+
+        builder
+            .addCase(fetchArticles.rejected, showThunkError)
+            .addCase(fetchArticleById.rejected, showThunkError)
+            .addCase(createArticle.rejected, showThunkError)
+            .addCase(updateArticle.rejected, showThunkError)
+    },
 })
 
-export default slice.reducer
+function showThunkError(state: any, action: any) {
+    toast.error(action.payload.message)
+}
+
+export const {
+    selectEntities,
+    selectAll,
+    selectById,
+} = articlesEntityAdapter.getSelectors<RootState>(({ articles }) => articles)
+
+
+
+export default articleSlice.reducer

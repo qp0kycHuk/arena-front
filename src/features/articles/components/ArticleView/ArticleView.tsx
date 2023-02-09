@@ -1,4 +1,3 @@
-import { useGetByIdQuery } from '@store/articles';
 import { ArticleViewImage } from './ArticleView.Image';
 import { ArticleViewTitle } from './ArticleView.Title';
 import { ArticleViewBody } from './ArticleView.Body';
@@ -6,14 +5,15 @@ import { ArticleViewDates } from './ArticleView.Dates';
 import { ArticleViewButtons } from './ArticleView.Buttons';
 import { ArticleViewImages } from './ArticleView.Images';
 import { Tag } from '@components/Tag';
+import { useFetchArticleById } from '@store/articles/articles.hooks';
+import { EntityId } from '@reduxjs/toolkit';
 
 interface IArticleViewProps {
-    articleId: string | number
+    articleId: EntityId
 }
 
 export function ArticleView({ articleId }: IArticleViewProps) {
-    const { data: article } = useGetByIdQuery(articleId)
-
+    const article = useFetchArticleById(articleId)
 
     return (
         <div className="relative flex flex-grow bg-white rounded-2xl dark:bg-opacity-5 dark:text-white" >

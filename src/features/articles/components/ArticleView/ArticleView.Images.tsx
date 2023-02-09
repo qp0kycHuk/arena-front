@@ -26,9 +26,9 @@ export function ArticleViewImages({ article, isLoading }: IArticleViewImagesProp
             <div className="font-semibold mb-5">Изображения</div>
             <div className="flex flex-wrap gap-6">
                 {article?.files.map((item) => (
-                    <ImageLightBox key={item.id} src={process.env.REACT_APP_API_URL + item.src}>
+                    <ImageLightBox key={item.id} src={item.src || ''}>
                         <div className="w-52 h-40 rounded-xl overflow-hidden bg-gray bg-opacity-10">
-                            <img src={process.env.REACT_APP_API_URL + item.src} alt="" className='w-full h-full object-cover' />
+                            <img src={item.src} alt="" className='w-full h-full object-cover' />
                         </div>
                     </ImageLightBox>
                 ))}

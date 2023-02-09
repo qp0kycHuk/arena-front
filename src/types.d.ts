@@ -50,3 +50,16 @@ interface TypedFormData<T> extends FormData {
   has(name: T): boolean
   set(name: T, value: string | Blob, fileName?: string): void
 }
+
+type UploadImagesFunc = (files: File[], beforeUpdate?: (files: IFile[] | undefined) => any) => Promise<IFile[] | undefined>
+
+
+interface IFileItem {
+  id?: string | number
+  key?: string
+  src?: string
+  preview?: string
+  title?: string
+  file?: File
+  extention?: IExtention
+}

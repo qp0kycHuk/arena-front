@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import { ArticleEdit } from '@features/articles';
 import { Button } from '@features/ui';
 import { ToLeftIcon } from '@assets/icons/stroke';
+import { ArticleEditContextProvider } from '../components/ArticleEdit/ArticleEdit.Context';
 
 interface IArticleEditPageProps { }
 
@@ -14,8 +15,9 @@ export function ArticleEditPage(props: IArticleEditPageProps) {
                 <ToLeftIcon className="mr-2" />
                 Назад
             </Button>
-
-            <ArticleEdit articleId={id?.toString()} />
+            <ArticleEditContextProvider articleId={id}>
+                <ArticleEdit articleId={id?.toString()} />
+            </ArticleEditContextProvider>
         </div>
     );
 }

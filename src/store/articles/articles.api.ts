@@ -1,90 +1,49 @@
-import { IArticle } from '@models/Article';
-import { rootApi } from '../api'
+import { EntityId } from '@reduxjs/toolkit';
+import { IArticle } from "@models/Article";
+import axios, { AxiosResponse } from "axios";
+import Cookies from "js-cookie";
 
+interface IArticlesApi {
+    fetch(): Promise<IArticle[]>
+}
 
 type CreateParams = 'user_id' | 'content' | 'excerpt' | 'name' | 'image' | 'tags[]'
-type UpdateParams = CreateParams | 'id'| 'image_delete'
+type UpdateParams = CreateParams | 'id' | 'image_delete'
 export type ICreateRequest = TypedFormData<CreateParams>
 export type IUpdateRequest = TypedFormData<UpdateParams>
 
+const ROOT_ENDPOINT_URL = process.env.REACT_APP_API_URL + '/api/articles'
 
-const ARTICLES_TAG: 'articles' = 'articles'
-const ROOT_ENDPOINT_URL = '/api/articles'
+export function articlesApi() {
+    const token = Cookies.get(process.env.REACT_APP_CSRF_COOKIE_NAME as string)
+    const api = axios.create({
+        withCredentials: true,
+        headers: {
+            [process.env.REACT_APP_CSRF_HEADER_NAME as string]: token
+        }
+    })
 
-const taggetRootApi = rootApi.enhanceEndpoints({ addTagTypes: [ARTICLES_TAG] });
+    async function fetch(): Promise<AxiosResponse<IListResponse<IArticle>, any>> {
+        return await api.get(ROOT_ENDPOINT_URL,)
+    }
 
-export const articlesApi = taggetRootApi.injectEndpoints({
-    endpoints: (builder) => ({
-        get: builder.query<IArticle[], null>({
-            query: () => {
-                return {
-                    url: ROOT_ENDPOINT_URL,
+    async function create(formData: IUpdateRequest): Promise<AxiosResponse<IItemResponse<IArticle>, any>> {
+        return await api.post(ROOT_ENDPOINT_URL, formData)
+    }
 
-                }
-            },
-            transformResponse: (response: IListResponse<IArticle>) => {
-                return response.items
-            },
-            providesTags: (result) => {
-                if (result) {
-                    return [
-                        ...result.map(({ id }) => ({ type: ARTICLES_TAG, id })),
-                        { type: ARTICLES_TAG, id: 'LIST' },
-                    ]
-                }
+    async function update(formData: IUpdateRequest): Promise<AxiosResponse<IItemResponse<IArticle>, any>> {
+        formData.append('_method', 'PUT')
+        return await api.post(ROOT_ENDPOINT_URL + '/' + formData.get('id'), formData)
+    }
 
-                return [{ type: ARTICLES_TAG, id: 'LIST' }]
-            }
-        }),
-        getById: builder.query<IArticle, number | string>({
-            query: (id) => ({
-                url: ROOT_ENDPOINT_URL + '/' + id,
-            }),
-            transformResponse: (response: IItemResponse<IArticle>) => {
-                return response.item
-            },
-            providesTags: (result, error, id) => [{ type: ARTICLES_TAG, id: id.toString() }],
+    async function fetchById(id: EntityId) {
+        return await api.get(ROOT_ENDPOINT_URL + '/' + id)
+    }
 
-        }),
-        create: builder.mutation<IArticle, ICreateRequest>({
-            query: (formData) => ({
-                url: ROOT_ENDPOINT_URL,
-                method: 'post',
-                body: formData
-            }),
-            transformResponse: (response: IItemResponse<IArticle>) => {
-                return response.item
-            },
-            invalidatesTags: [{ type: ARTICLES_TAG, id: 'LIST' }]
-        }),
-        update: builder.mutation<IArticle, IUpdateRequest>({
-            query: (formData) => {
-                formData.append('_method', 'PUT')
-                return {
-                    url: ROOT_ENDPOINT_URL + '/' + formData.get('id'),
-                    method: 'post',
-                    body: formData
-                }
-            },
-            transformResponse: (response: IItemResponse<IArticle>) => {
-                return response.item
-            },
-            async onQueryStarted(formData, { dispatch, queryFulfilled }) {
-                try {
-                    const { data: updatedArticle } = await queryFulfilled
-                    dispatch(articlesApi.util.updateQueryData('getById', updatedArticle.id.toString(), (draft) => {
-                        Object.assign(draft, updatedArticle)
-                    }))
-                    dispatch(articlesApi.util.updateQueryData('get', null, (draft) => {
-                        const index = draft.findIndex((item) => item.id === updatedArticle.id)
-                        if(draft[index]){
-                            draft[index] = updatedArticle
-                        }
-                    }))
-                } catch (error) { }
-            },
-        }),
-    }),
-})
-
-export const { useGetQuery, useGetByIdQuery, useLazyGetByIdQuery, useCreateMutation, useUpdateMutation } = articlesApi
+    return {
+        create,
+        update,
+        fetch,
+        fetchById
+    }
+}

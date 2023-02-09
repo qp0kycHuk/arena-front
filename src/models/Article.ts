@@ -1,9 +1,10 @@
+import { EntityId } from '@reduxjs/toolkit';
 import { ICategory } from "./Category";
 import { IFile } from "./File";
 import { ITag } from "./Tag";
 
 export interface IArticle {
-    id: number
+    id: EntityId
     user_id: number
     name: string
     content: string

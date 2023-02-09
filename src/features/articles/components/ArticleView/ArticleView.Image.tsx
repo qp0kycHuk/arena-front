@@ -9,7 +9,7 @@ interface IArticleViewImageProps {
 
 export function ArticleViewImage({ article, isLoading }: IArticleViewImageProps) {
     const imageClassName = 'self-start h-20 mr-6 overflow-hidden rounded-xl w-28'
-    const imageSrc = article?.image_src ? (process.env.REACT_APP_API_URL + article.image_src) : ''
+    const imageSrc = article?.image_src ? article.image_src : ''
 
     if (!article || isLoading) {
         return (
@@ -19,7 +19,7 @@ export function ArticleViewImage({ article, isLoading }: IArticleViewImageProps)
 
     if (!imageSrc) {
         return (<div className={imageClassName + ' flex bg-gray bg-opacity-10'}>
-            <ImageIcon className="text-3xl text-gray m-auto" />
+            <ImageIcon className="m-auto text-3xl text-gray" />
         </div>)
     }
 

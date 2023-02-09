@@ -1,116 +1,68 @@
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ICreateRequest, IUpdateRequest, useArticleControl } from '@store/articles';
-import { articlesApi } from '@store/articles/articles.api';
+import { useArticleControl } from '@store/articles';
 import { Uploader, useUploader } from '@features/fileUploader';
-import { getErrorMessage } from '@hooks/useErrorMessage';
-import { toast } from '@lib/Toast';
-import { useAppDispatch } from '@store/index';
-import { IArticle } from '@models/Article';
+import { useArticleEditMainContext, useArticleEditUtilsContext } from './ArticleEdit.Context';
+import { getFilePreview, getRandomUUID } from '@utils/index';
+import { ICreateRequest } from '@store/articles/articles.api';
 
-export interface IArticleEditAnonsProps {
-    article?: IArticle
-    getFormData(): ICreateRequest
-    onStartTransition?(): void
-    onEndTransition?(): void
-}
+export interface IArticleEditAnonsProps { }
 
-export function ArticleEditAnons({
-    article,
-    getFormData,
-    onStartTransition,
-    onEndTransition }: IArticleEditAnonsProps
-) {
-    const dispatch = useAppDispatch()
+export function ArticleEditAnons({ }: IArticleEditAnonsProps) {
+    const { article, update } = useArticleEditMainContext()
+    const { loadingStart, loadingEnd, getFormData } = useArticleEditUtilsContext()
     const { upsertArticle, createDraftArticle } = useArticleControl()
     const navigate = useNavigate();
 
-    const initialImageFiles = useMemo(() => article?.image ? ([{
+    const fileItems = useMemo(() => article?.image_src ? ([{
         id: article?.id,
-        src: process.env.REACT_APP_API_URL + article?.image_src,
-        title: article?.image,
+        src: article?.image_src,
+        // title: article?.image,
     }]) : [], [article])
+    console.log(article);
 
-    const anonsUploader = useUploader({
-        initialFiles: initialImageFiles,
-        multiple: false,
-        onChange: uploadImages,
-        onRemove: removeImage
-    })
 
-    async function uploadImages(fileItems: IFileItem[]) {
-        onStartTransition?.()
+    async function changeHandler(fileItems: IFileItem[]) {
+        const file = fileItems[0]?.file
 
-        const anons = fileItems[0]?.file
-
-        if (!anons) {
-            onEndTransition?.()
+        if (!file) {
             return;
         }
 
-        const formData: ICreateRequest = getFormData()
-        formData.append('image', anons)
+        const dataUrl = await getFilePreview(file)
 
-        const updatedArticle = await updateOrCreate(formData)
-        if (!updatedArticle) return
-
-        if (!article) {
-            navigate('/articles/edit/' + updatedArticle.id)
-        }
-
-        onEndTransition?.()
+        update({
+            anons: file,
+            image_src: dataUrl || '',
+            image_delete: false
+        })
     }
 
     async function removeImage() {
-        if (!article) return
-        onStartTransition?.()
+        if (!article?.id) return
 
-        const formData: IUpdateRequest = getFormData()
-        formData.append('image_delete', '1')
-        formData.append('id', article.id.toString())
-
-        // change article state manualy 
-        // for interface changed before request fullfiled
-        // for no refetch article
-        // because article state separately files api
-        const patchResult = dispatch(articlesApi.util.updateQueryData('getById', article.id.toString(), (draft) => {
-            Object.assign(draft, {
-                image: null,
-                image_src: null
-            })
-        }))
-
-        const updatedArticle = await updateOrCreate(formData)
-        if (!updatedArticle) {
-            patchResult.undo()
-        }
-
-        onEndTransition?.()
+        update({
+            anons: undefined,
+            image_src: undefined,
+            image_delete: true
+        })
     }
 
     // create draft if no exist or update article
     async function updateOrCreate(formData: ICreateRequest) {
-        let result
         if (article) {
-            result = await upsertArticle(formData)
+            return await upsertArticle(formData)
         } else {
-            result = await createDraftArticle(formData)
+            return await createDraftArticle(formData)
         }
-
-        const errorMessage = getErrorMessage((result as IResultWithError)?.error)
-
-        if (errorMessage) {
-            toast.error(errorMessage)
-            onEndTransition?.()
-            return
-        }
-
-        const updatedArticle = (result as IResultWithData<IArticle>).data
-        return updatedArticle
     }
 
     return (
-        <Uploader uploader={anonsUploader} >
+        <Uploader
+            multiple={false}
+            fileItems={fileItems}
+            onChange={changeHandler}
+        >
             <div className="font-semibold">Анонсовое изображение</div>
         </Uploader>
     );

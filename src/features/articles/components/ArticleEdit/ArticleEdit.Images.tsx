@@ -1,153 +1,61 @@
 import { useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '@store/index';
-import { ICreateRequest, useArticleControl } from '@store/articles';
-import { articlesApi } from '@store/articles/articles.api';
-import { IUploadRequest, useRemoveMutation, useUploadMutation } from '@store/files';
 import { Uploader, useUploader } from '@features/fileUploader';
-import { getErrorMessage } from '@hooks/useErrorMessage';
 import { toast } from '@lib/Toast';
-import { IArticle } from '@models/Article';
-import { IFile } from '@models/File';
+import { ArticleEditContext, useArticleEditMainContext, useArticleEditUtilsContext } from './ArticleEdit.Context';
+import { getFilePreview, getRandomUUID } from '@utils/index';
+import { getFileItems } from '@utils/helpers/files';
 
-export interface IArticleEditImagesProps {
-    article?: IArticle
-    getFormData(): ICreateRequest
-    onStartTransition?(): void
-    onEndTransition?(): void
-}
+
+export interface IArticleEditImagesProps { }
 
 // control upload and remove images
-export function ArticleEditImages({
-    article,
-    getFormData,
-    onStartTransition,
-    onEndTransition }: IArticleEditImagesProps
-) {
-    const dispatch = useAppDispatch()
-    const { createDraftArticle } = useArticleControl()
-    const [upload] = useUploadMutation()
-    const [remove] = useRemoveMutation()
-    const navigate = useNavigate();
+export function ArticleEditImages({ }: IArticleEditImagesProps) {
+    // const { uploadImages, removeImage } = useContext(ArticleEditContext)
+    const { article, update } = useArticleEditMainContext()
+    const { loadingStart, loadingEnd } = useArticleEditUtilsContext()
 
-    const initialImageFiles = useMemo(() => {
-        return article?.files.map((item) => ({
+
+    const fileItems = useMemo(() => {
+        return article?.files?.map((item) => ({
             id: item.id,
-            src: process.env.REACT_APP_API_URL + item.src,
+            src: item.src,
             title: item.name
         }))
     }, [article])
 
-    const imageUploader = useUploader({
-        initialFiles: initialImageFiles,
-        onChange: uploadImages,
-        onRemove: removeImage
-    })
 
-    async function uploadImages(fileItems: IFileItem[]) {
-        let currentArticle = article
-        onStartTransition?.()
 
-        // Create draft article if article not exist
-        if (!article) {
-            const createDraftResult = await createDraftArticle(getFormData())
-            currentArticle = (createDraftResult as { data: IArticle; }).data
-
-            const errorMessage = getErrorMessage((createDraftResult as IResultWithError)?.error)
-
-            if (errorMessage) {
-                toast.error(errorMessage)
-                onEndTransition?.()
-                return
-            }
-        }
-
-        if (!currentArticle) {
-            toast.error('currentArticle is undefined')
-            onEndTransition?.()
-            return
-        }
-
-        // check files
+    async function changeHandler(fileItems: IFileItem[]) {
         const files = fileItems.map((item) => (item as Required<IFileItem>).file)
 
-        if (!files.length) {
-            onEndTransition?.()
-            return;
-        }
+        loadingStart()
+        const updatedFiles = await getFileItems(files)
+        loadingEnd()
 
-        // create form data
-        const formData: IUploadRequest = new FormData()
-        formData.append('entity', 'article',)
-        formData.append('entity_id', currentArticle.id.toString())
-        files.forEach((file) => {
-            formData.append('files[]', file)
+        update({
+            files: [
+                ...(article?.files || []),
+                ...updatedFiles
+            ]
         })
-
-        // upload files
-        const result = await upload(formData)
-        const errorMessage = getErrorMessage((result as IResultWithError)?.error)
-
-        if (errorMessage) {
-            onEndTransition?.()
-            toast.error(errorMessage)
-            return
-        }
-
-        // change article state manualy 
-        // for no refetch article
-        // because article state separately files api
-        dispatch(articlesApi.util.updateQueryData('getById', currentArticle.id.toString(), (draft) => {
-            Object.assign(draft, {
-                files: [
-                    ...draft.files,
-                    ...(result as IResultWithData<IFile[]>).data
-                ]
-            })
-        }))
-
-        if (!article) {
-            navigate('/articles/edit/' + currentArticle.id)
-        }
-
-        onEndTransition?.()
     }
 
-    async function removeImage(fileItem: IFileItem) {
-        if (!article) return
-        onStartTransition?.()
-
-        const formData = new FormData()
-        formData.append('id', (fileItem as Required<IFileItem>).id.toString())
-        formData.append('entity_id', article.id.toString())
-        formData.append('entity', 'article')
-
-        // change article state manualy 
-        // for interface changed before request fullfiled
-        // for no refetch article
-        // because article state separately files api
-        const patchResult = dispatch(articlesApi.util.updateQueryData('getById', article.id.toString(), (draft) => {
-            Object.assign(draft, {
-                files: article.files.filter((item) => item.id !== fileItem.id)
-            })
-        }))
-
-        const result = await remove(formData)
-        const errorMessage = getErrorMessage((result as IResultWithError)?.error)
-
-        if (errorMessage) {
-            toast.error(errorMessage)
-            onEndTransition?.()
-            patchResult.undo()
-            return
-        }
-
-        onEndTransition?.()
+    function removeHandler(fileItem: IFileItem) {
+        update({
+            files: article?.files?.filter((item) => item.id !== fileItem.id)
+        })
     }
+
+
 
     return (
-        <Uploader uploader={imageUploader} >
+        <Uploader
+            fileItems={fileItems}
+            onChange={changeHandler}
+            onRemove={removeHandler} >
             <div className="font-semibold">Дополнительные изображения</div>
         </Uploader>
     );
 }
+
+
