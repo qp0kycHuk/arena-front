@@ -4,6 +4,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { rootApi } from './api'
 import authReducer from './auth/auth.slice'
 import articlesReducer from './articles/articles.slice'
+import usersReducer from './users/users.slice'
 
 
 export const store = configureStore({
@@ -11,6 +12,7 @@ export const store = configureStore({
         [rootApi.reducerPath]: rootApi.reducer,
         auth: authReducer,
         articles: articlesReducer,
+        users: usersReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(rootApi.middleware),
