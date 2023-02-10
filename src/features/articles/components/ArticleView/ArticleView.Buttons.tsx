@@ -1,6 +1,7 @@
 import { BookmarkIcon, PencilIcon } from '@assets/icons/stroke';
 import { Button } from '@features/ui';
 import { IArticle } from '@models/Article';
+import { getRoute } from '@utils/index';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -26,7 +27,7 @@ export function ArticleViewButtons({ article, isLoading }: IArticleViewButtonsPr
 
     return (
         <div className="flex gap-4">
-            <Link to={"/articles/edit/" + article?.id}>
+            <Link to={getRoute().articles.edit(article.id)}>
                 <Button variant='contur' color='gray'>
                     <PencilIcon className="text-2xl" />
                 </Button>

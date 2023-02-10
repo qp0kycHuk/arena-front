@@ -8,6 +8,9 @@ import { toast } from "@lib/Toast";
 import { IUploadRequest, useRemoveMutation, useUploadMutation } from "@store/files";
 import { useFetchArticleById } from "@store/articles/articles.hooks";
 import { ICreateRequest, IUpdateRequest } from "@store/articles/articles.api";
+import { getRoute } from "@utils/index";
+import { useEditableEntity } from "@hooks/useEditableEntity";
+import { useLoading } from "@hooks/useLoading";
 
 
 
@@ -36,7 +39,7 @@ interface IArticleEditContextProviderProps extends React.PropsWithChildren {
 
 interface IEditableArticle extends IArticle {
     anons?: File
-    image_delete: boolean
+    image_delete?: boolean
 }
 
 export const ArticleEditContext = createContext<IArticleEditContextValue>({} as IArticleEditContextValue)
@@ -58,23 +61,10 @@ export function ArticleEditContextProvider({
     const [remove] = useRemoveMutation()
 
     const article = useFetchArticleById(articleId || '')
-    const [editableArticle, setEditableArticle] = useState<Partial<IEditableArticle>>({})
 
-    const update = useCallback((updated: Partial<IEditableArticle>) => {
-        setEditableArticle((prev) => ({
-            ...prev,
-            ...updated
-        }))
-    }, [])
+    const [editableArticle, update] = useEditableEntity<IEditableArticle>(article)
+    const { loading, loadingStart, loadingEnd } = useLoading()
 
-    useEffect(() => {
-        setEditableArticle(article || {})
-    }, [article])
-
-
-    const [loading, setLoading] = useState(false)
-    const loadingStart = useCallback(() => setLoading(true), [])
-    const loadingEnd = useCallback(() => setLoading(false), [])
 
     // create form data from edit component states
     // name, editor
@@ -143,9 +133,8 @@ export function ArticleEditContextProvider({
             }
         }
 
-
         if ((updatedArticle as IArticle).id) {
-            navigate('/articles/' + (updatedArticle as IArticle).id)
+            navigate(getRoute().articles.edit((updatedArticle as IArticle).id))
         }
 
     }, [getFormData])

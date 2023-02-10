@@ -6,7 +6,8 @@ interface IMaskedInputProps extends InputProps {
     isComplete: (s: string) => boolean
 }
 
-export function MaskedInput({ getMaskedValue, isComplete, onChange, onBlur, ...props }: IMaskedInputProps) {
+export function MaskedInput({ getMaskedValue, isComplete, onChange, onBlur, value, ...props }: IMaskedInputProps) {
+
     function changeHandler(event: React.ChangeEvent<HTMLInputElement>) {
         const maskedValue = getMaskedValue(event.currentTarget.value)
         event.currentTarget.value = maskedValue
@@ -17,12 +18,13 @@ export function MaskedInput({ getMaskedValue, isComplete, onChange, onBlur, ...p
     function blurHandler(event: React.FocusEvent<HTMLInputElement>) {
         if (!isComplete(event.currentTarget.value)) {
             event.currentTarget.value = ''
+            onChange?.(event);
         }
         onBlur?.(event);
     }
 
     return (
-        <Input {...props} onChange={changeHandler} onBlur={blurHandler} />
+        <Input defaultValue={getMaskedValue(value?.toString() || '')} {...props} onChange={changeHandler} onBlur={blurHandler} />
     );
 }
 

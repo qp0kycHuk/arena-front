@@ -3,6 +3,7 @@ import { BriefcaseIcon, CrownIcon, DocumentIcon, FoldersIcon, ToTopIcon, UsersIc
 import { Tag } from '@components/Tag';
 import { Button } from '@features/ui';
 import { Link } from 'react-router-dom';
+import { getRoute } from '@utils/index';
 
 interface ISidebarProps {
 }
@@ -21,7 +22,7 @@ export function Sidebar(props: ISidebarProps) {
           <UsersIcon className='mr-2 text-lg text-gray dark:text-white' />
           <div className="mr-auto font-normal text-black dark:text-white">Пользователи</div>
         </Button>
-        <Link to="/articles/">
+        <Link to={getRoute().articles()}>
           <Button className='w-full' variant='text' size='small'>
             <DocumentIcon className='mr-2 text-lg text-gray dark:text-white' />
             <div className="mr-auto font-normal text-black dark:text-white">Статьи</div>

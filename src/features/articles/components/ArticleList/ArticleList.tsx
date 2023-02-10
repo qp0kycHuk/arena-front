@@ -9,6 +9,7 @@ import { fetchArticles } from '@store/articles/articles.thunk';
 import { articlesEntityAdapter } from '@store/articles/articles.adapter';
 import { useFetchArticles } from '@store/articles/articles.hooks';
 import { useDebouncedCallback } from 'use-debounce';
+import { getRoute } from '@utils/index';
 
 interface IArticleListProps {
 }
@@ -43,7 +44,7 @@ export function ArticleList(props: IArticleListProps) {
                     <Button className='ml-4 px-7'> Добавить </Button>
                 }>
                     <Button className='justify-start w-full' size='small' color='gray' variant='text'> <FoldersIcon className="mr-2" /> Папка </Button>
-                    <Link to="/articles/create">
+                    <Link to={getRoute().articles.create()}>
                         <Button className='justify-start w-full' size='small' color='gray' variant='text'> <FileTextIcon className="mr-2" /> Статья </Button>
                     </Link>
 
@@ -57,7 +58,7 @@ export function ArticleList(props: IArticleListProps) {
 
             {searchedArticles?.map((article, index) =>
                 <div key={article.id}>
-                    <Link className='peer' to={"/articles/" + article.id}>
+                    <Link className='peer' to={getRoute().articles(article.id)}>
                         <ArticleItem article={article} />
                     </Link>
                     <div className="border-t border-gray border-opacity-20 peer-hover:opacity-0"></div>

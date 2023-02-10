@@ -19,8 +19,6 @@ export function ArticleEditAnons({ }: IArticleEditAnonsProps) {
         src: article?.image_src,
         // title: article?.image,
     }]) : [], [article])
-    console.log(article);
-
 
     async function changeHandler(fileItems: IFileItem[]) {
         const file = fileItems[0]?.file

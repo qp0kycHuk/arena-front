@@ -6,8 +6,9 @@ import { Spiner } from '@components/Spiner';
 import { Button, Menu } from '@features/ui';
 import { ToDownIcon } from '@assets/icons/stroke';
 import { UserIcon } from '@assets/icons/fill';
-import { getMaskedPhoneValue } from '@utils/index';
+import { getMaskedPhoneValue, getRoute } from '@utils/index';
 import { SERVER_ERROR_MESSAGE } from '@utils/const/text';
+import { Link } from 'react-router-dom';
 
 interface IHeaderUserProps {
 }
@@ -37,7 +38,7 @@ export function HeaderUser(props: IHeaderUserProps) {
             </Button>
         }>
             <div className="p-2">
-                <div className="mb-1 text-xs font-semibold text-gray opacity-90">{user?.first_name} {user?.last_name}</div>
+                <Link to={getRoute().users(user?.id)} className="mb-1 text-xs font-semibold text-gray opacity-90">{user?.first_name} {user?.last_name}</Link>
                 <div className="mb-5 text-sm">{getMaskedPhoneValue(user?.phone)}</div>
                 <Button disabled={loading} onClick={logoutHandler} color='red' variant='light' className='w-full'>
                     {loading ? <Spiner /> : 'Выйти'}

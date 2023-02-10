@@ -13,7 +13,7 @@ export function ArticleEditPage(props: IArticleEditPageProps) {
     useDocumentTitle(id ? 'Редактировать' : 'Создать')
 
     return (
-        <PageContent>
+        <PageContent className='p-8'>
             <Button variant='text' size='small' className='mb-5'>
                 <ToLeftIcon className="mr-2" />
                 Назад
