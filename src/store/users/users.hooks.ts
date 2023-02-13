@@ -9,15 +9,6 @@ import { EntityId } from '@reduxjs/toolkit';
 export function useUserControl() {
     const dispatch = useAppDispatch()
 
-    async function createDraftUser(formData: ICreateRequest) {
-        if (!formData.get('name')) {
-            formData.append('name', '__DRAFT__')
-        }
-
-        const action = await dispatch(create(formData))
-        return action.payload as IUser
-    }
-
     async function updateUser(formData: IUpdateRequest) {
         const action = await dispatch(update(formData))
         return action.payload as IUser
@@ -42,7 +33,6 @@ export function useUserControl() {
 
     return {
         upsertUser,
-        createDraftUser,
         updateUser,
         createUser,
         manualUpdateUser
