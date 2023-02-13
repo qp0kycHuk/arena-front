@@ -14,34 +14,6 @@ import { useLoading } from "@hooks/useLoading";
 
 
 
-
-interface IArticleMainContextValue {
-    article?: Partial<IEditableArticle>
-    loading: boolean
-    update(updated: Partial<IEditableArticle>): void
-}
-
-interface IArticleUtilsContextValue {
-    loadingStart(): void
-    loadingEnd(): void
-    getFormData(): ICreateRequest
-    submitHandler(event: React.FormEvent<HTMLFormElement>): Promise<void>
-}
-
-interface IArticleEditContextValue {
-    uploadImages: UploadImagesFunc
-    removeImage(fileItem: IFileItem): void
-}
-
-interface IArticleEditContextProviderProps extends React.PropsWithChildren {
-    articleId?: number | string
-}
-
-interface IEditableArticle extends IArticle {
-    anons?: File
-    image_delete?: boolean
-}
-
 export const ArticleEditContext = createContext<IArticleEditContextValue>({} as IArticleEditContextValue)
 export const ArticleEditMainContext = createContext<IArticleMainContextValue>({} as IArticleMainContextValue)
 export const ArticleEditUtilsContext = createContext<IArticleUtilsContextValue>({} as IArticleUtilsContextValue)
@@ -154,4 +126,32 @@ function filterEditorContent(editorJson: any, filterFn: (item: any) => boolean) 
         editorJson.content.forEach((item: any) => filterEditorContent(item, filterFn))
     }
     return editorJson
+}
+
+
+interface IArticleMainContextValue {
+    article?: Partial<IEditableArticle>
+    loading: boolean
+    update(updated: Partial<IEditableArticle>): void
+}
+
+interface IArticleUtilsContextValue {
+    loadingStart(): void
+    loadingEnd(): void
+    getFormData(): ICreateRequest
+    submitHandler(event: React.FormEvent<HTMLFormElement>): Promise<void>
+}
+
+interface IArticleEditContextValue {
+    uploadImages: UploadImagesFunc
+    removeImage(fileItem: IFileItem): void
+}
+
+interface IArticleEditContextProviderProps extends React.PropsWithChildren {
+    articleId?: number | string
+}
+
+interface IEditableArticle extends IArticle {
+    anons?: File
+    image_delete?: boolean
 }
