@@ -4,6 +4,7 @@ import { PageContent } from "@layouts/PageContent";
 import { IUser } from "@models/User";
 import { getRoute } from "@utils/index";
 import { Link } from "react-router-dom";
+import { ProfileViewImage } from "./ProfileView.Image";
 
 
 interface IProfileViewProps {
@@ -17,9 +18,7 @@ export function ProfileView({ user }: IProfileViewProps) {
         <PageContent className="flex">
             <div className="w-[360px] px-8 py-12 border-r border-gray border-opacity-30">
                 <div className="flex items-center">
-                    <div className="w-[52px] h-[52px] rounded-full overflow-hidden mr-3">
-                        <img src={user?.image_src} alt="" className="w-full h-full object-cover" />
-                    </div>
+                    <ProfileViewImage className="mr-3" user={user} />
                     <div>
                         <div className="font-semibold">{user?.first_name} {user?.last_name}</div>
                     </div>
