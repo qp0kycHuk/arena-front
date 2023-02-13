@@ -30,7 +30,7 @@ export function ArticleEditAnons({ }: IArticleEditAnonsProps) {
         const dataUrl = await getFilePreview(file)
 
         update({
-            anons: file,
+            imageFile: file,
             image_src: dataUrl || '',
             image_delete: false
         })
@@ -40,7 +40,7 @@ export function ArticleEditAnons({ }: IArticleEditAnonsProps) {
         if (!article?.id) return
 
         update({
-            anons: undefined,
+            imageFile: undefined,
             image_src: undefined,
             image_delete: true
         })
@@ -60,6 +60,7 @@ export function ArticleEditAnons({ }: IArticleEditAnonsProps) {
             multiple={false}
             fileItems={fileItems}
             onChange={changeHandler}
+            onRemove={removeImage}
         >
             <div className="font-semibold">Анонсовое изображение</div>
         </Uploader>

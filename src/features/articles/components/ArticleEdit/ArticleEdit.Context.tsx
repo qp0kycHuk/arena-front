@@ -53,8 +53,8 @@ export function ArticleEditContextProvider({
 
         formData.append('user_id', user.id.toString())
 
-        if (editableArticle.anons) {
-            formData.append('image', editableArticle.anons)
+        if (editableArticle.imageFile) {
+            formData.append('image', editableArticle.imageFile)
         }
 
         if (editableArticle.image_delete && editableArticle.id) {
@@ -106,7 +106,7 @@ export function ArticleEditContextProvider({
         }
 
         if ((updatedArticle as IArticle).id) {
-            navigate(getRoute().articles.edit((updatedArticle as IArticle).id))
+            navigate(getRoute().articles((updatedArticle as IArticle).id))
         }
 
     }, [getFormData])
@@ -152,6 +152,6 @@ interface IArticleEditContextProviderProps extends React.PropsWithChildren {
 }
 
 interface IEditableArticle extends IArticle {
-    anons?: File
+    imageFile?: File
     image_delete?: boolean
 }
