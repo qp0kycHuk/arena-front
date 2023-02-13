@@ -32,8 +32,8 @@ export function HeaderUser(props: IHeaderUserProps) {
         <Menu align='end' menuButton={
             <Button variant='text' size='small' className='px-3 ml-4' rounded shadow color='gray'>
                 <ToDownIcon className="text-base" />
-                <div className="p-1 ml-2 text-white rounded-full bg-gray">
-                    <UserIcon />
+                <div className="w-[22px] h-[22px] flex ml-2 text-white rounded-full bg-gray">
+                    <UserIcon className="m-auto" />
                 </div>
             </Button>
         }>
