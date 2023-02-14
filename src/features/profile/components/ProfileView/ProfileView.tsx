@@ -5,6 +5,7 @@ import { IUser } from "@models/User";
 import { getRoute } from "@utils/index";
 import { Link } from "react-router-dom";
 import { ProfileViewImage } from "./ProfileView.Image";
+import { ProfileViewName } from "./ProfileView.Name";
 
 
 interface IProfileViewProps {
@@ -20,11 +21,12 @@ export function ProfileView({ user }: IProfileViewProps) {
                 <div className="flex items-center">
                     <ProfileViewImage className="mr-3" user={user} />
                     <div>
-                        <div className="font-semibold">{user?.first_name} {user?.last_name}</div>
+                        <ProfileViewName user={user} />
+                        
                     </div>
                 </div>
 
-                <Link to={getRoute().users.edit(user?.id)} className="mt-4 block">
+                <Link to={getRoute().users.edit(user?.id)} className="block mt-4">
                     <Button className="w-full">Редактировать</Button>
                 </Link>
             </div>
