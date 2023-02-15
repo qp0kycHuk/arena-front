@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { ArticleItem } from '../ArticleItem/ArticleItem';
+import { ArticleItem, ArticleItemPlacehlder } from '../ArticleItem/ArticleItem';
 import { SettingsIcon, FoldersIcon, FileTextIcon } from '@assets/icons/stroke';
 import { Button, Menu } from '@features/ui';
 import { Link, useSearchParams } from 'react-router-dom';
@@ -56,6 +56,12 @@ export function ArticleList(props: IArticleListProps) {
                 initialValue={searchParams.get(SEARCH_QUERY_NAME) || ''}
                 className='mb-4' />
 
+            {searchedArticles?.length <= 0 && new Array(10).fill(1).map((_, index) =>
+                <div key={index}>
+                    <ArticleItemPlacehlder />
+                    <div className="border-t border-gray border-opacity-20"></div>
+                </div>
+            )}
             {searchedArticles?.map((article, index) =>
                 <div key={article.id}>
                     <Link className='peer' to={getRoute().articles(article.id)}>
