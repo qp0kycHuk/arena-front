@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { ArticleItem } from '../ArticleItem/ArticleItem';
+import { ArticleItem, ArticleItemPlacehlder } from '../ArticleItem/ArticleItem';
 import { SettingsIcon, FoldersIcon, FileTextIcon } from '@assets/icons/stroke';
 import { Button, Menu } from '@features/ui';
 import { Link, useSearchParams } from 'react-router-dom';
@@ -9,6 +9,7 @@ import { fetchArticles } from '@store/articles/articles.thunk';
 import { articlesEntityAdapter } from '@store/articles/articles.adapter';
 import { useFetchArticles } from '@store/articles/articles.hooks';
 import { useDebouncedCallback } from 'use-debounce';
+import { getRoute } from '@utils/index';
 
 interface IArticleListProps {
 }
@@ -43,7 +44,7 @@ export function ArticleList(props: IArticleListProps) {
                     <Button className='ml-4 px-7'> Добавить </Button>
                 }>
                     <Button className='justify-start w-full' size='small' color='gray' variant='text'> <FoldersIcon className="mr-2" /> Папка </Button>
-                    <Link to="/articles/create">
+                    <Link to={getRoute().articles.create()}>
                         <Button className='justify-start w-full' size='small' color='gray' variant='text'> <FileTextIcon className="mr-2" /> Статья </Button>
                     </Link>
 
@@ -55,9 +56,15 @@ export function ArticleList(props: IArticleListProps) {
                 initialValue={searchParams.get(SEARCH_QUERY_NAME) || ''}
                 className='mb-4' />
 
+            {searchedArticles?.length <= 0 && new Array(10).fill(1).map((_, index) =>
+                <div key={index}>
+                    <ArticleItemPlacehlder />
+                    <div className="border-t border-gray border-opacity-20"></div>
+                </div>
+            )}
             {searchedArticles?.map((article, index) =>
                 <div key={article.id}>
-                    <Link className='peer' to={"/articles/" + article.id}>
+                    <Link className='peer' to={getRoute().articles(article.id)}>
                         <ArticleItem article={article} />
                     </Link>
                     <div className="border-t border-gray border-opacity-20 peer-hover:opacity-0"></div>

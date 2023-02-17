@@ -77,6 +77,7 @@ body {
             color: white;
         }
 
+        .hljs-number,
         .hljs-attribute,
         .hljs-symbol,
         .hljs-regexp,
@@ -199,3 +200,12 @@ body {
         }
     }
 }
+
+
+.air-datepicker {
+    --adp-accent-color: theme(colors.primary.DEFAULT);
+    --adp-cell-background-color-selected: theme(colors.primary.DEFAULT);
+    --adp-cell-background-color-selected-hover: theme(colors.primary.700);
+    --adp-day-name-color: theme(colors.yellow.DEFAULT);
+    --adp-day-name-color-hover: theme(colors.primary.DEFAULT / 10%);
+  }

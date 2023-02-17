@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Uploader, useUploader } from '@features/fileUploader';
+import { Uploader } from '@features/fileUploader';
 import { toast } from '@lib/Toast';
 import { ArticleEditContext, useArticleEditMainContext, useArticleEditUtilsContext } from './ArticleEdit.Context';
 import { getFilePreview, getRandomUUID } from '@utils/index';

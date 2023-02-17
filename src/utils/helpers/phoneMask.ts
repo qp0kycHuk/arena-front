@@ -35,7 +35,7 @@ export function getMaskedPhoneValue(value: string | number = ''): string {
     }
 
     const maskedValue =
-        `+7 (${matchValue[2]}${matchValue[3] ? `) ${matchValue[3]}` : ''
+        `+7${matchValue[2] ? ` (${matchValue[2]}` : ''}${matchValue[3] ? `) ${matchValue[3]}` : ''
         }${matchValue[4] ? ` - ${matchValue[4]}` : ''
         }${matchValue[5] ? ` - ${matchValue[5]}` : ''}`;
 

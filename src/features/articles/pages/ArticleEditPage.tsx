@@ -3,14 +3,17 @@ import { ArticleEdit } from '@features/articles';
 import { Button } from '@features/ui';
 import { ToLeftIcon } from '@assets/icons/stroke';
 import { ArticleEditContextProvider } from '../components/ArticleEdit/ArticleEdit.Context';
+import { PageContent } from '@layouts/PageContent';
+import { useDocumentTitle } from '@hooks/useDocumentTitle';
 
 interface IArticleEditPageProps { }
 
 export function ArticleEditPage(props: IArticleEditPageProps) {
     const { id } = useParams()
+    useDocumentTitle(id ? 'Редактировать' : 'Создать')
 
     return (
-        <div className="relative flex-grow p-8 bg-white rounded-2xl dark:bg-opacity-5 dark:text-white" >
+        <PageContent className='p-8'>
             <Button variant='text' size='small' className='mb-5'>
                 <ToLeftIcon className="mr-2" />
                 Назад
@@ -18,6 +21,6 @@ export function ArticleEditPage(props: IArticleEditPageProps) {
             <ArticleEditContextProvider articleId={id}>
                 <ArticleEdit articleId={id?.toString()} />
             </ArticleEditContextProvider>
-        </div>
+        </PageContent>
     );
 }

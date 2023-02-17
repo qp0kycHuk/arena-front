@@ -7,6 +7,8 @@ import { ArticleViewImages } from './ArticleView.Images';
 import { Tag } from '@components/Tag';
 import { useFetchArticleById } from '@store/articles/articles.hooks';
 import { EntityId } from '@reduxjs/toolkit';
+import { useDocumentTitle } from '@hooks/useDocumentTitle';
+import { PageContent } from '@layouts/PageContent';
 
 interface IArticleViewProps {
     articleId: EntityId
@@ -14,9 +16,10 @@ interface IArticleViewProps {
 
 export function ArticleView({ articleId }: IArticleViewProps) {
     const article = useFetchArticleById(articleId)
+    useDocumentTitle(article?.name)
 
     return (
-        <div className="relative flex flex-grow bg-white rounded-2xl dark:bg-opacity-5 dark:text-white" >
+        <PageContent className='flex'>
             <div className='flex-1 p-8'>
                 <div className="flex items-center mb-7">
                     <ArticleViewImage article={article} />
@@ -34,6 +37,6 @@ export function ArticleView({ articleId }: IArticleViewProps) {
                     {article?.tags.map((tag) => <Tag key={tag.id}>#{tag.name}</Tag>)}
                 </div>
             </div>
-        </div>
+        </PageContent>
     );
 }

@@ -1,8 +1,9 @@
+import { useDocumentTitle } from "@hooks/useDocumentTitle";
 
 interface IHomeProps { }
 
 export function Home(props: IHomeProps) {
-
+    useDocumentTitle('Главная')
 
 
     return (<div className="relative flex-grow p-8 bg-white rounded-2xl dark:bg-opacity-5 dark:text-white">

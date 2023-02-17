@@ -8,36 +8,11 @@ import { toast } from "@lib/Toast";
 import { IUploadRequest, useRemoveMutation, useUploadMutation } from "@store/files";
 import { useFetchArticleById } from "@store/articles/articles.hooks";
 import { ICreateRequest, IUpdateRequest } from "@store/articles/articles.api";
+import { getRoute } from "@utils/index";
+import { useEditableEntity } from "@hooks/useEditableEntity";
+import { useLoading } from "@hooks/useLoading";
 
 
-
-
-interface IArticleMainContextValue {
-    article?: Partial<IEditableArticle>
-    loading: boolean
-    update(updated: Partial<IEditableArticle>): void
-}
-
-interface IArticleUtilsContextValue {
-    loadingStart(): void
-    loadingEnd(): void
-    getFormData(): ICreateRequest
-    submitHandler(event: React.FormEvent<HTMLFormElement>): Promise<void>
-}
-
-interface IArticleEditContextValue {
-    uploadImages: UploadImagesFunc
-    removeImage(fileItem: IFileItem): void
-}
-
-interface IArticleEditContextProviderProps extends React.PropsWithChildren {
-    articleId?: number | string
-}
-
-interface IEditableArticle extends IArticle {
-    anons?: File
-    image_delete: boolean
-}
 
 export const ArticleEditContext = createContext<IArticleEditContextValue>({} as IArticleEditContextValue)
 export const ArticleEditMainContext = createContext<IArticleMainContextValue>({} as IArticleMainContextValue)
@@ -58,23 +33,10 @@ export function ArticleEditContextProvider({
     const [remove] = useRemoveMutation()
 
     const article = useFetchArticleById(articleId || '')
-    const [editableArticle, setEditableArticle] = useState<Partial<IEditableArticle>>({})
 
-    const update = useCallback((updated: Partial<IEditableArticle>) => {
-        setEditableArticle((prev) => ({
-            ...prev,
-            ...updated
-        }))
-    }, [])
+    const [editableArticle, update] = useEditableEntity<IEditableArticle>(article)
+    const { loading, loadingStart, loadingEnd } = useLoading()
 
-    useEffect(() => {
-        setEditableArticle(article || {})
-    }, [article])
-
-
-    const [loading, setLoading] = useState(false)
-    const loadingStart = useCallback(() => setLoading(true), [])
-    const loadingEnd = useCallback(() => setLoading(false), [])
 
     // create form data from edit component states
     // name, editor
@@ -91,8 +53,8 @@ export function ArticleEditContextProvider({
 
         formData.append('user_id', user.id.toString())
 
-        if (editableArticle.anons) {
-            formData.append('image', editableArticle.anons)
+        if (editableArticle.imageFile) {
+            formData.append('image', editableArticle.imageFile)
         }
 
         if (editableArticle.image_delete && editableArticle.id) {
@@ -143,9 +105,8 @@ export function ArticleEditContextProvider({
             }
         }
 
-
         if ((updatedArticle as IArticle).id) {
-            navigate('/articles/' + (updatedArticle as IArticle).id)
+            navigate(getRoute().articles((updatedArticle as IArticle).id))
         }
 
     }, [getFormData])
@@ -165,4 +126,32 @@ function filterEditorContent(editorJson: any, filterFn: (item: any) => boolean) 
         editorJson.content.forEach((item: any) => filterEditorContent(item, filterFn))
     }
     return editorJson
+}
+
+
+interface IArticleMainContextValue {
+    article?: Partial<IEditableArticle>
+    loading: boolean
+    update(updated: Partial<IEditableArticle>): void
+}
+
+interface IArticleUtilsContextValue {
+    loadingStart(): void
+    loadingEnd(): void
+    getFormData(): ICreateRequest
+    submitHandler(event: React.FormEvent<HTMLFormElement>): Promise<void>
+}
+
+interface IArticleEditContextValue {
+    uploadImages: UploadImagesFunc
+    removeImage(fileItem: IFileItem): void
+}
+
+interface IArticleEditContextProviderProps extends React.PropsWithChildren {
+    articleId?: number | string
+}
+
+interface IEditableArticle extends IArticle {
+    imageFile?: File
+    image_delete?: boolean
 }

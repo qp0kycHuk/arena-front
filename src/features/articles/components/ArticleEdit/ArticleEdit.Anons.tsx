@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useArticleControl } from '@store/articles';
-import { Uploader, useUploader } from '@features/fileUploader';
+import { Uploader } from '@features/fileUploader';
 import { useArticleEditMainContext, useArticleEditUtilsContext } from './ArticleEdit.Context';
 import { getFilePreview, getRandomUUID } from '@utils/index';
 import { ICreateRequest } from '@store/articles/articles.api';
@@ -19,8 +19,6 @@ export function ArticleEditAnons({ }: IArticleEditAnonsProps) {
         src: article?.image_src,
         // title: article?.image,
     }]) : [], [article])
-    console.log(article);
-
 
     async function changeHandler(fileItems: IFileItem[]) {
         const file = fileItems[0]?.file
@@ -32,7 +30,7 @@ export function ArticleEditAnons({ }: IArticleEditAnonsProps) {
         const dataUrl = await getFilePreview(file)
 
         update({
-            anons: file,
+            imageFile: file,
             image_src: dataUrl || '',
             image_delete: false
         })
@@ -42,7 +40,7 @@ export function ArticleEditAnons({ }: IArticleEditAnonsProps) {
         if (!article?.id) return
 
         update({
-            anons: undefined,
+            imageFile: undefined,
             image_src: undefined,
             image_delete: true
         })
@@ -62,6 +60,7 @@ export function ArticleEditAnons({ }: IArticleEditAnonsProps) {
             multiple={false}
             fileItems={fileItems}
             onChange={changeHandler}
+            onRemove={removeImage}
         >
             <div className="font-semibold">Анонсовое изображение</div>
         </Uploader>

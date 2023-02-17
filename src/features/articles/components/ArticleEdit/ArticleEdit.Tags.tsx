@@ -40,13 +40,18 @@ export function ArticleEditTags({ }: IArticleEditTagsProps) {
         // if (!id || addedIds?.includes(id)) return
         // const addedTag = 
         if (!tag) return
+        
+        const isTagAdded = addedIds.includes(tag.id)
 
-        update({
-            tags: [
-                ...(article?.tags || []),
-                tag
-            ]
-        })
+        if (!isTagAdded) {
+            update({
+                tags: [
+                    ...(article?.tags || []),
+                    tag
+                ]
+            })
+        }
+
 
         setOpen(false)
         setName('')
@@ -67,7 +72,10 @@ export function ArticleEditTags({ }: IArticleEditTagsProps) {
         const existingTag = Object.values(tags?.entities || {})
             .find((tag) => tag?.name.toLowerCase().trim() === name?.toLowerCase().trim())
 
-        if (existingTag) return addTag(existingTag)
+        if (existingTag) {
+
+            return addTag(existingTag)
+        }
 
         const formData: ICreateRequest = new FormData()
         formData.append('name', name.trim())

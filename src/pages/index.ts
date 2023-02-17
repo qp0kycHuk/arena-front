@@ -7,6 +7,10 @@ export const ArticleViewPage = lazy(() => import('../features/articles/').then((
 export const ArticleListPage = lazy(() => import('../features/articles/').then((m) => ({ default: m.ArticleListPage })))
 export const ArticleEditPage = lazy(() => import('../features/articles/').then((m) => ({ default: m.ArticleEditPage })))
 
+export const UserViewPage = lazy(() => import('../features/profile/').then((m) => ({ default: m.ProfileViewPage })))
+export const UserEditPage = lazy(() => import('../features/profile/').then((m) => ({ default: m.ProfileEditPage })))
+// export const ArticleEditPage = lazy(() => import('../features/articles/').then((m) => ({ default: m.ArticleEditPage })))
+
 export const Projects = lazy(() => import('./Projects').then((m) => ({ default: m.Projects })))
 export const Home = lazy(() => import('./Home').then((m) => ({ default: m.Home })))
 
