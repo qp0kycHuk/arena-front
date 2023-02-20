@@ -70,7 +70,28 @@ const LowlightCustom = Node.create({
         }
     },
 })
+const CustomImage = Image.configure({ allowBase64: true }).extend({
+    addAttributes() {
+        console.log('addAttributes');
 
+        return {
+            ...this.parent?.(),
+            id: {
+                default: 'null',
+                parseHTML: (element) => element.getAttribute('data-id'),
+                // … and customize the HTML rendering.
+                renderHTML: (attributes) => {
+                    console.log(attributes);
+
+                    return {
+                        'data-id': attributes.id,
+                    }
+                },
+
+            },
+        }
+    }
+})
 export const editorExtensions = [
     StarterKit.configure({
         codeBlock: false,
@@ -82,7 +103,7 @@ export const editorExtensions = [
     TextAlign.configure({ types: ['heading', 'paragraph'], }),
     Highlight.configure({ multicolor: true }),
     Link.configure({ openOnClick: false, }),
-    Image.configure({ allowBase64: true, }),
+    CustomImage,
     FileBlockExtension.configure({
         component: FileBlock
     }),

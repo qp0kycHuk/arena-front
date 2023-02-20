@@ -52,6 +52,7 @@ export function ArticleEditEditor({ }: IArticleEditEditorProps) {
             type: 'image',
             attrs: {
                 src: item.src,
+                id: item.id
             },
         }))
 
