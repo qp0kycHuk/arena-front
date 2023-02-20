@@ -14,7 +14,6 @@ export function ArticleEditImages({ }: IArticleEditImagesProps) {
     const { article, update } = useArticleEditMainContext()
     const { loadingStart, loadingEnd } = useArticleEditUtilsContext()
 
-
     const fileItems = useMemo(() => {
         return article?.files?.map((item) => ({
             id: item.id,
@@ -22,8 +21,6 @@ export function ArticleEditImages({ }: IArticleEditImagesProps) {
             title: item.name
         }))
     }, [article])
-
-
 
     async function changeHandler(fileItems: IFileItem[]) {
         const files = fileItems.map((item) => (item as Required<IFileItem>).file)
@@ -45,8 +42,6 @@ export function ArticleEditImages({ }: IArticleEditImagesProps) {
             files: article?.files?.filter((item) => item.id !== fileItem.id)
         })
     }
-
-
 
     return (
         <Uploader

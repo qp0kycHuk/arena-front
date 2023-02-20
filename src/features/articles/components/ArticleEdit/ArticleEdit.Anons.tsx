@@ -46,15 +46,6 @@ export function ArticleEditAnons({ }: IArticleEditAnonsProps) {
         })
     }
 
-    // create draft if no exist or update article
-    async function updateOrCreate(formData: ICreateRequest) {
-        if (article) {
-            return await upsertArticle(formData)
-        } else {
-            return await createDraftArticle(formData)
-        }
-    }
-
     return (
         <Uploader
             multiple={false}

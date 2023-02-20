@@ -1,39 +1,20 @@
-import { rootApi } from '../api'
-import { IFile } from '@models/File';
+import { IFile } from "@models/File"
+import { createRootApi } from "@store/utils/createRootApi"
+import { AxiosResponse } from "axios"
 
-export type IUploadRequest = TypedFormData<'entity' | 'entity_id' | 'files[]'>
-export type IRemoveRequest = TypedFormData<'id' | 'entity_id' | 'entity'>
+const ROOT_ENDPOINT_URL = process.env.REACT_APP_API_URL + "/api/files"
 
-const FILES_TAG: 'files' = 'files'
-const ROOT_ENDPOINT_URL = '/api/files'
+type UploadParams = 'files[]'
+export type IUploadRequest = TypedFormData<UploadParams>
 
-const taggetRootApi = rootApi.enhanceEndpoints({ addTagTypes: [FILES_TAG] });
+export function filesApi() {
+    const api = createRootApi()
 
-export const filesApi = taggetRootApi.injectEndpoints({
-    endpoints: (builder) => ({
-        upload: builder.mutation<IFile[], IUploadRequest>({
-            query: (body) => ({
-                url: ROOT_ENDPOINT_URL,
-                method: 'post',
-                body
-            }),
-            transformResponse: (response: IListResponse<IFile>) => {
-                return response.items
-            },
-            invalidatesTags: [{ type: FILES_TAG, id: 'LIST' }]
-        }),
-        remove: builder.mutation<null, IRemoveRequest>({
-            query: (formData) => ({
-                url: ROOT_ENDPOINT_URL + '/' + formData.get('id'),
-                method: 'delete',
-                // body: formData,
-                params: {
-                    entity: formData.get('entity'),
-                    entity_id: formData.get('entity_id'),
-                }
-            })
-        })
-    }),
-})
+    async function upload(formData: IUploadRequest): Promise<AxiosResponse<IListResponse<IFile>, any>> {
+        return await api.post(ROOT_ENDPOINT_URL, formData)
+    }
 
-export const { useUploadMutation, useRemoveMutation } = filesApi
+    return {
+        upload,
+    }
+}

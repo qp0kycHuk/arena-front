@@ -5,12 +5,12 @@ import { useUserQuery } from "@store/auth";
 import { useNavigate } from "react-router-dom";
 import { getErrorMessage } from "@hooks/useErrorMessage";
 import { toast } from "@lib/Toast";
-import { IUploadRequest, useRemoveMutation, useUploadMutation } from "@store/files";
 import { useFetchArticleById } from "@store/articles/articles.hooks";
 import { ICreateRequest, IUpdateRequest } from "@store/articles/articles.api";
 import { getRoute } from "@utils/index";
 import { useEditableEntity } from "@hooks/useEditableEntity";
 import { useLoading } from "@hooks/useLoading";
+import { IUploadRequest, filesApi } from "@store/files/files.api";
 
 
 
@@ -29,8 +29,6 @@ export function ArticleEditContextProvider({
     const navigate = useNavigate();
 
     const { createDraftArticle, upsertArticle, manualUpdateArticle } = useArticleControl()
-    const [upload] = useUploadMutation()
-    const [remove] = useRemoveMutation()
 
     const { data: article } = useFetchArticleById(articleId || '')
 
@@ -79,35 +77,42 @@ export function ArticleEditContextProvider({
             toast.error('Введите название статьи')
             return;
         }
-
         const formData = getFormData()
 
-        loadingStart()
-        const updatedArticle = await upsertArticle(formData)
-        loadingEnd()
-
-
+        // upload files
         const filesFormData: IUploadRequest = new FormData()
-        filesFormData.append('entity', 'article',)
-        filesFormData.append('entity_id', updatedArticle.id.toString())
         editableArticle.files?.forEach((item) => {
             if (item.file) {
                 filesFormData.append('files[]', item.file)
+            } else {
+                formData.append('attachment[]', item.id as string)
             }
         })
-        if (filesFormData.has('files[]')) {
-            const result = await upload(filesFormData)
-            const errorMessage = getErrorMessage((result as IResultWithError)?.error)
 
-            if (errorMessage) {
-                toast.error(errorMessage)
-                return
-            }
-        }
+        console.log(JSON.parse(editableArticle.content || '{}'));
+        console.log(editableArticle.files);
+        
 
-        if ((updatedArticle as IArticle).id) {
-            navigate(getRoute().articles((updatedArticle as IArticle).id))
-        }
+        // if (filesFormData.has('files[]')) {
+        //     const result = await filesApi().upload(filesFormData)
+        //     const items = result.data.items
+        //     items.forEach((fileItem) => {
+        //         formData.append('attachment[]', fileItem.id as string)
+        //     })
+        // }
+
+
+
+        // loadingStart()
+        // const updatedArticle = await upsertArticle(formData)
+        // loadingEnd()
+
+
+
+
+        // if (updatedArticle?.id) {
+        //     navigate(getRoute().articles(updatedArticle.id))
+        // }
 
     }, [getFormData])
 
