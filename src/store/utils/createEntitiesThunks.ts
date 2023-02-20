@@ -51,7 +51,7 @@ export function createEntitiesThunks<E, C, U>({
         }
     )
 
-    const fetchThunkById = createAsyncThunk<E, EntityId>(
+    const fetchByIdThunk = createAsyncThunk<E, EntityId>(
         name + '/fetchById',
         async (id, { rejectWithValue }) => {
             try {
@@ -73,6 +73,6 @@ export function createEntitiesThunks<E, C, U>({
         fetchAllThunk,
         updateThunk,
         createThunk,
-        fetchThunkById,
+        fetchByIdThunk,
     }
 }
