@@ -1,3 +1,4 @@
+import { useLoading } from '@hooks/useLoading';
 import { IArticle } from '@models/Article';
 import { useAppDispatch, useAppSelector } from './../index';
 import { ICreateRequest, IUpdateRequest } from "./articles.api"
@@ -50,25 +51,37 @@ export function useArticleControl() {
 }
 
 export const useFetchArticles = () => {
+    const { loading, loadingStart, loadingEnd } = useLoading(false)
     const articles = useAppSelector(selectAll)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(fetchArticles())
+        const load = async () => {
+            loadingStart()
+            await dispatch(fetchArticles())
+            loadingEnd()
+        }
+        load()
     }, [])
 
-    return articles
+    return { data: articles, loading }
 }
 
 export const useFetchArticleById = (id: EntityId) => {
+    const { loading, loadingStart, loadingEnd } = useLoading(false)
     const article = useAppSelector((state) => selectById(state, id))
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        if (id) {
-            dispatch(fetchArticleById(id))
+        const load = async () => {
+            if (id) {
+                loadingStart()
+                await dispatch(fetchArticleById(id))
+                loadingEnd()
+            }
         }
+        load()
     }, [id])
 
-    return article
+    return { data: article, loading }
 }

@@ -32,7 +32,7 @@ export function ArticleEditContextProvider({
     const [upload] = useUploadMutation()
     const [remove] = useRemoveMutation()
 
-    const article = useFetchArticleById(articleId || '')
+    const { data: article } = useFetchArticleById(articleId || '')
 
     const [editableArticle, update] = useEditableEntity<IEditableArticle>(article)
     const { loading, loadingStart, loadingEnd } = useLoading()

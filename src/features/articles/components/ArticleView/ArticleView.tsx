@@ -15,7 +15,7 @@ interface IArticleViewProps {
 }
 
 export function ArticleView({ articleId }: IArticleViewProps) {
-    const article = useFetchArticleById(articleId)
+    const { data: article } = useFetchArticleById(articleId)
     useDocumentTitle(article?.name)
 
     return (
