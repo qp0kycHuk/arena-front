@@ -1,11 +1,9 @@
 import { toast } from '@lib/Toast';
 import { IArticle } from './../../models/Article';
-import { RootState, useAppDispatch, useAppSelector } from './../index';
-import { EntityId, PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { RootState } from './../index';
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { createArticle, fetchArticleById, fetchArticles, updateArticle } from "./articles.thunk";
 import { articlesEntityAdapter } from "./articles.adapter";
-import { useEffect } from 'react';
-
 
 export const articleSlice = createSlice({
     name: 'articles',
@@ -42,7 +40,5 @@ export const {
     selectAll,
     selectById,
 } = articlesEntityAdapter.getSelectors<RootState>(({ articles }) => articles)
-
-
 
 export default articleSlice.reducer
