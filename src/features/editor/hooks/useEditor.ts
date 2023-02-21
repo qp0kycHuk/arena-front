@@ -70,7 +70,7 @@ const LowlightCustom = Node.create({
     },
 })
 
-const CustomImage = Image.configure({ allowBase64: true }).extend({
+const CustomImage = Image.extend({
     addAttributes() {
         console.log('addAttributes');
 
@@ -78,15 +78,6 @@ const CustomImage = Image.configure({ allowBase64: true }).extend({
             ...this.parent?.(),
             id: {
                 default: 'null',
-                parseHTML: (element) => element.getAttribute('data-id'),
-                // … and customize the HTML rendering.
-                renderHTML: (attributes) => {
-                    console.log(attributes);
-
-                    return {
-                        'data-id': attributes.id,
-                    }
-                },
 
             },
         }
@@ -104,11 +95,11 @@ export const editorExtensions = [
     TextAlign.configure({ types: ['heading', 'paragraph'], }),
     Highlight.configure({ multicolor: true }),
     Link.configure({ openOnClick: false, }),
-    CustomImage,
+    CustomImage.configure({ allowBase64: true }),
+    LowlightCustom,
     FileBlockExtension.configure({
         component: FileBlock
     }),
-    LowlightCustom
 ]
 
 export function useEditor(options?: IOptions, deps?: any[]) {
@@ -116,20 +107,7 @@ export function useEditor(options?: IOptions, deps?: any[]) {
 
     return useEditorConfig({
         extensions: [
-            StarterKit.configure({
-                codeBlock: false,
-            }),
-            Underline,
-            TextStyle,
-            Color,
-            CodeBlockLowlight.configure({ lowlight, }),
-            TextAlign.configure({ types: ['heading', 'paragraph'], }),
-            Highlight.configure({ multicolor: true }),
-            Link.configure({ openOnClick: false, }),
-            Image.configure({ allowBase64: true, }),
-            FileBlockExtension.configure({
-                component: FileBlock
-            }),
+            ...editorExtensions,
             Placeholder.configure({ placeholder: placeholder, }),
         ],
 
@@ -175,4 +153,20 @@ export function useGenerateHtml(content: string = ''): string {
     }, [content]);
 
     return html
+}
+
+export function editorContentUpdate(editorJson: any, updateFn: (item: any) => any) {
+    if (editorJson.content?.length > 0) {
+        editorJson.content = editorJson.content.map(updateFn)
+        editorJson.content.forEach((item: any) => editorContentUpdate(item, updateFn))
+    }
+    return editorJson
+}
+
+export function editorContentFilter(editorJson: any, filterFn: (item: any) => any) {
+    if (editorJson.content?.length > 0) {
+        editorJson.content = editorJson.content.filter(filterFn)
+        editorJson.content.forEach((item: any) => editorContentFilter(item, filterFn))
+    }
+    return editorJson
 }

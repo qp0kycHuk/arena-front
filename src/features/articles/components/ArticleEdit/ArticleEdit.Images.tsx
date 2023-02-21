@@ -1,16 +1,14 @@
 import { useMemo } from 'react';
 import { Uploader } from '@features/fileUploader';
-import { toast } from '@lib/Toast';
-import { ArticleEditContext, useArticleEditMainContext, useArticleEditUtilsContext } from './ArticleEdit.Context';
-import { getFilePreview, getRandomUUID } from '@utils/index';
+import { useArticleEditMainContext, useArticleEditUtilsContext } from './ArticleEdit.Context';
 import { getFileItems } from '@utils/helpers/files';
+import { editorContentFilter } from '@features/editor/hooks/useEditor';
 
 
-export interface IArticleEditImagesProps { }
+interface IArticleEditImagesProps { }
 
 // control upload and remove images
 export function ArticleEditImages({ }: IArticleEditImagesProps) {
-    // const { uploadImages, removeImage } = useContext(ArticleEditContext)
     const { article, update } = useArticleEditMainContext()
     const { loadingStart, loadingEnd } = useArticleEditUtilsContext()
 
@@ -38,7 +36,16 @@ export function ArticleEditImages({ }: IArticleEditImagesProps) {
     }
 
     function removeHandler(fileItem: IFileItem) {
+        const filteredContent = editorContentFilter(JSON.parse(article?.contentJson || '{}'), (item) => {
+            if (item.type === 'image') {
+                return fileItem.src !== item.attrs.src
+            }
+            return true
+        })
+
         update({
+            content: JSON.stringify(filteredContent),
+            contentJson: JSON.stringify(filteredContent),
             files: article?.files?.filter((item) => item.id !== fileItem.id)
         })
     }

@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { IArticle } from "@models/Article";
 import { useArticleControl } from "@store/articles";
 import { useUserQuery } from "@store/auth";
@@ -11,6 +11,8 @@ import { getRoute } from "@utils/index";
 import { useEditableEntity } from "@hooks/useEditableEntity";
 import { useLoading } from "@hooks/useLoading";
 import { IUploadRequest, filesApi } from "@store/files/files.api";
+import { IFile } from "@models/File";
+import { editorContentUpdate } from "@features/editor/hooks/useEditor";
 
 
 
@@ -31,8 +33,13 @@ export function ArticleEditContextProvider({
     const { createDraftArticle, upsertArticle, manualUpdateArticle } = useArticleControl()
 
     const { data: article } = useFetchArticleById(articleId || '')
-
-    const [editableArticle, update] = useEditableEntity<IEditableArticle>(article)
+    const initialArticle = useMemo(() => {
+        return {
+            ...article,
+            contentJson: article?.content
+        }
+    }, [article])
+    const [editableArticle, update] = useEditableEntity<IEditableArticle>(initialArticle)
     const { loading, loadingStart, loadingEnd } = useLoading()
 
 
@@ -77,42 +84,58 @@ export function ArticleEditContextProvider({
             toast.error('Введите название статьи')
             return;
         }
+
+        loadingStart()
         const formData = getFormData()
 
         // upload files
+        const uploadedFileItems: IFile[] = []
         const filesFormData: IUploadRequest = new FormData()
+
         editableArticle.files?.forEach((item) => {
             if (item.file) {
                 filesFormData.append('files[]', item.file)
+                uploadedFileItems.push(item)
             } else {
                 formData.append('attachment[]', item.id as string)
             }
         })
 
-        console.log(JSON.parse(editableArticle.content || '{}'));
-        console.log(editableArticle.files);
-        
+        if (filesFormData.has('files[]')) {
+            const result = await filesApi().upload(filesFormData)
+            const items = result.data.items
 
-        // if (filesFormData.has('files[]')) {
-        //     const result = await filesApi().upload(filesFormData)
-        //     const items = result.data.items
-        //     items.forEach((fileItem) => {
-        //         formData.append('attachment[]', fileItem.id as string)
-        //     })
-        // }
+            const updatedEditorContent = editorContentUpdate(JSON.parse(editableArticle.content || '{}'), (item) => {
+                if (item.type === 'image') {
+                    const uploadedFileIndex = uploadedFileItems.findIndex((fileItem) => fileItem.src == item.attrs.src)
 
+                    if (uploadedFileIndex >= 0) {
+                        return {
+                            ...item,
+                            attrs: {
+                                ...item.attrs,
+                                src: items[uploadedFileIndex].src
+                            }
+                        }
+                    }
+                }
 
+                return item
+            })
 
-        // loadingStart()
-        // const updatedArticle = await upsertArticle(formData)
-        // loadingEnd()
+            formData.set('content', JSON.stringify(updatedEditorContent))
 
+            items.forEach((fileItem) => {
+                formData.append('attachment[]', fileItem.id as string)
+            })
+        }
 
+        const updatedArticle = await upsertArticle(formData)
+        loadingEnd()
 
-
-        // if (updatedArticle?.id) {
-        //     navigate(getRoute().articles(updatedArticle.id))
-        // }
+        if (updatedArticle?.id) {
+            navigate(getRoute().articles(updatedArticle.id))
+        }
 
     }, [getFormData])
 
@@ -125,13 +148,7 @@ export function ArticleEditContextProvider({
     );
 }
 
-function filterEditorContent(editorJson: any, filterFn: (item: any) => boolean) {
-    if (editorJson.content?.length > 0) {
-        editorJson.content = editorJson.content.filter(filterFn)
-        editorJson.content.forEach((item: any) => filterEditorContent(item, filterFn))
-    }
-    return editorJson
-}
+
 
 
 interface IArticleMainContextValue {
@@ -156,7 +173,8 @@ interface IArticleEditContextProviderProps extends React.PropsWithChildren {
     articleId?: number | string
 }
 
-interface IEditableArticle extends IArticle {
+interface IEditableArticle extends Partial<IArticle> {
     imageFile?: File
     image_delete?: boolean
+    contentJson?: string
 }

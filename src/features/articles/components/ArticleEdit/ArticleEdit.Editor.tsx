@@ -17,11 +17,11 @@ export type ArticleEditEditorRef = React.ForwardedRef<EditorType | null>
 
 export function ArticleEditEditor({ }: IArticleEditEditorProps) {
     const { article, update } = useArticleEditMainContext()
-    const initialEditorContent = useInitialContent(article?.content, [article?.id]);
+    const initialEditorContent = useInitialContent(article?.content, [article?.content]);
 
     const updateHandler = useCallback((props: EditorEvents['update']) => {
         update({
-            content: JSON.stringify(props.editor.getJSON())
+            contentJson: JSON.stringify(props.editor.getJSON())
         })
     }, [update])
 
