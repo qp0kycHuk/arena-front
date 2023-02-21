@@ -20,9 +20,7 @@ export function ArticleEditEditor({ }: IArticleEditEditorProps) {
     const initialEditorContent = useInitialContent(article?.content, [article?.content]);
 
     const updateHandler = useCallback((props: EditorEvents['update']) => {
-        update({
-            contentJson: JSON.stringify(props.editor.getJSON())
-        })
+        update({ contentJson: JSON.stringify(props.editor.getJSON()) })
     }, [update])
 
     const debouncedUpdateHandler = useDebouncedCallback(updateHandler, 800)
@@ -43,9 +41,6 @@ export function ArticleEditEditor({ }: IArticleEditEditorProps) {
     const filePasteHandler = useCallback(async (event: React.ClipboardEvent) => {
         const files = Array.from(event.clipboardData.files)
         const images = filterFiles(files, [imageExtention.regex])
-        // TODO add paste files
-        // const documents = filterFiles(files, [docExtention.regex])
-
         const pastedFileItems = await getFileItems(images)
 
         const insertImages = pastedFileItems.map((item) => ({
@@ -65,7 +60,7 @@ export function ArticleEditEditor({ }: IArticleEditEditorProps) {
             ]
         })
 
-    }, [editor])
+    }, [editor, article])
 
     return (
         <div>

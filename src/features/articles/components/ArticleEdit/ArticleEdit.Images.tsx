@@ -1,9 +1,8 @@
 import { useMemo } from 'react';
 import { Uploader } from '@features/fileUploader';
+import { editorContentFilter } from '@features/editor/hooks/useEditor';
 import { useArticleEditMainContext, useArticleEditUtilsContext } from './ArticleEdit.Context';
 import { getFileItems } from '@utils/helpers/files';
-import { editorContentFilter } from '@features/editor/hooks/useEditor';
-
 
 interface IArticleEditImagesProps { }
 
@@ -59,5 +58,3 @@ export function ArticleEditImages({ }: IArticleEditImagesProps) {
         </Uploader>
     );
 }
-
-

@@ -1,18 +1,17 @@
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { IArticle } from "@models/Article";
-import { useArticleControl } from "@store/articles";
+import React, { createContext, useCallback, useContext,  useMemo } from "react";
 import { useUserQuery } from "@store/auth";
-import { useNavigate } from "react-router-dom";
-import { getErrorMessage } from "@hooks/useErrorMessage";
-import { toast } from "@lib/Toast";
+import { useArticleControl } from "@store/articles";
 import { useFetchArticleById } from "@store/articles/articles.hooks";
 import { ICreateRequest, IUpdateRequest } from "@store/articles/articles.api";
-import { getRoute } from "@utils/index";
+import { IUploadRequest, filesApi } from "@store/files/files.api";
+import { editorContentUpdate } from "@features/editor/hooks/useEditor";
 import { useEditableEntity } from "@hooks/useEditableEntity";
 import { useLoading } from "@hooks/useLoading";
-import { IUploadRequest, filesApi } from "@store/files/files.api";
+import { getRoute } from "@utils/index";
+import { toast } from "@lib/Toast";
+import { useNavigate } from "react-router-dom";
 import { IFile } from "@models/File";
-import { editorContentUpdate } from "@features/editor/hooks/useEditor";
+import { IArticle } from "@models/Article";
 
 
 
@@ -30,7 +29,7 @@ export function ArticleEditContextProvider({
     const { data: user } = useUserQuery(null)
     const navigate = useNavigate();
 
-    const { createDraftArticle, upsertArticle, manualUpdateArticle } = useArticleControl()
+    const { upsertArticle } = useArticleControl()
 
     const { data: article } = useFetchArticleById(articleId || '')
     const initialArticle = useMemo(() => {
@@ -48,7 +47,7 @@ export function ArticleEditContextProvider({
     const getFormData = useCallback((): ICreateRequest => {
         const formData: ICreateRequest = new FormData()
         formData.append('name', editableArticle.name || '')
-        formData.append('content', editableArticle.content || '')
+        formData.append('content', editableArticle.contentJson || '')
         formData.append('excerpt', editableArticle.excerpt || '')
 
 
@@ -88,7 +87,7 @@ export function ArticleEditContextProvider({
         loadingStart()
         const formData = getFormData()
 
-        // upload files
+        // upload files and update content with images src`s
         const uploadedFileItems: IFile[] = []
         const filesFormData: IUploadRequest = new FormData()
 
@@ -105,7 +104,7 @@ export function ArticleEditContextProvider({
             const result = await filesApi().upload(filesFormData)
             const items = result.data.items
 
-            const updatedEditorContent = editorContentUpdate(JSON.parse(editableArticle.content || '{}'), (item) => {
+            const updatedEditorContent = editorContentUpdate(JSON.parse(editableArticle.contentJson || '{}'), (item) => {
                 if (item.type === 'image') {
                     const uploadedFileIndex = uploadedFileItems.findIndex((fileItem) => fileItem.src == item.attrs.src)
 
@@ -147,8 +146,6 @@ export function ArticleEditContextProvider({
         </ArticleEditMainContext.Provider>
     );
 }
-
-
 
 
 interface IArticleMainContextValue {
