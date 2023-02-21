@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useEditor as useEditorConfig, EditorOptions, generateHTML, JSONContent, Editor } from '@tiptap/react'
+import { useEditor as useEditorConfig, EditorOptions, generateHTML, JSONContent } from '@tiptap/react'
 import { Node } from '@tiptap/core'
 import StarterKit from '@tiptap/starter-kit'
 import Underline from '@tiptap/extension-underline'
@@ -23,7 +23,6 @@ import php from 'highlight.js/lib/languages/php'
 
 import { FileBlock } from '../components/TextEditor/FileBlock'
 import { FileBlockExtension } from '../lib/file-block-extension'
-import { FilePasteExtention } from '../lib/file-paste-extension'
 import { IFile } from '@models/File'
 
 lowlight.registerLanguage('html', html)
@@ -70,6 +69,7 @@ const LowlightCustom = Node.create({
         }
     },
 })
+
 const CustomImage = Image.configure({ allowBase64: true }).extend({
     addAttributes() {
         console.log('addAttributes');
@@ -92,6 +92,7 @@ const CustomImage = Image.configure({ allowBase64: true }).extend({
         }
     }
 })
+
 export const editorExtensions = [
     StarterKit.configure({
         codeBlock: false,
@@ -111,7 +112,7 @@ export const editorExtensions = [
 ]
 
 export function useEditor(options?: IOptions, deps?: any[]) {
-    const { config, placeholder, uploadFunction } = options || defaultOptions
+    const { config, placeholder } = options || defaultOptions
 
     return useEditorConfig({
         extensions: [
