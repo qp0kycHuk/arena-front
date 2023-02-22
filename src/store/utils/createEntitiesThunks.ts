@@ -7,6 +7,11 @@ interface IConfig<E, C, U> {
     name: string
 }
 
+interface IErrorData {
+    message: string
+    errors: Record<string, string[]>
+}
+
 export function createEntitiesThunks<E, C, U>({
     name,
     api
@@ -20,7 +25,7 @@ export function createEntitiesThunks<E, C, U>({
                 const items = response.data.items
                 return items
             } catch (err) {
-                return rejectWithValue(err)
+                return rejectWithValue((err as AxiosError<IErrorData>).response?.data)
             }
         }
     )
@@ -33,7 +38,7 @@ export function createEntitiesThunks<E, C, U>({
                 const item = response.data.item
                 return item
             } catch (err) {
-                return rejectWithValue((err as AxiosError).response?.data)
+                return rejectWithValue((err as AxiosError<IErrorData>).response?.data)
             }
         }
     )
@@ -46,7 +51,7 @@ export function createEntitiesThunks<E, C, U>({
                 const item = response.data.item
                 return item
             } catch (err) {
-                return rejectWithValue(err)
+                return rejectWithValue((err as AxiosError<IErrorData>).response?.data)
             }
         }
     )
@@ -64,7 +69,7 @@ export function createEntitiesThunks<E, C, U>({
 
                 }
             } catch (err) {
-                return rejectWithValue(err)
+                return rejectWithValue((err as AxiosError<IErrorData>).response?.data)
             }
         }
     )
