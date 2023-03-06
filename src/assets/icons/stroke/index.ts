@@ -9,6 +9,7 @@ export { ReactComponent as BoldIcon } from './bold.svg';
 export { ReactComponent as BookmarkIcon } from './bookmark.svg';
 export { ReactComponent as BriefcaseIcon } from './briefcase.svg';
 export { ReactComponent as BulletListIcon } from './bulletList.svg';
+export { ReactComponent as CakeIcon } from './cake.svg';
 export { ReactComponent as CrossIcon } from './cross.svg';
 export { ReactComponent as CrownIcon } from './crown.svg';
 export { ReactComponent as DocumentIcon } from './document.svg';

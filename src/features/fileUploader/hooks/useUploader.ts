@@ -6,6 +6,8 @@ interface IUploaderParams {
     initialFiles?: IFileItem[]
     extention?: IExtention
     multiple?: boolean
+    rounded?: boolean
+    sign?: boolean
     onChange?: (fileItems: IFileItem[]) => any
     onRemove?: (fileItem: IFileItem) => any
     // onChange?: (fileItems: IFileItem[]) => any
@@ -15,6 +17,8 @@ export function useUploader({
     initialFiles = [],
     extention = imageExtention,
     multiple = true,
+    rounded = false,
+    sign = true,
     onChange,
     onRemove }: IUploaderParams): IUplodaer {
 
@@ -49,6 +53,8 @@ export function useUploader({
     return {
         extention: extention || imageExtention,
         multiple,
+        rounded,
+        sign,
         fileItems,
         addItems,
         updateItem,

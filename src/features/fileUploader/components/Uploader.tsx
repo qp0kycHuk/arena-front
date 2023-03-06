@@ -9,6 +9,8 @@ interface IUploaderProps extends PropsWithChildren {
     fileItems?: IFileItem[]
     extention?: IExtention
     multiple?: boolean
+    rounded?: boolean
+    sign?: boolean
     onChange?: (fileItems: IFileItem[]) => any
     onRemove?: (fileItem: IFileItem) => any
 }
@@ -17,6 +19,8 @@ export function Uploader({
     fileItems,
     extention,
     multiple,
+    rounded,
+    sign,
     onChange,
     onRemove,
     children
@@ -24,6 +28,8 @@ export function Uploader({
 ) {
     const uploader = useUploader({
         multiple,
+        rounded,
+        sign,
         initialFiles: fileItems,
         onChange,
         onRemove
