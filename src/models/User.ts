@@ -8,6 +8,7 @@ export interface IUser {
     date_of_birth: string
     email: string
     email_verified_at: null
+    telegram: string
     phone: string
     phone_verified_at: null
     phone_verify_code: null
@@ -22,4 +23,6 @@ export interface IUser {
     created_at: Date
     updated_at: Date
     deleted_at: Date
+    positions: any[]
+    roles: any[]
 }

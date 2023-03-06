@@ -5,6 +5,7 @@ import { rootApi } from './api'
 import authReducer from './auth/auth.slice'
 import articlesReducer from './articles/articles.slice'
 import usersReducer from './users/users.slice'
+import positionsReducer from './positions/positions.slice'
 
 
 export const store = configureStore({
@@ -13,6 +14,7 @@ export const store = configureStore({
         auth: authReducer,
         articles: articlesReducer,
         users: usersReducer,
+        positions: positionsReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(rootApi.middleware),
