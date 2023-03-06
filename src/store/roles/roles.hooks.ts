@@ -2,7 +2,7 @@ import { IRole } from '@models/Role';
 import { useAppDispatch, useAppSelector } from '../index';
 import { ICreateRequest, IUpdateRequest } from "./roles.api"
 import { createRole as create, fetchRoleById, fetchRoles, updateRole as update } from './roles.thunk';
-import { rolesSlice, selectAll, selectById } from './roles.slice';
+import { rolesSlice, selectById } from './roles.slice';
 import { useEffect } from 'react';
 import { EntityId } from '@reduxjs/toolkit';
 
@@ -45,7 +45,7 @@ export const useFetchRoles = () => {
 
     useEffect(() => {
         dispatch(fetchRoles())
-    }, [])
+    }, [dispatch])
 
     return roles
 }
@@ -58,7 +58,7 @@ export const useFetchRoleById = (id: EntityId) => {
         if (id) {
             dispatch(fetchRoleById(id))
         }
-    }, [id])
+    }, [id, dispatch])
 
     return position
 }

@@ -1,7 +1,4 @@
-import { EntityId } from '@reduxjs/toolkit';
 import { IUser } from "@models/User";
-import axios, { AxiosResponse } from "axios";
-import Cookies from "js-cookie";
 import { createEntitiesApi } from '@store/utils/createEntitiesApi';
 
 type CreateParams = keyof IUser | 'positions[]'
