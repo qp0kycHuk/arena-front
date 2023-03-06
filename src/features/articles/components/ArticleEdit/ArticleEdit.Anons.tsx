@@ -31,8 +31,6 @@ export function ArticleEditAnons({ }: IArticleEditAnonsProps) {
     }
 
     async function removeImage() {
-        if (!article?.id) return
-
         update({
             imageFile: undefined,
             image_src: undefined,
