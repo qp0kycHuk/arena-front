@@ -7,6 +7,7 @@ interface IProps {
     color?: Color
     size?: Size
     borderless?: boolean
+    className?: string
 };
 
 export type InputProps = IProps & Omit<React.InputHTMLAttributes<HTMLInputElement>, keyof IProps>
@@ -45,15 +46,15 @@ export function getUnputClassNames({
     color = 'primary',
     size = 'middle',
     borderless = false,
-    ...props }: InputProps) {
+    className = '' }: IProps) {
     return classnames(
         baseClassNames,
         sizeClassNames[size],
-        props.className,
+        className,
         {
-            ['pl-4']: !props.className?.includes('pl-') && !props.className?.includes('px-'),
-            ['pr-4']: !props.className?.includes('pr-') && !props.className?.includes('px-'),
-            ['bg-white dark:bg-opacity-5']: !props.className?.includes('bg-'),
+            ['pl-4']: !className?.includes('pl-') && !className?.includes('px-'),
+            ['pr-4']: !className?.includes('pr-') && !className?.includes('px-'),
+            ['bg-white dark:bg-opacity-5']: !className?.includes('bg-'),
             ['border border-black border-opacity-10 focus:ring-1']: !borderless,
             [`focus:border-${color}  focus:ring-${color}`]: !borderless
         }

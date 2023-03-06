@@ -40,7 +40,7 @@ export function useUserControl() {
 }
 
 export const useFetchPositions = () => {
-    const positions = useAppSelector(selectAll)
+    const positions = useAppSelector(({ positions }) => positions)
     const dispatch = useAppDispatch()
 
     useEffect(() => {

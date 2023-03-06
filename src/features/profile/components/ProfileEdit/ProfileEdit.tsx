@@ -3,10 +3,11 @@ import { IUser } from "@models/User";
 import { EntityId } from "@reduxjs/toolkit";
 import { ProfileEditImage } from "./ProfileEdit.Image";
 import { useUserEditContext } from "./ProfileEdit.Context";
-import { Button, DatePicker, Input } from "@features/ui";
+import { Button, DatePicker, Input, Select } from "@features/ui";
 import { PhoneInput } from "@components/PhoneInput";
 import { getUnmaskedPhoneValue } from "@utils/index";
 import { Spiner } from "@components/Spiner";
+import { ProfileEditPosition } from "./ProfileEdit.Position";
 
 
 interface IProfileEditProps {
@@ -45,6 +46,7 @@ export function ProfileEdit({ }: IProfileEditProps) {
                             <DatePicker className="w-full" value={user.date_of_birth}
                                 onSelect={({ date }) => update({ date_of_birth: (date as Date).toISOString() })} />
                         </label>
+                        <ProfileEditPosition />
                     </div>
                 </div>
                 <div className="mx-12 border-r border-gray border-opacity-20"></div>

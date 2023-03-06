@@ -30,6 +30,7 @@ export { ReactComponent as TextColorIcon } from './textColor.svg';
 export { ReactComponent as ToDownIcon } from './to-down.svg';
 export { ReactComponent as ToTopIcon } from './to-top.svg';
 export { ReactComponent as ToLeftIcon } from './to-left.svg';
+export { ReactComponent as ToRightIcon } from './to-right.svg';
 export { ReactComponent as UnderlineIcon } from './underline.svg';
 export { ReactComponent as UsersIcon } from './users.svg';
 export { ReactComponent as VideoIcon } from './video.svg';

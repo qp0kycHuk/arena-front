@@ -1,4 +1,5 @@
 import { EntityId } from '@reduxjs/toolkit'
+import { IPosition } from './Position'
 
 export interface IUser {
     id: EntityId
@@ -23,6 +24,6 @@ export interface IUser {
     created_at: Date
     updated_at: Date
     deleted_at: Date
-    positions: any[]
+    positions: IPosition[]
     roles: any[]
 }
