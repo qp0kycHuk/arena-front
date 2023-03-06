@@ -1,16 +1,17 @@
-import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
-import { IArticle } from "@models/Article";
-import { useArticleControl } from "@store/articles";
+import React, { createContext, useCallback, useContext,  useMemo } from "react";
 import { useUserQuery } from "@store/auth";
-import { useNavigate } from "react-router-dom";
-import { getErrorMessage } from "@hooks/useErrorMessage";
-import { toast } from "@lib/Toast";
-import { IUploadRequest, useRemoveMutation, useUploadMutation } from "@store/files";
+import { useArticleControl } from "@store/articles";
 import { useFetchArticleById } from "@store/articles/articles.hooks";
 import { ICreateRequest, IUpdateRequest } from "@store/articles/articles.api";
-import { getRoute } from "@utils/index";
+import { IUploadRequest, filesApi } from "@store/files/files.api";
+import { editorContentUpdate } from "@features/editor/hooks/useEditor";
 import { useEditableEntity } from "@hooks/useEditableEntity";
 import { useLoading } from "@hooks/useLoading";
+import { getRoute } from "@utils/index";
+import { toast } from "@lib/Toast";
+import { useNavigate } from "react-router-dom";
+import { IFile } from "@models/File";
+import { IArticle } from "@models/Article";
 
 
 
@@ -28,13 +29,16 @@ export function ArticleEditContextProvider({
     const { data: user } = useUserQuery(null)
     const navigate = useNavigate();
 
-    const { createDraftArticle, upsertArticle, manualUpdateArticle } = useArticleControl()
-    const [upload] = useUploadMutation()
-    const [remove] = useRemoveMutation()
+    const { upsertArticle } = useArticleControl()
 
     const { data: article } = useFetchArticleById(articleId || '')
-
-    const [editableArticle, update] = useEditableEntity<IEditableArticle>(article)
+    const initialArticle = useMemo(() => {
+        return {
+            ...article,
+            contentJson: article?.content
+        }
+    }, [article])
+    const [editableArticle, update] = useEditableEntity<IEditableArticle>(initialArticle)
     const { loading, loadingStart, loadingEnd } = useLoading()
 
 
@@ -43,7 +47,7 @@ export function ArticleEditContextProvider({
     const getFormData = useCallback((): ICreateRequest => {
         const formData: ICreateRequest = new FormData()
         formData.append('name', editableArticle.name || '')
-        formData.append('content', editableArticle.content || '')
+        formData.append('content', editableArticle.contentJson || '')
         formData.append('excerpt', editableArticle.excerpt || '')
 
 
@@ -80,33 +84,56 @@ export function ArticleEditContextProvider({
             return;
         }
 
+        loadingStart()
         const formData = getFormData()
 
-        loadingStart()
-        const updatedArticle = await upsertArticle(formData)
-        loadingEnd()
-
-
+        // upload files and update content with images src`s
+        const uploadedFileItems: IFile[] = []
         const filesFormData: IUploadRequest = new FormData()
-        filesFormData.append('entity', 'article',)
-        filesFormData.append('entity_id', updatedArticle.id.toString())
+
         editableArticle.files?.forEach((item) => {
             if (item.file) {
                 filesFormData.append('files[]', item.file)
+                uploadedFileItems.push(item)
+            } else {
+                formData.append('attachment[]', item.id as string)
             }
         })
-        if (filesFormData.has('files[]')) {
-            const result = await upload(filesFormData)
-            const errorMessage = getErrorMessage((result as IResultWithError)?.error)
 
-            if (errorMessage) {
-                toast.error(errorMessage)
-                return
-            }
+        if (filesFormData.has('files[]')) {
+            const result = await filesApi().upload(filesFormData)
+            const items = result.data.items
+
+            const updatedEditorContent = editorContentUpdate(JSON.parse(editableArticle.contentJson || '{}'), (item) => {
+                if (item.type === 'image') {
+                    const uploadedFileIndex = uploadedFileItems.findIndex((fileItem) => fileItem.src == item.attrs.src)
+
+                    if (uploadedFileIndex >= 0) {
+                        return {
+                            ...item,
+                            attrs: {
+                                ...item.attrs,
+                                src: items[uploadedFileIndex].src
+                            }
+                        }
+                    }
+                }
+
+                return item
+            })
+
+            formData.set('content', JSON.stringify(updatedEditorContent))
+
+            items.forEach((fileItem) => {
+                formData.append('attachment[]', fileItem.id as string)
+            })
         }
 
-        if ((updatedArticle as IArticle).id) {
-            navigate(getRoute().articles((updatedArticle as IArticle).id))
+        const updatedArticle = await upsertArticle(formData)
+        loadingEnd()
+
+        if (updatedArticle?.id) {
+            navigate(getRoute().articles(updatedArticle.id))
         }
 
     }, [getFormData])
@@ -118,14 +145,6 @@ export function ArticleEditContextProvider({
             </ArticleEditUtilsContext.Provider>
         </ArticleEditMainContext.Provider>
     );
-}
-
-function filterEditorContent(editorJson: any, filterFn: (item: any) => boolean) {
-    if (editorJson.content?.length > 0) {
-        editorJson.content = editorJson.content.filter(filterFn)
-        editorJson.content.forEach((item: any) => filterEditorContent(item, filterFn))
-    }
-    return editorJson
 }
 
 
@@ -151,7 +170,8 @@ interface IArticleEditContextProviderProps extends React.PropsWithChildren {
     articleId?: number | string
 }
 
-interface IEditableArticle extends IArticle {
+interface IEditableArticle extends Partial<IArticle> {
     imageFile?: File
     image_delete?: boolean
+    contentJson?: string
 }

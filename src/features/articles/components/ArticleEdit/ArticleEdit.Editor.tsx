@@ -17,12 +17,10 @@ export type ArticleEditEditorRef = React.ForwardedRef<EditorType | null>
 
 export function ArticleEditEditor({ }: IArticleEditEditorProps) {
     const { article, update } = useArticleEditMainContext()
-    const initialEditorContent = useInitialContent(article?.content, [article?.id]);
+    const initialEditorContent = useInitialContent(article?.content, [article?.content]);
 
     const updateHandler = useCallback((props: EditorEvents['update']) => {
-        update({
-            content: JSON.stringify(props.editor.getJSON())
-        })
+        update({ contentJson: JSON.stringify(props.editor.getJSON()) })
     }, [update])
 
     const debouncedUpdateHandler = useDebouncedCallback(updateHandler, 800)
@@ -37,21 +35,17 @@ export function ArticleEditEditor({ }: IArticleEditEditorProps) {
         } as IOptions
     }, [initialEditorContent])
 
-
     const editor = useEditor(options)
 
-    const filePasteHandler = useCallback(async (event: React.ClipboardEvent) => {
-        const files = Array.from(event.clipboardData.files)
+    const insertImages = useCallback(async (files: File[]) => {
         const images = filterFiles(files, [imageExtention.regex])
-        // TODO add paste files
-        // const documents = filterFiles(files, [docExtention.regex])
-
         const pastedFileItems = await getFileItems(images)
 
         const insertImages = pastedFileItems.map((item) => ({
             type: 'image',
             attrs: {
                 src: item.src,
+                id: item.id
             },
         }))
 
@@ -63,12 +57,22 @@ export function ArticleEditEditor({ }: IArticleEditEditorProps) {
                 ...pastedFileItems
             ]
         })
+    }, [editor, article])
 
-    }, [editor])
+    function filePasteHandler(event: React.ClipboardEvent) {
+        const files = Array.from(event.clipboardData.files)
+        insertImages(files)
+    }
+
+    function imageAddHandler(files: File[]) {
+        insertImages(files)
+    }
 
     return (
         <div>
-            <EditorControl editor={editor} className='sticky z-10 -ml-4 -mr-4 top-2' />
+            <EditorControl
+                onImageAdd={imageAddHandler}
+                editor={editor} className='sticky z-10 -ml-4 -mr-4 top-16' />
             <Editor
                 onPaste={filePasteHandler}
                 editor={editor} className='min-h-[260px] flex flex-col' />

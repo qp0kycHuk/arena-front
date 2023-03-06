@@ -166,6 +166,10 @@ body {
         @apply text-xl
     }
 
+    img{
+        max-width: 500px;
+    }
+
     img.ProseMirror-selectednode {
         @apply ring-primary ring-4
     }

@@ -5,13 +5,14 @@ import { filePasteHandler } from '../../lib/file-paste-extension';
 import type { Editor } from '@tiptap/react';
 
 export interface IImageMenuProps {
-    editor: Editor
+    editor: Editor,
+    onImageAdd?(files: File[]): any
 }
 
-export function ImageMenu({ editor }: IImageMenuProps) {
+export function ImageMenu({ editor, onImageAdd }: IImageMenuProps) {
     function changeHandler(event: React.ChangeEvent<HTMLInputElement>) {
         if (event.target.files) {
-            filePasteHandler(Array.from(event.target.files), editor);
+            onImageAdd?.(Array.from(event.target.files));
         }
     }
 

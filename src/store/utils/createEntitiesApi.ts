@@ -1,7 +1,6 @@
-// import { IEntitiesApi } from './createEntitiesApi';
 import { EntityId } from "@reduxjs/toolkit"
-import axios, { AxiosResponse } from "axios"
-import Cookies from "js-cookie"
+import { createRootApi } from "./createRootApi";
+import { AxiosResponse } from "axios";
 
 export interface IEntitiesApi<E, C, U> {
     create: (formData: C) => Promise<AxiosResponse<IItemResponse<E>, any>>;
@@ -24,13 +23,7 @@ export function createEntitiesApi<E, C, U>({
     const ROOT_ENDPOINT_URL = url
 
     return function api(): IEntitiesApi<E, C, U> {
-        const token = Cookies.get(process.env.REACT_APP_CSRF_COOKIE_NAME as string)
-        const api = axios.create({
-            withCredentials: true,
-            headers: {
-                [process.env.REACT_APP_CSRF_HEADER_NAME as string]: token
-            }
-        })
+        const api = createRootApi()
 
         async function fetch(): Promise<AxiosResponse<IListResponse<E>, any>> {
             return await api.get(ROOT_ENDPOINT_URL,)

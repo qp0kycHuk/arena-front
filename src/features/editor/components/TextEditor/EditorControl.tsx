@@ -22,9 +22,10 @@ import { HighlightMenu } from './HighlightMenu';
 
 interface IEditorControlProps extends React.HTMLProps<HTMLDivElement> {
     editor: Editor | null
+    onImageAdd?(file: File[]): void
 }
 
-export function EditorControl({ editor, className }: IEditorControlProps) {
+export function EditorControl({ editor, className, onImageAdd }: IEditorControlProps) {
     if (!editor) {
         return null
     }
@@ -82,7 +83,7 @@ export function EditorControl({ editor, className }: IEditorControlProps) {
             </MenuButton>
 
             <div className="mx-2"></div>
-            <ImageMenu editor={editor} />
+            <ImageMenu onImageAdd={onImageAdd} editor={editor} />
             <LinkMenu editor={editor} />
 
             <DocumentMenu editor={editor} />

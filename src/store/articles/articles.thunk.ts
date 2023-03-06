@@ -9,7 +9,7 @@ export const {
     fetchAllThunk: fetchArticles,
     updateThunk: updateArticle,
     createThunk: createArticle,
-    fetchThunkById: fetchArticleById,
+    fetchByIdThunk: fetchArticleById,
 } = createEntitiesThunks<IArticle, ICreateRequest, IUpdateRequest>({
     name: 'articles',
     api: articlesApi
