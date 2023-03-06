@@ -6,7 +6,7 @@ import { positionsSlice, selectAll, selectById } from './positions.slice';
 import { useEffect } from 'react';
 import { EntityId } from '@reduxjs/toolkit';
 
-export function useUserControl() {
+export function usePositionControl() {
     const dispatch = useAppDispatch()
 
     async function updatePosition(formData: IUpdateRequest) {
@@ -28,7 +28,7 @@ export function useUserControl() {
     }
 
     function manualUpdatePosition(updated: IPosition) {
-        dispatch(positionsSlice.actions.updateUser(updated))
+        dispatch(positionsSlice.actions.updatePosition(updated))
     }
 
     return {

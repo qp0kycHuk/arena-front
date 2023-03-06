@@ -10,7 +10,7 @@ export const positionsSlice = createSlice({
     name: 'positions',
     initialState: positionsEntityAdapter.getInitialState(),
     reducers: {
-        updateUser(state, action: PayloadAction<IPosition>) {
+        updatePosition(state, action: PayloadAction<IPosition>) {
             positionsEntityAdapter.updateOne(state, {
                 id: action.payload.id,
                 changes: action.payload

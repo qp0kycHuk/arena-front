@@ -29,8 +29,8 @@ export function UserEditContextProvider({
         formData.append('patronymic', data.patronymic || '')
         formData.append('date_of_birth', data.date_of_birth || '')
         formData.append('email', data.email || '')
+        formData.append('telegram', data.telegram || '')
 
-        // formData.append('email', data.email || '')
         if (data.id) {
             formData.append('id', data.id as string)
         }
@@ -40,6 +40,10 @@ export function UserEditContextProvider({
         if (data.imageFile) {
             formData.append('image', data.imageFile)
         }
+
+        data.positions.forEach((position) => {
+            formData.append('positions[]', position.id as string)
+        })
 
         return formData
     }
