@@ -1,10 +1,9 @@
-import { BriefcaseIcon, TrashIcon } from "@assets/icons/stroke";
+import { TrashIcon } from "@assets/icons/stroke";
 import { Spiner } from "@components/Spiner";
 import { Button, Input } from "@features/ui";
 import { useLoading } from "@hooks/useLoading";
 import { IHandbook } from "@models/Handbook";
 import { EntityId } from "@reduxjs/toolkit";
-import { useFetchPositions } from "@store/positions/positions.hooks";
 import { getRandomUUID } from "@utils/index";
 import { useEffect, useState } from "react";
 
@@ -19,8 +18,6 @@ interface IEditHandbook extends IHandbook {
 export function HandbooksEdit({ initialHandbooks }: IHandbooksEditProps) {
     const { loading } = useLoading()
     const [handbooks, setHandbooks] = useState<Partial<IEditHandbook>[]>(initialHandbooks || [])
-
-    console.log(initialHandbooks);
 
     useEffect(() => {
         setHandbooks(initialHandbooks || [])
@@ -40,7 +37,6 @@ export function HandbooksEdit({ initialHandbooks }: IHandbooksEditProps) {
         if (!id) return
 
         setHandbooks((prev) => prev.map((item) => {
-
             if (item.id === id || item.key === id) {
                 return {
                     ...item,
