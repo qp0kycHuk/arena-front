@@ -1,6 +1,3 @@
-import { EntityId } from "@reduxjs/toolkit"
+import { IHandbook } from "./Handbook";
 
-export interface IPosition {
-    id: EntityId
-    name: string
-}
+export interface IPosition extends IHandbook { }

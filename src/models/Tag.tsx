@@ -1,6 +1,3 @@
-import { EntityId } from "@reduxjs/toolkit"
+import { IHandbook } from "./Handbook";
 
-export interface ITag {
-    id: EntityId
-    name: string
-}
+export interface ITag extends IHandbook { }

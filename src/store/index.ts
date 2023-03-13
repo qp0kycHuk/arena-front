@@ -7,6 +7,7 @@ import articlesReducer from './articles/articles.slice'
 import usersReducer from './users/users.slice'
 import positionsReducer from './positions/positions.slice'
 import rolesReducer from './roles/roles.slice'
+import tagsReducer from './tags/tags.slice'
 
 
 export const store = configureStore({
@@ -17,6 +18,7 @@ export const store = configureStore({
         users: usersReducer,
         positions: positionsReducer,
         roles: rolesReducer,
+        tags: tagsReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(rootApi.middleware),
