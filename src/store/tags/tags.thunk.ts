@@ -10,6 +10,7 @@ export const {
     fetchAllThunk: fetchTags,
     updateThunk: updateTag,
     createThunk: createTag,
+    removeThunk: removeTag,
     fetchByIdThunk: fetchTagById,
 } = createEntitiesThunks<ITag, ICreateRequest, IUpdateRequest>({
     name: 'tags',

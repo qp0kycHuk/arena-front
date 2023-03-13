@@ -2,7 +2,7 @@ import { ITag } from '@models/Tag';
 import { toast } from '@lib/Toast';
 import { RootState } from '../index';
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { createTag, fetchTagById, fetchTags, updateTag } from "./tags.thunk";
+import { createTag, fetchTagById, fetchTags, removeTag, updateTag } from "./tags.thunk";
 import { tagsEntityAdapter } from "./tags.adapter";
 
 
@@ -23,12 +23,14 @@ export const tagsSlice = createSlice({
             .addCase(fetchTagById.fulfilled, tagsEntityAdapter.upsertOne)
             .addCase(createTag.fulfilled, tagsEntityAdapter.upsertOne)
             .addCase(updateTag.fulfilled, tagsEntityAdapter.upsertOne)
+            .addCase(removeTag.fulfilled, tagsEntityAdapter.removeOne)
 
         builder
             .addCase(fetchTags.rejected, showThunkError)
             .addCase(fetchTagById.rejected, showThunkError)
             .addCase(createTag.rejected, showThunkError)
             .addCase(updateTag.rejected, showThunkError)
+            .addCase(removeTag.rejected, showThunkError)
     },
 })
 

@@ -5,7 +5,7 @@ import { Button, getUnputClassNames } from '@features/ui';
 import { Combobox, Transition } from '@headlessui/react'
 import { CrossIcon, HashIcon } from '@assets/icons/stroke';
 import { ITag } from '@models/Tag';
-import {  useArticleEditMainContext, useArticleEditUtilsContext } from './ArticleEdit.Context';
+import { useArticleEditMainContext, useArticleEditUtilsContext } from './ArticleEdit.Context';
 import { useFetchTags, useTagControl } from '@store/tags/tags.hooks';
 import { ICreateRequest } from '@store/tags/tags.api';
 
@@ -17,7 +17,7 @@ export function ArticleEditTags({ }: IArticleEditTagsProps) {
     const addedIds = article?.tags?.map((tag) => tag.id) || []
 
     const tags = useFetchTags()
-    const { createTag } = useTagControl()
+    const { create: createTag } = useTagControl()
     const [name, setName] = useState<string>('')
     const [isOpen, setOpen] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null)

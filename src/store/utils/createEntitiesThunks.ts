@@ -56,6 +56,24 @@ export function createEntitiesThunks<E, C, U>({
         }
     )
 
+    const removeThunk = createAsyncThunk<EntityId, EntityId>(
+        name + '/remove',
+        async (id, { rejectWithValue }) => {
+            try {
+                const response = await api().remove(id)
+                const item = response.data.item
+                if (item) {
+                    return id
+                } else {
+                    return rejectWithValue({ message: 'Non - existent' })
+
+                }
+            } catch (err) {
+                return rejectWithValue((err as AxiosError<IErrorData>).response?.data)
+            }
+        }
+    )
+
     const fetchByIdThunk = createAsyncThunk<E, EntityId>(
         name + '/fetchById',
         async (id, { rejectWithValue }) => {
@@ -77,6 +95,7 @@ export function createEntitiesThunks<E, C, U>({
     return {
         fetchAllThunk,
         updateThunk,
+        removeThunk,
         createThunk,
         fetchByIdThunk,
     }

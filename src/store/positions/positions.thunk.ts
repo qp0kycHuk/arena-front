@@ -10,6 +10,7 @@ export const {
     fetchAllThunk: fetchPositions,
     updateThunk: updatePosition,
     createThunk: createPosition,
+    removeThunk: removePosition,
     fetchByIdThunk: fetchPositionById,
 } = createEntitiesThunks<IPosition, ICreateRequest, IUpdateRequest>({
     name: 'positions',
