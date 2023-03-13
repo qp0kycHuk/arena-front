@@ -1,6 +1,7 @@
 import { TrashIcon } from "@assets/icons/stroke";
 import { Spiner } from "@components/Spiner";
 import { Button, Input } from "@features/ui";
+import { useArray } from "@hooks/useArray";
 import { useLoading } from "@hooks/useLoading";
 import { IHandbook } from "@models/Handbook";
 import { EntityId } from "@reduxjs/toolkit";
@@ -9,23 +10,25 @@ import { useEffect, useState } from "react";
 
 interface IHandbooksEditProps {
     initialHandbooks?: Partial<IEditHandbook>[]
+    onSubmit?(handbooks: Partial<IEditHandbook>[], removedIds: EntityId[]): Promise<any>
 }
 
 interface IEditHandbook extends IHandbook {
     key?: EntityId
 }
 
-export function HandbooksEdit({ initialHandbooks }: IHandbooksEditProps) {
-    const { loading } = useLoading()
+export function HandbooksEdit({ initialHandbooks, onSubmit }: IHandbooksEditProps) {
+    const { loading, loadingStart, loadingEnd } = useLoading()
     const [handbooks, setHandbooks] = useState<Partial<IEditHandbook>[]>(initialHandbooks || [])
+    const [removedIds, setRemovedIds] = useState<EntityId[]>([])
 
     useEffect(() => {
         setHandbooks(initialHandbooks || [])
     }, [initialHandbooks])
 
     function addItem() {
-        setHandbooks([
-            ...handbooks,
+        setHandbooks((prev) => [
+            ...prev,
             {
                 key: getRandomUUID(),
                 name: '',
@@ -48,10 +51,25 @@ export function HandbooksEdit({ initialHandbooks }: IHandbooksEditProps) {
         }))
     }
 
-    function submitHandler(event: React.FormEvent<HTMLFormElement>) {
+    async function submitHandler(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
-        console.log(handbooks);
+        loadingStart()
+        await onSubmit?.(handbooks, removedIds)
+        setRemovedIds([])
+        loadingEnd()
+    }
 
+    function removeHandler(handbook: Partial<IEditHandbook>) {
+        if (handbook.id) {
+            setRemovedIds((prev) => [...prev, handbook.id as EntityId])
+        }
+        setHandbooks((prev) => prev.filter((item) => {
+            if ((item.id || item.key) == (handbook.id || handbook.key)) {
+                return false
+            } else {
+                return true
+            }
+        }))
     }
 
     return (
@@ -64,15 +82,13 @@ export function HandbooksEdit({ initialHandbooks }: IHandbooksEditProps) {
                             value={handbook.name}
                             onChange={(event) => updateHandbookName(handbook.id || handbook.key, event.target.value)} />
                     </div>
-                    <Button color="red" variant="light" icon className="ml-6 self-end">
+                    <Button onClick={() => removeHandler(handbook)} color="red" variant="light" icon className="ml-6 self-end">
                         <TrashIcon className="text-2xl" />
                     </Button>
                 </div>
             ))}
 
-
             <Button onClick={addItem} variant='text' className='mt-2'>Добавить позицию</Button>
-
 
             <div className="flex gap-4 mt-8">
                 <Button type='submit' disabled={loading}>{loading ? <Spiner /> : 'Сохранить'}</Button>

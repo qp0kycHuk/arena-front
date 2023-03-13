@@ -7,6 +7,7 @@ export interface IEntitiesApi<E, C, U> {
     update: (formData: U) => Promise<AxiosResponse<IItemResponse<E>, any>>;
     fetch: () => Promise<AxiosResponse<IListResponse<E>, any>>;
     fetchById: (id: EntityId) => Promise<AxiosResponse<any, any>>;
+    remove: (id: EntityId) => Promise<AxiosResponse<any, any>>;
 }
 
 export type IEntitiesApiCreator<E, C, U> = () => IEntitiesApi<E, C, U>
@@ -43,10 +44,15 @@ export function createEntitiesApi<E, C, U>({
             return await api.get(ROOT_ENDPOINT_URL + '/' + id)
         }
 
+        async function remove(id: EntityId) {
+            return await api.delete(ROOT_ENDPOINT_URL + '/' + id)
+        }
+
         return {
             create,
             update,
             fetch,
+            remove,
             fetchById
         }
     }
