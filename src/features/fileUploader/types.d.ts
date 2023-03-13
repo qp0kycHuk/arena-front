@@ -7,4 +7,6 @@ interface IUplodaer {
     updateItem: (item: IFileItem, data: Partial<IFileItem>) => void
     removeItem: (item: IFileItem) => void
     multiple?: boolean
+    rounded?: boolean
+    sign?: boolean
 }

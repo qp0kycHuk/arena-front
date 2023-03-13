@@ -24,8 +24,8 @@ export function ProfileViewImage({ user, isLoading, className }: IProfileViewIma
     }
 
     return (
-        <div className={imageClassName + ' ' + className}>
-            <img src={user?.image_src} alt="" className="w-full h-full object-cover" />
+        <div className={imageClassName + ' bg-gray bg-opacity-50 ' + className}>
+            <img src={user?.image_src} alt="" className="object-cover w-full h-full" />
         </div>
     );
 }

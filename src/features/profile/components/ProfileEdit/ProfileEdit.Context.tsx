@@ -1,4 +1,4 @@
-import { createContext, useCallback, useEffect, useState, useContext, FormEvent } from "react"
+import { createContext, useContext, FormEvent } from "react"
 import { useEditableEntity } from "@hooks/useEditableEntity"
 import { useLoading } from "@hooks/useLoading"
 import { IUser } from "@models/User"
@@ -16,6 +16,8 @@ export function UserEditContextProvider({
     user }: IUserEditContextProviderProps
 ) {
     const [editableUser, update] = useEditableEntity<IEditableUser>(user)
+    console.log(editableUser);
+    
     const { loading, loadingStart, loadingEnd } = useLoading()
     const { upsertUser } = useUserControl()
     const navigate = useNavigate();
@@ -29,8 +31,8 @@ export function UserEditContextProvider({
         formData.append('patronymic', data.patronymic || '')
         formData.append('date_of_birth', data.date_of_birth || '')
         formData.append('email', data.email || '')
+        formData.append('telegram', data.telegram || '')
 
-        // formData.append('email', data.email || '')
         if (data.id) {
             formData.append('id', data.id as string)
         }
@@ -40,6 +42,10 @@ export function UserEditContextProvider({
         if (data.imageFile) {
             formData.append('image', data.imageFile)
         }
+
+        data.positions.forEach((position) => {
+            formData.append('positions[]', position.id as string)
+        })
 
         return formData
     }

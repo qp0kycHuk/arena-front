@@ -3,7 +3,7 @@ const phoneCompleteRegexp = /(7|8)\d{10}$/
 
 /**
  * Get unmasked phone
- * @example "+7 (999) 999 - 99 - 99" -> "79999999999"
+ * @example "+7 (123) 456 - 78 - 90" -> "71234567890"
  *
  * @export
  * @param {string} value

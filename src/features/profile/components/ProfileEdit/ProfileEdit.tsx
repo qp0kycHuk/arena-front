@@ -1,12 +1,12 @@
-import { PageContent } from "@layouts/PageContent";
-import { IUser } from "@models/User";
-import { EntityId } from "@reduxjs/toolkit";
 import { ProfileEditImage } from "./ProfileEdit.Image";
 import { useUserEditContext } from "./ProfileEdit.Context";
-import { Button, DatePicker, Input } from "@features/ui";
+import { Button, DatePicker, Input, Select } from "@features/ui";
 import { PhoneInput } from "@components/PhoneInput";
 import { getUnmaskedPhoneValue } from "@utils/index";
 import { Spiner } from "@components/Spiner";
+import { ProfileEditPosition } from "./ProfileEdit.Position";
+import { ProfileEditRoles } from "./ProfileEdit.Roles";
+import { dateToSQLFormatString } from "@utils/helpers/dates";
 
 
 interface IProfileEditProps {
@@ -23,28 +23,40 @@ export function ProfileEdit({ }: IProfileEditProps) {
 
             <div className="flex">
                 <div className="w-[360px] ">
-                    <div className="mb-8 text-2xl font-semibold">Личные данные</div>
+                    <div className="mb-8 text-2xl font-semibold">Личные данные </div>
+
                     <div className="flex flex-col gap-5">
                         <label className="block w-full">
                             <div className="mb-2 text-sm font-medium">Фамилия</div>
-                            <Input value={user.last_name || ''} className="w-full" required
+                            <Input
+                                value={user.last_name || ''}
+                                className="w-full"
+                                required
                                 onChange={(event) => update({ last_name: event.target.value })} />
                         </label>
                         <label className="block w-full">
                             <div className="mb-2 text-sm font-medium">Имя</div>
-                            <Input value={user.first_name || ''} className="w-full" required
+                            <Input
+                                value={user.first_name || ''}
+                                className="w-full"
+                                required
                                 onChange={(event) => update({ first_name: event.target.value })} />
                         </label>
                         <label className="block w-full">
                             <div className="mb-2 text-sm font-medium">Отчество</div>
-                            <Input value={user.patronymic || ''} className="w-full"
+                            <Input
+                                value={user.patronymic || ''}
+                                className="w-full"
                                 onChange={(event) => update({ patronymic: event.target.value })} />
                         </label>
                         <label className="block w-full">
                             <div className="mb-2 text-sm font-medium">Дата рождения</div>
-                            <DatePicker className="w-full" value={user.date_of_birth}
-                                onSelect={({ date }) => update({ date_of_birth: (date as Date).toISOString() })} />
+                            <DatePicker
+                                className="w-full"
+                                value={user.date_of_birth}
+                                onSelect={({ date }) => update({ date_of_birth: dateToSQLFormatString(date as Date) })} />
                         </label>
+                        <ProfileEditPosition />
                     </div>
                 </div>
                 <div className="mx-12 border-r border-gray border-opacity-20"></div>
@@ -53,14 +65,20 @@ export function ProfileEdit({ }: IProfileEditProps) {
                     <div className="flex flex-col gap-5">
                         <label className="block w-full">
                             <div className="mb-2 text-sm font-medium">Почта</div>
-                            <Input value={user.email || ''} className="w-full"
+                            <Input
+                                value={user.email || ''}
+                                className="w-full"
+                                type="email"
                                 onChange={(event) => update({ email: event.target.value })} />
                         </label>
-                        {/* <label className="block w-full">
+                        <label className="block w-full">
                             <div className="mb-2 text-sm font-medium">Телеграм</div>
-                            <Input value={user.email || ''} className="w-full"
-                                onChange={(event) => update({ email: event.target.value })} />
-                        </label> */}
+                            <Input
+                                value={user.telegram || ''}
+                                className="w-full"
+                                onChange={(event) => update({ telegram: event.target.value })} />
+                        </label>
+                        {/* <ProfileEditRoles /> */}
                     </div>
                 </div>
                 <div className="mx-12 border-r border-gray border-opacity-20"></div>
@@ -69,7 +87,11 @@ export function ProfileEdit({ }: IProfileEditProps) {
                     <div className="flex flex-col gap-5">
                         <label className="block w-full">
                             <div className="mb-2 text-sm font-medium">Логин</div>
-                            <PhoneInput value={user.phone || ''} className="w-full" required
+                            <PhoneInput
+                                value={user.phone || ''}
+                                className="w-full"
+                                required
+                                readOnly
                                 onChange={(event) => update({ phone: getUnmaskedPhoneValue(event.target.value) })} />
                         </label>
 

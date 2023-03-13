@@ -46,6 +46,8 @@ export function ProfileEditImage({ }: IProfileEditImageProps) {
 
     return (
         <Uploader
+            rounded
+            sign={false}
             multiple={false}
             fileItems={fileItems}
             onChange={changeHandler}
