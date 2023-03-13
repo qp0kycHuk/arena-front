@@ -19,7 +19,7 @@ export function ProfileEditPosition(props: IProfileEditPositionProps) {
 
     return (
         <label className="block w-full">
-            <div className="mb-2 text-sm font-medium">Отчество</div>
+            <div className="mb-2 text-sm font-medium">Должность</div>
             <Select className="w-full"
                 value={user.positions?.[0]?.id || 'default'}
                 onChange={changeHandler}>
