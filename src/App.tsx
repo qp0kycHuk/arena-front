@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import { ToastContainer } from '@lib/Toast';
 import { MainLayout } from '@layouts/MainLayout';
-import { ArticleEditPage, ArticleViewPage, ArticleListPage, Home, Login, Registration, UserViewPage, UserEditPage } from "@pages/index";
+import { ArticleEditPage, ArticleViewPage, ArticleListPage, Home, Login, Registration, UserViewPage, UserEditPage, HandbooksEditPage } from "@pages/index";
 import { AuthLayout } from '@layouts/AuthLayout';
 import { getRoute } from './utils';
 
@@ -21,6 +21,8 @@ function App() {
 
             <Route path={getRoute().users(':id')} element={<UserViewPage />} />
             <Route path={getRoute().users.edit(':id')} element={<UserEditPage />} />
+
+            <Route path='handbooks' element={<HandbooksEditPage />}></Route>
           </Route>
           <Route path='/' element={<AuthLayout />}>
             <Route path='login/' element={<Login />} />

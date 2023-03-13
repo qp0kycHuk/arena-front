@@ -1,31 +1,23 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { EntityId } from '@reduxjs/toolkit';
-import { useCreateTagMutation, useGetTagsQuery, ICreateRequest } from '@store/tag';
 import { Tag } from '@components/Tag';
 import { Button, getUnputClassNames } from '@features/ui';
-import { getErrorMessage } from '@hooks/useErrorMessage';
-import { toast } from '@lib/Toast';
 import { Combobox, Transition } from '@headlessui/react'
 import { CrossIcon, HashIcon } from '@assets/icons/stroke';
 import { ITag } from '@models/Tag';
-import { ArticleEditContext, useArticleEditMainContext, useArticleEditUtilsContext } from './ArticleEdit.Context';
+import {  useArticleEditMainContext, useArticleEditUtilsContext } from './ArticleEdit.Context';
+import { useFetchTags, useTagControl } from '@store/tags/tags.hooks';
+import { ICreateRequest } from '@store/tags/tags.api';
 
 interface IArticleEditTagsProps { }
 
 export function ArticleEditTags({ }: IArticleEditTagsProps) {
     const { article, update } = useArticleEditMainContext()
-    // const [addedTags, setAddedTags] = useState<EntityId[]>(article?.tags?.map((tag) => tag.id) || [])
     const { loadingStart, loadingEnd } = useArticleEditUtilsContext()
     const addedIds = article?.tags?.map((tag) => tag.id) || []
 
-    useEffect(() => {
-        if (addedIds.length === 0) {
-            // setAddedTags(article?.tags?.map((tag) => tag.id) || [])
-        }
-    }, [article])
-
-    const { data: tags } = useGetTagsQuery(null)
-    const [create] = useCreateTagMutation()
+    const tags = useFetchTags()
+    const { createTag } = useTagControl()
     const [name, setName] = useState<string>('')
     const [isOpen, setOpen] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null)
@@ -37,10 +29,7 @@ export function ArticleEditTags({ }: IArticleEditTagsProps) {
     })
 
     function addTag(tag?: ITag) {
-        // if (!id || addedIds?.includes(id)) return
-        // const addedTag = 
         if (!tag) return
-        
         const isTagAdded = addedIds.includes(tag.id)
 
         if (!isTagAdded) {
@@ -51,7 +40,6 @@ export function ArticleEditTags({ }: IArticleEditTagsProps) {
                 ]
             })
         }
-
 
         setOpen(false)
         setName('')
@@ -73,7 +61,6 @@ export function ArticleEditTags({ }: IArticleEditTagsProps) {
             .find((tag) => tag?.name.toLowerCase().trim() === name?.toLowerCase().trim())
 
         if (existingTag) {
-
             return addTag(existingTag)
         }
 
@@ -81,16 +68,10 @@ export function ArticleEditTags({ }: IArticleEditTagsProps) {
         formData.append('name', name.trim())
 
         loadingStart()
-        const result = await create(formData)
+        const createdTag = await createTag(formData)
         loadingEnd()
-        const errorMessage = getErrorMessage((result as IResultWithError)?.error)
 
-        if (errorMessage) {
-            toast.error(errorMessage)
-            return
-        }
-        const newTag = (result as IResultWithData<ITag>).data
-        addTag(newTag)
+        addTag(createdTag)
     }
 
     return (

@@ -1,0 +1,1 @@
+export { HandbooksEditPage } from './pages/HandbooksEditPage'

@@ -2,8 +2,8 @@ import { IPosition } from '@models/Position';
 import { useAppDispatch, useAppSelector } from '../index';
 import { ICreateRequest, IUpdateRequest } from "./positions.api"
 import { createPosition as create, fetchPositionById, fetchPositions, updatePosition as update } from './positions.thunk';
-import { positionsSlice, selectById } from './positions.slice';
-import { useEffect } from 'react';
+import { positionsSlice, selectAll, selectById } from './positions.slice';
+import { useEffect, useMemo } from 'react';
 import { EntityId } from '@reduxjs/toolkit';
 
 export function usePositionControl() {
@@ -41,13 +41,21 @@ export function usePositionControl() {
 
 export const useFetchPositions = () => {
     const positions = useAppSelector(({ positions }) => positions)
+    const items = useAppSelector(selectAll)
     const dispatch = useAppDispatch()
+
+    const result = useMemo(() => {
+        return {
+            ...positions,
+            items
+        }
+    }, [positions, items])
 
     useEffect(() => {
         dispatch(fetchPositions())
     }, [dispatch])
 
-    return positions
+    return result
 }
 
 export const useFetchPositionById = (id: EntityId) => {

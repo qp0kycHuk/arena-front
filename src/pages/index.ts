@@ -11,6 +11,8 @@ export const UserViewPage = lazy(() => import('../features/profile/').then((m) =
 export const UserEditPage = lazy(() => import('../features/profile/').then((m) => ({ default: m.ProfileEditPage })))
 // export const ArticleEditPage = lazy(() => import('../features/articles/').then((m) => ({ default: m.ArticleEditPage })))
 
+export const HandbooksEditPage = lazy(() => import('../features/handbooks/').then((m) => ({ default: m.HandbooksEditPage })))
+
 export const Projects = lazy(() => import('./Projects').then((m) => ({ default: m.Projects })))
 export const Home = lazy(() => import('./Home').then((m) => ({ default: m.Home })))
 
