@@ -92,7 +92,7 @@ export function HandbooksEdit({ initialHandbooks, onSubmit }: IHandbooksEditProp
 
             <div className="flex gap-4 mt-8">
                 <Button type='submit' disabled={loading}>{loading ? <Spiner /> : 'Сохранить'}</Button>
-                <Button variant='light'>Отмена</Button>
+                <Button onClick={() => setHandbooks(initialHandbooks || [])} variant='light'>Отмена</Button>
             </div>
         </form>
     );
