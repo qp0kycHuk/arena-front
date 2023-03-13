@@ -16,6 +16,8 @@ export function UserEditContextProvider({
     user }: IUserEditContextProviderProps
 ) {
     const [editableUser, update] = useEditableEntity<IEditableUser>(user)
+    console.log(editableUser);
+    
     const { loading, loadingStart, loadingEnd } = useLoading()
     const { upsertUser } = useUserControl()
     const navigate = useNavigate();

@@ -21,26 +21,28 @@ export function ProfileView({ user }: IProfileViewProps) {
             <div className="w-[360px] px-8 py-12 border-r border-gray border-opacity-30">
                 <div className="flex items-center">
                     <ProfileViewImage className="mr-3" user={user} />
-                    <div>
-                        <ProfileViewName user={user} />
-
-                    </div>
+                    <ProfileViewName user={user} />
                 </div>
+
+
+
+                {user?.created_at ?
+                    <div className="bg-gray bg-opacity-10 rounded-full px-5 py-2 text-xs text-gray mt-8 w-max max-w-full">
+                        В STDKIT с {new Date(user.created_at).toLocaleDateString()}
+                    </div> : null}
 
                 {user?.date_of_birth ?
                     <div className="flex items-center mt-6 text-sm text-gray">
                         <CakeIcon className="mr-2 text-2xl " />
                         День рождения: {new Date(user.date_of_birth).toLocaleDateString()}
-                    </div> : null
-                }
-                
+                    </div> : null}
+
                 {user?.email ?
                     <div className="flex items-center mt-6 text-sm text-gray">
                         <img src="/img/email.svg" alt="" className="w-6 h-6 mr-2" />
                         {user.email}
-                    </div> : null
-                }
-                
+                    </div> : null}
+
                 {user?.telegram ?
                     <div className="flex items-center mt-2 text-sm text-gray">
                         <img src="/img/telegram.svg" alt="" className="w-6 h-6 mr-2" />
@@ -48,7 +50,7 @@ export function ProfileView({ user }: IProfileViewProps) {
                     </div> : null
                 }
 
-           
+
 
                 <Link to={getRoute().users.edit(user?.id)} className="block mt-4">
                     <Button className="w-full">Редактировать</Button>

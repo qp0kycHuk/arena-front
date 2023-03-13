@@ -17,7 +17,7 @@ export function ProfileViewName({ user, isLoading }: IProfileViewNameProps) {
 
     return (
         <div>
-            <div className="font-semibold">{user?.first_name} {user?.last_name}</div>
+            <div className="font-semibold">{user?.first_name} {user?.last_name}  {user?.patronymic}</div>
             {
                 user?.positions[0]?.name ?
                     <div className="opacity-60">{user?.positions[0]?.name}</div>
