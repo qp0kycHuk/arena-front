@@ -1,4 +1,4 @@
-import { ImageIcon } from "@assets/icons/stroke";
+import { UserIcon } from "@assets/icons/fill";
 import { IUser } from "@models/User";
 
 interface IUserViewImageProps {
@@ -19,7 +19,7 @@ export function UserViewImage({ user, isLoading, className }: IUserViewImageProp
 
     if (!imageSrc) {
         return (<div className={imageClassName + ' flex bg-gray bg-opacity-10 ' + className}>
-            <ImageIcon className="m-auto text-2xl text-gray" />
+            <UserIcon className="m-auto text-2xl text-gray" />
         </div>)
     }
 
