@@ -1,15 +1,15 @@
 import { Navigate, useParams } from "react-router";
-import { ProfileEdit } from "../components/ProfileEdit/ProfileEdit";
+import { UserEdit } from "../components/UserEdit/UserEdit";
 import { useDocumentTitle } from "@hooks/useDocumentTitle";
 import { useFetchUserById } from "@store/users/users.hooks";
-import { UserEditContextProvider } from "../components/ProfileEdit/ProfileEdit.Context";
+import { UserEditContextProvider } from "../components/UserEdit/UserEdit.Context";
 import { PageContent } from "@layouts/PageContent";
 
 
-interface IProfileEditPageProps {
+interface IUserEditPageProps {
 }
 
-export function ProfileEditPage(props: IProfileEditPageProps) {
+export function UserEditPage(props: IUserEditPageProps) {
     const { id } = useParams()
     const user = useFetchUserById(id as string)
     useDocumentTitle('Редактирование')
@@ -20,9 +20,9 @@ export function ProfileEditPage(props: IProfileEditPageProps) {
 
     return (
         <PageContent className="p-8">
-            <div className="text-2xl font-semibold mb-10">Редактирование</div>
+            <div className="mb-10 text-2xl font-semibold">Редактирование</div>
             <UserEditContextProvider user={user}>
-                <ProfileEdit  />
+                <UserEdit  />
             </UserEditContextProvider>
         </PageContent>
     );

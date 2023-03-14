@@ -1,13 +1,13 @@
 import { ImageIcon } from "@assets/icons/stroke";
 import { IUser } from "@models/User";
 
-interface IProfileViewImageProps {
+interface IUserViewImageProps {
     user?: IUser
     isLoading?: boolean
     className?: string
 }
 
-export function ProfileViewImage({ user, isLoading, className }: IProfileViewImageProps) {
+export function UserViewImage({ user, isLoading, className }: IUserViewImageProps) {
     const imageClassName = 'w-[52px] h-[52px] rounded-full overflow-hidden'
     const imageSrc = user?.image_src ? user.image_src : ''
 

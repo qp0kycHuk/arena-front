@@ -1,13 +1,13 @@
 import { IUser } from "@models/User";
 
 
-interface IProfileViewNameProps {
+interface IUserViewNameProps {
     user?: IUser
     isLoading?: boolean
     className?: string
 }
 
-export function ProfileViewName({ user, isLoading }: IProfileViewNameProps) {
+export function UserViewName({ user, isLoading }: IUserViewNameProps) {
     if (!user || isLoading) {
         return <div>
             <div className="w-32 h-3 bg-opacity-50 animate-pulse bg-gray "></div>

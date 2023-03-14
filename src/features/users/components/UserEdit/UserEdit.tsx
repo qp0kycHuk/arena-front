@@ -1,24 +1,24 @@
-import { ProfileEditImage } from "./ProfileEdit.Image";
-import { useUserEditContext } from "./ProfileEdit.Context";
+import { UserEditImage } from "./UserEdit.Image";
+import { useUserEditContext } from "./UserEdit.Context";
 import { Button, DatePicker, Input, Select } from "@features/ui";
 import { PhoneInput } from "@components/PhoneInput";
 import { getUnmaskedPhoneValue } from "@utils/index";
 import { Spiner } from "@components/Spiner";
-import { ProfileEditPosition } from "./ProfileEdit.Position";
-import { ProfileEditRoles } from "./ProfileEdit.Roles";
+import { UserEditPosition } from "./UserEdit.Position";
+import { UserEditRoles } from "./UserEdit.Roles";
 import { dateToSQLFormatString } from "@utils/helpers/dates";
 
 
-interface IProfileEditProps {
+interface IUserEditProps {
 
 }
 
-export function ProfileEdit({ }: IProfileEditProps) {
+export function UserEdit({ }: IUserEditProps) {
     const { user, update, loading, submitHandler } = useUserEditContext()
 
     return (
         <form onSubmit={submitHandler}>
-            <ProfileEditImage />
+            <UserEditImage />
             <div className="my-5"></div>
 
             <div className="flex">
@@ -56,7 +56,7 @@ export function ProfileEdit({ }: IProfileEditProps) {
                                 value={user.date_of_birth}
                                 onSelect={({ date }) => update({ date_of_birth: dateToSQLFormatString(date as Date) })} />
                         </label>
-                        <ProfileEditPosition />
+                        <UserEditPosition />
                     </div>
                 </div>
                 <div className="mx-12 border-r border-gray border-opacity-20"></div>
@@ -78,7 +78,7 @@ export function ProfileEdit({ }: IProfileEditProps) {
                                 className="w-full"
                                 onChange={(event) => update({ telegram: event.target.value })} />
                         </label>
-                        {/* <ProfileEditRoles /> */}
+                        {/* <UserEditRoles /> */}
                     </div>
                 </div>
                 <div className="mx-12 border-r border-gray border-opacity-20"></div>

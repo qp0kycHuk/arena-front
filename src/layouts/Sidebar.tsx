@@ -18,10 +18,12 @@ export function Sidebar(props: ISidebarProps) {
             <div className="mr-auto text-black dark:text-white">Главная</div>
           </Button>
         </Link>
-        <Button className='w-full' variant='text' size='small'>
-          <UsersIcon className='mr-2 text-lg text-gray dark:text-white' />
-          <div className="mr-auto font-normal text-black dark:text-white">Пользователи</div>
-        </Button>
+        <Link to={getRoute().users()}>
+          <Button className='w-full' variant='text' size='small'>
+            <UsersIcon className='mr-2 text-lg text-gray dark:text-white' />
+            <div className="mr-auto font-normal text-black dark:text-white">Пользователи</div>
+          </Button>
+        </Link>
         <Link to={getRoute().articles()}>
           <Button className='w-full' variant='text' size='small'>
             <DocumentIcon className='mr-2 text-lg text-gray dark:text-white' />

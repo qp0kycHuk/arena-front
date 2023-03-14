@@ -4,24 +4,24 @@ import { PageContent } from "@layouts/PageContent";
 import { IUser } from "@models/User";
 import { getRoute } from "@utils/index";
 import { Link } from "react-router-dom";
-import { ProfileViewImage } from "./ProfileView.Image";
-import { ProfileViewName } from "./ProfileView.Name";
+import { UserViewImage } from "./UserView.Image";
+import { UserViewName } from "./UserView.Name";
 import { CakeIcon } from "@assets/icons/stroke";
 
 
-interface IProfileViewProps {
+interface IUserViewProps {
     user?: IUser
 }
 
-export function ProfileView({ user }: IProfileViewProps) {
+export function UserView({ user }: IUserViewProps) {
 
 
     return (
         <PageContent className="flex">
             <div className="w-[360px] px-8 py-12 border-r border-gray border-opacity-30">
                 <div className="flex items-center">
-                    <ProfileViewImage className="mr-3" user={user} />
-                    <ProfileViewName user={user} />
+                    <UserViewImage className="mr-3" user={user} />
+                    <UserViewName user={user} />
                 </div>
 
 

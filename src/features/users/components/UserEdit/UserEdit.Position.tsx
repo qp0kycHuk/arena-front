@@ -1,11 +1,11 @@
 import { Select } from "@features/ui";
-import { useUserEditContext } from "./ProfileEdit.Context";
+import { useUserEditContext } from "./UserEdit.Context";
 import { useFetchPositions } from "@store/positions/positions.hooks";
 import React from "react";
 
-interface IProfileEditPositionProps {
+interface IUserEditPositionProps {
 }
-export function ProfileEditPosition(props: IProfileEditPositionProps) {
+export function UserEditPosition(props: IUserEditPositionProps) {
     const { user, update } = useUserEditContext()
     const positions = useFetchPositions()
 
