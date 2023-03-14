@@ -16,7 +16,7 @@ interface IArticleListProps {
 const SEARCH_QUERY_NAME = 's'
 
 export function ArticleList(props: IArticleListProps) {
-    const { data: articles, loading } = useFetchArticles()
+    const { items: articles, loading } = useFetchArticles()
     let [searchParams, setSearchParams] = useSearchParams();
 
     const searchedArticles = articles.filter((article) => {
@@ -56,7 +56,7 @@ export function ArticleList(props: IArticleListProps) {
                 initialValue={searchParams.get(SEARCH_QUERY_NAME) || ''}
                 className='mb-4' />
 
-            {loading && new Array(10).fill(1).map((_, index) =>
+            {loading && new Array(5).fill(1).map((_, index) =>
                 <div key={index}>
                     <ArticleItemPlacehlder />
                     <div className="border-t border-gray border-opacity-20"></div>

@@ -10,6 +10,7 @@ export const {
     updateThunk: updateArticle,
     createThunk: createArticle,
     fetchByIdThunk: fetchArticleById,
+    removeThunk: removeArticle
 } = createEntitiesThunks<IArticle, ICreateRequest, IUpdateRequest>({
     name: 'articles',
     api: articlesApi

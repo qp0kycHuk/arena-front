@@ -20,6 +20,9 @@ export const usersSlice = createSlice({
     },
     extraReducers(builder) {
         builder
+            .addCase(fetchUsers.pending, usersEntityAdapter.removeAll)
+
+        builder
             .addCase(fetchUsers.fulfilled, usersEntityAdapter.setAll)
             .addCase(fetchUserById.fulfilled, usersEntityAdapter.upsertOne)
             .addCase(createUser.fulfilled, usersEntityAdapter.upsertOne)

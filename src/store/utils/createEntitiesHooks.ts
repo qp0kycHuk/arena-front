@@ -2,6 +2,7 @@ import { RootState } from './../index';
 import { AsyncThunk, EntityId, EntityState } from "@reduxjs/toolkit"
 import { useAppDispatch, useAppSelector } from "../index"
 import { useEffect, useMemo } from "react"
+import { useLoading } from '@hooks/useLoading';
 
 interface IOptions<E, C, U> {
     fetchAllThunk: AsyncThunk<E[], void, {}>
@@ -58,35 +59,51 @@ export function createEntitiesHooks<E, C, U>({
     }
 
     function useFetchEntities() {
+        const { loading, loadingStart, loadingEnd } = useLoading(true)
         const entitiesState = useAppSelector(selectEntitiesSelector)
         const items = useAppSelector(selectAllSelector)
         const dispatch = useAppDispatch()
 
-        const result = useMemo(() => {
-            return {
-                ...entitiesState,
-                items
-            }
-        }, [entitiesState, items])
+        const result = useMemo(() => ({
+            ...entitiesState,
+            items,
+            loading
+        }), [entitiesState, items, loading])
 
         useEffect(() => {
-            dispatch(fetchAllThunk())
+            const load = async () => {
+                loadingStart()
+                await dispatch(fetchAllThunk())
+                loadingEnd()
+            }
+            load()
         }, [dispatch])
 
         return result
     }
 
     function useFetchEntityById(id: EntityId) {
+        const { loading, loadingStart, loadingEnd } = useLoading(true)
         const entity = useAppSelector((state) => selectByIdSelector(state, id))
         const dispatch = useAppDispatch()
 
+        const result = useMemo(() => ({
+            item: entity,
+            loading
+        }), [entity, loading])
+
         useEffect(() => {
-            if (id) {
-                dispatch(fetchByIdThunk(id))
+            const load = async () => {
+                if (id) {
+                    loadingStart()
+                    await dispatch(fetchByIdThunk(id))
+                    loadingEnd()
+                }
             }
+            load()
         }, [id, dispatch])
 
-        return entity
+        return result
     }
 
     return {
