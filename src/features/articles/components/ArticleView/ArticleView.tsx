@@ -9,6 +9,7 @@ import { useFetchArticleById } from '@store/articles/articles.hooks';
 import { EntityId } from '@reduxjs/toolkit';
 import { useDocumentTitle } from '@hooks/useDocumentTitle';
 import { PageContent } from '@layouts/PageContent';
+import { ArticleViewAuthor } from './ArticleView.Author';
 
 interface IArticleViewProps {
     articleId: EntityId
@@ -30,6 +31,7 @@ export function ArticleView({ articleId }: IArticleViewProps) {
             </div>
             <div className='min-w-[266px] w-[266px] py-8 px-6 border-l border-gray border-opacity-30'>
                 <ArticleViewButtons article={article} />
+                <ArticleViewAuthor article={article} className='mt-8' />
                 <div className="my-8">
                     <ArticleViewDates article={article} />
                 </div>
