@@ -17,7 +17,7 @@ export function UserEditContextProvider({
 ) {
     const [editableUser, update] = useEditableEntity<IEditableUser>(user)
     const { loading, loadingStart, loadingEnd } = useLoading()
-    const { upsertUser } = useUserControl()
+    const { upsert: upsertUser } = useUserControl()
     const navigate = useNavigate();
 
     function getFormData(): ICreateRequest {
