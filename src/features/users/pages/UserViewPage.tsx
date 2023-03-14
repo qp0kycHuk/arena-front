@@ -9,14 +9,14 @@ interface IUserViewPageProps {
 
 export function UserViewPage(props: IUserViewPageProps) {
     const { id } = useParams()
-    const user = useFetchUserById(id as string)
+    const { item: user } = useFetchUserById(id as string)
     const userFullName = ((user?.first_name || '') + ' ' + (user?.last_name || '')).trim()
     useDocumentTitle(userFullName || '')
-    
+
     if (!id) {
         return <Navigate to='/' />
     }
-    
+
     return (
         <UserView user={user} />
     );

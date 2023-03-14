@@ -11,7 +11,7 @@ interface IArticleViewAuthorProps {
 
 export function ArticleViewAuthor({ article, isLoading, className }: IArticleViewAuthorProps) {
     const imageClassName = 'w-9 h-9 rounded-full overflow-hidden mr-2'
-    const user = useFetchUserById(article?.user_id as EntityId)
+    const { item: user } = useFetchUserById(article?.user_id as EntityId)
     const imageSrc = user?.image_src ? user.image_src : ''
 
     if (!article || !user || isLoading) {

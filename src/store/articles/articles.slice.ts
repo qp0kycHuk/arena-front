@@ -18,6 +18,9 @@ export const articleSlice = createSlice({
     },
     extraReducers(builder) {
         builder
+            .addCase(fetchArticles.pending, articlesEntityAdapter.removeAll)
+            
+        builder
             .addCase(fetchArticles.fulfilled, articlesEntityAdapter.setAll)
             .addCase(fetchArticleById.fulfilled, articlesEntityAdapter.upsertOne)
             .addCase(createArticle.fulfilled, articlesEntityAdapter.upsertOne)

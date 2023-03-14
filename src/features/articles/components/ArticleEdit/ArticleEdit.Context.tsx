@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useContext,  useMemo } from "react";
+import React, { createContext, useCallback, useContext, useMemo } from "react";
 import { useAuth } from "@store/auth";
 import { useArticleControl } from "@store/articles";
 import { useFetchArticleById } from "@store/articles/articles.hooks";
@@ -29,9 +29,9 @@ export function ArticleEditContextProvider({
     const { user } = useAuth()
     const navigate = useNavigate();
 
-    const { upsertArticle } = useArticleControl()
+    const { upsert: upsertArticle } = useArticleControl()
 
-    const { data: article } = useFetchArticleById(articleId || '')
+    const { item: article } = useFetchArticleById(articleId || '')
     const initialArticle = useMemo(() => {
         return {
             ...article,
