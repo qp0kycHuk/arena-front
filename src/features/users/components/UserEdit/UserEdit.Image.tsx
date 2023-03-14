@@ -1,13 +1,13 @@
 import { Uploader } from "@features/fileUploader";
 import { IUser } from "@models/User";
 import { useMemo } from "react";
-import { useUserEditContext } from "./ProfileEdit.Context";
+import { useUserEditContext } from "./UserEdit.Context";
 import { getFilePreview } from "@utils/index";
 
 
-interface IProfileEditImageProps { }
+interface IUserEditImageProps { }
 
-export function ProfileEditImage({ }: IProfileEditImageProps) {
+export function UserEditImage({ }: IUserEditImageProps) {
     const { user, update } = useUserEditContext()
 
     const fileItems = useMemo(() => user?.image_src ? ([{

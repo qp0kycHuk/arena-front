@@ -1,13 +1,13 @@
 import { Navigate, useParams } from "react-router";
-import { ProfileView } from "../components/ProfileView/ProfileView";
+import { UserView } from "../components/UserView/UserView";
 import { useDocumentTitle } from "@hooks/useDocumentTitle";
 import { useFetchUserById } from "@store/users/users.hooks";
 
 
-interface IProfileViewPageProps {
+interface IUserViewPageProps {
 }
 
-export function ProfileViewPage(props: IProfileViewPageProps) {
+export function UserViewPage(props: IUserViewPageProps) {
     const { id } = useParams()
     const user = useFetchUserById(id as string)
     const userFullName = ((user?.first_name || '') + ' ' + (user?.last_name || '')).trim()
@@ -18,6 +18,6 @@ export function ProfileViewPage(props: IProfileViewPageProps) {
     }
     
     return (
-        <ProfileView user={user} />
+        <UserView user={user} />
     );
 }

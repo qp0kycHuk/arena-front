@@ -1,11 +1,11 @@
 import { Select } from "@features/ui";
-import { useUserEditContext } from "./ProfileEdit.Context";
+import { useUserEditContext } from "./UserEdit.Context";
 import { useFetchRoles } from "@store/roles/roles.hooks";
 import React from "react";
 
-interface IProfileEditRoleProps {
+interface IUserEditRoleProps {
 }
-export function ProfileEditRoles(props: IProfileEditRoleProps) {
+export function UserEditRoles(props: IUserEditRoleProps) {
     const { user, update } = useUserEditContext()
     const roles = useFetchRoles()
 
