@@ -20,7 +20,10 @@ export function ArticleEditEditor({ }: IArticleEditEditorProps) {
     const initialEditorContent = useInitialContent(article?.content, [article?.content]);
 
     const updateHandler = useCallback((props: EditorEvents['update']) => {
-        update({ contentJson: JSON.stringify(props.editor.getJSON()) })
+        update({
+            contentJson: JSON.stringify(props.editor.getJSON()),
+            excerpt: props.editor.getText()
+        })
     }, [update])
 
     const debouncedUpdateHandler = useDebouncedCallback(updateHandler, 800)
