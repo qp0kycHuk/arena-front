@@ -1,7 +1,8 @@
 import Cookies from 'js-cookie'
-import { createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { authApi } from './auth.api'
 import { IUser } from '@models/User'
+import { fetchUserById, updateUser } from '@store/users/users.thunk'
 
 
 interface IAuthState {
@@ -16,7 +17,7 @@ const initialState: IAuthState = {
     isLogedIn: Cookies.get(process.env.REACT_APP_CSRF_COOKIE_NAME as string) ? true : false
 }
 
-function authHandler(state: IAuthState){
+function authHandler(state: IAuthState) {
     state.token = Cookies.get(process.env.REACT_APP_CSRF_COOKIE_NAME as string) || null
     state.isLogedIn = state.token ? true : false
 }
@@ -35,6 +36,18 @@ const slice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
+        const updateCurrentUser = (state: IAuthState, action: PayloadAction<IUser, string>) => {
+            if (action.payload.id === state.user?.id) {
+                state.user = {
+                    ...state.user,
+                    ...action.payload
+                }
+            }
+        }
+        builder
+            .addCase(fetchUserById.fulfilled, updateCurrentUser)
+            .addCase(updateUser.fulfilled, updateCurrentUser)
+
         builder.addMatcher(
             authApi.endpoints.initCsrf.matchFulfilled,
             (state) => {
@@ -42,13 +55,15 @@ const slice = createSlice({
             }
         )
 
-        builder.addMatcher( authApi.endpoints.register.matchFulfilled,authHandler )
-        builder.addMatcher( authApi.endpoints.login.matchFulfilled,authHandler)
-        
+        builder.addMatcher(authApi.endpoints.register.matchFulfilled, authHandler)
+        builder.addMatcher(authApi.endpoints.login.matchFulfilled, authHandler)
+
         builder.addMatcher(authApi.endpoints.login.matchRejected, logoutHandler)
         builder.addMatcher(authApi.endpoints.register.matchRejected, logoutHandler)
         builder.addMatcher(authApi.endpoints.logout.matchFulfilled, logoutHandler)
         builder.addMatcher(authApi.endpoints.user.matchRejected, logoutHandler)
+
+
 
         builder.addMatcher(
             authApi.endpoints.user.matchFulfilled,

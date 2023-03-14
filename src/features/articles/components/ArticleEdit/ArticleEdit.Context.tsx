@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useContext,  useMemo } from "react";
-import { useUserQuery } from "@store/auth";
+import { useAuth } from "@store/auth";
 import { useArticleControl } from "@store/articles";
 import { useFetchArticleById } from "@store/articles/articles.hooks";
 import { ICreateRequest, IUpdateRequest } from "@store/articles/articles.api";
@@ -26,7 +26,7 @@ export function ArticleEditContextProvider({
     children,
     articleId }: IArticleEditContextProviderProps
 ) {
-    const { data: user } = useUserQuery(null)
+    const { user } = useAuth()
     const navigate = useNavigate();
 
     const { upsertArticle } = useArticleControl()

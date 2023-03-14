@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { toast } from '@lib/Toast';
-import { useLogout, useUserQuery } from '@store/auth';
+import { useAuth, useLogout } from '@store/auth';
 import { Spiner } from '@components/Spiner';
 import { Button, Menu, MenuItem } from '@features/ui';
 import { ToDownIcon } from '@assets/icons/stroke';
@@ -13,8 +13,8 @@ import { Link } from 'react-router-dom';
 interface IHeaderUserProps {
 }
 
-export function HeaderUser(props: IHeaderUserProps) {
-    const { data: user } = useUserQuery(null)
+export function HeaderUser(props: IHeaderUserProps) { 
+    const { user } = useAuth()
     const [logout] = useLogout()
     const [loading, setLoading] = useState(false)
 
@@ -29,7 +29,7 @@ export function HeaderUser(props: IHeaderUserProps) {
     }
 
     return (
-        <Menu align='end'  menuButton={
+        <Menu align='end' menuButton={
             <Button variant='text' size='small' className='px-3 ml-4' rounded shadow color='gray'>
                 <ToDownIcon className="text-base" />
                 <div className="w-[22px] h-[22px] flex ml-2 text-white rounded-full bg-gray">
