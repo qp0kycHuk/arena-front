@@ -6,7 +6,9 @@ interface IPrivateOutletProps { }
 
 export function PrivateOutlet(props: IPrivateOutletProps) {
     // initial user data load
-    useUserQuery(null)
+    useUserQuery(null, {
+        refetchOnMountOrArgChange: true
+    })
     const auth = useAuth()
     const location = useLocation();
 
