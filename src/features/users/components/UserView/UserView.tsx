@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { UserViewImage } from "./UserView.Image";
 import { UserViewName } from "./UserView.Name";
 import { CakeIcon } from "@assets/icons/stroke";
+import { useAuth } from "@store/auth";
 
 
 interface IUserViewProps {
@@ -14,7 +15,7 @@ interface IUserViewProps {
 }
 
 export function UserView({ user }: IUserViewProps) {
-
+    const { user: currentUser } = useAuth()
 
     return (
         <PageContent className="flex">
@@ -51,10 +52,12 @@ export function UserView({ user }: IUserViewProps) {
                         </div> : null
                     }
                 </div>
+                {currentUser?.id === user?.id && (
+                    <Link to={getRoute().users.edit(user?.id)} className="block mt-4">
+                        <Button className="w-full">Редактировать</Button>
+                    </Link>
+                )}
 
-                <Link to={getRoute().users.edit(user?.id)} className="block mt-4">
-                    <Button className="w-full">Редактировать</Button>
-                </Link>
             </div>
             <div className="flex-grow p-8">
                 <pre >

@@ -11,7 +11,7 @@ interface IUserEditPageProps {
 
 export function UserEditPage(props: IUserEditPageProps) {
     const { id } = useParams()
-    const user = useFetchUserById(id as string)
+    const { item: user } = useFetchUserById(id as string)
     useDocumentTitle('Редактирование')
 
     if (!id) {
@@ -22,7 +22,7 @@ export function UserEditPage(props: IUserEditPageProps) {
         <PageContent className="p-8">
             <div className="mb-10 text-2xl font-semibold">Редактирование</div>
             <UserEditContextProvider user={user}>
-                <UserEdit  />
+                <UserEdit />
             </UserEditContextProvider>
         </PageContent>
     );
