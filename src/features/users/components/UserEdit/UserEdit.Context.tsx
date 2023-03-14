@@ -6,6 +6,7 @@ import { ICreateRequest, IUpdateRequest } from "@store/users/users.api"
 import { useUserControl } from "@store/users/users.hooks"
 import { useNavigate } from "react-router-dom"
 import { getRoute } from "@utils/index"
+import { dateToSQLFormatString } from "@utils/helpers/dates"
 
 
 export const UserEditContext = createContext<IArticleEditContextValue>({} as IArticleEditContextValue)
@@ -27,7 +28,7 @@ export function UserEditContextProvider({
         formData.append('first_name', data.first_name)
         formData.append('last_name', data.last_name)
         formData.append('patronymic', data.patronymic || '')
-        formData.append('date_of_birth', data.date_of_birth || '')
+        formData.append('date_of_birth', dateToSQLFormatString(new Date(data.date_of_birth || '')))
         formData.append('email', data.email || '')
         formData.append('telegram', data.telegram || '')
 
