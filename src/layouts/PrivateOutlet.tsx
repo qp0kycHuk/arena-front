@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { useAuth } from '@store/auth';
+import { useAuth, useUserQuery } from '@store/auth';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
-interface IPrivateOutletProps {
-}
+interface IPrivateOutletProps { }
 
 export function PrivateOutlet(props: IPrivateOutletProps) {
+    // initial user data load
+    useUserQuery(null)
     const auth = useAuth()
     const location = useLocation();
 
