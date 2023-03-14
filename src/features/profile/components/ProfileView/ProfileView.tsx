@@ -27,7 +27,7 @@ export function ProfileView({ user }: IProfileViewProps) {
 
 
                 {user?.created_at ?
-                    <div className="bg-gray bg-opacity-10 rounded-full px-5 py-2 text-xs text-gray mt-8 w-max max-w-full">
+                    <div className="max-w-full px-5 py-2 mt-8 text-xs rounded-full bg-gray bg-opacity-10 text-gray w-max">
                         В STDKIT с {new Date(user.created_at).toLocaleDateString()}
                     </div> : null}
 
@@ -37,20 +37,20 @@ export function ProfileView({ user }: IProfileViewProps) {
                         День рождения: {new Date(user.date_of_birth).toLocaleDateString()}
                     </div> : null}
 
-                {user?.email ?
-                    <div className="flex items-center mt-6 text-sm text-gray">
-                        <img src="/img/email.svg" alt="" className="w-6 h-6 mr-2" />
-                        {user.email}
-                    </div> : null}
+                <div className="flex flex-col gap-2 mt-6">
+                    {user?.email ?
+                        <div className="flex items-center text-sm text-gray">
+                            <img src="/img/email.svg" alt="" className="w-6 h-6 mr-2" />
+                            {user.email}
+                        </div> : null}
 
-                {user?.telegram ?
-                    <div className="flex items-center mt-2 text-sm text-gray">
-                        <img src="/img/telegram.svg" alt="" className="w-6 h-6 mr-2" />
-                        {user.telegram}
-                    </div> : null
-                }
-
-
+                    {user?.telegram ?
+                        <div className="flex items-center text-sm text-gray">
+                            <img src="/img/telegram.svg" alt="" className="w-6 h-6 mr-2" />
+                            {user.telegram}
+                        </div> : null
+                    }
+                </div>
 
                 <Link to={getRoute().users.edit(user?.id)} className="block mt-4">
                     <Button className="w-full">Редактировать</Button>
