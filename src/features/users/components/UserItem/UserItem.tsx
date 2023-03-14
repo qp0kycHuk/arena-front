@@ -13,7 +13,9 @@ export function UserItem({ user }: IUserItemProps) {
         <Link to={getRoute().users(user.id)}>
             <div className="flex items-center px-4 py-3 -mx-4 rounded-2xl hover:bg-primary hover:bg-opacity-10">
                 <div className="w-[52px] h-[52px] rounded-full overflow-hidden mr-6 bg-gray bg-opacity-10 flex">
-                    {user.image_src ? <img src={user.image_src} alt="" /> :  <UserIcon className="m-auto text-2xl text-gray" />}
+                    {user.image_src ?
+                        <img src={user.image_src} alt="" className="object-cover w-full h-full" /> :
+                        <UserIcon className="m-auto text-2xl text-gray" />}
                 </div>
                 <div className="w-1/4">
                     <div className="font-semibold">{user.last_name} {user.first_name} {user.patronymic}</div>
