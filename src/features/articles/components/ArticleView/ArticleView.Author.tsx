@@ -1,3 +1,4 @@
+import { UserIcon } from "@assets/icons/fill";
 import { ImageIcon } from "@assets/icons/stroke";
 import { IArticle } from "@models/Article";
 import { EntityId } from "@reduxjs/toolkit";
@@ -11,7 +12,7 @@ interface IArticleViewAuthorProps {
 
 export function ArticleViewAuthor({ article, isLoading, className }: IArticleViewAuthorProps) {
     const imageClassName = 'w-9 h-9 rounded-full overflow-hidden mr-2'
-    const { item: user } = useFetchUserById(article?.user_id as EntityId)
+    const { item: user } = useFetchUserById(article?.owner_id as EntityId)
     const imageSrc = user?.image_src ? user.image_src : ''
 
     if (!article || !user || isLoading) {
@@ -34,8 +35,8 @@ export function ArticleViewAuthor({ article, isLoading, className }: IArticleVie
                         <img src={user?.image_src} alt="" className="object-cover w-full h-full" />
                     </div>
                     :
-                    <div className={imageClassName + ' bg-gray bg-opacity-10'}>
-                        <ImageIcon className="m-auto text-2xl text-gray" />
+                    <div className={imageClassName + ' flex bg-gray bg-opacity-10'}>
+                        <UserIcon className="m-auto text-2xl text-gray" />
                     </div>
             }
 

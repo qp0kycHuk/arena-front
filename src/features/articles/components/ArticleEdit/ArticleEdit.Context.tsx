@@ -55,7 +55,9 @@ export function ArticleEditContextProvider({
             throw new Error('user is undefined')
         }
 
-        formData.append('user_id', user.id.toString())
+        if(!editableArticle.id){
+            formData.append('owner_id', user.id.toString())
+        }
 
         if (editableArticle.imageFile) {
             formData.append('image', editableArticle.imageFile)

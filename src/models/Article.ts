@@ -5,7 +5,7 @@ import { ITag } from "./Tag";
 
 export interface IArticle {
     id: EntityId
-    user_id: number
+    owner_id: number
     name: string
     content: string
     excerpt: string
