@@ -8,7 +8,7 @@ interface IArticlesApi {
     fetch(): Promise<IArticle[]>
 }
 
-type CreateParams = 'user_id' | 'content' | 'excerpt' | 'name' | 'image' | 'tags[]' | 'attachment[]'
+type CreateParams = 'owner_id' | 'content' | 'excerpt' | 'name' | 'image' | 'tags[]' | 'attachment[]'
 type UpdateParams = CreateParams | 'id' | 'image_delete'
 export type ICreateRequest = TypedFormData<CreateParams>
 export type IUpdateRequest = TypedFormData<UpdateParams>
