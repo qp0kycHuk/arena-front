@@ -26,20 +26,22 @@ export function ArticleEditContextProvider({
     children,
     articleId }: IArticleEditContextProviderProps
 ) {
-    const { user } = useAuth()
     const navigate = useNavigate();
-
-    const { upsert: upsertArticle } = useArticleControl()
+    const { loading, loadingStart, loadingEnd } = useLoading()
+    const { user } = useAuth()
 
     const { item: article } = useFetchArticleById(articleId || '')
+    const { upsert: upsertArticle } = useArticleControl()
+
     const initialArticle = useMemo(() => {
         return {
             ...article,
             contentJson: article?.content
         }
     }, [article])
+
     const [editableArticle, update] = useEditableEntity<IEditableArticle>(initialArticle)
-    const { loading, loadingStart, loadingEnd } = useLoading()
+ 
 
 
     // create form data from edit component states

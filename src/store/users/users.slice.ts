@@ -1,10 +1,9 @@
 import { IUser } from '@models/User';
-import { toast } from '@lib/Toast';
-import { RootState, useAppDispatch, useAppSelector } from '../index';
-import { EntityId, PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { RootState } from '../index';
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { createUser, fetchUserById, fetchUsers, updateUser } from "./users.thunk";
 import { usersEntityAdapter } from "./users.adapter";
-import { useEffect } from 'react';
+import { asyncThunkErrorHandler } from '@store/utils/asyncThunkErrorHandler';
 
 
 export const usersSlice = createSlice({
@@ -29,16 +28,12 @@ export const usersSlice = createSlice({
             .addCase(updateUser.fulfilled, usersEntityAdapter.upsertOne)
 
         builder
-            .addCase(fetchUsers.rejected, showThunkError)
-            .addCase(fetchUserById.rejected, showThunkError)
-            .addCase(createUser.rejected, showThunkError)
-            .addCase(updateUser.rejected, showThunkError)
+            .addCase(fetchUsers.rejected, asyncThunkErrorHandler)
+            .addCase(fetchUserById.rejected, asyncThunkErrorHandler)
+            .addCase(createUser.rejected, asyncThunkErrorHandler)
+            .addCase(updateUser.rejected, asyncThunkErrorHandler)
     },
 })
-
-function showThunkError(state: any, action: any) {
-    toast.error(action.payload.message)
-}
 
 export const {
     selectEntities,

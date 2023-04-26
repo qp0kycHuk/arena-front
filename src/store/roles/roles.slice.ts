@@ -1,9 +1,9 @@
 import { IRole } from '@models/Role';
-import { toast } from '@lib/Toast';
 import { RootState } from '../index';
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { createRole, fetchRoleById, fetchRoles, updateRole } from "./roles.thunk";
 import { rolesEntityAdapter } from "./roles.adapter";
+import { asyncThunkErrorHandler } from '@store/utils/asyncThunkErrorHandler';
 
 
 export const rolesSlice = createSlice({
@@ -25,16 +25,12 @@ export const rolesSlice = createSlice({
             .addCase(updateRole.fulfilled, rolesEntityAdapter.upsertOne)
 
         builder
-            .addCase(fetchRoles.rejected, showThunkError)
-            .addCase(fetchRoleById.rejected, showThunkError)
-            .addCase(createRole.rejected, showThunkError)
-            .addCase(updateRole.rejected, showThunkError)
+            .addCase(fetchRoles.rejected, asyncThunkErrorHandler)
+            .addCase(fetchRoleById.rejected, asyncThunkErrorHandler)
+            .addCase(createRole.rejected, asyncThunkErrorHandler)
+            .addCase(updateRole.rejected, asyncThunkErrorHandler)
     },
 })
-
-function showThunkError(state: any, action: any) {
-    toast.error(action.payload.message)
-}
 
 export const {
     selectEntities,

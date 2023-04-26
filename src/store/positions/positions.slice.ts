@@ -1,9 +1,9 @@
 import { IPosition } from '@models/Position';
-import { toast } from '@lib/Toast';
 import { RootState } from '../index';
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { createPosition, fetchPositionById, fetchPositions, removePosition, updatePosition } from "./positions.thunk";
 import { positionsEntityAdapter } from "./positions.adapter";
+import { asyncThunkErrorHandler } from '@store/utils/asyncThunkErrorHandler';
 
 
 export const positionsSlice = createSlice({
@@ -26,17 +26,14 @@ export const positionsSlice = createSlice({
             .addCase(removePosition.fulfilled, positionsEntityAdapter.removeOne)
 
         builder
-            .addCase(fetchPositions.rejected, showThunkError)
-            .addCase(fetchPositionById.rejected, showThunkError)
-            .addCase(createPosition.rejected, showThunkError)
-            .addCase(updatePosition.rejected, showThunkError)
-            .addCase(removePosition.rejected, showThunkError)
+            .addCase(fetchPositions.rejected, asyncThunkErrorHandler)
+            .addCase(fetchPositionById.rejected, asyncThunkErrorHandler)
+            .addCase(createPosition.rejected, asyncThunkErrorHandler)
+            .addCase(updatePosition.rejected, asyncThunkErrorHandler)
+            .addCase(removePosition.rejected, asyncThunkErrorHandler)
     },
 })
 
-function showThunkError(state: any, action: any) {
-    toast.error(action.payload.message)
-}
 
 export const {
     selectEntities,

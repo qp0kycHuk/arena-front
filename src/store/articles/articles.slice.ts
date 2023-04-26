@@ -1,9 +1,9 @@
-import { toast } from '@lib/Toast';
-import { IArticle } from './../../models/Article';
+import { IArticle } from '@models/Article';
 import { RootState } from './../index';
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { createArticle, fetchArticleById, fetchArticles, updateArticle } from "./articles.thunk";
 import { articlesEntityAdapter } from "./articles.adapter";
+import { asyncThunkErrorHandler } from '@store/utils/asyncThunkErrorHandler';
 
 export const articleSlice = createSlice({
     name: 'articles',
@@ -27,16 +27,13 @@ export const articleSlice = createSlice({
             .addCase(updateArticle.fulfilled, articlesEntityAdapter.upsertOne)
 
         builder
-            .addCase(fetchArticles.rejected, showThunkError)
-            .addCase(fetchArticleById.rejected, showThunkError)
-            .addCase(createArticle.rejected, showThunkError)
-            .addCase(updateArticle.rejected, showThunkError)
+            .addCase(fetchArticles.rejected, asyncThunkErrorHandler)
+            .addCase(fetchArticleById.rejected, asyncThunkErrorHandler)
+            .addCase(createArticle.rejected, asyncThunkErrorHandler)
+            .addCase(updateArticle.rejected, asyncThunkErrorHandler)
     },
 })
 
-function showThunkError(state: any, action: any) {
-    toast.error(action.payload.message)
-}
 
 export const {
     selectEntities,
