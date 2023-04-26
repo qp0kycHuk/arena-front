@@ -43,7 +43,7 @@ export function ArticleEditImages({ }: IArticleEditImagesProps) {
         })
 
         update({
-            content: JSON.stringify(filteredContent),
+            content: filteredContent,
             contentJson: JSON.stringify(filteredContent),
             files: article?.files?.filter((item) => item.id !== fileItem.id)
         })

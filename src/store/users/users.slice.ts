@@ -1,11 +1,9 @@
 import { IUser } from '@models/User';
-import { toast } from '@lib/Toast';
-import { RootState, useAppDispatch, useAppSelector } from '../index';
-import { EntityId, PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { RootState } from '../index';
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { createUser, fetchUserById, fetchUsers, updateUser } from "./users.thunk";
 import { usersEntityAdapter } from "./users.adapter";
-import { useEffect } from 'react';
-import { thunkErrorHandler } from '@store/utils/thunkErrorHandler';
+import { asyncThunkErrorHandler } from '@store/utils/asyncThunkErrorHandler';
 
 
 export const usersSlice = createSlice({
@@ -30,10 +28,10 @@ export const usersSlice = createSlice({
             .addCase(updateUser.fulfilled, usersEntityAdapter.upsertOne)
 
         builder
-            .addCase(fetchUsers.rejected, thunkErrorHandler)
-            .addCase(fetchUserById.rejected, thunkErrorHandler)
-            .addCase(createUser.rejected, thunkErrorHandler)
-            .addCase(updateUser.rejected, thunkErrorHandler)
+            .addCase(fetchUsers.rejected, asyncThunkErrorHandler)
+            .addCase(fetchUserById.rejected, asyncThunkErrorHandler)
+            .addCase(createUser.rejected, asyncThunkErrorHandler)
+            .addCase(updateUser.rejected, asyncThunkErrorHandler)
     },
 })
 

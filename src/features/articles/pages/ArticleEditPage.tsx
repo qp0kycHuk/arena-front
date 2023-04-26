@@ -19,7 +19,7 @@ export function ArticleEditPage(props: IArticleEditPageProps) {
                 Назад
             </Button>
             <ArticleEditContextProvider articleId={id}>
-                <ArticleEdit articleId={id?.toString()} />
+                <ArticleEdit articleId={id} />
             </ArticleEditContextProvider>
         </PageContent>
     );

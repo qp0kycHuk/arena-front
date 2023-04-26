@@ -63,8 +63,6 @@ const slice = createSlice({
         builder.addMatcher(authApi.endpoints.logout.matchFulfilled, logoutHandler)
         builder.addMatcher(authApi.endpoints.user.matchRejected, logoutHandler)
 
-
-
         builder.addMatcher(
             authApi.endpoints.user.matchFulfilled,
             (state, { payload }) => {
