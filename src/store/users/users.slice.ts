@@ -5,6 +5,7 @@ import { EntityId, PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { createUser, fetchUserById, fetchUsers, updateUser } from "./users.thunk";
 import { usersEntityAdapter } from "./users.adapter";
 import { useEffect } from 'react';
+import { thunkErrorHandler } from '@store/utils/thunkErrorHandler';
 
 
 export const usersSlice = createSlice({
@@ -29,16 +30,12 @@ export const usersSlice = createSlice({
             .addCase(updateUser.fulfilled, usersEntityAdapter.upsertOne)
 
         builder
-            .addCase(fetchUsers.rejected, showThunkError)
-            .addCase(fetchUserById.rejected, showThunkError)
-            .addCase(createUser.rejected, showThunkError)
-            .addCase(updateUser.rejected, showThunkError)
+            .addCase(fetchUsers.rejected, thunkErrorHandler)
+            .addCase(fetchUserById.rejected, thunkErrorHandler)
+            .addCase(createUser.rejected, thunkErrorHandler)
+            .addCase(updateUser.rejected, thunkErrorHandler)
     },
 })
-
-function showThunkError(state: any, action: any) {
-    toast.error(action.payload.message)
-}
 
 export const {
     selectEntities,
