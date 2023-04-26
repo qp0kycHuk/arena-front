@@ -9,8 +9,6 @@ interface IUserItemProps {
 }
 
 export function UserItem({ user }: IUserItemProps) {
-    console.log(user);
-    
     return (
         <Link to={getRoute().users(user.id)}>
             <div className="flex items-center px-4 py-3 -mx-4 rounded-2xl hover:bg-primary hover:bg-opacity-10">

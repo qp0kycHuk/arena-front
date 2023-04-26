@@ -1,7 +1,7 @@
 import React, { createContext, useCallback, useContext, useMemo } from "react";
 import { useAuth } from "@store/auth";
 import { ICreateRequest, IUpdateRequest } from "@services/articles/articles.api";
-import { IUploadRequest, filesApi } from "@store/files/files.api";
+import { IUploadRequest, filesApi } from "@services/files/files.api";
 import { editorContentUpdate } from "@features/editor/hooks/useEditor";
 import { useEditableEntity } from "@hooks/useEditableEntity";
 import { useLoading } from "@hooks/useLoading";

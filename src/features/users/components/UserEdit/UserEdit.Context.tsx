@@ -2,11 +2,12 @@ import { createContext, useContext, FormEvent } from "react"
 import { useEditableEntity } from "@hooks/useEditableEntity"
 import { useLoading } from "@hooks/useLoading"
 import { IUser } from "@models/User"
-import { ICreateRequest, IUpdateRequest } from "@store/users/users.api"
-import { useUserControl } from "@store/users/users.hooks"
+import { ICreateRequest, IUpdateRequest } from "@services/users/users.api"
+import { useUserControl } from "@services/users/users.hooks"
 import { useNavigate } from "react-router-dom"
 import { getRoute } from "@utils/index"
 import { dateToSQLFormatString } from "@utils/helpers/dates"
+import { EMPTY_OBJECT } from "@utils/const"
 
 
 export const UserEditContext = createContext<IArticleEditContextValue>({} as IArticleEditContextValue)
@@ -16,7 +17,7 @@ export function UserEditContextProvider({
     children,
     user }: IUserEditContextProviderProps
 ) {
-    const [editableUser, update] = useEditableEntity<IEditableUser>(user)
+    const [editableUser, update] = useEditableEntity<IEditableUser>(user || EMPTY_OBJECT)
     const { loading, loadingStart, loadingEnd } = useLoading()
     const { upsert: upsertUser } = useUserControl()
     const navigate = useNavigate();
@@ -78,7 +79,7 @@ interface IUserEditContextProviderProps extends React.PropsWithChildren {
     user?: IUser
 }
 
-interface IEditableUser extends IUser {
+interface IEditableUser extends Partial<IUser> {
     imageFile?: File
     image_delete?: boolean
 }

@@ -1,9 +1,9 @@
 import { Navigate, useParams } from "react-router";
 import { UserEdit } from "../components/UserEdit/UserEdit";
 import { useDocumentTitle } from "@hooks/useDocumentTitle";
-import { useFetchUserById } from "@store/users/users.hooks";
 import { UserEditContextProvider } from "../components/UserEdit/UserEdit.Context";
 import { PageContent } from "@layouts/PageContent";
+import { useFetchUserById } from "@services/users/users.hooks";
 
 
 interface IUserEditPageProps {

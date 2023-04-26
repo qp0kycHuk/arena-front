@@ -6,9 +6,11 @@ import { AxiosError } from "axios";
 
 interface IOptions<E, C, U> {
     api: IEntitiesApiCreator<E, C, U>
+    onCreate?(item: E): any
+    onUpdate?(item: E): any
 }
 
-export function createHooks<E, C, U>({ api }: IOptions<E, C, U>) {
+export function createHooks<E, C, U>({ api, onCreate, onUpdate }: IOptions<E, C, U>) {
 
     function useFetchEntities() {
         const { loading, loadingStart, loadingEnd } = useLoading(true)
@@ -94,11 +96,13 @@ export function createHooks<E, C, U>({ api }: IOptions<E, C, U>) {
 
         async function update(formData: U) {
             const response = await api().update(formData)
+            onUpdate?.(response.data.item)
             return response.data.item
         }
 
         async function create(formData: C) {
             const response = await api().create(formData)
+            onCreate?.(response.data.item)
             return response.data.item
         }
 
