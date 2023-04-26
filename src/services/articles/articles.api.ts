@@ -2,7 +2,7 @@ import { EntityId } from '@reduxjs/toolkit';
 import { IArticle } from "@models/Article";
 import axios, { AxiosResponse } from "axios";
 import Cookies from "js-cookie";
-import { createEntitiesApi } from '@store/utils/createEntitiesApi';
+import { createEntitiesApi } from '@services/utils/createEntitiesApi';
 
 interface IArticlesApi {
     fetch(): Promise<IArticle[]>

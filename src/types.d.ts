@@ -63,3 +63,8 @@ interface IFileItem {
   file?: File
   extention?: IExtention
 }
+
+interface IErrorData {
+  message: string
+  errors: Record<string, string[]>
+}

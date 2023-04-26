@@ -2,11 +2,15 @@ import { EntityId } from "@reduxjs/toolkit"
 import { createRootApi } from "./createRootApi";
 import { AxiosResponse } from "axios";
 
+// E - Entity type
+// C - Create FormData type
+// U - Update FormData type
+
 export interface IEntitiesApi<E, C, U> {
     create: (formData: C) => Promise<AxiosResponse<IItemResponse<E>, any>>;
     update: (formData: U) => Promise<AxiosResponse<IItemResponse<E>, any>>;
     fetch: () => Promise<AxiosResponse<IListResponse<E>, any>>;
-    fetchById: (id: EntityId) => Promise<AxiosResponse<any, any>>;
+    fetchById: (id: EntityId) => Promise<AxiosResponse<IItemResponse<E>, any>>;
     remove: (id: EntityId) => Promise<AxiosResponse<any, any>>;
 }
 
@@ -17,7 +21,6 @@ interface IConfig {
 }
 
 export function createEntitiesApi<E, C, U>({
-
     url,
 }: IConfig
 ): IEntitiesApiCreator<E, C, U> {
