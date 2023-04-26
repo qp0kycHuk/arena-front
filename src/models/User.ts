@@ -20,7 +20,7 @@ export interface IUser {
     social: null
     gender: null
     level: null
-    role: null
+    role: string
     created_at: Date
     updated_at: Date
     deleted_at: Date

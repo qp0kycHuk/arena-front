@@ -9,6 +9,8 @@ interface IUserItemProps {
 }
 
 export function UserItem({ user }: IUserItemProps) {
+    console.log(user);
+    
     return (
         <Link to={getRoute().users(user.id)}>
             <div className="flex items-center px-4 py-3 -mx-4 rounded-2xl hover:bg-primary hover:bg-opacity-10">
@@ -24,7 +26,7 @@ export function UserItem({ user }: IUserItemProps) {
                     <div className="text-sm opacity-60">{user.positions[0]?.name}</div>
                 </div>
                 <div className="w-1/6">
-                    <div className="text-sm">{user.roles[0]?.name}</div>
+                    <div className="text-sm">{user.role}</div>
                 </div>
             </div>
         </Link>
