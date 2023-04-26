@@ -1,9 +1,9 @@
-import { ITag } from '@models/Tag';
-import { toast } from '@lib/Toast';
+import type { ITag } from '@models/Tag';
 import { RootState } from '../index';
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { createTag, fetchTagById, fetchTags, removeTag, updateTag } from "./tags.thunk";
 import { tagsEntityAdapter } from "./tags.adapter";
+import { asyncThunkErrorHandler } from '@store/utils/asyncThunkErrorHandler';
 
 
 export const tagsSlice = createSlice({
@@ -26,17 +26,13 @@ export const tagsSlice = createSlice({
             .addCase(removeTag.fulfilled, tagsEntityAdapter.removeOne)
 
         builder
-            .addCase(fetchTags.rejected, showThunkError)
-            .addCase(fetchTagById.rejected, showThunkError)
-            .addCase(createTag.rejected, showThunkError)
-            .addCase(updateTag.rejected, showThunkError)
-            .addCase(removeTag.rejected, showThunkError)
+            .addCase(fetchTags.rejected, asyncThunkErrorHandler)
+            .addCase(fetchTagById.rejected, asyncThunkErrorHandler)
+            .addCase(createTag.rejected, asyncThunkErrorHandler)
+            .addCase(updateTag.rejected, asyncThunkErrorHandler)
+            .addCase(removeTag.rejected, asyncThunkErrorHandler)
     },
 })
-
-function showThunkError(state: any, action: any) {
-    toast.error(action.payload.message)
-}
 
 export const {
     selectEntities,
