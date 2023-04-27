@@ -1,4 +1,3 @@
-
 import { IUser } from '@models/User';
 import { IUpdateRequest, ICreateRequest, usersApi } from './users.api';
 import { createEntitiesThunks } from '@store/utils/createEntitiesThunks';

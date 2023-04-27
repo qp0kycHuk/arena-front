@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import { ToastContainer } from '@lib/Toast';
 import { MainLayout } from '@layouts/MainLayout';
-import { ArticleEditPage, ArticleViewPage, ArticleListPage, Home, Login, Registration, UserViewPage, UserEditPage, HandbooksEditPage, UserListPage, Projects, NotFoundPage } from "@pages/index";
+import { ArticleEditPage, ArticleViewPage, Home, Login, Registration, UserViewPage, UserEditPage, HandbooksEditPage, UserListPage, Projects, NotFoundPage } from "@pages/index";
 import { AuthLayout } from '@layouts/AuthLayout';
 import { getRoute } from './utils';
 

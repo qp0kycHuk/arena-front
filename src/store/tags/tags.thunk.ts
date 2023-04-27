@@ -1,7 +1,4 @@
-
 import { ITag } from '@models/Tag';
-import { EntityId, createAsyncThunk } from '@reduxjs/toolkit';
-import { AxiosError } from 'axios';
 import { IUpdateRequest, ICreateRequest, tagsApi } from './tags.api';
 import { createEntitiesThunks } from '@store/utils/createEntitiesThunks';
 

@@ -1,4 +1,3 @@
-
 import { IRole } from '@models/Role';
 import { IUpdateRequest, ICreateRequest, rolesApi } from './roles.api';
 import { createEntitiesThunks } from '@store/utils/createEntitiesThunks';

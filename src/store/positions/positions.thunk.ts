@@ -1,7 +1,4 @@
-
 import { IPosition } from '@models/Position';
-import { EntityId, createAsyncThunk } from '@reduxjs/toolkit';
-import { AxiosError } from 'axios';
 import { IUpdateRequest, ICreateRequest, positionsApi } from './positions.api';
 import { createEntitiesThunks } from '@store/utils/createEntitiesThunks';
 
