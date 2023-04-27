@@ -1,4 +1,5 @@
 import { useDocumentTitle } from "@hooks/useDocumentTitle";
+import { PageContent } from "@layouts/PageContent";
 
 interface IHomeProps { }
 
@@ -6,7 +7,7 @@ export function Home(props: IHomeProps) {
     useDocumentTitle('Главная')
 
 
-    return (<div className="relative flex-grow p-8 bg-white rounded-2xl dark:bg-opacity-5 dark:text-white">
+    return (<PageContent className='p-8'>
         <div className="text-3xl font-semibold">Home page</div>
-    </div>);
+    </PageContent>);
 };

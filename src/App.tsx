@@ -3,18 +3,19 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import { ToastContainer } from '@lib/Toast';
 import { MainLayout } from '@layouts/MainLayout';
-import { ArticleEditPage, ArticleViewPage, ArticleListPage, Home, Login, Registration, UserViewPage, UserEditPage, HandbooksEditPage, UserListPage } from "@pages/index";
+import { ArticleEditPage, ArticleViewPage, ArticleListPage, Home, Login, Registration, UserViewPage, UserEditPage, HandbooksEditPage, UserListPage, Projects, NotFoundPage } from "@pages/index";
 import { AuthLayout } from '@layouts/AuthLayout';
 import { getRoute } from './utils';
 
 function App() {
   return (
     <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
+      <BrowserRouter >
+        <Routes >
           <Route path='/' element={<MainLayout />}>
+            <Route path='*' element={<NotFoundPage />} />
             <Route index element={<Home />} />
-            <Route path={getRoute().articles()} element={<ArticleListPage />} />
+            <Route path={getRoute().articles()} element={<Projects />} />
             <Route path={getRoute().articles(':id')} element={<ArticleViewPage />} />
             <Route path={getRoute().articles.edit(':id')} element={<ArticleEditPage />} />
             <Route path={getRoute().articles.create()} element={<ArticleEditPage />} />

@@ -1,4 +1,4 @@
-import { useFetchUsers } from "@services/users/users.hooks";
+import { useFetchUsers } from "@store/users/users.hooks";
 import { UserItem, UserItemPlaceholder } from "../UserItem/UserItem";
 
 

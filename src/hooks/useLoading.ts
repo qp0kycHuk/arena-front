@@ -1,13 +1,12 @@
 import { useCallback, useState } from "react"
+import { useToggle } from "./useToggle"
 
 export function useLoading(initial: boolean = false) {
-    const [loading, setLoading] = useState(initial)
-    const loadingStart = useCallback(() => setLoading(true), [])
-    const loadingEnd = useCallback(() => setLoading(false), [])
+    const [loading, toggle, on, off] = useToggle(initial)
 
     return {
         loading,
-        loadingStart,
-        loadingEnd,
+        loadingStart: on,
+        loadingEnd: off,
     }
 }
