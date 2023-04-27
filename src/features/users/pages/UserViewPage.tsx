@@ -1,7 +1,7 @@
 import { Navigate, useParams } from "react-router";
 import { UserView } from "../components/UserView/UserView";
 import { useDocumentTitle } from "@hooks/useDocumentTitle";
-import { useFetchUserById } from "@store/users/users.hooks";
+import { useFetchUserById } from "@services/users/users.hooks";
 
 
 interface IUserViewPageProps {

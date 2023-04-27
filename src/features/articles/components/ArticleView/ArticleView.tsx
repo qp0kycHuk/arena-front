@@ -5,11 +5,11 @@ import { ArticleViewDates } from './ArticleView.Dates';
 import { ArticleViewButtons } from './ArticleView.Buttons';
 import { ArticleViewImages } from './ArticleView.Images';
 import { Tag } from '@components/Tag';
-import { useFetchArticleById } from '@store/articles/articles.hooks';
 import { EntityId } from '@reduxjs/toolkit';
 import { useDocumentTitle } from '@hooks/useDocumentTitle';
 import { PageContent } from '@layouts/PageContent';
 import { ArticleViewAuthor } from './ArticleView.Author';
+import { useFetchArticleById } from '@services/articles/articles.hooks';
 
 interface IArticleViewProps {
     articleId: EntityId

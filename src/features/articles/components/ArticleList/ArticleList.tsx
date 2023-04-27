@@ -4,12 +4,9 @@ import { SettingsIcon, FoldersIcon, FileTextIcon } from '@assets/icons/stroke';
 import { Button, Menu } from '@features/ui';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Search } from '@components/Search/Search';
-import { useAppDispatch, useAppSelector } from '@store/index';
-import { fetchArticles } from '@store/articles/articles.thunk';
-import { articlesEntityAdapter } from '@store/articles/articles.adapter';
-import { useFetchArticles } from '@store/articles/articles.hooks';
 import { useDebouncedCallback } from 'use-debounce';
 import { getRoute } from '@utils/index';
+import { useFetchArticles } from '@services/articles/articles.hooks';
 
 interface IArticleListProps {
 }
@@ -19,18 +16,12 @@ export function ArticleList(props: IArticleListProps) {
     const { items: articles, loading } = useFetchArticles()
     let [searchParams, setSearchParams] = useSearchParams();
 
-    const searchedArticles = articles.filter((article) => {
-        const searchString = searchParams.get(SEARCH_QUERY_NAME)
-        if (searchString) {
-            return article.name.toLowerCase().includes(searchString.toLowerCase())
-        }
-        return true
-    })
+
 
     const changeHandler: React.ChangeEventHandler<HTMLInputElement> = (event) => {
         setSearchParams({ [SEARCH_QUERY_NAME]: event.target.value })
-
     }
+
     const debouncedChangeHandler = useDebouncedCallback(changeHandler, 800)
 
     return (
@@ -62,8 +53,8 @@ export function ArticleList(props: IArticleListProps) {
                     <div className="border-t border-gray border-opacity-20"></div>
                 </div>
             )}
-            {searchedArticles?.length <= 0 && !loading && 'Здесь ничего нет'}
-            {searchedArticles?.map((article, index) =>
+            {articles?.length <= 0 && !loading && 'Здесь ничего нет'}
+            {articles?.map((article, index) =>
                 <div key={article.id}>
                     <Link className='peer' to={getRoute().articles(article.id)}>
                         <ArticleItem article={article} />

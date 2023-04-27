@@ -1,9 +1,7 @@
 import React, { createContext, useCallback, useContext, useMemo } from "react";
 import { useAuth } from "@store/auth";
-import { useArticleControl } from "@store/articles";
-import { useFetchArticleById } from "@store/articles/articles.hooks";
-import { ICreateRequest, IUpdateRequest } from "@store/articles/articles.api";
-import { IUploadRequest, filesApi } from "@store/files/files.api";
+import { ICreateRequest, IUpdateRequest } from "@services/articles/articles.api";
+import { IUploadRequest, filesApi } from "@services/files/files.api";
 import { editorContentUpdate } from "@features/editor/hooks/useEditor";
 import { useEditableEntity } from "@hooks/useEditableEntity";
 import { useLoading } from "@hooks/useLoading";
@@ -12,19 +10,16 @@ import { toast } from "@lib/Toast";
 import { useNavigate } from "react-router-dom";
 import { IFile } from "@models/File";
 import { IArticle } from "@models/Article";
+import { useArticleControl, useFetchArticleById } from "@services/articles/articles.hooks";
 
-
-
-export const ArticleEditContext = createContext<IArticleEditContextValue>({} as IArticleEditContextValue)
 export const ArticleEditMainContext = createContext<IArticleMainContextValue>({} as IArticleMainContextValue)
 export const ArticleEditUtilsContext = createContext<IArticleUtilsContextValue>({} as IArticleUtilsContextValue)
 
 export const useArticleEditMainContext = () => useContext(ArticleEditMainContext)
 export const useArticleEditUtilsContext = () => useContext(ArticleEditUtilsContext)
 
-export function ArticleEditContextProvider({
-    children,
-    articleId }: IArticleEditContextProviderProps
+export function ArticleEditContextProvider(
+    { children, articleId }: IArticleEditContextProviderProps
 ) {
     const navigate = useNavigate();
     const { loading, loadingStart, loadingEnd } = useLoading()
@@ -57,7 +52,7 @@ export function ArticleEditContextProvider({
             throw new Error('user is undefined')
         }
 
-        if(!editableArticle.id){
+        if (!editableArticle.id) {
             formData.append('owner_id', user.id.toString())
         }
 
@@ -163,11 +158,6 @@ interface IArticleUtilsContextValue {
     loadingEnd(): void
     getFormData(): ICreateRequest
     submitHandler(event: React.FormEvent<HTMLFormElement>): Promise<void>
-}
-
-interface IArticleEditContextValue {
-    uploadImages: UploadImagesFunc
-    removeImage(fileItem: IFileItem): void
 }
 
 interface IArticleEditContextProviderProps extends React.PropsWithChildren {

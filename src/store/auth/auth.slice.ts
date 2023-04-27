@@ -1,9 +1,7 @@
 import Cookies from 'js-cookie'
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { ActionCreator, PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { authApi } from './auth.api'
 import { IUser } from '@models/User'
-import { fetchUserById, updateUser } from '@store/users/users.thunk'
-
 
 interface IAuthState {
     user: IUser | null
@@ -34,7 +32,11 @@ function logoutHandler(state: IAuthState) {
 const slice = createSlice({
     name: 'auth',
     initialState,
-    reducers: {},
+    reducers: {
+        updateAuth(state, action: PayloadAction<IUser>) {
+            state.user = action.payload
+        }
+    },
     extraReducers: (builder) => {
         const updateCurrentUser = (state: IAuthState, action: PayloadAction<IUser, string>) => {
             if (action.payload.id === state.user?.id) {
@@ -44,9 +46,6 @@ const slice = createSlice({
                 }
             }
         }
-        builder
-            .addCase(fetchUserById.fulfilled, updateCurrentUser)
-            .addCase(updateUser.fulfilled, updateCurrentUser)
 
         builder.addMatcher(
             authApi.endpoints.initCsrf.matchFulfilled,
@@ -71,6 +70,8 @@ const slice = createSlice({
         )
     },
 })
+
+export const { updateAuth } = slice.actions
 
 export default slice.reducer
 

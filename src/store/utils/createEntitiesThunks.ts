@@ -1,15 +1,10 @@
 import { EntityId, createAsyncThunk } from "@reduxjs/toolkit"
 import { AxiosError } from "axios"
-import { IEntitiesApiCreator } from "./createEntitiesApi"
+import { IEntitiesApiCreator } from "../../services/utils/createEntitiesApi"
 
 interface IConfig<E, C, U> {
     api: IEntitiesApiCreator<E, C, U>
     name: string
-}
-
-interface IErrorData {
-    message: string
-    errors: Record<string, string[]>
 }
 
 export function createEntitiesThunks<E, C, U>({
