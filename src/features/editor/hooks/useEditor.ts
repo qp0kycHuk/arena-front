@@ -72,8 +72,6 @@ const LowlightCustom = Node.create({
 
 const CustomImage = Image.extend({
     addAttributes() {
-        console.log('addAttributes');
-
         return {
             ...this.parent?.(),
             id: {
