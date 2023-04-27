@@ -19,6 +19,8 @@ export function createHooks<E, C, U>({ api, onCreate, onUpdate }: IOptions<E, C,
 
         const load = async () => {
             loadingStart()
+            setError(undefined)
+            setItems([])
             try {
                 const response = await api().fetch()
                 setItems(response.data.items)
@@ -55,10 +57,12 @@ export function createHooks<E, C, U>({ api, onCreate, onUpdate }: IOptions<E, C,
         const [error, setError] = useState<IErrorData>()
         const [item, setItem] = useState<E>()
 
-
         const load = async () => {
             if (id) {
                 loadingStart()
+                setError(undefined)
+                setItem(undefined)
+                
                 try {
                     const response = await api().fetchById(id)
                     setItem(response.data.item)
