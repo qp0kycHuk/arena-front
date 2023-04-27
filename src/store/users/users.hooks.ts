@@ -1,10 +1,7 @@
 import { IUser } from '@models/User';
-import { useAppDispatch, useAppSelector } from './../index';
 import { ICreateRequest, IUpdateRequest } from "./users.api"
 import { createUser, fetchUserById, fetchUsers, updateUser, removeUser } from './users.thunk';
-import { usersSlice, selectAll, selectById } from './users.slice';
-import { useEffect } from 'react';
-import { EntityId } from '@reduxjs/toolkit';
+import { selectAll, selectById } from './users.slice';
 import { createEntitiesHooks } from '@store/utils/createEntitiesHooks';
 
 export const {

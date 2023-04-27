@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { toast } from '@lib/Toast';
 import { useAuth, useLogout } from '@store/auth';
 import { Spiner } from '@components/Spiner';
-import { Button, Menu, MenuItem } from '@features/ui';
+import { Button, Menu } from '@features/ui';
 import { ToDownIcon } from '@assets/icons/stroke';
 import { UserIcon } from '@assets/icons/fill';
 import { getMaskedPhoneValue, getRoute } from '@utils/index';
@@ -41,7 +41,7 @@ export function HeaderUser(props: IHeaderUserProps) {
             </Button>
         }>
             <div className="w-48 p-2">
-                <Link to={getRoute().users(user?.id)} className="block mb-1 text-xs font-semibold text-gray opacity-90">
+                <Link to={getRoute().users(user?.id)} className="block mb-1 text-xs font-semibold text-gray dark:text-gray-300 opacity-90">
                     {user?.first_name} {user?.last_name}
                 </Link>
                 <div className="mb-4 text-sm">{getMaskedPhoneValue(user?.phone)}</div>

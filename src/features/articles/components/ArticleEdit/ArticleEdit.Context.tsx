@@ -105,7 +105,7 @@ export function ArticleEditContextProvider(
 
             const updatedEditorContent = editorContentUpdate(JSON.parse(editableArticle.contentJson || '{}'), (item) => {
                 if (item.type === 'image') {
-                    const uploadedFileIndex = uploadedFileItems.findIndex((fileItem) => fileItem.src == item.attrs.src)
+                    const uploadedFileIndex = uploadedFileItems.findIndex((fileItem) => fileItem.src === item.attrs.src)
 
                     if (uploadedFileIndex >= 0) {
                         return {

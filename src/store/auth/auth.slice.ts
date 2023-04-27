@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie'
-import { ActionCreator, PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { authApi } from './auth.api'
 import { IUser } from '@models/User'
 import { fetchUserById, updateUser } from '@store/users/users.thunk'

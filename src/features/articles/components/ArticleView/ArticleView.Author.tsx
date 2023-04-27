@@ -1,5 +1,4 @@
 import { UserIcon } from "@assets/icons/fill";
-import { ImageIcon } from "@assets/icons/stroke";
 import { IArticle } from "@models/Article";
 import { EntityId } from "@reduxjs/toolkit";
 import { useFetchUserById } from "@store/users/users.hooks";
@@ -36,12 +35,12 @@ export function ArticleViewAuthor({ article, isLoading, className }: IArticleVie
                     </div>
                     :
                     <div className={imageClassName + ' flex bg-gray bg-opacity-10'}>
-                        <UserIcon className="m-auto text-2xl text-gray" />
+                        <UserIcon className="m-auto text-2xl text-gray dark:text-gray-300" />
                     </div>
             }
 
             <div>
-                <div className="text-xs text-gray">Автор:</div>
+                <div className="text-xs text-gray dark:text-gray-300">Автор:</div>
                 <div className="text-sm font-semibold">{user.last_name} {user.first_name}</div>
             </div>
         </div>

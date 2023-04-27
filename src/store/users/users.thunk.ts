@@ -1,7 +1,5 @@
 
-import { IUser } from '../../models/User';
-import { EntityId, createAsyncThunk } from '@reduxjs/toolkit';
-import { AxiosError } from 'axios';
+import { IUser } from '@models/User';
 import { IUpdateRequest, ICreateRequest, usersApi } from './users.api';
 import { createEntitiesThunks } from '@store/utils/createEntitiesThunks';
 
