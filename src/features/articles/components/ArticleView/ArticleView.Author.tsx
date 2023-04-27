@@ -2,7 +2,7 @@ import { UserIcon } from "@assets/icons/fill";
 import { ImageIcon } from "@assets/icons/stroke";
 import { IArticle } from "@models/Article";
 import { EntityId } from "@reduxjs/toolkit";
-import { useFetchUserById } from "@services/users/users.hooks";
+import { useFetchUserById } from "@store/users/users.hooks";
 
 interface IArticleViewAuthorProps {
     article?: IArticle

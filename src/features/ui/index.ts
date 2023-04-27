@@ -1,3 +1,4 @@
+export { Dialog } from "./components/Dialog";
 export { Button } from "./components/Button";
 export { DatePicker } from "./components/DatePicker";
 export { Input, getUnputClassNames } from "./components/Input";

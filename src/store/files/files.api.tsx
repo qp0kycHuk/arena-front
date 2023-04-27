@@ -1,5 +1,5 @@
 import { IFile } from "@models/File"
-import { createRootApi } from "@services/utils/createRootApi"
+import { createRootApi } from "@store/utils/createRootApi"
 import { AxiosResponse } from "axios"
 
 const ROOT_ENDPOINT_URL = process.env.REACT_APP_API_URL + "/api/files"

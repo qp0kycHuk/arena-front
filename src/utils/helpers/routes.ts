@@ -8,10 +8,12 @@ interface IRouteCreator extends Function {
 
 export function getRoute() {
     const articles = createRouteCreator('articles')
+    const folders = createRouteCreator('folders')
     const users = createRouteCreator('users')
 
     return {
         articles,
+        folders,
         users
     }
 }

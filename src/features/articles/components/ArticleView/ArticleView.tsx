@@ -9,7 +9,7 @@ import { EntityId } from '@reduxjs/toolkit';
 import { useDocumentTitle } from '@hooks/useDocumentTitle';
 import { PageContent } from '@layouts/PageContent';
 import { ArticleViewAuthor } from './ArticleView.Author';
-import { useFetchArticleById } from '@services/articles/articles.hooks';
+import { useFetchArticleById } from '@store/articles/articles.hooks';
 
 interface IArticleViewProps {
     articleId: EntityId

@@ -1,7 +1,7 @@
 import React, { createContext, useCallback, useContext, useMemo } from "react";
 import { useAuth } from "@store/auth";
-import { ICreateRequest, IUpdateRequest } from "@services/articles/articles.api";
-import { IUploadRequest, filesApi } from "@services/files/files.api";
+import { ICreateRequest, IUpdateRequest } from "@store/articles/articles.api";
+import { IUploadRequest, filesApi } from "@store/files/files.api";
 import { editorContentUpdate } from "@features/editor/hooks/useEditor";
 import { useEditableEntity } from "@hooks/useEditableEntity";
 import { useLoading } from "@hooks/useLoading";
@@ -10,7 +10,7 @@ import { toast } from "@lib/Toast";
 import { useNavigate } from "react-router-dom";
 import { IFile } from "@models/File";
 import { IArticle } from "@models/Article";
-import { useArticleControl, useFetchArticleById } from "@services/articles/articles.hooks";
+import { useArticleControl, useFetchArticleById } from "@store/articles/articles.hooks";
 
 export const ArticleEditMainContext = createContext<IArticleMainContextValue>({} as IArticleMainContextValue)
 export const ArticleEditUtilsContext = createContext<IArticleUtilsContextValue>({} as IArticleUtilsContextValue)

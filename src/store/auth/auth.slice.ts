@@ -2,6 +2,7 @@ import Cookies from 'js-cookie'
 import { ActionCreator, PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { authApi } from './auth.api'
 import { IUser } from '@models/User'
+import { fetchUserById, updateUser } from '@store/users/users.thunk'
 
 interface IAuthState {
     user: IUser | null
@@ -46,6 +47,9 @@ const slice = createSlice({
                 }
             }
         }
+        builder
+            .addCase(fetchUserById.fulfilled, updateCurrentUser)
+            .addCase(updateUser.fulfilled, updateCurrentUser)
 
         builder.addMatcher(
             authApi.endpoints.initCsrf.matchFulfilled,
