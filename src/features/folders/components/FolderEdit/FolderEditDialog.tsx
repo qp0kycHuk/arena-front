@@ -25,6 +25,7 @@ export function FolderEditDialog({ isOpen, close }: IFolderEditDialogProps) {
         }
 
         const response = await upsert(formData)
+        
         close()
         loadingEnd()
     }

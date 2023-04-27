@@ -10,7 +10,7 @@ import { useFetchArticles } from '@store/articles/articles.hooks';
 import React from 'react';
 import { FolderEditDialog } from '@features/folders/components/FolderEdit/FolderEditDialog';
 import { useToggle } from '@hooks/useToggle';
-// import { useFetchFolders } from '@store/folders/folders.hooks';
+import { useFetchFolders } from '@store/folders/folders.hooks';
 import { FolderItem } from '@features/folders/components/FolderItem/FolderItem';
 
 interface IArticleListProps {
@@ -19,7 +19,7 @@ const SEARCH_QUERY_NAME = 's'
 
 export function ArticleList(props: IArticleListProps) {
     const { items: articles, loading } = useFetchArticles()
-    // const { items: folders, } = useFetchFolders()
+    const { items: folders, } = useFetchFolders()
     let [searchParams, setSearchParams] = useSearchParams();
     const [isAddFolderOpen, _, openIsAddFolderOpen, closeIsAddFolderOpen] = useToggle(false)
 
@@ -68,14 +68,14 @@ export function ArticleList(props: IArticleListProps) {
                 </React.Fragment>
             )}
             {articles?.length <= 0 && !loading && 'Здесь ничего нет'}
-            {/* {folders?.map((folder) =>
+            {folders?.map((folder) =>
                 <React.Fragment key={folder.id}>
                     <Link className='peer' to={getRoute().folders(folder.id)}>
                         <FolderItem folder={folder} />
                     </Link>
                     <div className="border-t border-gray border-opacity-20"></div>
                 </React.Fragment>
-            )} */}
+            )}
             {articles?.map((article) =>
                 <React.Fragment key={article.id}>
                     <Link className='peer' to={getRoute().articles(article.id)}>
