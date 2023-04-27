@@ -16,4 +16,5 @@ export const HandbooksEditPage = lazy(() => import('../features/handbooks/').the
 
 export const Projects = lazy(() => import('./Projects').then((m) => ({ default: m.Projects })))
 export const Home = lazy(() => import('./Home').then((m) => ({ default: m.Home })))
+export const NotFoundPage = lazy(() => import('./NotFoundPage').then((m) => ({ default: m.NotFoundPage })))
 
