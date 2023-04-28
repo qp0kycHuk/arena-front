@@ -18,7 +18,7 @@ export function ArticleItem({ article }: IArticleItemProps) {
             </div>
             <div className='max-w-5xl ml-4'>
                 <div className="mb-2 font-semibold">{article.name}</div>
-                <div className="max-w-md text-xs text-gray dark:text-gray-300">{article.excerpt}</div>
+                <div className="text-xs text-gray dark:text-gray-300">{article.excerpt}</div>
             </div>
             <div className="ml-auto text-right whitespace-nowrap">
                 <div className="text-xs text-gray dark:text-gray-300">Созд: {new Date(article.created_at).toLocaleDateString()}</div>

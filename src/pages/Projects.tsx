@@ -24,11 +24,15 @@ export interface IProjectsProps {
 export function Projects(props: IProjectsProps) {
   useDocumentTitle('Статьи')
   const { folderId } = useParams()
-  const [isAddFolderOpen, _, openIsAddFolderOpen, closeIsAddFolderOpen] = useToggle(false)
+  const [isCreateFolderOpen, _, openCreateFolderOpen, closeCreateFolderOpen] = useToggle(false)
+  const [isUpdateFolderOpen, __, openUpdateFolderOpen, closeUpdateFolderOpen] = useToggle(false)
   const folders = useFetchFolders({ immediately: false })
   const folder = useFetchFolderById(folderId as EntityId, { immediately: false })
   const articles = useFetchArticles({ immediately: false })
   const loading = folderId ? folder.loading : folders.loading || articles.loading
+
+  const foldersItems = folderId ? (folder.item?.children || []) : folders.items
+  const articlesItems = folderId ? (folder.item?.articles || []) : articles.items
 
   useEffect(() => {
     if (folderId) {
@@ -44,42 +48,51 @@ export function Projects(props: IProjectsProps) {
       <PageContent className='p-8'>
         <div className="flex items-center mb-8">
           <div className="text-2xl font-semibold">{folder.item?.name ? folder.item.name : 'Статьи'}</div>
-          <Button variant='contur' color='gray' className='ml-auto'>
-            <SettingsIcon className="text-2xl" />
-          </Button>
-          <Menu align='end' menuButton={
-            <Button className='ml-4 px-7'> Добавить </Button>
-          }>
-            <MenuItem>
-              <Button
-                className='justify-start w-full'
-                size='small'
-                color='gray'
-                variant='text'
-                onClick={openIsAddFolderOpen}>
-                <FoldersIcon className="mr-2" /> Папка
-              </Button>
-            </MenuItem>
-            <Link to={
-              folderId ?
-                getRoute().projects(folderId + '/article/create') :
-                getRoute().articles.create()
+          <div className='ml-auto flex'>
+            {folder.item ?
+              <Button variant='contur' color='gray' onClick={openUpdateFolderOpen}>
+                <SettingsIcon className="text-2xl" />
+              </Button> : null
+            }
+            <Menu align='end' menuButton={
+              <Button className='ml-4 px-7'> Добавить </Button>
             }>
-              <Button className='justify-start w-full' size='small' color='gray' variant='text'> <FileTextIcon className="mr-2" /> Статья </Button>
-            </Link>
-          </Menu>
+              <MenuItem>
+                <Button
+                  className='justify-start w-full'
+                  size='small'
+                  color='gray'
+                  variant='text'
+                  onClick={openCreateFolderOpen}>
+                  <FoldersIcon className="mr-2" /> Папка
+                </Button>
+              </MenuItem>
+              <Link to={
+                folderId ?
+                  getRoute().projects(folderId + '/article/create') :
+                  getRoute().articles.create()
+              }>
+                <Button className='justify-start w-full' size='small' color='gray' variant='text'> <FileTextIcon className="mr-2" /> Статья </Button>
+              </Link>
+            </Menu>
+          </div>
         </div>
         {/* <Search
           onChange={debouncedChangeHandler}
           initialValue={searchParams.get(SEARCH_QUERY_NAME) || ''}
           className='mb-4' /> */}
-
-        <FolderList items={folderId ? folder.item?.children : folders.items} loading={loading} />
-        <ArticleList items={folderId ? folder.item?.articles : articles.items} loading={loading} />
+        {!loading && (foldersItems.length + articlesItems.length) === 0 ?
+          <div className='text-center text-gray dark:text-gray-300'>Пустая папка</div> :
+          null
+        }
+        <FolderList items={foldersItems} loading={false} />
+        <ArticleList items={articlesItems} loading={false} />
 
       </PageContent>
-
-      <FolderEditDialog isOpen={isAddFolderOpen} close={closeIsAddFolderOpen} />
+      {folder.item ?
+        <FolderEditDialog item={folder.item} isOpen={isUpdateFolderOpen} close={closeUpdateFolderOpen} /> : null
+      }
+      <FolderEditDialog isOpen={isCreateFolderOpen} close={closeCreateFolderOpen} />
     </>
   );
 }

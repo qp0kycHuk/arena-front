@@ -7,7 +7,7 @@ interface IFolderItemProps {
 
 export function FolderItem({ folder }: IFolderItemProps) {
     return (
-        <div className="flex items-center py-4">
+        <div className="flex items-center py-4 hover:bg-primary hover:bg-opacity-10 px-4 -mx-4 rounded-2xl">
             <FolderIcon className='mr-4 text-3xl' />
             <div className="py-2 mr-4 text-xs font-semibold text-center rounded-full bg-gray bg-opacity-10 text-gray dark:text-gray-300 w-11">
                 {(folder.articles?.length || 0) + (folder.children?.length || 0)}

@@ -26,7 +26,13 @@ export const foldersSlice = createSlice({
         builder
             .addCase(fetchFolders.fulfilled, foldersEntityAdapter.setAll)
             .addCase(fetchFolderById.fulfilled, foldersEntityAdapter.upsertOne)
-            .addCase(createFolder.fulfilled, foldersEntityAdapter.upsertOne)
+            .addCase(createFolder.fulfilled, (state, action: PayloadAction<IFolder>) => {
+                if (action.payload.parent_id) {
+                    state.entities[action.payload.parent_id]?.children.push(action.payload)
+                } else {
+                    foldersEntityAdapter.upsertOne(state, action)
+                }
+            })
             .addCase(updateFolder.fulfilled, foldersEntityAdapter.upsertOne)
 
         builder
