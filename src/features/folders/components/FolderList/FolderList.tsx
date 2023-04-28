@@ -11,8 +11,7 @@ interface IFolderListProps {
 
 
 export function FolderList({ loading, items }: IFolderListProps) {
-    const isItemsLoadedAndEmpty = (!items || (items?.length <= 0 && !loading))
-    const isItemsReady = !loading && items && items?.length > 0
+    const isItemsReady = items && items?.length > 0 && !loading
 
     return (
         <>
@@ -22,10 +21,9 @@ export function FolderList({ loading, items }: IFolderListProps) {
                     <div className="border-t border-gray border-opacity-20"></div>
                 </React.Fragment>
             )}
-            {isItemsLoadedAndEmpty && 'Здесь ничего нет'}
             {isItemsReady && items.map((folder) =>
                 <React.Fragment key={folder.id}>
-                    <Link className='peer' to={getRoute().folders(folder.id)}>
+                    <Link className='peer' to={getRoute().projects(folder.id)}>
                         <FolderItem folder={folder} />
                     </Link>
                     <div className="border-t border-gray border-opacity-20"></div>

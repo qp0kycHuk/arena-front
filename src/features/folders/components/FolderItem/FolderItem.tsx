@@ -10,7 +10,7 @@ export function FolderItem({ folder }: IFolderItemProps) {
         <div className="flex items-center py-4">
             <FolderIcon className='mr-4 text-3xl' />
             <div className="py-2 mr-4 text-xs font-semibold text-center rounded-full bg-gray bg-opacity-10 text-gray dark:text-gray-300 w-11">
-                {folder.articles.length}
+                {(folder.articles?.length || 0) + (folder.children?.length || 0)}
             </div>
             <div className="font-semibold">{folder.name}</div>
             {/* 

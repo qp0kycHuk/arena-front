@@ -4,6 +4,7 @@ import { IDialogProps } from "@features/ui/components/Dialog";
 import { useLoading } from "@hooks/useLoading";
 import { useFolderControl } from "@store/folders/folders.hooks";
 import { useAuth } from "@store/auth";
+import { useParams } from "react-router-dom";
 
 
 interface IFolderEditDialogProps extends IDialogProps {
@@ -14,18 +15,25 @@ export function FolderEditDialog({ isOpen, close }: IFolderEditDialogProps) {
     const { user } = useAuth()
     const { loading, loadingStart, loadingEnd } = useLoading()
     const { upsert } = useFolderControl()
+    const { folderId } = useParams()
 
     async function submitHandler(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
         loadingStart()
         const formData = new FormData(event.target as HTMLFormElement)
-        
+
         if (user) {
             formData.append('owner_id', user.id.toString())
+        } else {
+            return
+        }
+
+        if (folderId) {
+            formData.append('parent_id', folderId)
         }
 
         const response = await upsert(formData)
-        
+
         close()
         loadingEnd()
     }

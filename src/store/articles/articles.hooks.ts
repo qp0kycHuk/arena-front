@@ -1,7 +1,7 @@
 import { IArticle } from '@models/Article';
 import { ICreateRequest, IUpdateRequest } from "./articles.api"
 import { createArticle, fetchArticleById, fetchArticles, updateArticle, removeArticle } from './articles.thunk';
-import { selectAll, selectById } from './articles.slice';
+import { clearAction, selectAll, selectById, } from './articles.slice';
 
 import { createEntitiesHooks } from '@store/utils/createEntitiesHooks';
 
@@ -15,6 +15,7 @@ export const {
     removeThunk: removeArticle,
     createThunk: createArticle,
     fetchByIdThunk: fetchArticleById,
+    clearEntitiesAction: clearAction,
     selectEntitiesSelector: ({ articles }) => articles,
     selectAllSelector: selectAll,
     selectByIdSelector: selectById,

@@ -8,19 +8,19 @@ interface IRouteCreator extends Function {
 
 export function getRoute() {
     const articles = createRouteCreator('articles')
-    const folders = createRouteCreator('folders')
+    const projects = createRouteCreator('projects')
     const users = createRouteCreator('users')
 
     return {
         articles,
-        folders,
+        projects,
         users
     }
 }
 
 function createRouteCreator(path: string) {
-    const root: IRouteCreator = (id?: EntityId) => {
-        const result = `/${path}/` + (id ? id : '')
+    const root: IRouteCreator = (params?: EntityId) => {
+        const result = `/${path}/` + (params ? params : '')
         return result
     }
 
