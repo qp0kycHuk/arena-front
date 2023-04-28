@@ -5,21 +5,24 @@ import { createFolder, fetchFolderById, fetchFolders, updateFolder } from "./fol
 import { foldersEntityAdapter } from "./folders.adapter";
 import { asyncThunkErrorHandler } from '@store/utils/asyncThunkErrorHandler';
 
-export const articleSlice = createSlice({
+export const foldersSlice = createSlice({
     name: 'folders',
     initialState: foldersEntityAdapter.getInitialState(),
     reducers: {
-        updateFolder(state, action: PayloadAction<IFolder>) {
+        update(state, action: PayloadAction<IFolder>) {
             foldersEntityAdapter.updateOne(state, {
                 id: action.payload.id,
                 changes: action.payload
             })
+        },
+        clear(state) {
+            foldersEntityAdapter.removeAll(state)
         }
     },
     extraReducers(builder) {
         builder
             .addCase(fetchFolders.pending, foldersEntityAdapter.removeAll)
-            
+
         builder
             .addCase(fetchFolders.fulfilled, foldersEntityAdapter.setAll)
             .addCase(fetchFolderById.fulfilled, foldersEntityAdapter.upsertOne)
@@ -34,6 +37,7 @@ export const articleSlice = createSlice({
     },
 })
 
+export const { clear: clearAction, update: updateAction } = foldersSlice.actions
 
 export const {
     selectEntities,
@@ -41,4 +45,4 @@ export const {
     selectById,
 } = foldersEntityAdapter.getSelectors<RootState>(({ folders }) => folders)
 
-export default articleSlice.reducer
+export default foldersSlice.reducer

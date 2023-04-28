@@ -7,7 +7,7 @@ import { useEditableEntity } from "@hooks/useEditableEntity";
 import { useLoading } from "@hooks/useLoading";
 import { getRoute } from "@utils/index";
 import { toast } from "@lib/Toast";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { IFile } from "@models/File";
 import { IArticle } from "@models/Article";
 import { useArticleControl, useFetchArticleById } from "@store/articles/articles.hooks";
@@ -24,6 +24,7 @@ export function ArticleEditContextProvider(
     const navigate = useNavigate();
     const { loading, loadingStart, loadingEnd } = useLoading()
     const { user } = useAuth()
+    const { folderId } = useParams()
 
     const { item: article } = useFetchArticleById(articleId || '')
     const { upsert: upsertArticle } = useArticleControl()
@@ -36,7 +37,7 @@ export function ArticleEditContextProvider(
     }, [article])
 
     const [editableArticle, update] = useEditableEntity<IEditableArticle>(initialArticle)
- 
+
 
 
     // create form data from edit component states
@@ -50,6 +51,10 @@ export function ArticleEditContextProvider(
 
         if (!user) {
             throw new Error('user is undefined')
+        }
+
+        if (folderId) {
+            formData.append('parent_id', folderId)
         }
 
         if (!editableArticle.id) {
@@ -73,7 +78,7 @@ export function ArticleEditContextProvider(
         })
 
         return formData
-    }, [editableArticle, user])
+    }, [editableArticle, user, folderId])
 
     const submitHandler = useCallback(async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()

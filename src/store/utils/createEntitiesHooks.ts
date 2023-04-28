@@ -1,8 +1,9 @@
 import { RootState } from './../index';
-import { AsyncThunk, EntityId, EntityState } from "@reduxjs/toolkit"
+import { ActionCreatorWithoutPayload, AsyncThunk, EntityId, EntityState } from "@reduxjs/toolkit"
 import { useAppDispatch, useAppSelector } from "../index"
 import { useEffect, useMemo } from "react"
 import { useLoading } from '@hooks/useLoading';
+import { EMPTY_OBJECT } from '@utils/const';
 
 interface IOptions<E, C, U> {
     fetchAllThunk: AsyncThunk<E[], void, {}>
@@ -13,6 +14,16 @@ interface IOptions<E, C, U> {
     selectEntitiesSelector(state: RootState): EntityState<E>
     selectAllSelector(state: RootState): E[]
     selectByIdSelector(state: RootState, id: EntityId): E | undefined
+    clearEntitiesAction?: ActionCreatorWithoutPayload
+}
+
+interface IFetchParams {
+    immediately?: boolean
+    clear?: boolean
+}
+
+interface IFetchByIdParams {
+    immediately?: boolean
 }
 
 export function createEntitiesHooks<E, C, U>({
@@ -21,6 +32,7 @@ export function createEntitiesHooks<E, C, U>({
     removeThunk,
     createThunk,
     fetchByIdThunk,
+    clearEntitiesAction,
     selectEntitiesSelector,
     selectAllSelector,
     selectByIdSelector,
@@ -58,50 +70,66 @@ export function createEntitiesHooks<E, C, U>({
         }
     }
 
-    function useFetchEntities() {
+    function useFetchEntities({ immediately = true, clear = true }: IFetchParams = EMPTY_OBJECT) {
         const { loading, loadingStart, loadingEnd } = useLoading(true)
-        const entitiesState = useAppSelector(selectEntitiesSelector)
+        const { ids, entities } = useAppSelector(selectEntitiesSelector)
         const items = useAppSelector(selectAllSelector)
         const dispatch = useAppDispatch()
 
-        const result = useMemo(() => ({
-            ...entitiesState,
-            items,
-            loading
-        }), [entitiesState, items, loading])
+        const load = async () => {
+            loadingStart()
+            await dispatch(fetchAllThunk())
+            loadingEnd()
+        }
 
         useEffect(() => {
-            const load = async () => {
-                loadingStart()
-                await dispatch(fetchAllThunk())
-                loadingEnd()
+            if (immediately) {
+                load()
             }
-            load()
-        }, [dispatch])
+        }, [dispatch, immediately])
+
+        useEffect(() => {
+            if (clear && clearEntitiesAction) {
+                dispatch(clearEntitiesAction())
+            }
+        }, [dispatch, clear, clearEntitiesAction])
+
+        const result = {
+            ids,
+            entities,
+            items,
+            loading,
+            load
+        }
 
         return result
     }
 
-    function useFetchEntityById(id: EntityId) {
+    function useFetchEntityById(id: EntityId, { immediately = true }: IFetchParams = EMPTY_OBJECT) {
         const { loading, loadingStart, loadingEnd } = useLoading(true)
         const entity = useAppSelector((state) => selectByIdSelector(state, id))
         const dispatch = useAppDispatch()
 
-        const result = useMemo(() => ({
-            item: entity,
-            loading
-        }), [entity, loading])
+
+        const load = async () => {
+            if (id) {
+                loadingStart()
+                await dispatch(fetchByIdThunk(id))
+                loadingEnd()
+            }
+        }
 
         useEffect(() => {
-            const load = async () => {
-                if (id) {
-                    loadingStart()
-                    await dispatch(fetchByIdThunk(id))
-                    loadingEnd()
-                }
+            if (immediately) {
+                load()
             }
-            load()
-        }, [id, dispatch])
+        }, [id, dispatch, immediately])
+
+        const result = {
+            item: entity,
+            loading,
+            load
+        }
 
         return result
     }

@@ -15,7 +15,10 @@ function App() {
           <Route path='/' element={<MainLayout />}>
             <Route path='*' element={<NotFoundPage />} />
             <Route index element={<Home />} />
-            <Route path={getRoute().articles()} element={<Projects />} />
+            <Route path={getRoute().projects()} element={<Projects />} />
+            <Route path={getRoute().projects(':folderId')} element={<Projects />} />
+            <Route path={getRoute().projects(':folderId/article/create')} element={<ArticleEditPage />} />
+
             <Route path={getRoute().articles(':id')} element={<ArticleViewPage />} />
             <Route path={getRoute().articles.edit(':id')} element={<ArticleEditPage />} />
             <Route path={getRoute().articles.create()} element={<ArticleEditPage />} />

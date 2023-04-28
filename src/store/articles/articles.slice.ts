@@ -9,17 +9,20 @@ export const articleSlice = createSlice({
     name: 'articles',
     initialState: articlesEntityAdapter.getInitialState(),
     reducers: {
-        updateArticle(state, action: PayloadAction<IArticle>) {
+        update(state, action: PayloadAction<IArticle>) {
             articlesEntityAdapter.updateOne(state, {
                 id: action.payload.id,
                 changes: action.payload
             })
+        },
+        clear(state) {
+            articlesEntityAdapter.removeAll(state)
         }
     },
     extraReducers(builder) {
         builder
             .addCase(fetchArticles.pending, articlesEntityAdapter.removeAll)
-            
+
         builder
             .addCase(fetchArticles.fulfilled, articlesEntityAdapter.setAll)
             .addCase(fetchArticleById.fulfilled, articlesEntityAdapter.upsertOne)
@@ -34,11 +37,13 @@ export const articleSlice = createSlice({
     },
 })
 
+export const { clear: clearAction, update: updateAction } = articleSlice.actions
 
 export const {
     selectEntities,
     selectAll,
     selectById,
+
 } = articlesEntityAdapter.getSelectors<RootState>(({ articles }) => articles)
 
 export default articleSlice.reducer

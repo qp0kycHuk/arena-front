@@ -11,8 +11,7 @@ interface IArticleListProps {
 
 
 export function ArticleList({ loading, items }: IArticleListProps) {
-    const isItemsLoadedAndEmpty = (!items || (items?.length <= 0 && !loading))
-    const isItemsReady = !loading && items && items?.length > 0
+    const isItemsReady = items && items?.length > 0 && !loading
 
     return (
         <>
@@ -22,7 +21,6 @@ export function ArticleList({ loading, items }: IArticleListProps) {
                     <div className="border-t border-gray border-opacity-20"></div>
                 </React.Fragment>
             )}
-            {isItemsLoadedAndEmpty && 'Здесь ничего нет'}
             {isItemsReady && items.map((article) =>
                 <div key={article.id}>
                     <Link className='peer' to={getRoute().articles(article.id)}>
