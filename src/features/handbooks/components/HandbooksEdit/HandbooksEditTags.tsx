@@ -41,7 +41,7 @@ export function HandbooksEditTags(props: IHandbooksEditTagsProps) {
     return (
         <div>
             <div className="flex items-center mb-7">
-                <HashIcon className="text-2xl text-gray mr-2" />
+                <HashIcon className="mr-2 text-2xl text-gray" />
                 <div className="font-semibold">Тэги</div>
             </div>
             <HandbooksEdit onSubmit={submitHandler} initialHandbooks={tags.items} />

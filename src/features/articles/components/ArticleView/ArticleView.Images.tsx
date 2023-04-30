@@ -11,7 +11,7 @@ export function ArticleViewImages({ article, isLoading }: IArticleViewImagesProp
         return (
             <div className="flex flex-wrap gap-6">
                 {(new Array(3)).fill(1).map((_, index) => {
-                    return (<div className="w-52 h-40 rounded-xl overflow-hidden animate-pulse bg-gray bg-opacity-50" key={index}> </div>)
+                    return (<div className="h-40 overflow-hidden bg-opacity-50 w-52 rounded-xl animate-pulse bg-gray" key={index}> </div>)
                 })}
             </div>
         )
@@ -23,12 +23,12 @@ export function ArticleViewImages({ article, isLoading }: IArticleViewImagesProp
 
     return (
         <div>
-            <div className="font-semibold mb-5">Изображения</div>
+            <div className="mb-5 font-semibold">Изображения</div>
             <div className="flex flex-wrap gap-6">
                 {article?.files.map((item) => (
                     <ImageLightBox key={item.id} src={item.src || ''}>
-                        <div className="w-52 h-40 rounded-xl overflow-hidden bg-gray bg-opacity-10">
-                            <img src={item.src} alt="" className='w-full h-full object-cover' />
+                        <div className="h-40 overflow-hidden w-52 rounded-xl bg-gray bg-opacity-10">
+                            <img src={item.src} alt="" className='object-cover w-full h-full' />
                         </div>
                     </ImageLightBox>
                 ))}

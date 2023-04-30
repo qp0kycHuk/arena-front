@@ -42,7 +42,7 @@ export function HandbooksEditPositions(props: IHandbooksEditPositionsProps) {
     return (
         <div>
             <div className="flex items-center mb-7">
-                <BriefcaseIcon className="text-2xl text-gray mr-2" />
+                <BriefcaseIcon className="mr-2 text-2xl text-gray" />
                 <div className="font-semibold">Должности</div>
             </div>
             <HandbooksEdit onSubmit={submitHandler} initialHandbooks={positions.items} />

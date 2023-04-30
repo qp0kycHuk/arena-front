@@ -76,7 +76,7 @@ export function ArticleEditTags({ }: IArticleEditTagsProps) {
 
     return (
         <div className="flex items-center">
-            <HashIcon className="text-2xl mr-1 text-gray" />
+            <HashIcon className="mr-1 text-2xl text-gray" />
             <div className="relative mr-1">
                 {/* TODO move Combobox to @features/ui  */}
                 <Combobox value={name} onChange={(id) => addTag(tags?.entities[id])}>
@@ -108,7 +108,7 @@ export function ArticleEditTags({ }: IArticleEditTagsProps) {
                             leaveTo="opacity-0"
                             show={name.length >= 3 && isOpen && !!tagsFilteredByName?.length}
                         >
-                            <Combobox.Options className="absolute ml-1 max-h-60 left-full top-1/2 -translate-y-1/2 w-full overflow-auto rounded-md bg-white py-1 shadow-md focus:outline-none z-10">
+                            <Combobox.Options className="absolute z-10 w-full py-1 ml-1 overflow-auto -translate-y-1/2 bg-white rounded-md shadow-md max-h-60 left-full top-1/2 focus:outline-none">
                                 {tagsFilteredByName?.map((id) => (
                                     <Combobox.Option key={id}
                                         className={({ active }) =>
@@ -126,7 +126,7 @@ export function ArticleEditTags({ }: IArticleEditTagsProps) {
 
             <Button variant='text' onClick={() => addTagRequest()}>Добавить</Button>
 
-            <div className="flex ml-auto gap-2">
+            <div className="flex gap-2 ml-auto">
                 {addedIds?.map((id) => (
                     <Tag key={id} onClick={() => removeTag(id)}>
                         {tags?.entities[id]?.name} <CrossIcon className="ml-2" />
