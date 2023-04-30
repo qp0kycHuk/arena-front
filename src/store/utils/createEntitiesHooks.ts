@@ -1,7 +1,7 @@
 import { RootState } from './../index';
 import { ActionCreatorWithoutPayload, AsyncThunk, EntityId, EntityState } from "@reduxjs/toolkit"
 import { useAppDispatch, useAppSelector } from "../index"
-import { useEffect, useMemo } from "react"
+import { useEffect } from "react"
 import { useLoading } from '@hooks/useLoading';
 import { EMPTY_OBJECT } from '@utils/const';
 
@@ -105,7 +105,7 @@ export function createEntitiesHooks<E, C, U>({
         return result
     }
 
-    function useFetchEntityById(id: EntityId, { immediately = true }: IFetchParams = EMPTY_OBJECT) {
+    function useFetchEntityById(id: EntityId, { immediately = true }: IFetchByIdParams = EMPTY_OBJECT) {
         const { loading, loadingStart, loadingEnd } = useLoading(true)
         const entity = useAppSelector((state) => selectByIdSelector(state, id))
         const dispatch = useAppDispatch()

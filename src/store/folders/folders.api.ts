@@ -1,5 +1,5 @@
 import { IFolder } from "@models/Folder";
-import { createEntitiesApi } from '@store/utils/createEntitiesApi';
+import { EntitesApi } from '@store/utils/EntitesApi';
 
 type CreateParams = 'owner_id' | 'name'
 type UpdateParams = CreateParams | 'id' | 'image_delete'
@@ -8,6 +8,6 @@ export type IUpdateRequest = TypedFormData<UpdateParams>
 
 const ROOT_ENDPOINT_URL = process.env.REACT_APP_API_URL + '/api/folders'
 
-export const foldersApi = createEntitiesApi<IFolder, ICreateRequest, IUpdateRequest>({
+export const foldersApi = new EntitesApi<IFolder, ICreateRequest, IUpdateRequest>({
     url: ROOT_ENDPOINT_URL
 })
