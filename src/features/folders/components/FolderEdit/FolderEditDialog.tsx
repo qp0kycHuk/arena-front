@@ -5,13 +5,15 @@ import { useLoading } from "@hooks/useLoading";
 import { useFolderControl } from "@store/folders/folders.hooks";
 import { useAuth } from "@store/auth";
 import { useParams } from "react-router-dom";
+import { IFolder } from "@models/Folder";
 
 
 interface IFolderEditDialogProps extends IDialogProps {
+    item?: IFolder
     onCancel?(): any
 }
 
-export function FolderEditDialog({ isOpen, close }: IFolderEditDialogProps) {
+export function FolderEditDialog({ item, isOpen, close }: IFolderEditDialogProps) {
     const { user } = useAuth()
     const { loading, loadingStart, loadingEnd } = useLoading()
     const { upsert } = useFolderControl()
@@ -28,8 +30,12 @@ export function FolderEditDialog({ isOpen, close }: IFolderEditDialogProps) {
             return
         }
 
-        if (folderId) {
+        if (!item && folderId) {
             formData.append('parent_id', folderId)
+        }
+
+        if (item) {
+            formData.append('id', item.id.toString())
         }
 
         const response = await upsert(formData)
@@ -40,15 +46,15 @@ export function FolderEditDialog({ isOpen, close }: IFolderEditDialogProps) {
 
     return (
         <Dialog isOpen={isOpen} close={close}>
-            <div className="overflow-hidden bg-white w-80 rounded-2xl">
-                <div className="p-4 text-center bg-gray-200">
+            <div className="overflow-hidden bg-white dark:bg-black w-80 rounded-2xl">
+                <div className="p-4 text-center bg-gray-200 dark:bg-gray-900">
                     <div className="text-2xl font-semibold">Создать папку</div>
                 </div>
                 <form onSubmit={submitHandler} className="px-6 py-8">
 
                     <label className="block">
                         <div className="mb-2 text-sm font-semibold">Название</div>
-                        <Input name="name" className="w-full" required />
+                        <Input defaultValue={item?.name} name="name" className="w-full" required />
                     </label>
                     <div className="grid grid-cols-2 gap-3 mt-8">
                         <Button type="submit" disabled={loading}>{loading ? <Spiner /> : 'Сохранить'}</Button>
