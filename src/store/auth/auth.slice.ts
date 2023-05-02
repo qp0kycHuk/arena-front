@@ -27,7 +27,6 @@ function logoutHandler(state: IAuthState) {
     state.token = null
 
     Cookies.remove(process.env.REACT_APP_CSRF_COOKIE_NAME as string)
-    Cookies.remove(process.env.REACT_APP_CSRF_COOKIE_NAME as string)
 }
 
 const slice = createSlice({

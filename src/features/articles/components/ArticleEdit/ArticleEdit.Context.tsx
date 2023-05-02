@@ -54,7 +54,7 @@ export function ArticleEditContextProvider(
         }
 
         if (folderId) {
-            formData.append('parent_id', folderId)
+            formData.append('folders[]', folderId)
         }
 
         if (!editableArticle.id) {
