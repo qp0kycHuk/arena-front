@@ -12,7 +12,7 @@ export function ArticleViewBody({ article, isLoading }: IArticleViewBodyProps) {
 
     if (!article || isLoading) {
         return (
-            <div className='space-y-2 mb-8'>
+            <div className='mb-8 space-y-2'>
                 <div className="h-3 bg-opacity-50 animate-pulse bg-gray w-[500px] "></div>
                 <div className="w-64 h-3 bg-opacity-50 animate-pulse bg-gray "></div>
                 <div className="h-3 bg-opacity-50 animate-pulse bg-gray w-96 "></div>
@@ -24,7 +24,7 @@ export function ArticleViewBody({ article, isLoading }: IArticleViewBodyProps) {
     }
 
     return (
-        <div className='ProseMirror mb-8'
+        <div className='mb-8 ProseMirror'
             dangerouslySetInnerHTML={{ __html: htmlBody }}></div>
     );
 }

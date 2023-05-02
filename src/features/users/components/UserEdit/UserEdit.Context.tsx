@@ -10,7 +10,7 @@ import { dateToSQLFormatString } from "@utils/helpers/dates"
 import { EMPTY_OBJECT } from "@utils/const"
 
 
-export const UserEditContext = createContext<IArticleEditContextValue>({} as IArticleEditContextValue)
+export const UserEditContext = createContext<IUserEditContextValue>({} as IUserEditContextValue)
 export const useUserEditContext = () => useContext(UserEditContext)
 
 export function UserEditContextProvider({
@@ -84,7 +84,7 @@ interface IEditableUser extends Partial<IUser> {
     image_delete?: boolean
 }
 
-interface IArticleEditContextValue {
+interface IUserEditContextValue {
     user: Partial<IEditableUser>
     loading: boolean
     update(updated: Partial<IEditableUser>): void

@@ -1,9 +1,9 @@
 import { EntityId, createAsyncThunk } from "@reduxjs/toolkit"
 import { AxiosError } from "axios"
-import { IEntitiesApiCreator } from "./createEntitiesApi"
+import { EntitesApi } from "./EntitesApi"
 
 interface IConfig<E, C, U> {
-    api: IEntitiesApiCreator<E, C, U>
+    api: EntitesApi<E, C, U>
     name: string
 }
 
@@ -16,7 +16,7 @@ export function createEntitiesThunks<E, C, U>({
         name + '/fetch',
         async (_, { rejectWithValue }) => {
             try {
-                const response = await api().fetch()
+                const response = await api.fetch()
                 const items = response.data.items
                 return items
             } catch (err) {
@@ -29,7 +29,7 @@ export function createEntitiesThunks<E, C, U>({
         name + '/update',
         async (formData, { rejectWithValue }) => {
             try {
-                const response = await api().update(formData)
+                const response = await api.update(formData)
                 const item = response.data.item
                 return item
             } catch (err) {
@@ -42,7 +42,7 @@ export function createEntitiesThunks<E, C, U>({
         name + '/create',
         async (formData, { rejectWithValue }) => {
             try {
-                const response = await api().create(formData)
+                const response = await api.create(formData)
                 const item = response.data.item
                 return item
             } catch (err) {
@@ -55,7 +55,7 @@ export function createEntitiesThunks<E, C, U>({
         name + '/remove',
         async (id, { rejectWithValue }) => {
             try {
-                const response = await api().remove(id)
+                const response = await api.remove(id)
                 const item = response.data.item
                 if (item) {
                     return id
@@ -73,7 +73,7 @@ export function createEntitiesThunks<E, C, U>({
         name + '/fetchById',
         async (id, { rejectWithValue }) => {
             try {
-                const response = await api().fetchById(id)
+                const response = await api.fetchById(id)
                 const item = response.data.item
                 if (item) {
                     return item

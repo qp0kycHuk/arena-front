@@ -77,12 +77,12 @@ export function HandbooksEdit({ initialHandbooks, onSubmit }: IHandbooksEditProp
             {handbooks.map((handbook) => (
                 <div className="flex mb-4" key={handbook.id || handbook.key}>
                     <div>
-                        {/* <div className="text-sm mb-2 font-medium">Заголовок</div> */}
+                        {/* <div className="mb-2 text-sm font-medium">Заголовок</div> */}
                         <Input className='w-96'
                             value={handbook.name}
                             onChange={(event) => updateHandbookName(handbook.id || handbook.key, event.target.value)} />
                     </div>
-                    <Button onClick={() => removeHandler(handbook)} color="red" variant="light" icon className="ml-6 self-end">
+                    <Button onClick={() => removeHandler(handbook)} color="red" variant="light" icon className="self-end ml-6">
                         <TrashIcon className="text-2xl" />
                     </Button>
                 </div>
