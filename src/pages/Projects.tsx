@@ -24,8 +24,8 @@ export interface IProjectsProps {
 export function Projects(props: IProjectsProps) {
   useDocumentTitle('Статьи')
   const { folderId } = useParams()
-  const [isCreateFolderOpen, _, openCreateFolderOpen, closeCreateFolderOpen] = useToggle(false)
-  const [isUpdateFolderOpen, __, openUpdateFolderOpen, closeUpdateFolderOpen] = useToggle(false)
+  const [isCreateFolderOpen, , openCreateFolderOpen, closeCreateFolderOpen] = useToggle(false)
+  const [isUpdateFolderOpen, , openUpdateFolderOpen, closeUpdateFolderOpen] = useToggle(false)
   const folders = useFetchFolders({ immediately: false })
   const folder = useFetchFolderById(folderId as EntityId, { immediately: false })
   const articles = useFetchArticles({ immediately: false })
@@ -48,7 +48,7 @@ export function Projects(props: IProjectsProps) {
       <PageContent className='p-8'>
         <div className="flex items-center mb-8">
           <div className="text-2xl font-semibold">{folder.item?.name ? folder.item.name : 'Статьи'}</div>
-          <div className='ml-auto flex'>
+          <div className='flex ml-auto'>
             {folder.item ?
               <Button variant='contur' color='gray' onClick={openUpdateFolderOpen}>
                 <SettingsIcon className="text-2xl" />
@@ -90,7 +90,7 @@ export function Projects(props: IProjectsProps) {
 
       </PageContent>
       {folder.item ?
-        <FolderEditDialog item={folder.item} isOpen={isUpdateFolderOpen} close={closeUpdateFolderOpen} /> : null
+        <FolderEditDialog isOpen={isUpdateFolderOpen} close={closeUpdateFolderOpen} item={folder.item} /> : null
       }
       <FolderEditDialog isOpen={isCreateFolderOpen} close={closeCreateFolderOpen} />
     </>
