@@ -12,9 +12,9 @@ export function HandbooksEditPage(props: IHandbooksEditPageProps) {
 
     return (
         <PageContent className="p-8">
-            <div className="text-2xl font-semibold mb-10">Справочники</div>
+            <div className="mb-10 text-2xl font-semibold">Справочники</div>
             <HandbooksEditTags />
-            <div className="border-t border-gray border-opacity-20 my-6"></div>
+            <div className="my-6 border-t border-gray border-opacity-20"></div>
             <HandbooksEditPositions />
         </PageContent>
     );
