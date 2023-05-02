@@ -1,15 +1,19 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { store } from './store';
 import { ToastContainer } from '@lib/Toast';
 import { MainLayout } from '@layouts/MainLayout';
 import { ArticleEditPage, ArticleViewPage, Home, Login, Registration, UserViewPage, UserEditPage, HandbooksEditPage, UserListPage, Projects, NotFoundPage } from "@pages/index";
 import { AuthLayout } from '@layouts/AuthLayout';
 import { getRoute } from './utils';
+import { useToggleTheme } from '@store/theme/theme.hooks';
+import { useEffect } from 'react';
 
 function App() {
+  const { theme, toggle: toggleTheme } = useToggleTheme()
+
+  useEffect(() => { toggleTheme(theme) }, [])
+
   return (
-    <Provider store={store}>
+    <>
       <BrowserRouter >
         <Routes >
           <Route path='/' element={<MainLayout />}>
@@ -36,7 +40,7 @@ function App() {
         </Routes>
       </BrowserRouter>
       <ToastContainer />
-    </Provider>
+    </>
   );
 }
 
