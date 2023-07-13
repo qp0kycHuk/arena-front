@@ -5,5 +5,5 @@
  * @returns {string}
  */
 export function getRandomUUID(): string {
-    return crypto.randomUUID()
+  return crypto.randomUUID()
 }

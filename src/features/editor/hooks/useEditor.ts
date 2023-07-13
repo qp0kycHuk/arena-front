@@ -31,140 +31,141 @@ lowlight.registerLanguage('js', js)
 lowlight.registerLanguage('ts', ts)
 lowlight.registerLanguage('php', php)
 
-
 export interface IOptions {
-    config?: Partial<EditorOptions> | undefined
-    placeholder?: string
-    uploadFunction?(files: File[]): Promise<IFile[] | undefined>
+  config?: Partial<EditorOptions> | undefined
+  placeholder?: string
+  uploadFunction?(files: File[]): Promise<IFile[] | undefined>
 }
 
 const defaultOptions = {
-    config: {},
-    placeholder: 'Type here',
-    uploadFunction: undefined
+  config: {},
+  placeholder: 'Type here',
+  uploadFunction: undefined,
 }
 
 const LowlightCustom = Node.create({
-    name: 'lowlightcustom',
-    group: 'block',
-    atom: true,
-    addAttributes() {
-        return {
-            content: {
-                default: '',
-            },
-        }
-    },
-    renderHTML({ HTMLAttributes }) {
-        const lowlighted = lowlight.highlightAuto(HTMLAttributes.content);
-        const html = toHtml(lowlighted)
+  name: 'lowlightcustom',
+  group: 'block',
+  atom: true,
+  addAttributes() {
+    return {
+      content: {
+        default: '',
+      },
+    }
+  },
+  renderHTML({ HTMLAttributes }) {
+    const lowlighted = lowlight.highlightAuto(HTMLAttributes.content)
+    const html = toHtml(lowlighted)
 
-        const pre = document.createElement('pre')
-        const code = document.createElement('code')
-        code.innerHTML = html
-        pre.appendChild(code)
+    const pre = document.createElement('pre')
+    const code = document.createElement('code')
+    code.innerHTML = html
+    pre.appendChild(code)
 
-        return {
-            dom: pre,
-        }
-    },
+    return {
+      dom: pre,
+    }
+  },
 })
 
 const CustomImage = Image.extend({
-    addAttributes() {
-        return {
-            ...this.parent?.(),
-            id: {
-                default: 'null',
-
-            },
-        }
+  addAttributes() {
+    return {
+      ...this.parent?.(),
+      id: {
+        default: 'null',
+      },
     }
+  },
 })
 
 export const editorExtensions = [
-    StarterKit.configure({
-        codeBlock: false,
-    }),
-    Underline,
-    TextStyle,
-    Color,
-    CodeBlockLowlight.configure({ lowlight, }),
-    TextAlign.configure({ types: ['heading', 'paragraph'], }),
-    Highlight.configure({ multicolor: true }),
-    Link.configure({ openOnClick: false, }),
-    CustomImage.configure({ allowBase64: true }),
-    LowlightCustom,
-    FileBlockExtension.configure({
-        component: FileBlock
-    }),
+  StarterKit.configure({
+    codeBlock: false,
+  }),
+  Underline,
+  TextStyle,
+  Color,
+  CodeBlockLowlight.configure({ lowlight }),
+  TextAlign.configure({ types: ['heading', 'paragraph'] }),
+  Highlight.configure({ multicolor: true }),
+  Link.configure({ openOnClick: false }),
+  CustomImage.configure({ allowBase64: true }),
+  LowlightCustom,
+  FileBlockExtension.configure({
+    component: FileBlock,
+  }),
 ]
 
 export function useEditor(options?: IOptions, deps?: any[]) {
-    const { config, placeholder } = options || defaultOptions
+  const { config, placeholder } = options || defaultOptions
 
-    return useEditorConfig({
-        extensions: [
-            ...editorExtensions,
-            Placeholder.configure({ placeholder: placeholder, }),
-        ],
+  return useEditorConfig(
+    {
+      extensions: [...editorExtensions, Placeholder.configure({ placeholder: placeholder })],
 
-        ...config
-    }, [config, ...(deps || [])])
+      ...config,
+    },
+    [config, ...(deps || [])]
+  )
 }
 
 export function useInitialContent(content?: string, dependeties: any[] = []) {
-    const initialContent = useMemo(() => {
-        try {
-            return content ? JSON.parse(content) : ''
-        } catch (error) {
-            return content ? content : ''
-        }
-    }, dependeties || []);
+  const initialContent = useMemo(() => {
+    try {
+      return content ? JSON.parse(content) : ''
+    } catch (error) {
+      return content ? content : ''
+    }
+  }, dependeties || [])
 
-    return initialContent
+  return initialContent
 }
 
-export function useGenerateHtml(content: string = ''): string {
-    const html = useMemo(() => {
-        try {
-            const json: JSONContent = content ? JSON.parse(content) : null
-            if (json?.content) {
-                json.content = json.content.map((item: any) => {
-                    if (item.type === 'codeBlock') {
-                        const content = item.content.map(({ text }: any) => text).join('\n');
+export function useGenerateHtml(content = ''): string {
+  const html = useMemo(() => {
+    try {
+      const json: JSONContent = content ? JSON.parse(content) : null
 
-                        return {
-                            type: 'lowlightcustom',
-                            attrs: { content }
-                        }
-                    }
+      if (json?.content) {
+        json.content = json.content.map((item: any) => {
+          if (item.type === 'codeBlock') {
+            const content = item.content.map(({ text }: any) => text).join('\n')
 
-                    return item
-                })
+            return {
+              type: 'lowlightcustom',
+              attrs: { content },
             }
+          }
 
-            return json ? generateHTML(json, editorExtensions) : ''
-        } catch (error) {
-            return content ? content : ''
-        }
-    }, [content]);
+          return item
+        })
+      }
 
-    return html
+      return json ? generateHTML(json, editorExtensions) : ''
+    } catch (error) {
+      return content ? content : ''
+    }
+  }, [content])
+
+  return html
 }
 
 export function editorContentUpdate(editorJson: any, updateFn: (item: any) => any) {
-    if (editorJson.content?.length > 0) {
-        editorJson.content = editorJson.content.map(updateFn)
-        editorJson.content.forEach((item: any) => editorContentUpdate(item, updateFn))
-    }
-    return editorJson
+  if (editorJson.content?.length > 0) {
+    editorJson.content = editorJson.content.map(updateFn)
+    editorJson.content.forEach((item: any) => editorContentUpdate(item, updateFn))
+  }
+
+  return editorJson
 }
 
 export function editorContentFilter(editorJson: any, filterFn: (item: any) => any) {
-    if (editorJson.content?.length > 0) {
-        editorJson.content = editorJson.content.filter(filterFn)
-        editorJson.content.forEach((item: any) => editorContentFilter(item, filterFn))
-    }
-    return editorJson
+  if (editorJson.content?.length > 0) {
+    editorJson.content = editorJson.content.filter(filterFn)
+    editorJson.content.forEach((item: any) => editorContentFilter(item, filterFn))
+  }
+
+  return editorJson
 }

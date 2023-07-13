@@ -1,4 +1,3 @@
-
 type ExtentionType = 'image' | 'doc' | 'video'
 
 interface IExtention {
@@ -11,20 +10,19 @@ interface IServerError {
   message: string
 }
 
-declare module "*.png";
-declare module "*.svg";
-declare module "*.jpeg";
-declare module "*.jpg";
+declare module '*.png'
+declare module '*.svg'
+declare module '*.jpeg'
+declare module '*.jpg'
 
 declare module '*.module.scss' {
-  const classes: { [key: string]: string };
-  export default classes;
+  const classes: { [key: string]: string }
+  export default classes
 }
 
 type PartialRecord<K extends keyof any, T> = {
-  [P in K]?: T;
-};
-
+  [P in K]?: T
+}
 
 interface IListResponse<T> {
   items: T[]
@@ -39,7 +37,7 @@ interface IResultWithError {
 }
 
 interface IResultWithData<T> {
-  data: T;
+  data: T
 }
 
 interface TypedFormData<T> extends FormData {
@@ -52,7 +50,6 @@ interface TypedFormData<T> extends FormData {
 }
 
 type UploadImagesFunc = (files: File[], beforeUpdate?: (files: IFile[] | undefined) => any) => Promise<IFile[] | undefined>
-
 
 interface IFileItem {
   id?: string | number

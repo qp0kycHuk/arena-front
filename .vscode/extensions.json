@@ -1,0 +1,13 @@
+{
+    "recommendations": [
+        "stylelint.vscode-stylelint",
+        "ryuta46.multi-command",
+        "bradlc.vscode-tailwindcss",
+        "heybourn.headwind",
+        "j69.ejs-beautify",
+        "mrmlnc.vscode-postcss-sorting",
+        "usernamehw.errorlens",
+        "dbaeumer.vscode-eslint",
+        "rvest.vs-code-prettier-eslint"
+    ]
+}

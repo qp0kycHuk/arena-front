@@ -1,41 +1,36 @@
-import * as React from 'react';
-import { useCallback } from 'react';
-import { MenuButton } from './MenuButton';
-import { InsertLinkIcon } from '@assets/icons/stroke';
-import type { Editor } from '@tiptap/react';
+import React from 'react'
+import { useCallback } from 'react'
+import { MenuButton } from './MenuButton'
+import { InsertLinkIcon } from '@assets/icons/stroke'
+import type { Editor } from '@tiptap/react'
 
 interface ILinkMenuProps {
-    editor: Editor
+  editor: Editor
 }
 
 export function LinkMenu({ editor }: ILinkMenuProps) {
-    const setLink = useCallback(() => {
-        const previousUrl = editor.getAttributes('link').href
-        const url = window.prompt('URL', previousUrl)
+  const setLink = useCallback(() => {
+    const previousUrl = editor.getAttributes('link').href
+    const url = window.prompt('URL', previousUrl)
 
-        // cancelled
-        if (url === null) {
-            return
-        }
+    // cancelled
+    if (url === null) {
+      return
+    }
 
-        // empty
-        if (url === '') {
-            editor.chain().focus().extendMarkRange('link').unsetLink()
-                .run()
+    // empty
+    if (url === '') {
+      editor.chain().focus().extendMarkRange('link').unsetLink().run()
 
-            return
-        }
+      return
+    }
 
-        // update link
-        editor.chain().focus().extendMarkRange('link').setLink({ href: url })
-            .run()
-    }, [editor])
-    return (
-        <MenuButton
-            title='Ссылка'
-            isActive={editor.isActive('link')}
-            onClick={setLink}>
-            <InsertLinkIcon className="text-2xl" />
-        </MenuButton>
-    );
+    // update link
+    editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run()
+  }, [editor])
+  return (
+    <MenuButton title="Ссылка" isActive={editor.isActive('link')} onClick={setLink}>
+      <InsertLinkIcon className="text-2xl" />
+    </MenuButton>
+  )
 }

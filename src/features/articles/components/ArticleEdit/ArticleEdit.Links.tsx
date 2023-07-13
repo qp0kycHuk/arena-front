@@ -1,14 +1,10 @@
-import { Links, useLinks } from "@features/editor";
-import {  useArticleEditMainContext } from "./ArticleEdit.Context";
+import React from 'react'
+import { Links, useLinks } from '@features/editor'
+import { useArticleEditMainContext } from './ArticleEdit.Context'
 
+export function ArticleEditLinks() {
+  const { article, update } = useArticleEditMainContext()
+  const linksController = useLinks()
 
-interface IArticleEditLinksProps {
-}
-export function ArticleEditLinks(props: IArticleEditLinksProps) {
-    const { article, update } = useArticleEditMainContext()
-    const linksController = useLinks()
-    
-    return (
-        <Links controller={linksController}></Links>
-    );
+  return <Links controller={linksController}></Links>
 }

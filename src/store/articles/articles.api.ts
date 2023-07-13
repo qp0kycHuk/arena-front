@@ -1,5 +1,5 @@
-import type { IArticle } from "@models/Article";
-import { EntitesApi } from '@store/utils/EntitesApi';
+import type { IArticle } from '@models/Article'
+import { EntitesApi } from '@store/utils/EntitesApi'
 
 type CreateParams = 'owner_id' | 'content' | 'excerpt' | 'name' | 'image' | 'tags[]' | 'attachment[]' | 'parent_id' | 'folders[]'
 type UpdateParams = CreateParams | 'id' | 'image_delete'

@@ -1,0 +1,135 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:import/typescript",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "ignorePatterns": [
+    "webpack.config.js",
+    "tailwind.config.js",
+    "postcss.config.js",
+    "tailwind.form.js",
+    "tailwind.button.js",
+    "craco.config.js"
+  ],
+  "overrides": [],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "plugins": [
+    "react",
+    "@typescript-eslint"
+  ],
+  "rules": {
+    "indent": [
+      "error",
+      2
+    ],
+    "linebreak-style": [
+      "error",
+      "windows"
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "semi": [
+      "error",
+      "never",
+      {
+        "beforeStatementContinuationChars": "always"
+      }
+    ],
+    "no-extra-semi": "off",
+    "@typescript-eslint/no-extra-semi": "off",
+    "yoda": [
+      "error",
+      "never"
+    ],
+    "@typescript-eslint/ban-ts-comment": [
+      "warn"
+    ],
+    "arrow-spacing": [
+      1,
+      {
+        "before": true,
+        "after": true
+      }
+    ],
+    "arrow-parens": [
+      1,
+      "always"
+    ],
+    "block-spacing": [
+      1,
+      "always"
+    ],
+    "brace-style": [
+      1,
+      "1tbs"
+    ],
+    "dot-location": [
+      1,
+      "property"
+    ],
+    "max-len": [
+      1,
+      {
+        "code": 180,
+        "ignoreStrings": true
+      }
+    ],
+    "newline-per-chained-call": [
+      1,
+      {
+        "ignoreChainWithDepth": 3
+      }
+    ],
+    "no-whitespace-before-property": [
+      1
+    ],
+    "no-trailing-spaces": [
+      1
+    ],
+    "padding-line-between-statements": [
+      1,
+      {
+        "blankLine": "always",
+        "prev": "block-like",
+        "next": "*"
+      },
+      {
+        "blankLine": "always",
+        "prev": "*",
+        "next": "block-like"
+      },
+      {
+        "blankLine": "always",
+        "prev": "import",
+        "next": "*"
+      },
+      {
+        "blankLine": "any",
+        "prev": "import",
+        "next": "import"
+      }
+    ],
+    "multiline-ternary": "off",
+    "function-call-argument-newline": ["warn","consistent"]
+    // "padded-blocks": [
+    //     "error",
+    //     {
+    //         "blocks": "never",
+    //         "classes": "always",
+    //         "switches": "never"
+    //     }
+    // ]
+  }
+}

@@ -1,10 +1,6 @@
-import { DotsPreloader } from '@components/DotsPreloader/DotsPreloader';
-import * as React from 'react';
+import * as React from 'react'
+import { DotsPreloader } from '@components/DotsPreloader/DotsPreloader'
 
-interface IPagePreloaderProps { }
-
-export function PagePreloader(props: IPagePreloaderProps) {
-  return (
-    <DotsPreloader />
-  );
+export function PagePreloader() {
+  return <DotsPreloader />
 }
