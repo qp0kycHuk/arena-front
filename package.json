@@ -79,6 +79,7 @@
   "devDependencies": {
     "@craco/craco": "^7.0.0",
     "@craco/types": "^7.0.0",
+    "@qpokychuk/tailwind-button-plugin": "^2.0.0",
     "@types/js-cookie": "^3.0.2",
     "@types/react-input-mask": "^3.0.2",
     "autoprefixer": "^10.4.13",
