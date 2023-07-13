@@ -1,0 +1,18 @@
+// Поместите настраиваемые сочетания клавиш в этот файл, чтобы переопределить сочетания клавиш по умолчанию.
+[
+    {
+        "key": "ctrl+s",
+        "command": "extension.multiCommand.execute",
+        "args": {
+            "sequence": [
+                "postcssSorting.execute",
+                "workbench.action.files.save"
+            ]
+        },
+        "when": "editorLangId == css || editorLangId == scss"
+    },
+    {
+        "key": "ctrl+meta+s",
+        "command": "workbench.action.files.saveFiles"
+    }
+]
