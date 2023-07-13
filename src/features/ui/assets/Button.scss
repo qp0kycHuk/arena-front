@@ -1,9 +1,8 @@
 .btn {
-  &-primary {
-    --color: theme(colors.primary.DEFAULT)
-  }
+  font-weight: 600;
 
-  &-gray {
-    --color: theme(colors.gray.DEFAULT)
+
+  &-gray.btn-contur {
+    border-color: theme('colors.gray.DEFAULT / 30%');
   }
 }
