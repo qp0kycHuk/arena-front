@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react'
 import { Color, Size } from '../types'
 import { ripplePointerdownHandler } from '../utils/ripple'
@@ -43,7 +42,6 @@ const variantClassNames: Record<Variant, string> = {
   text: '',
 }
 
-// It is render function for React.forwardRef
 function ButtonComponent(
   {
     children,
