@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { RootState } from './index';
+import { RootState } from './index'
 
 // initialize an empty api service that we'll inject endpoints into later as needed
 export const rootApi = createApi({
@@ -15,7 +15,7 @@ export const rootApi = createApi({
       headers.set('Accept', 'application/json')
       headers.set('X-Requested-With', 'XMLHttpRequest')
       return headers
-    }
+    },
   }),
   endpoints: () => ({}),
 })

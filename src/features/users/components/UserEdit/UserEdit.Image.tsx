@@ -1,57 +1,51 @@
-import { Uploader } from "@features/fileUploader";
-import { IUser } from "@models/User";
-import { useMemo } from "react";
-import { useUserEditContext } from "./UserEdit.Context";
-import { getFilePreview } from "@utils/index";
+import { Uploader } from '@features/fileUploader'
+import { IUser } from '@models/User'
+import React, { useMemo } from 'react'
+import { useUserEditContext } from './UserEdit.Context'
+import { getFilePreview } from '@utils/index'
 
+export function UserEditImage() {
+  const { user, update } = useUserEditContext()
 
-interface IUserEditImageProps { }
-
-export function UserEditImage({ }: IUserEditImageProps) {
-    const { user, update } = useUserEditContext()
-
-    const fileItems = useMemo(() => user?.image_src ? ([{
-        id: user?.id,
-        src: user?.image_src,
-        // title: article?.image,
-    }]) : [], [user])
-
-    async function changeHandler(fileItems: IFileItem[]) {
-        const file = fileItems[0]?.file
-
-        if (!file) {
-            return;
-        }
-
-        const dataUrl = await getFilePreview(file)
-
-        update({
-            imageFile: file,
-            image_src: dataUrl || '',
-            image_delete: false
-        })
-
+  const fileItems = useMemo(() => {
+    if (user?.image_src) {
+      return [
+        {
+          id: user?.id,
+          src: user?.image_src,
+          // title: article?.image,
+        },
+      ]
     }
 
-    async function removeImage() {
-        // if (!user?.id) return
+    return []
+  }, [user])
 
-        update({
-            imageFile: undefined,
-            image_src: undefined,
-            image_delete: true
-        })
+  async function changeHandler(fileItems: IFileItem[]) {
+    const file = fileItems[0]?.file
+
+    if (!file) {
+      return
     }
 
+    const dataUrl = await getFilePreview(file)
 
-    return (
-        <Uploader
-            rounded
-            sign={false}
-            multiple={false}
-            fileItems={fileItems}
-            onChange={changeHandler}
-            onRemove={removeImage}
-        />
-    );
+    update({
+      imageFile: file,
+      image_src: dataUrl || '',
+      image_delete: false,
+    })
+  }
+
+  async function removeImage() {
+    // if (!user?.id) return
+
+    update({
+      imageFile: undefined,
+      image_src: undefined,
+      image_delete: true,
+    })
+  }
+
+  return <Uploader rounded sign={false} multiple={false} fileItems={fileItems} onChange={changeHandler} onRemove={removeImage} />
 }

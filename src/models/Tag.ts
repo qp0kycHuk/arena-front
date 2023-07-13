@@ -1,3 +1,3 @@
-import { IHandbook } from "./Handbook";
+import { IHandbook } from './Handbook'
 
-export interface ITag extends IHandbook { }
+export type ITag = IHandbook

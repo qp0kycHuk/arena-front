@@ -10,7 +10,7 @@ const phoneCompleteRegexp = /(7|8)\d{10}$/
  * @returns {string}
  */
 export function getUnmaskedPhoneValue(value: string): string {
-    return value.replace(/\D/g, '')
+  return value.replace(/\D/g, '')
 }
 
 /**
@@ -22,24 +22,23 @@ export function getUnmaskedPhoneValue(value: string): string {
  * @returns {string}
  */
 export function getMaskedPhoneValue(value: string | number = ''): string {
-    const numberValue = value.toString().replace(/\D/g, '')
+  const numberValue = value.toString().replace(/\D/g, '')
 
-    if (!numberValue) {
-        return ''
-    }
+  if (!numberValue) {
+    return ''
+  }
 
-    const matchValue = numberValue.match(phoneRegexp);
+  const matchValue = numberValue.match(phoneRegexp)
 
-    if (!matchValue) {
-        return ''
-    }
+  if (!matchValue) {
+    return ''
+  }
 
-    const maskedValue =
-        `+7${matchValue[2] ? ` (${matchValue[2]}` : ''}${matchValue[3] ? `) ${matchValue[3]}` : ''
-        }${matchValue[4] ? ` - ${matchValue[4]}` : ''
-        }${matchValue[5] ? ` - ${matchValue[5]}` : ''}`;
+  const maskedValue = `+7${matchValue[2] ? ` (${matchValue[2]}` : ''}${matchValue[3] ? `) ${matchValue[3]}` : ''}${matchValue[4] ? ` - ${matchValue[4]}` : ''}${
+    matchValue[5] ? ` - ${matchValue[5]}` : ''
+  }`
 
-    return maskedValue
+  return maskedValue
 }
 
 /**
@@ -50,7 +49,7 @@ export function getMaskedPhoneValue(value: string | number = ''): string {
  * @returns {boolean}
  */
 export function isPhoneComplete(value: string): boolean {
-    const numberValue = value.replace(/\D/g, '')
+  const numberValue = value.replace(/\D/g, '')
 
-    return phoneCompleteRegexp.test(numberValue)
+  return phoneCompleteRegexp.test(numberValue)
 }

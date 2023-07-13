@@ -1,17 +1,14 @@
-import * as React from 'react';
+import React from 'react'
 import { ArticleList as ListComponent } from '@features/articles'
-import { PageContent } from '@layouts/PageContent';
-import { useDocumentTitle } from '@hooks/useDocumentTitle';
+import { PageContent } from '@layouts/PageContent'
+import { useDocumentTitle } from '@hooks/useDocumentTitle'
 
-interface IArticleListPageProps {
-}
-
-export function ArticleListPage(props: IArticleListPageProps) {
+export function ArticleListPage() {
   useDocumentTitle('Статьи')
-  
+
   return (
-    <PageContent className='p-8'>
+    <PageContent className="p-8">
       <ListComponent />
     </PageContent>
-  );
+  )
 }

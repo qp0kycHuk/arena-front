@@ -1,6 +1,6 @@
-import { EntityId } from "@reduxjs/toolkit"
+import { EntityId } from '@reduxjs/toolkit'
 
 export interface IHandbook {
-    id: EntityId
-    name: string
+  id: EntityId
+  name: string
 }

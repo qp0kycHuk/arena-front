@@ -1,3 +1,3 @@
-import { IHandbook } from "./Handbook";
+import { IHandbook } from './Handbook'
 
-export interface IRole extends IHandbook { }
+export type IRole = IHandbook

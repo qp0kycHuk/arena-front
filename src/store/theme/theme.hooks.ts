@@ -1,13 +1,13 @@
-import { useAppDispatch, useAppSelector } from "..";
-import { ITheme, toggleTheme } from "./theme.slice";
+import { useAppDispatch, useAppSelector } from '..'
+import { ITheme, toggleTheme } from './theme.slice'
 
 export function useToggleTheme() {
-    const theme = useAppSelector((state) => state.theme.theme)
-    const dispatch = useAppDispatch()
+  const theme = useAppSelector((state) => state.theme.theme)
+  const dispatch = useAppDispatch()
 
-    const toggle = (theme?: ITheme) => {
-        dispatch(toggleTheme(theme || null))
-    }
+  const toggle = (theme?: ITheme) => {
+    dispatch(toggleTheme(theme || null))
+  }
 
-    return { theme, toggle }
+  return { theme, toggle }
 }

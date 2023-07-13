@@ -1,1 +1,1 @@
-export { ReactComponent as UserIcon } from './user.svg';
+export { ReactComponent as UserIcon } from './user.svg'

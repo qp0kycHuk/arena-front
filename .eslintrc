@@ -13,7 +13,8 @@
     "tailwind.config.js",
     "postcss.config.js",
     "tailwind.form.js",
-    "tailwind.button.js"
+    "tailwind.button.js",
+    "craco.config.js"
   ],
   "overrides": [],
   "parser": "@typescript-eslint/parser",
@@ -41,8 +42,13 @@
     ],
     "semi": [
       "error",
-      "never"
+      "never",
+      {
+        "beforeStatementContinuationChars": "always"
+      }
     ],
+    "no-extra-semi": "off",
+    "@typescript-eslint/no-extra-semi": "off",
     "yoda": [
       "error",
       "never"
@@ -76,7 +82,7 @@
     "max-len": [
       1,
       {
-        "code": 120,
+        "code": 180,
         "ignoreStrings": true
       }
     ],
@@ -92,17 +98,8 @@
     "no-trailing-spaces": [
       1
     ],
-    "newline-after-var": [
-      1,
-      "always"
-    ],
     "padding-line-between-statements": [
       1,
-      {
-        "blankLine": "always",
-        "prev": "*",
-        "next": "return"
-      },
       {
         "blankLine": "always",
         "prev": "block-like",
@@ -123,7 +120,9 @@
         "prev": "import",
         "next": "import"
       }
-    ]
+    ],
+    "multiline-ternary": "off",
+    "function-call-argument-newline": ["warn","consistent"]
     // "padded-blocks": [
     //     "error",
     //     {

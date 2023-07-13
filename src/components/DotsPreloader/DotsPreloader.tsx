@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from 'react'
 import c from './DotsPreloader.module.scss'
 
 export interface IDotsPreloaderProps {
@@ -16,5 +16,5 @@ export function DotsPreloader({ className }: IDotsPreloaderProps) {
         <div className={'bg-primary text-gray-100 dark:text-black ' + c.dot} style={{ '--i': 5 } as React.CSSProperties}></div>
       </div>
     </div>
-  );
+  )
 }

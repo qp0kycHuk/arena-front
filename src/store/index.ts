@@ -10,21 +10,19 @@ import rolesReducer from './roles/roles.slice'
 import tagsReducer from './tags/tags.slice'
 import themeReducer from './theme/theme.slice'
 
-
 export const store = configureStore({
-    reducer: {
-        [rootApi.reducerPath]: rootApi.reducer,
-        auth: authReducer,
-        articles: articlesReducer,
-        folders: foldersReducer,
-        users: usersReducer,
-        positions: positionsReducer,
-        roles: rolesReducer,
-        tags: tagsReducer,
-        theme: themeReducer,
-    },
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(rootApi.middleware),
+  reducer: {
+    [rootApi.reducerPath]: rootApi.reducer,
+    auth: authReducer,
+    articles: articlesReducer,
+    folders: foldersReducer,
+    users: usersReducer,
+    positions: positionsReducer,
+    roles: rolesReducer,
+    tags: tagsReducer,
+    theme: themeReducer,
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(rootApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>
