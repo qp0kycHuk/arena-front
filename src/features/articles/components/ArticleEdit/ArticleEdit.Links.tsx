@@ -4,7 +4,9 @@ import { useArticleEditMainContext } from './ArticleEdit.Context'
 
 export function ArticleEditLinks() {
   const { article, update } = useArticleEditMainContext()
+
   const linksController = useLinks()
+  console.log(linksController.links)
 
   return <Links controller={linksController}></Links>
 }

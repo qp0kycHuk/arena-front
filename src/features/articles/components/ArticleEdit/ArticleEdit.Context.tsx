@@ -11,6 +11,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { IFile } from '@models/File'
 import { IArticle } from '@models/Article'
 import { useArticleControl, useFetchArticleById } from '@store/articles/articles.hooks'
+import { showAsyncError } from '@utils/helpers/errors'
+import { AxiosError } from 'axios'
 
 export const ArticleEditMainContext = createContext<IArticleMainContextValue>({} as IArticleMainContextValue)
 export const ArticleEditUtilsContext = createContext<IArticleUtilsContextValue>({} as IArticleUtilsContextValue)
@@ -103,32 +105,38 @@ export function ArticleEditContextProvider({ children, articleId }: IArticleEdit
       })
 
       if (filesFormData.has('files[]')) {
-        const result = await filesApi().upload(filesFormData)
-        const items = result.data.items
+        try {
+          const result = await filesApi().upload(filesFormData)
+          const items = result.data.items
 
-        const updatedEditorContent = editorContentUpdate(JSON.parse(editableArticle.contentJson || '{}'), (item) => {
-          if (item.type === 'image') {
-            const uploadedFileIndex = uploadedFileItems.findIndex((fileItem) => fileItem.src === item.attrs.src)
+          const updatedEditorContent = editorContentUpdate(JSON.parse(editableArticle.contentJson || '{}'), (item) => {
+            if (item.type === 'image') {
+              const uploadedFileIndex = uploadedFileItems.findIndex((fileItem) => fileItem.src === item.attrs.src)
 
-            if (uploadedFileIndex >= 0) {
-              return {
-                ...item,
-                attrs: {
-                  ...item.attrs,
-                  src: items[uploadedFileIndex].src,
-                },
+              if (uploadedFileIndex >= 0) {
+                return {
+                  ...item,
+                  attrs: {
+                    ...item.attrs,
+                    src: items[uploadedFileIndex].src,
+                  },
+                }
               }
             }
-          }
 
-          return item
-        })
+            return item
+          })
 
-        formData.set('content', JSON.stringify(updatedEditorContent))
+          formData.set('content', JSON.stringify(updatedEditorContent))
 
-        items.forEach((fileItem) => {
-          formData.append('attachment[]', fileItem.id as string)
-        })
+          items.forEach((fileItem) => {
+            formData.append('attachment[]', fileItem.id as string)
+          })
+        } catch (error) {
+          showAsyncError((error as AxiosError).response?.data as IErrorData)
+          loadingEnd()
+          return
+        }
       }
 
       const updatedArticle = await upsertArticle(formData)
