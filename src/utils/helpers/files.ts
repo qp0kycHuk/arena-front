@@ -46,6 +46,7 @@ function getVideoPreview(file: File, seekTo = 0.0) {
         reject('video is too short.')
         return
       }
+
       setTimeout(() => {
         videoPlayer.currentTime = seekTo
       }, 200)
@@ -56,6 +57,7 @@ function getVideoPreview(file: File, seekTo = 0.0) {
         canvas.height = videoPlayer.videoHeight / 2
 
         const ctx = canvas.getContext('2d')
+
         if (!ctx) {
           reject('Can`t get canvas context')
           return
@@ -82,6 +84,7 @@ function getImagePreview(file: File) {
   return new Promise<string>((resolve, reject) => {
     const reader = new FileReader()
     reader.readAsDataURL(file)
+
     reader.onload = () => {
       if (reader.result) {
         resolve(reader.result.toString())
