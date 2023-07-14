@@ -17,6 +17,9 @@ export const FileBlockExtension = Node.create<IOptions>({
       name: {
         default: '',
       },
+      id: {
+        default: '',
+      },
     }
   },
 

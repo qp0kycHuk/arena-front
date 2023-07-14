@@ -1,5 +1,6 @@
 import { imageExtention, videoExtention } from '@utils/const/extentions'
 import { getRandomUUID } from './uniqueId'
+import { IFile } from '@models/File'
 
 /**
  * generate data image preview for images or video files
@@ -141,7 +142,8 @@ export async function getFileItems(files: File[]) {
         id: getRandomUUID(),
         src: dataUrl || '',
         file,
-      }
+        name: file.name,
+      } as IFile
     })
   )
 }

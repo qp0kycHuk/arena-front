@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react'
 import { Editor, EditorControl, useEditor, useInitialContent } from '@features/editor'
-import { imageExtention } from '@utils/const/extentions'
+import { docExtention, imageExtention } from '@utils/const/extentions'
 import { filterFiles } from '@utils/index'
 import type { EditorEvents, Editor as EditorType } from '@tiptap/react'
 import React from 'react'
@@ -46,6 +46,7 @@ export function ArticleEditEditor() {
       const images = filterFiles(files, [imageExtention.regex])
       const pastedFileItems = await getFileItems(images)
 
+      // file items to editor images format
       const insertImages = pastedFileItems.map((item) => ({
         type: 'image',
         attrs: {
@@ -67,10 +68,41 @@ export function ArticleEditEditor() {
     [editor, article]
   )
 
+  const insertDocuments = useCallback(
+    async (files: File[]) => {
+      const images = filterFiles(files, [docExtention.regex])
+      const pastedFileItems = await getFileItems(images)
+
+      // file items to editor images format
+      const insertDocuments = pastedFileItems.map((item) => ({
+        type: 'fileBlock',
+        attrs: {
+          name: item.name,
+          id: item.id,
+        },
+      }))
+
+      editor
+        ?.chain()
+        .focus()
+        .insertContent(insertDocuments || [])
+        .run()
+
+      update({
+        files: [...(article?.files || []), ...pastedFileItems],
+      })
+    },
+    [editor, article]
+  )
+
   function filePasteHandler(event: React.ClipboardEvent) {
     const files = Array.from(event.clipboardData.files)
 
-    insertImages(files)
+    const images = filterFiles(files, [imageExtention.regex])
+    const documents = filterFiles(files, [docExtention.regex])
+
+    insertDocuments(documents)
+    insertImages(images)
   }
 
   function imageAddHandler(files: File[]) {
