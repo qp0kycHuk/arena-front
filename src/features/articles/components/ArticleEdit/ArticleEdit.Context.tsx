@@ -13,6 +13,7 @@ import { IArticle } from '@models/Article'
 import { useArticleControl, useFetchArticleById } from '@store/articles/articles.hooks'
 import { showAsyncError } from '@utils/helpers/errors'
 import { AxiosError } from 'axios'
+import { linksApi } from '@store/links/links.api'
 
 export const ArticleEditMainContext = createContext<IArticleMainContextValue>({} as IArticleMainContextValue)
 export const ArticleEditUtilsContext = createContext<IArticleUtilsContextValue>({} as IArticleUtilsContextValue)
@@ -92,45 +93,82 @@ export function ArticleEditContextProvider({ children, articleId }: IArticleEdit
       const formData = getFormData()
 
       // upload files and update content with images src`s
-      const uploadedFileItems: IFile[] = []
-      const filesFormData: IUploadRequest = new FormData()
+      {
+        const uploadedFileItems: IFile[] = []
+        const filesFormData: IUploadRequest = new FormData()
 
-      editableArticle.files?.forEach((item) => {
-        if (item.file) {
-          filesFormData.append('files[]', item.file)
-          uploadedFileItems.push(item)
-        } else {
-          formData.append('attachment[]', item.id as string)
-        }
-      })
+        editableArticle.files?.forEach((item) => {
+          if (item.file) {
+            filesFormData.append('files[]', item.file)
+            uploadedFileItems.push(item)
+          } else {
+            formData.append('attachment[]', item.id as string)
+          }
+        })
 
-      if (filesFormData.has('files[]')) {
-        try {
-          const result = await filesApi().upload(filesFormData)
-          const items = result.data.items
+        if (filesFormData.has('files[]')) {
+          try {
+            const result = await filesApi().upload(filesFormData)
+            const items = result.data.items
 
-          const updatedEditorContent = editorContentUpdate(JSON.parse(editableArticle.contentJson || '{}'), (item) => {
-            if (item.type === 'image') {
-              const uploadedFileIndex = uploadedFileItems.findIndex((fileItem) => fileItem.src === item.attrs.src)
+            const updatedEditorContent = editorContentUpdate(JSON.parse(editableArticle.contentJson || '{}'), (item) => {
+              if (item.type === 'image') {
+                const uploadedFileIndex = uploadedFileItems.findIndex((fileItem) => fileItem.src === item.attrs.src)
 
-              if (uploadedFileIndex >= 0) {
-                return {
-                  ...item,
-                  attrs: {
-                    ...item.attrs,
-                    src: items[uploadedFileIndex].src,
-                  },
+                if (uploadedFileIndex >= 0) {
+                  return {
+                    ...item,
+                    attrs: {
+                      ...item.attrs,
+                      src: items[uploadedFileIndex].src,
+                      id: items[uploadedFileIndex].id,
+                    },
+                  }
                 }
               }
-            }
 
-            return item
-          })
+              return item
+            })
 
-          formData.set('content', JSON.stringify(updatedEditorContent))
+            formData.set('content', JSON.stringify(updatedEditorContent))
 
-          items.forEach((fileItem) => {
-            formData.append('attachment[]', fileItem.id as string)
+            items.forEach((fileItem) => {
+              formData.append('attachment[]', fileItem.id as string)
+            })
+          } catch (error) {
+            showAsyncError((error as AxiosError).response?.data as IErrorData)
+            loadingEnd()
+            return
+          }
+        }
+      }
+
+      // create links
+      if (editableArticle.links) {
+        try {
+          const promises = editableArticle.links
+            .filter((link) => link.name && link.url)
+            .map((link) => {
+              const linkFormData = new FormData()
+              linkFormData.append('name', link.name)
+              linkFormData.append('url', link.url || '')
+
+              if (link.id) {
+                linkFormData.append('id', link.id as string)
+                return linksApi.update(linkFormData)
+              } else {
+                if (!user) {
+                  throw new Error('user is undefined')
+                }
+
+                linkFormData.append('owner_id', user.id.toString())
+                return linksApi.create(linkFormData)
+              }
+            })
+
+          const linksResult = await Promise.all(promises)
+          linksResult.forEach((res) => {
+            formData.append('links[]', res.data.item.id as string)
           })
         } catch (error) {
           showAsyncError((error as AxiosError).response?.data as IErrorData)
@@ -143,7 +181,7 @@ export function ArticleEditContextProvider({ children, articleId }: IArticleEdit
       loadingEnd()
 
       if (updatedArticle?.id) {
-        navigate(getRoute().articles(updatedArticle.id))
+        // navigate(getRoute().articles(updatedArticle.id))
       }
     },
     [getFormData]

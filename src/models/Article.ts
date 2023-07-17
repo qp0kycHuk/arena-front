@@ -2,6 +2,7 @@ import { EntityId } from '@reduxjs/toolkit'
 import { ICategory } from './Category'
 import { IFile } from './File'
 import { ITag } from './Tag'
+import { ILink } from './Link'
 
 export interface IArticle {
   id: EntityId
@@ -16,4 +17,5 @@ export interface IArticle {
   categories: ICategory[]
   tags: ITag[]
   files: IFile[]
+  links: ILink[]
 }
