@@ -3,12 +3,15 @@ import { useCallback } from 'react'
 import { MenuButton } from './MenuButton'
 import { InsertLinkIcon } from '@assets/icons/stroke'
 import type { Editor } from '@tiptap/react'
+import { ILink } from '@models/Link'
+import { getEditorSelection } from '@features/editor/hooks/useEditor'
 
 interface ILinkMenuProps {
   editor: Editor
+  onLink(link: Partial<ILink>): void
 }
 
-export function LinkMenu({ editor }: ILinkMenuProps) {
+export function LinkMenu({ editor, onLink }: ILinkMenuProps) {
   const setLink = useCallback(() => {
     const previousUrl = editor.getAttributes('link').href
     const url = window.prompt('URL', previousUrl)
@@ -24,6 +27,11 @@ export function LinkMenu({ editor }: ILinkMenuProps) {
 
       return
     }
+
+    onLink({
+      url,
+      name: getEditorSelection(editor),
+    })
 
     // update link
     editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run()

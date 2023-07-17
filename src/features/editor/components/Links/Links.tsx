@@ -6,7 +6,7 @@ import { ILink } from '@models/Link'
 
 interface ILinksProps {
   links: Partial<ILink>[]
-  onChange(links: Partial<ILink>[]): void
+  onChange(links: Partial<ILink>[], action?: string): void
 }
 
 export function Links({ links, onChange }: ILinksProps) {
@@ -55,7 +55,8 @@ export function Links({ links, onChange }: ILinksProps) {
         }
 
         return true
-      })
+      }),
+      'remove'
     )
   }
 

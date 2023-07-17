@@ -6,8 +6,7 @@ import { ILink } from '@models/Link'
 export function ArticleEditLinks() {
   const { article, update } = useArticleEditMainContext()
 
-  function changeHandler(updatedLinks: Partial<ILink>[]) {
-    console.log(updatedLinks)
+  function changeHandler(updatedLinks: Partial<ILink>[], action: string) {
     update({
       links: updatedLinks as ILink[],
     })

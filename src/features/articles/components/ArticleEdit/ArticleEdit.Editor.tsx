@@ -1,13 +1,14 @@
 import { useCallback, useMemo } from 'react'
 import { Editor, EditorControl, useEditor, useInitialContent } from '@features/editor'
 import { docExtention, imageExtention } from '@utils/const/extentions'
-import { filterFiles } from '@utils/index'
+import { filterFiles, getRandomUUID } from '@utils/index'
 import type { EditorEvents, Editor as EditorType } from '@tiptap/react'
 import React from 'react'
 import { useArticleEditMainContext } from './ArticleEdit.Context'
 import { IOptions } from '@features/editor/hooks/useEditor'
 import { getFileItems } from '@utils/helpers/files'
 import { useDebouncedCallback } from 'use-debounce'
+import { ILink } from '@models/Link'
 
 // TODO try remove duplicate with ArticleEditImages component
 
@@ -32,6 +33,7 @@ export function ArticleEditEditor() {
   const options: IOptions = useMemo(() => {
     return {
       placeholder: 'Напишите статью...',
+      onLink: linkAddHandler,
       config: {
         content: initialEditorContent,
         onUpdate: debouncedUpdateHandler,
@@ -105,14 +107,22 @@ export function ArticleEditEditor() {
     insertImages(images)
   }
 
-  function imageAddHandler(files: File[]) {
-    insertImages(files)
+  function linkAddHandler(link: Partial<ILink>) {
+    update({
+      links: [
+        ...(article?.links || []),
+        {
+          key: getRandomUUID(),
+          ...link,
+        },
+      ],
+    })
   }
 
   return (
     <div>
-      <EditorControl onImageAdd={imageAddHandler} editor={editor} className="sticky z-10 -ml-4 -mr-4 top-16" />
-      <Editor onPaste={filePasteHandler} editor={editor} className="min-h-[260px] flex flex-col" />
+      <EditorControl onLink={linkAddHandler} onImageAdd={insertImages} editor={editor} className="sticky z-10 -ml-4 -mr-4 top-16" />
+      <Editor onLink={linkAddHandler} onPaste={filePasteHandler} editor={editor} className="min-h-[260px] flex flex-col" />
     </div>
   )
 }

@@ -17,5 +17,5 @@ export interface IArticle {
   categories: ICategory[]
   tags: ITag[]
   files: IFile[]
-  links: ILink[]
+  links: Partial<ILink>[]
 }

@@ -147,11 +147,12 @@ export function ArticleEditContextProvider({ children, articleId }: IArticleEdit
       if (editableArticle.links) {
         try {
           const promises = editableArticle.links
-            .filter((link) => link.name && link.url)
+            .filter((link) => link.url)
             .map((link) => {
               const linkFormData = new FormData()
-              linkFormData.append('name', link.name)
-              linkFormData.append('url', link.url || '')
+              const name = (link.name || link.url?.replace(/^https?\:\/\//i, '')) as string
+              linkFormData.append('name', name)
+              linkFormData.append('url', link.url as string)
 
               if (link.id) {
                 linkFormData.append('id', link.id as string)
@@ -181,7 +182,7 @@ export function ArticleEditContextProvider({ children, articleId }: IArticleEdit
       loadingEnd()
 
       if (updatedArticle?.id) {
-        // navigate(getRoute().articles(updatedArticle.id))
+        navigate(getRoute().articles(updatedArticle.id))
       }
     },
     [getFormData]
