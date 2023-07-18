@@ -13,7 +13,7 @@ export function ArticleViewLinks({ article }: IArticleViewLinksProps) {
   }
 
   return (
-    <>
+    <div className="mb-8">
       <div className="mb-5 font-semibold">Ссылки</div>
       {article?.links.map((link, index) => (
         <a href={link.url} target="_blank" key={index} rel="noreferrer" className="flex items-center py-2 text-sm hover:underline">
@@ -21,6 +21,6 @@ export function ArticleViewLinks({ article }: IArticleViewLinksProps) {
           {link.name}
         </a>
       ))}
-    </>
+    </div>
   )
 }
