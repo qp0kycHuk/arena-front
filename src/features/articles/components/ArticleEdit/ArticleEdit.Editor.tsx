@@ -108,14 +108,20 @@ export function ArticleEditEditor() {
   }
 
   function linkAddHandler(link: Partial<ILink>) {
-    update({
-      links: [
-        ...(article?.links || []),
-        {
+    update((prev) => {
+      const newLinks: Partial<ILink>[] = (prev?.links || []).filter((link) => link.name || link.url)
+
+      if (!newLinks.find((item) => item.url?.trim() === link.url?.trim())) {
+        newLinks.push({
           key: getRandomUUID(),
           ...link,
-        },
-      ],
+        })
+      }
+
+      return {
+        ...prev,
+        links: newLinks,
+      }
     })
   }
 

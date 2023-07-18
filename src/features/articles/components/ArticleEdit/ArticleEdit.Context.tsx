@@ -3,7 +3,7 @@ import { useAuth } from '@store/auth'
 import { ICreateRequest, IUpdateRequest } from '@store/articles/articles.api'
 import { IUploadRequest, filesApi } from '@store/files/files.api'
 import { editorContentUpdate } from '@features/editor/hooks/useEditor'
-import { useEditableEntity } from '@hooks/useEditableEntity'
+import { DispatchEditableEntity, useEditableEntity } from '@hooks/useEditableEntity'
 import { useLoading } from '@hooks/useLoading'
 import { getRoute } from '@utils/index'
 import { toast } from '@lib/Toast'
@@ -198,7 +198,7 @@ export function ArticleEditContextProvider({ children, articleId }: IArticleEdit
 interface IArticleMainContextValue {
   article?: Partial<IEditableArticle>
   loading: boolean
-  update(updated: Partial<IEditableArticle>): void
+  update(updated: DispatchEditableEntity<IEditableArticle>): void
 }
 
 interface IArticleUtilsContextValue {
