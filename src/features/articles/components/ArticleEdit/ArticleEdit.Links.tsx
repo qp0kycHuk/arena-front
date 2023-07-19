@@ -1,10 +1,16 @@
 import React from 'react'
-import { Links, useLinks } from '@features/editor'
+import { Links } from '@features/editor'
 import { useArticleEditMainContext } from './ArticleEdit.Context'
+import { ILink } from '@models/Link'
 
 export function ArticleEditLinks() {
   const { article, update } = useArticleEditMainContext()
-  const linksController = useLinks()
 
-  return <Links controller={linksController}></Links>
+  function changeHandler(updatedLinks: Partial<ILink>[], action: string) {
+    update({
+      links: updatedLinks as ILink[],
+    })
+  }
+
+  return <Links links={article?.links || []} onChange={changeHandler}></Links>
 }

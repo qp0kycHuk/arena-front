@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Button } from '@features/ui'
 import { CrossIcon, DocumentIcon, ImageIcon } from '@assets/icons/stroke'
-import { getFilePreview } from '@utils/index'
 
 interface IUpliaderItemProps {
   item: IFileItem
@@ -28,7 +27,7 @@ export function UploaderItem({ item, extention, rounded, sign, update, remove }:
               ) : (
                 <div className="flex flex-col items-center">
                   <DocumentIcon className="mb-2 text-3xl text-gray" />
-                  <div className="w-full text-xs text-center truncate">{item.title}</div>
+                  <div className="w-full text-xs text-center truncate">{item.name}</div>
                 </div>
               )}
             </div>
@@ -38,7 +37,7 @@ export function UploaderItem({ item, extention, rounded, sign, update, remove }:
           <CrossIcon />
         </Button>
       </div>
-      {isMedia && sign ? <input type="text" defaultValue={item.title} className="max-w-full mt-2 text-xs border-0" placeholder="Добавить название..." /> : null}
+      {isMedia && sign ? <input type="text" defaultValue={item.name} readOnly className="max-w-full mt-2 text-xs border-0" placeholder="Добавить название..." /> : null}
     </div>
   )
 }

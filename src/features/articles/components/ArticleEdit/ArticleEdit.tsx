@@ -38,11 +38,9 @@ export function ArticleEdit({ articleId }: IArticleEditProps) {
           <ArticleEditImages />
         </div>
         {/* <div className="border-t border-gray border-opacity-30"></div>
-                <div className="px-8 py-6">
-                    <Uploader uploader={videoUploader} >
-                        <div className="font-semibold">Видео</div>
-                    </Uploader>
-                </div> */}
+        <div className="px-8 py-6">
+          <ArticleEditDocuments />
+        </div> */}
         <div className="border-t border-gray border-opacity-30"></div>
         <div className="px-8 py-6">
           <ArticleEditLinks />

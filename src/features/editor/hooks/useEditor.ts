@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useEditor as useEditorConfig, EditorOptions, generateHTML, JSONContent } from '@tiptap/react'
+import { useEditor as useEditorConfig, EditorOptions, generateHTML, JSONContent, Editor } from '@tiptap/react'
 import { Node } from '@tiptap/core'
 import StarterKit from '@tiptap/starter-kit'
 import Underline from '@tiptap/extension-underline'
@@ -24,6 +24,7 @@ import php from 'highlight.js/lib/languages/php'
 import { FileBlock } from '../components/TextEditor/FileBlock'
 import { FileBlockExtension } from '../lib/file-block-extension'
 import { IFile } from '@models/File'
+import { ILink } from '@models/Link'
 
 lowlight.registerLanguage('html', html)
 lowlight.registerLanguage('css', css)
@@ -35,12 +36,14 @@ export interface IOptions {
   config?: Partial<EditorOptions> | undefined
   placeholder?: string
   uploadFunction?(files: File[]): Promise<IFile[] | undefined>
+  onLink?(link: Partial<ILink>): void
 }
 
 const defaultOptions = {
   config: {},
   placeholder: 'Type here',
   uploadFunction: undefined,
+  onLink: undefined,
 }
 
 const LowlightCustom = Node.create({
@@ -90,7 +93,7 @@ export const editorExtensions = [
   CodeBlockLowlight.configure({ lowlight }),
   TextAlign.configure({ types: ['heading', 'paragraph'] }),
   Highlight.configure({ multicolor: true }),
-  Link.configure({ openOnClick: false }),
+
   CustomImage.configure({ allowBase64: true }),
   LowlightCustom,
   FileBlockExtension.configure({
@@ -99,11 +102,22 @@ export const editorExtensions = [
 ]
 
 export function useEditor(options?: IOptions, deps?: any[]) {
-  const { config, placeholder } = options || defaultOptions
+  const { config, placeholder, onLink } = options || defaultOptions
 
   return useEditorConfig(
     {
-      extensions: [...editorExtensions, Placeholder.configure({ placeholder: placeholder })],
+      extensions: [
+        ...editorExtensions,
+        Placeholder.configure({ placeholder: placeholder }),
+        Link.configure({
+          openOnClick: false,
+          validate(url) {
+            onLink?.({ url })
+
+            return /^https?:\/\//.test(url)
+          },
+        }),
+      ],
 
       ...config,
     },
@@ -143,7 +157,7 @@ export function useGenerateHtml(content = ''): string {
         })
       }
 
-      return json ? generateHTML(json, editorExtensions) : ''
+      return json ? generateHTML(json, [...editorExtensions, Link.configure({})]) : ''
     } catch (error) {
       return content ? content : ''
     }
@@ -168,4 +182,8 @@ export function editorContentFilter(editorJson: any, filterFn: (item: any) => an
   }
 
   return editorJson
+}
+
+export function getEditorSelection(editor: Editor): string {
+  return editor.view.state.selection.content().content.textBetween(0, editor.view.state.selection.content().content.size)
 }

@@ -9,9 +9,11 @@ export const rootApi = createApi({
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.token
+
       if (token) {
         headers.set(process.env.REACT_APP_CSRF_HEADER_NAME as string, token)
       }
+
       headers.set('Accept', 'application/json')
       headers.set('X-Requested-With', 'XMLHttpRequest')
       return headers

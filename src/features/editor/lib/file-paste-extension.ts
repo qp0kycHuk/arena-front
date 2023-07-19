@@ -13,20 +13,6 @@ export interface FilePasteOptions {
   }
 }
 
-function dataToFilesArray(data: DataTransferItemList): File[] {
-  const arr: File[] = []
-
-  Array.from(data)
-    .map((item) => item.getAsFile())
-    .forEach((item) => {
-      if (item !== null) {
-        arr.push(item)
-      }
-    })
-
-  return arr
-}
-
 export async function filePasteHandler(files: File[], editor: Editor) {
   const images = filterFiles(files, [imageExtention.regex])
   const documents = filterFiles(files, [docExtention.regex])

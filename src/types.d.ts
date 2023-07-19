@@ -56,7 +56,7 @@ interface IFileItem {
   key?: string
   src?: string
   preview?: string
-  title?: string
+  name?: string
   file?: File
   extention?: IExtention
 }

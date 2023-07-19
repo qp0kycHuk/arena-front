@@ -5,7 +5,7 @@ import { useArticleEditMainContext, useArticleEditUtilsContext } from './Article
 import { getFileItems } from '@utils/helpers/files'
 
 // control upload and remove images
-export function ArticleEditImages() {
+export function ArticleEditDocuments() {
   const { article, update } = useArticleEditMainContext()
   const { loadingStart, loadingEnd } = useArticleEditUtilsContext()
 
@@ -47,7 +47,7 @@ export function ArticleEditImages() {
 
   return (
     <Uploader fileItems={fileItems} onChange={changeHandler} onRemove={removeHandler}>
-      <div className="font-semibold">Дополнительные изображения</div>
+      <div className="font-semibold">Документы</div>
     </Uploader>
   )
 }
