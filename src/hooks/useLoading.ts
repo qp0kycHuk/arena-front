@@ -1,8 +1,7 @@
-import { useCallback, useState } from 'react'
 import { useToggle } from './useToggle'
 
 export function useLoading(initial = false) {
-  const [loading, toggle, on, off] = useToggle(initial)
+  const [loading, , on, off] = useToggle(initial)
 
   return {
     loading,

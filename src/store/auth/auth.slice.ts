@@ -46,6 +46,7 @@ const slice = createSlice({
         }
       }
     }
+
     builder.addCase(fetchUserById.fulfilled, updateCurrentUser).addCase(updateUser.fulfilled, updateCurrentUser)
 
     builder.addMatcher(authApi.endpoints.initCsrf.matchFulfilled, (state) => {

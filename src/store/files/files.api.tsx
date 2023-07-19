@@ -10,7 +10,7 @@ export type IUploadRequest = TypedFormData<UploadParams>
 export function filesApi() {
   const api = createRootApi()
 
-  async function upload(formData: IUploadRequest): Promise<AxiosResponse<IListResponse<IFile>, any>> {
+  async function upload(formData: IUploadRequest): Promise<AxiosResponse<IListResponse<IFile>, unknown>> {
     return await api.post(ROOT_ENDPOINT_URL, formData)
   }
 

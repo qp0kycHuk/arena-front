@@ -9,7 +9,7 @@ interface IConfig {
   url: string
 }
 
-type UpsertResponse<EntityType> = AxiosResponse<IItemResponse<EntityType>, any>
+type UpsertResponse<EntityType> = AxiosResponse<IItemResponse<EntityType>, unknown>
 
 export class EntitesApi<EntityType, C, U> {
   private ROOT_ENDPOINT_URL: string
@@ -18,7 +18,7 @@ export class EntitesApi<EntityType, C, U> {
     this.ROOT_ENDPOINT_URL = url
   }
 
-  async fetch(): Promise<AxiosResponse<IListResponse<EntityType>, any>> {
+  async fetch(): Promise<AxiosResponse<IListResponse<EntityType>, unknown>> {
     return await this.rootApi().get(this.ROOT_ENDPOINT_URL)
   }
 
