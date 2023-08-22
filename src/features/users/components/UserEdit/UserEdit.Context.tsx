@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom'
 import { getRoute } from '@utils/index'
 import { dateToSQLFormatString } from '@utils/helpers/dates'
 import { EMPTY_OBJECT } from '@utils/const'
+import { useAuth } from '@store/auth'
+import { isUser } from '@features/users'
 
 export const UserEditContext = createContext<IUserEditContextValue>({} as IUserEditContextValue)
 export const useUserEditContext = () => useContext(UserEditContext)
@@ -17,6 +19,10 @@ export function UserEditContextProvider({ children, user }: IUserEditContextProv
   const { loading, loadingStart, loadingEnd } = useLoading()
   const { upsert: upsertUser } = useUserControl()
   const navigate = useNavigate()
+
+  const { user: currentUser } = useAuth()
+  const isCurrentUserRole = isUser(currentUser)
+  const isCurrentUser = currentUser?.id === user?.id
 
   function getFormData(): ICreateRequest {
     const formData: ICreateRequest = new FormData()
@@ -42,15 +48,19 @@ export function UserEditContextProvider({ children, user }: IUserEditContextProv
       formData.append('image', data.imageFile)
     }
 
-    data.positions.forEach((position) => {
-      formData.append('positions[]', position.id as string)
-    })
+    if (isCurrentUserRole.admin) {
+      formData.append('role', data.role || '')
+
+      data.positions.forEach((position) => {
+        formData.append('positions[]', position.id as string)
+      })
+    }
 
     return formData
   }
 
-  async function submitHandler(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
+  async function submitHandler(event?: FormEvent<HTMLFormElement>) {
+    event?.preventDefault()
     const formData = getFormData()
 
     loadingStart()
@@ -62,6 +72,15 @@ export function UserEditContextProvider({ children, user }: IUserEditContextProv
     }
   }
 
+  async function toggleStatus() {
+    const formData = getFormData()
+    formData.append('status', editableUser.status == 'active' ? 'inactive' : 'active')
+
+    loadingStart()
+    await upsertUser(formData)
+    loadingEnd()
+  }
+
   return (
     <UserEditContext.Provider
       value={{
@@ -69,6 +88,9 @@ export function UserEditContextProvider({ children, user }: IUserEditContextProv
         loading,
         update,
         submitHandler,
+        isCurrentUserRole,
+        isCurrentUser,
+        toggleStatus,
       }}
     >
       {children}
@@ -89,5 +111,8 @@ interface IUserEditContextValue {
   user: Partial<IEditableUser>
   loading: boolean
   update(updated: Partial<IEditableUser>): void
-  submitHandler(event: React.FormEvent<HTMLFormElement>): Promise<void>
+  submitHandler(event?: React.FormEvent<HTMLFormElement>): Promise<void>
+  toggleStatus(): void
+  isCurrentUserRole: ReturnType<typeof isUser>
+  isCurrentUser: boolean
 }

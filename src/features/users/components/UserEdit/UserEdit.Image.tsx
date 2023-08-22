@@ -3,9 +3,25 @@ import { IUser } from '@models/User'
 import React, { useMemo } from 'react'
 import { useUserEditContext } from './UserEdit.Context'
 import { getFilePreview } from '@utils/index'
+import { UserIcon } from '@assets/icons/fill'
+import classNames from 'classnames'
 
 export function UserEditImage() {
-  const { user, update } = useUserEditContext()
+  const { user, update, isCurrentUser } = useUserEditContext()
+
+  if (!isCurrentUser) {
+    return (
+      <div
+        className={classNames('relative w-24 h-24 rounded-full', !user.image_src ? 'bg-gray bg-opacity-20 flex' : null)}
+      >
+        {user.image_src ? (
+          <img className="object-cover w-full h-full rounded-full" src={user.image_src} alt="" />
+        ) : (
+          <UserIcon className="m-auto text-3xl text-gray" />
+        )}
+      </div>
+    )
+  }
 
   const fileItems = useMemo(() => {
     if (user?.image_src) {
@@ -47,5 +63,14 @@ export function UserEditImage() {
     })
   }
 
-  return <Uploader rounded sign={false} multiple={false} fileItems={fileItems} onChange={changeHandler} onRemove={removeImage} />
+  return (
+    <Uploader
+      rounded
+      sign={false}
+      multiple={false}
+      fileItems={fileItems}
+      onChange={changeHandler}
+      onRemove={removeImage}
+    />
+  )
 }

@@ -4,6 +4,8 @@ import { Button } from '@features/ui'
 import { IArticle } from '@models/Article'
 import { getRoute } from '@utils/index'
 import { Link } from 'react-router-dom'
+import { isUser } from '@features/users'
+import { useAuth } from '@store/auth'
 
 interface IArticleViewButtonsProps {
   article?: IArticle
@@ -11,6 +13,9 @@ interface IArticleViewButtonsProps {
 }
 
 export function ArticleViewButtons({ article, isLoading }: IArticleViewButtonsProps) {
+  const { user: currentUser } = useAuth()
+  const isCurrentUserRole = isUser(currentUser)
+
   if (!article || isLoading) {
     return (
       <div className="flex gap-4">
@@ -26,11 +31,13 @@ export function ArticleViewButtons({ article, isLoading }: IArticleViewButtonsPr
 
   return (
     <div className="flex gap-4">
-      <Link to={getRoute().articles.edit(article.id)}>
-        <Button variant="contur" color="gray">
-          <PencilIcon className="text-2xl" />
-        </Button>
-      </Link>
+      {(article.owner_id === currentUser?.id || isCurrentUserRole.admin) && (
+        <Link to={getRoute().articles.edit(article.id)}>
+          <Button variant="contur" color="gray">
+            <PencilIcon className="text-2xl" />
+          </Button>
+        </Link>
+      )}
       <Button variant="contur" color="gray">
         <BookmarkIcon className="text-2xl" />
       </Button>

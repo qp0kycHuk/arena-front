@@ -4,7 +4,7 @@ import { useFetchPositions } from '@store/positions/positions.hooks'
 import React from 'react'
 
 export function UserEditPosition() {
-  const { user, update } = useUserEditContext()
+  const { user, update, isCurrentUserRole } = useUserEditContext()
   const positions = useFetchPositions()
 
   function changeHandler(event: React.ChangeEvent<HTMLSelectElement>) {
@@ -18,7 +18,12 @@ export function UserEditPosition() {
   return (
     <label className="block w-full">
       <div className="mb-2 text-sm font-medium">Должность</div>
-      <Select className="w-full" value={user.positions?.[0]?.id || 'default'} onChange={changeHandler}>
+      <Select
+        className="w-full"
+        value={user.positions?.[0]?.id || 'default'}
+        onChange={isCurrentUserRole.admin ? changeHandler : undefined}
+        disabled={!isCurrentUserRole.admin}
+      >
         <option disabled hidden value="default">
           Выберите
         </option>

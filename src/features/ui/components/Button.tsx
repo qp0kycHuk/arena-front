@@ -20,10 +20,10 @@ export type ButtonRef = React.ForwardedRef<HTMLElement>
 const baseClassNames = 'btn'
 
 const sizeClassNames: Record<Size, string> = {
-  xsmall: 'btn-xs',
-  small: 'btn-sm',
-  middle: 'btn-md',
-  large: 'btn-lg',
+  xs: 'btn-xs',
+  sm: 'btn-sm',
+  base: 'btn-md',
+  lg: 'btn-lg',
 }
 
 const colorClassNames: PartialRecord<Color, string> = {
@@ -43,17 +43,7 @@ const variantClassNames: Record<Variant, string> = {
 }
 
 function ButtonComponent(
-  {
-    children,
-    color = 'primary',
-    size = 'middle',
-    variant = 'fill',
-    as: ButtonTag = 'button',
-    rounded = false,
-    shadow = false,
-    icon = false,
-    ...props
-  }: ButtonProps,
+  { children, color = 'primary', size = 'base', variant = 'fill', as: ButtonTag = 'button', rounded = false, shadow = false, icon = false, ...props }: ButtonProps,
   ref: ButtonRef
 ) {
   const classNames = [
@@ -71,14 +61,7 @@ function ButtonComponent(
   ].join(' ')
 
   return (
-    <ButtonTag
-      ref={ref}
-      tabIndex={0}
-      type="button"
-      {...props}
-      onPointerDown={ripplePointerdownHandler}
-      className={classNames}
-    >
+    <ButtonTag ref={ref} tabIndex={0} type="button" {...props} onPointerDown={ripplePointerdownHandler} className={classNames}>
       {children}
     </ButtonTag>
   )

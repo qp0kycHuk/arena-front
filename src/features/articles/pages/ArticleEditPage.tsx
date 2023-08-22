@@ -13,7 +13,7 @@ export function ArticleEditPage() {
 
   return (
     <PageContent className="p-8">
-      <Button variant="text" size="small" className="mb-5">
+      <Button variant="text" size="sm" className="mb-5">
         <ToLeftIcon className="mr-2" />
         Назад
       </Button>

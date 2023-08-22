@@ -1,30 +1,31 @@
 import { Select } from '@features/ui'
 import { useUserEditContext } from './UserEdit.Context'
-import { useFetchRoles } from '@store/roles/roles.hooks'
 import React from 'react'
+import { roles } from '@features/users'
 
 export function UserEditRoles() {
-  const { user, update } = useUserEditContext()
-  const roles = useFetchRoles()
+  const { user, update, isCurrentUserRole } = useUserEditContext()
 
-  // function changeHandler(event: React.ChangeEvent<HTMLSelectElement>) {
-  //     const newPosition = roles.entities[event.target.value]
+  function changeHandler(event: React.ChangeEvent<HTMLSelectElement>) {
+    const newPosition = event.target.value as keyof typeof roles
 
-  //     update({
-  //         roles: newPosition ? [newPosition] : []
-  //     })
-  // }
+    update({
+      role: newPosition,
+    })
+  }
 
   return (
     <label className="block w-full">
-      <div className="mb-2 text-sm font-medium">Отчество</div>
-      <Select className="w-full" value={user.roles?.[0]?.id || 'default'}>
-        <option disabled hidden value="default">
-          Выберите
-        </option>
-        {roles.ids.map((id) => (
-          <option key={id} value={id}>
-            {roles.entities[id]?.name}
+      <div className="mb-2 text-sm font-medium">Роль</div>
+      <Select
+        className="w-full"
+        value={user.role || roles.subscriber.key}
+        onChange={isCurrentUserRole.admin ? changeHandler : undefined}
+        disabled={!isCurrentUserRole.admin}
+      >
+        {Object.values(roles).map(({ key, name }) => (
+          <option key={key} value={key}>
+            {name}
           </option>
         ))}
       </Select>

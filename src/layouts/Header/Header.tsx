@@ -18,14 +18,14 @@ export function Header() {
       </div>
       <CheckBox defaultChecked={theme === 'DARK'} onChange={(event) => toggleTheme()} className="mr-5" label="Dark mode" />
 
-      <Button variant="contur" size="small" color="gray">
+      <Button variant="contur" size="sm" color="gray">
         <BookmarkIcon className="text-2xl" />
       </Button>
       {auth.isLogedIn ? (
         <HeaderUser />
       ) : (
         <Link to="login" className="mx-2">
-          <Button variant="contur" size="small" color="gray">
+          <Button variant="contur" size="sm" color="gray">
             Login
           </Button>
         </Link>

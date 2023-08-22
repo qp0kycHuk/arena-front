@@ -1,49 +1,43 @@
 import React from 'react'
-import { Color, Size } from '../types'
 import classnames from 'classnames'
+import type { Color, Size } from '../types'
 
-interface IProps {
-  color?: Color
-  size?: Size
-  borderless?: boolean
+const baseClassName = 'input rounded-lg'
+
+const colorClassNames: PartialRecord<Color, string> = {
+  white: 'input-white',
+  black: 'input-black',
+  green: 'input-green',
+  yellow: 'input-yellow',
+  primary: 'input-primary',
+  red: 'input-red',
+  gray: 'input-gray',
+}
+
+const sizeClassNames: PartialRecord<Size, string> = {
+  xs: 'input-xs',
+  sm: 'input-sm',
+  base: 'input-base',
+  lg: 'input-lg',
+}
+
+function InputComponent({ color = 'primary', size, type = 'text', className, ...props }: InputProps, ref: InputRef) {
+  const classNames = getInputClassname({ color, size, className })
+
+  return <input placeholder="" {...props} type={type} ref={ref} className={classNames} />
+}
+
+export function getInputClassname({ color = 'primary', size, className }: InputProps) {
+  return classnames(baseClassName, color ? colorClassNames[color] : null, size ? sizeClassNames[size] : null, className)
+}
+
+export const Input = React.forwardRef(InputComponent)
+
+export interface IProps {
+  color?: keyof typeof colorClassNames
+  size?: keyof typeof sizeClassNames
   className?: string
 }
 
 export type InputProps = IProps & Omit<React.InputHTMLAttributes<HTMLInputElement>, keyof IProps>
 export type InputRef = React.ForwardedRef<HTMLInputElement>
-
-const baseClassNames = 'rounded-lg  outline-none disabled:pointer-events-none disabled:opacity-50 '
-
-const sizeClassNames: Record<Size, string> = {
-  xsmall: 'h-7',
-  small: 'h-10',
-  middle: 'h-12',
-  large: 'h-14',
-}
-
-export function InputComponent({ color = 'primary', size = 'middle', borderless = false, ...props }: InputProps, ref: InputRef) {
-  return (
-    <input
-      {...props}
-      ref={ref}
-      className={getUnputClassNames({
-        color,
-        size,
-        borderless,
-        ...props,
-      })}
-    />
-  )
-}
-
-export function getUnputClassNames({ color = 'primary', size = 'middle', borderless = false, className = '' }: IProps) {
-  return classnames(baseClassNames, sizeClassNames[size], className, {
-    ['pl-4']: !className?.includes('pl-') && !className?.includes('px-'),
-    ['pr-4']: !className?.includes('pr-') && !className?.includes('px-'),
-    ['bg-white dark:bg-opacity-5']: !className?.includes('bg-'),
-    ['border border-black border-opacity-10 focus:ring-1']: !borderless,
-    [`focus:border-${color}  focus:ring-${color}`]: !borderless,
-  })
-}
-
-export const Input = React.forwardRef(InputComponent)

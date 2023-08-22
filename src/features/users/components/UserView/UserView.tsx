@@ -9,6 +9,7 @@ import { UserViewImage } from './UserView.Image'
 import { UserViewName } from './UserView.Name'
 import { CakeIcon } from '@assets/icons/stroke'
 import { useAuth } from '@store/auth'
+import { isUser } from '@features/users/utils/isUser'
 
 interface IUserViewProps {
   user?: IUser
@@ -16,6 +17,8 @@ interface IUserViewProps {
 
 export function UserView({ user }: IUserViewProps) {
   const { user: currentUser } = useAuth()
+  const isCurrentUserRole = isUser(currentUser)
+  const isCurrentUser = currentUser?.id === user?.id
 
   return (
     <PageContent className="flex">
@@ -51,7 +54,7 @@ export function UserView({ user }: IUserViewProps) {
             </div>
           ) : null}
         </div>
-        {currentUser?.id === user?.id && (
+        {(isCurrentUser || isCurrentUserRole.admin) && (
           <Link to={getRoute().users.edit(user?.id)} className="block mt-4">
             <Button className="w-full">Редактировать</Button>
           </Link>
