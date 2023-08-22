@@ -97,14 +97,7 @@ export function UserEdit() {
           <div className="flex flex-col gap-5">
             <label className="block w-full">
               <div className="mb-2 text-sm font-medium">Логин</div>
-              <PhoneInput
-                value={user.phone || ''}
-                className="w-full"
-                required
-                readOnly
-                disabled={!isCurrentUser}
-                onChange={(event) => update({ phone: getUnmaskedPhoneValue(event.target.value) })}
-              />
+              <PhoneInput value={user.phone || ''} className="w-full" required readOnly disabled />
             </label>
           </div>
         </div>
