@@ -10,6 +10,7 @@ export function DatePicker({
   timepicker,
   onSelect,
   onChange,
+  onFocus,
   value,
   ...props
 }: IDatePickerProps) {
@@ -51,6 +52,6 @@ export function DatePicker({
   return <Input readOnly {...props} ref={inputRef} />
 }
 
-interface IDatePickerProps extends Partial<AirDatepickerOptions>, Omit<InputProps, 'onSelect' | 'value'> {
+interface IDatePickerProps extends Partial<AirDatepickerOptions>, Omit<InputProps, 'onFocus' | 'onSelect' | 'value'> {
   value?: string | string[] | Date | Date[]
 }
