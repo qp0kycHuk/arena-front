@@ -2,7 +2,6 @@ import React from 'react'
 import { BriefcaseIcon, CrownIcon, DocumentIcon, FoldersIcon, HandbooksIcon, ToTopIcon, UsersIcon } from '@assets/icons/stroke'
 import { Tag } from '@components/Tag'
 import { Button } from '@features/ui'
-import { Link, NavLink } from 'react-router-dom'
 import { getRoute } from '@utils/index'
 import { SidebarButton } from './SidebarButton'
 
@@ -32,7 +31,7 @@ export function Sidebar() {
         <Tag>#Дизайн</Tag>
         <Tag>#Команда</Tag>
       </div>
-      <Button variant="text" size="small" className="justify-start w-auto mt-5 -ml-2 -mr-2">
+      <Button variant="text" size="sm" className="justify-start w-auto mt-5 -ml-2 -mr-2">
         Показать всё
       </Button>
     </div>

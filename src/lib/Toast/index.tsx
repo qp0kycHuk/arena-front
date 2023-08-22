@@ -16,7 +16,7 @@ const contextClass = {
 
 const CloseButton = ({ closeToast, type }: CloseButtonProps) => {
   return (
-    <Button onClick={closeToast} variant="text" icon size="small" color={type === 'default' ? 'primary' : 'gray'}>
+    <Button onClick={closeToast} variant="text" icon size="sm" color={type === 'default' ? 'primary' : 'gray'}>
       <CrossIcon className={type !== 'default' ? 'text-white' : ''} />
     </Button>
   )

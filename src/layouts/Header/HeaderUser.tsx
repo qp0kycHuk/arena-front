@@ -30,7 +30,7 @@ export function HeaderUser() {
     <Menu
       align="end"
       menuButton={
-        <Button variant="text" size="small" className="px-3 ml-4" rounded shadow color="gray">
+        <Button variant="text" size="sm" className="px-3 ml-4" rounded shadow color="gray">
           <ToDownIcon className="text-base" />
           <div className="w-[22px] h-[22px] flex ml-2 text-white rounded-full bg-gray overflow-hidden">
             {user?.image_src ? <img src={user?.image_src} alt="" className="object-cover w-full h-full" /> : <UserIcon className="m-auto" />}

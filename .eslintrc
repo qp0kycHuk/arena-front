@@ -14,6 +14,7 @@
     "postcss.config.js",
     "tailwind.form.js",
     "tailwind.button.js",
+    "tailwind.input.js",
     "craco.config.js"
   ],
   "overrides": [],

@@ -24,7 +24,7 @@ export function ArticleItem({ article }: IArticleItemProps) {
         <div className="text-xs text-gray dark:text-gray-300">Созд: {new Date(article.created_at).toLocaleDateString()}</div>
         <div className="text-xs text-gray dark:text-gray-300">Ред: {new Date(article.updated_at).toLocaleDateString()}</div>
       </div>
-      <Button variant="text" size="small" color="gray" className="px-3 ml-3">
+      <Button variant="text" size="sm" color="gray" className="px-3 ml-3">
         <BookmarkIcon className="text-2xl fill-primary text-primary" />
       </Button>
     </div>
@@ -46,7 +46,7 @@ export function ArticleItemPlacehlder() {
         <div className="w-24 h-3 mb-1 ml-1 bg-opacity-50 animate-pulse bg-gray" />
         <div className="w-24 h-3 ml-1 bg-opacity-50 animate-pulse bg-gray" />
       </div>
-      <Button variant="text" size="small" color="gray" className="px-3 ml-3" disabled>
+      <Button variant="text" size="sm" color="gray" className="px-3 ml-3" disabled>
         <BookmarkIcon className="text-2xl" />
       </Button>
     </div>

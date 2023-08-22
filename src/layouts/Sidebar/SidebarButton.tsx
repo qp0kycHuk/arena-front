@@ -14,7 +14,7 @@ export function SidebarButton({ link, icon: Icon, title, children, className }: 
     return (
       <NavLink to={link}>
         {({ isActive }) => (
-          <Button className={'w-full ' + className} variant="text" size="small">
+          <Button className={'w-full ' + className} variant="text" size="sm">
             <Icon className={`mr-2 text-lg ${isActive ? 'text-primary' : 'text-gray dark:text-white'}`} />
             <div className={`mr-auto ${isActive ? '' : 'font-normal'} text-black dark:text-white`}>{title}</div>
 
@@ -26,7 +26,7 @@ export function SidebarButton({ link, icon: Icon, title, children, className }: 
   }
 
   return (
-    <Button className={'w-full ' + className} variant="text" size="small">
+    <Button className={'w-full ' + className} variant="text" size="sm">
       <Icon className="mr-2 text-lg text-gray dark:text-white" />
       <div className="mr-auto font-normal text-black dark:text-white">{title}</div>
 

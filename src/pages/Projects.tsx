@@ -48,12 +48,12 @@ export function Projects() {
             ) : null}
             <Menu align="end" menuButton={<Button className="ml-4 px-7"> Добавить </Button>}>
               <MenuItem>
-                <Button className="justify-start w-full" size="small" color="gray" variant="text" onClick={openCreateFolderOpen}>
+                <Button className="justify-start w-full" size="sm" color="gray" variant="text" onClick={openCreateFolderOpen}>
                   <FoldersIcon className="mr-2" /> Папка
                 </Button>
               </MenuItem>
               <Link to={folderId ? getRoute().projects(folderId + '/article/create') : getRoute().articles.create()}>
-                <Button className="justify-start w-full" size="small" color="gray" variant="text">
+                <Button className="justify-start w-full" size="sm" color="gray" variant="text">
                   {' '}
                   <FileTextIcon className="mr-2" /> Статья{' '}
                 </Button>

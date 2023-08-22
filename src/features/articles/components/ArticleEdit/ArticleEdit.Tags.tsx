@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { EntityId } from '@reduxjs/toolkit'
 import { Tag } from '@components/Tag'
-import { Button, getUnputClassNames } from '@features/ui'
+import { Button, getInputClassname } from '@features/ui'
 import { Combobox, Transition } from '@headlessui/react'
 import { CrossIcon, HashIcon } from '@assets/icons/stroke'
 import { ITag } from '@models/Tag'
@@ -77,7 +77,7 @@ export function ArticleEditTags() {
           <div className="relative">
             <Combobox.Input
               ref={inputRef}
-              className={getUnputClassNames({ borderless: true, className: 'w-36' })}
+              className={getInputClassname({ className: 'w-36' })}
               placeholder="Напишите тэг..."
               displayValue={() => name}
               onKeyUp={(event: React.KeyboardEvent) => {
