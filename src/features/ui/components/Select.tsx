@@ -18,7 +18,7 @@ export function SelectComponent({ color = 'primary', size = 'base', children, ..
         {...props}
         ref={ref}
         className={
-          'appearance-none ' +
+          'appearance-none w-full ' +
           getInputClassname({
             color,
             size,
