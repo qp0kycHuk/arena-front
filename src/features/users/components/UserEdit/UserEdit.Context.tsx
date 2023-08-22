@@ -34,7 +34,6 @@ export function UserEditContextProvider({ children, user }: IUserEditContextProv
     formData.append('date_of_birth', dateToSQLFormatString(new Date(data.date_of_birth || '')))
     formData.append('email', data.email || '')
     formData.append('telegram', data.telegram || '')
-    formData.append('role', data.role || '')
 
     if (data.id) {
       formData.append('id', data.id as string)
@@ -49,9 +48,13 @@ export function UserEditContextProvider({ children, user }: IUserEditContextProv
       formData.append('image', data.imageFile)
     }
 
-    data.positions.forEach((position) => {
-      formData.append('positions[]', position.id as string)
-    })
+    if (isCurrentUserRole.admin) {
+      formData.append('role', data.role || '')
+
+      data.positions.forEach((position) => {
+        formData.append('positions[]', position.id as string)
+      })
+    }
 
     return formData
   }
@@ -74,7 +77,7 @@ export function UserEditContextProvider({ children, user }: IUserEditContextProv
     formData.append('status', editableUser.status == 'active' ? 'inactive' : 'active')
 
     loadingStart()
-    const updatedUser = await upsertUser(formData)
+    await upsertUser(formData)
     loadingEnd()
   }
 
