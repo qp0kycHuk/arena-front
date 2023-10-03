@@ -2,6 +2,9 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
+      "@/*": [
+        "src/*"
+      ],
       "@assets/*": [
         "src/assets/*"
       ],
@@ -34,6 +37,9 @@
       ],
       "@models/*": [
         "src/models/*"
+      ],
+      "@views/*": [
+        "src/views/*"
       ],
     },
     "target": "es5",

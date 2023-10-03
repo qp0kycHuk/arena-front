@@ -142,6 +142,7 @@
     "react/jsx-closing-bracket-location": [
       2,
       "tag-aligned"
-    ]
+    ],
+    "react/react-in-jsx-scope": "off"
   }
 }

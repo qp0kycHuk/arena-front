@@ -1,8 +1,4 @@
-import React, { useEffect } from 'react'
 import { FileTextIcon, FoldersIcon, SettingsIcon } from '@assets/icons/stroke'
-import { ArticleList } from '@features/articles'
-import { FolderEditDialog } from '@features/folders/components/FolderEdit/FolderEditDialog'
-import { FolderList } from '@features/folders/components/FolderList/FolderList'
 import { Button, Menu, MenuItem } from '@features/ui'
 import { useDocumentTitle } from '@hooks/useDocumentTitle'
 import { useToggle } from '@hooks/useToggle'
@@ -13,6 +9,10 @@ import { useFetchFolderById, useFetchFolders } from '@store/folders/'
 import { getRoute } from '@utils/index'
 import { Link, useParams } from 'react-router-dom'
 import { useFetchArticles } from '@store/articles/'
+
+import { FolderEditDialog } from '@/views/folders'
+import { FolderList } from '@/views/folders/components/FolderList/FolderList'
+import { ArticleList } from '@/views/articles'
 
 export function Projects() {
   useDocumentTitle('Статьи')
