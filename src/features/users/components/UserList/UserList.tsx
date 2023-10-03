@@ -1,6 +1,6 @@
 import React from 'react'
 import { UserItem, UserItemPlaceholder } from '../UserItem/UserItem'
-import { useFetchUsers } from '@store/users/users.query'
+import { useFetchUsers } from '@store/users/'
 
 export function UserList() {
   const { data, isLoading: loading } = useFetchUsers()

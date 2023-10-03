@@ -13,7 +13,7 @@ import { IArticle } from '@models/Article'
 import { showAsyncError } from '@utils/helpers/errors'
 import { AxiosError } from 'axios'
 import { linksApi } from '@store/links/links.api'
-import { useFetchArticleById, useUpsertArticle } from '@store/articles/articles.query'
+import { useFetchArticleById, useUpsertArticle } from '@store/articles/'
 
 export const ArticleEditMainContext = createContext<IArticleMainContextValue>({} as IArticleMainContextValue)
 export const ArticleEditUtilsContext = createContext<IArticleUtilsContextValue>({} as IArticleUtilsContextValue)

@@ -12,7 +12,7 @@ import { EntityId } from '@reduxjs/toolkit'
 import { useFetchFolderById, useFetchFolders } from '@store/folders/'
 import { getRoute } from '@utils/index'
 import { Link, useParams } from 'react-router-dom'
-import { useFetchArticles } from '@store/articles/articles.query'
+import { useFetchArticles } from '@store/articles/'
 
 export function Projects() {
   useDocumentTitle('Статьи')

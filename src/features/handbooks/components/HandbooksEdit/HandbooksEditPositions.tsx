@@ -1,19 +1,20 @@
 import React from 'react'
 import { BriefcaseIcon } from '@assets/icons/stroke'
 import { HandbooksEdit } from './HandbooksEdit'
-import { useFetchPositions, usePositionControl } from '@store/positions/positions.hooks'
 import { EntityId } from '@reduxjs/toolkit'
 import { IHandbook } from '@models/Handbook'
 import { IUpdateRequest } from '@store/positions/positions.api'
+import { useDeletePosition, useFetchPositions, useUpsertPosition } from '@store/positions/'
 
 interface IEditHandbook extends IHandbook {
   key?: EntityId
 }
 
 export function HandbooksEditPositions() {
-  const positions = useFetchPositions()
+  const { data: positionsData } = useFetchPositions()
 
-  const { upsert: upsertPosition, remove: removePosition } = usePositionControl()
+  const { mutateAsync: upsertPosition } = useUpsertPosition()
+  const { mutateAsync: removePosition } = useDeletePosition()
 
   async function submitHandler(handbooks: Partial<IEditHandbook>[], removedIds: EntityId[]) {
     const updatedPromises = handbooks.map((handbook) => {
@@ -40,7 +41,7 @@ export function HandbooksEditPositions() {
         <BriefcaseIcon className="mr-2 text-2xl text-gray" />
         <div className="font-semibold">Должности</div>
       </div>
-      <HandbooksEdit onSubmit={submitHandler} initialHandbooks={positions.items} />
+      <HandbooksEdit onSubmit={submitHandler} initialHandbooks={positionsData?.items} />
     </div>
   )
 }

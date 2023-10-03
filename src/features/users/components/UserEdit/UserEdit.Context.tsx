@@ -9,7 +9,7 @@ import { dateToSQLFormatString } from '@utils/helpers/dates'
 import { EMPTY_OBJECT } from '@utils/const'
 import { useAuth } from '@store/auth'
 import { isUser } from '@features/users'
-import { useUpsertUser } from '@store/users/users.query'
+import { useUpsertUser } from '@store/users/'
 
 export const UserEditContext = createContext<IUserEditContextValue>({} as IUserEditContextValue)
 export const useUserEditContext = () => useContext(UserEditContext)

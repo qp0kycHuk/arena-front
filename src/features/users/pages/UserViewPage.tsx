@@ -2,7 +2,7 @@ import React from 'react'
 import { Navigate, useParams } from 'react-router'
 import { UserView } from '../components/UserView/UserView'
 import { useDocumentTitle } from '@hooks/useDocumentTitle'
-import { useFetchUserById } from '@store/users/users.query'
+import { useFetchUserById } from '@store/users/'
 
 export function UserViewPage() {
   const { id } = useParams()

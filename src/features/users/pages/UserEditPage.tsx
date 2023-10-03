@@ -4,7 +4,7 @@ import { UserEdit } from '../components/UserEdit/UserEdit'
 import { useDocumentTitle } from '@hooks/useDocumentTitle'
 import { UserEditContextProvider } from '../components/UserEdit/UserEdit.Context'
 import { PageContent } from '@layouts/PageContent'
-import { useFetchUserById } from '@store/users/users.query'
+import { useFetchUserById } from '@store/users/'
 
 export function UserEditPage() {
   const { id } = useParams()

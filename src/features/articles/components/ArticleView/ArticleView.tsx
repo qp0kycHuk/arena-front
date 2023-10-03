@@ -11,7 +11,7 @@ import { useDocumentTitle } from '@hooks/useDocumentTitle'
 import { PageContent } from '@layouts/PageContent'
 import { ArticleViewAuthor } from './ArticleView.Author'
 import { ArticleViewLinks } from './ArticleView.Links'
-import { useFetchArticleById } from '@store/articles/articles.query'
+import { useFetchArticleById } from '@store/articles/'
 
 interface IArticleViewProps {
   articleId: EntityId

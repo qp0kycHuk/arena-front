@@ -1,14 +1,15 @@
+import React from 'react'
 import { Select } from '@features/ui'
 import { useUserEditContext } from './UserEdit.Context'
-import { useFetchPositions } from '@store/positions/positions.hooks'
-import React from 'react'
+import { useFetchPositions } from '@store/positions/'
 
 export function UserEditPosition() {
   const { user, update, isCurrentUserRole } = useUserEditContext()
-  const positions = useFetchPositions()
+  const { data } = useFetchPositions()
+  const positions = data
 
   function changeHandler(event: React.ChangeEvent<HTMLSelectElement>) {
-    const newPosition = positions.entities[event.target.value]
+    const newPosition = positions?.entities[event.target.value]
 
     update({
       positions: newPosition ? [newPosition] : [],
@@ -27,9 +28,9 @@ export function UserEditPosition() {
         <option disabled hidden value="default">
           Выберите
         </option>
-        {positions.ids.map((id) => (
+        {positions?.ids.map((id) => (
           <option key={id} value={id}>
-            {positions.entities[id]?.name}
+            {positions?.entities?.[id]?.name}
           </option>
         ))}
       </Select>

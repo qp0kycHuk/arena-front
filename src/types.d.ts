@@ -26,7 +26,7 @@ type PartialRecord<K extends keyof any, T> = {
 
 interface IEntitesAdapter<T> {
   ids: EntityId[]
-  entites: Record<EntityId, T>
+  entities: Record<EntityId, T>
 }
 
 interface IListResponse<T> {

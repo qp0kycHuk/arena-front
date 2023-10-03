@@ -1,18 +1,20 @@
 import React from 'react'
 import { HashIcon } from '@assets/icons/stroke'
 import { HandbooksEdit } from './HandbooksEdit'
-import { useFetchTags, useTagControl } from '@store/tags/tags.hooks'
 import { EntityId } from '@reduxjs/toolkit'
 import { IUpdateRequest } from '@store/tags/tags.api'
 import { IHandbook } from '@models/Handbook'
+import { useDeleteTag, useFetchTags, useUpsertTag } from '@store/tags/'
 
 interface IEditHandbook extends IHandbook {
   key?: EntityId
 }
 
 export function HandbooksEditTags() {
-  const tags = useFetchTags()
-  const { upsert: upsertTag, remove: removeTag } = useTagControl()
+  const { data: tagsData } = useFetchTags()
+
+  const { mutateAsync: upsertTag } = useUpsertTag()
+  const { mutateAsync: removeTag } = useDeleteTag()
 
   async function submitHandler(handbooks: Partial<IEditHandbook>[], removedIds: EntityId[]) {
     const updatedPromises = handbooks.map((handbook) => {
@@ -39,7 +41,7 @@ export function HandbooksEditTags() {
         <HashIcon className="mr-2 text-2xl text-gray" />
         <div className="font-semibold">Тэги</div>
       </div>
-      <HandbooksEdit onSubmit={submitHandler} initialHandbooks={tags.items} />
+      <HandbooksEdit onSubmit={submitHandler} initialHandbooks={tagsData?.items} />
     </div>
   )
 }
