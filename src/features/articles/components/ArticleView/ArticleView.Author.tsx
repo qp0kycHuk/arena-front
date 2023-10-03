@@ -2,7 +2,7 @@ import React from 'react'
 import { UserIcon } from '@assets/icons/fill'
 import { IArticle } from '@models/Article'
 import { EntityId } from '@reduxjs/toolkit'
-import { useFetchUserById } from '@store/users/users.hooks'
+import { useFetchUserById } from '@store/users/users.query'
 
 interface IArticleViewAuthorProps {
   article?: IArticle
@@ -12,7 +12,8 @@ interface IArticleViewAuthorProps {
 
 export function ArticleViewAuthor({ article, isLoading, className }: IArticleViewAuthorProps) {
   const imageClassName = 'w-9 h-9 rounded-full overflow-hidden mr-2'
-  const { item: user } = useFetchUserById(article?.owner_id as EntityId)
+  const { data } = useFetchUserById(article?.owner_id as EntityId)
+  const user = data?.item
   const imageSrc = user?.image_src ? user.image_src : ''
 
   if (!article || !user || isLoading) {

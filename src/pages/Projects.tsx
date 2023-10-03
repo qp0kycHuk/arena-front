@@ -8,47 +8,48 @@ import { useDocumentTitle } from '@hooks/useDocumentTitle'
 import { useToggle } from '@hooks/useToggle'
 import { PageContent } from '@layouts/PageContent'
 import { EntityId } from '@reduxjs/toolkit'
-import { useFetchArticles } from '@store/articles/articles.hooks'
-import { useFetchFolderById, useFetchFolders } from '@store/folders/folders.hooks'
+// import { useFetchArticles } from '@store/articles/articles.hooks'
+import { useFetchFolderById, useFetchFolders } from '@store/folders/'
 import { getRoute } from '@utils/index'
 import { Link, useParams } from 'react-router-dom'
+import { useFetchArticles } from '@store/articles/articles.query'
 
 export function Projects() {
   useDocumentTitle('Статьи')
   const { folderId } = useParams()
+
   const [isCreateFolderOpen, , openCreateFolderOpen, closeCreateFolderOpen] = useToggle(false)
   const [isUpdateFolderOpen, , openUpdateFolderOpen, closeUpdateFolderOpen] = useToggle(false)
-  const folders = useFetchFolders({ immediately: false })
-  const folder = useFetchFolderById(folderId as EntityId, { immediately: false })
-  const articles = useFetchArticles({ immediately: false })
-  const loading = folderId ? folder.loading : folders.loading || articles.loading
 
-  const foldersItems = folderId ? folder.item?.children || [] : folders.items
-  const articlesItems = folderId ? folder.item?.articles || [] : articles.items
+  const { data: foldersData, isLoading: foldersLoading } = useFetchFolders()
+  const { data: articlesData, isLoading: articlesLoading } = useFetchArticles()
+  const { data: folderData, isLoading: folderLoading } = useFetchFolderById(folderId as EntityId)
 
-  useEffect(() => {
-    if (folderId) {
-      folder.load()
-    } else {
-      folders.load()
-      articles.load()
-    }
-  }, [folderId])
+  const loading = foldersLoading || folderLoading || articlesLoading
+
+  const foldersItems = (folderId ? folderData?.item?.children : foldersData?.items) || []
+  const articlesItems = (folderId ? folderData?.item?.articles : articlesData?.items) || []
 
   return (
     <>
       <PageContent className="p-8">
         <div className="flex items-center mb-8">
-          <div className="text-2xl font-semibold">{folder.item?.name ? folder.item.name : 'Статьи'}</div>
+          <div className="text-2xl font-semibold">{folderData?.item?.name ? folderData?.item.name : 'Статьи'}</div>
           <div className="flex ml-auto">
-            {folder.item ? (
+            {folderData?.item ? (
               <Button variant="contur" color="gray" onClick={openUpdateFolderOpen}>
                 <SettingsIcon className="text-2xl" />
               </Button>
             ) : null}
             <Menu align="end" menuButton={<Button className="ml-4 px-7"> Добавить </Button>}>
               <MenuItem>
-                <Button className="justify-start w-full" size="sm" color="gray" variant="text" onClick={openCreateFolderOpen}>
+                <Button
+                  className="justify-start w-full"
+                  size="sm"
+                  color="gray"
+                  variant="text"
+                  onClick={openCreateFolderOpen}
+                >
                   <FoldersIcon className="mr-2" /> Папка
                 </Button>
               </MenuItem>
@@ -65,11 +66,15 @@ export function Projects() {
           onChange={debouncedChangeHandler}
           initialValue={searchParams.get(SEARCH_QUERY_NAME) || ''}
           className='mb-4' /> */}
-        {!loading && foldersItems.length + articlesItems.length === 0 ? <div className="text-center text-gray dark:text-gray-300">Пустая папка</div> : null}
+        {!loading && foldersItems.length + articlesItems.length === 0 ? (
+          <div className="text-center text-gray dark:text-gray-300">Пустая папка</div>
+        ) : null}
         <FolderList items={foldersItems} loading={false} />
         <ArticleList items={articlesItems} loading={false} />
       </PageContent>
-      {folder.item ? <FolderEditDialog isOpen={isUpdateFolderOpen} close={closeUpdateFolderOpen} item={folder.item} /> : null}
+      {folderData?.item ? (
+        <FolderEditDialog isOpen={isUpdateFolderOpen} close={closeUpdateFolderOpen} item={folderData?.item} />
+      ) : null}
       <FolderEditDialog isOpen={isCreateFolderOpen} close={closeCreateFolderOpen} />
     </>
   )

@@ -10,15 +10,17 @@ import { EntityId } from '@reduxjs/toolkit'
 import { useDocumentTitle } from '@hooks/useDocumentTitle'
 import { PageContent } from '@layouts/PageContent'
 import { ArticleViewAuthor } from './ArticleView.Author'
-import { useFetchArticleById } from '@store/articles/articles.hooks'
 import { ArticleViewLinks } from './ArticleView.Links'
+import { useFetchArticleById } from '@store/articles/articles.query'
 
 interface IArticleViewProps {
   articleId: EntityId
 }
 
 export function ArticleView({ articleId }: IArticleViewProps) {
-  const { item: article } = useFetchArticleById(articleId)
+  const { data } = useFetchArticleById(articleId)
+
+  const article = data?.item
   useDocumentTitle(article?.name)
 
   return (

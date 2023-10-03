@@ -7,7 +7,11 @@ import { ArticleEditTags } from './ArticleEdit.Tags'
 import { ArticleEditEditor } from './ArticleEdit.Editor'
 import { ArticleEditTitle } from './ArticleEdit.Title'
 import { ArticleEditLinks } from './ArticleEdit.Links'
-import { useArticleEditMainContext, useArticleEditUtilsContext } from './ArticleEdit.Context'
+import {
+  ArticleEditContextProvider,
+  useArticleEditMainContext,
+  useArticleEditUtilsContext,
+} from './ArticleEdit.Context'
 import { EntityId } from '@reduxjs/toolkit'
 
 interface IArticleEditProps {
@@ -16,7 +20,7 @@ interface IArticleEditProps {
 
 // TODO links, editor images, editor files
 
-export function ArticleEdit({ articleId }: IArticleEditProps) {
+function ArticleEditInner() {
   // const { submitHandler } = useContext(ArticleEditContext)
   const { loading } = useArticleEditMainContext()
   const { submitHandler } = useArticleEditUtilsContext()
@@ -57,5 +61,13 @@ export function ArticleEdit({ articleId }: IArticleEditProps) {
         <Button variant="light">Отмена</Button>
       </div>
     </form>
+  )
+}
+
+export function ArticleEdit({ articleId }: IArticleEditProps) {
+  return (
+    <ArticleEditContextProvider articleId={articleId}>
+      <ArticleEditInner />
+    </ArticleEditContextProvider>
   )
 }

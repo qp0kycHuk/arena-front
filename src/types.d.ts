@@ -24,6 +24,11 @@ type PartialRecord<K extends keyof any, T> = {
   [P in K]?: T
 }
 
+interface IEntitesAdapter<T> {
+  ids: EntityId[]
+  entites: Record<EntityId, T>
+}
+
 interface IListResponse<T> {
   items: T[]
 }
@@ -49,7 +54,10 @@ interface TypedFormData<T> extends FormData {
   set(name: T, value: string | Blob, fileName?: string): void
 }
 
-type UploadImagesFunc = (files: File[], beforeUpdate?: (files: IFile[] | undefined) => any) => Promise<IFile[] | undefined>
+type UploadImagesFunc = (
+  files: File[],
+  beforeUpdate?: (files: IFile[] | undefined) => any
+) => Promise<IFile[] | undefined>
 
 interface IFileItem {
   id?: string | number

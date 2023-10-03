@@ -4,11 +4,13 @@ import { UserEdit } from '../components/UserEdit/UserEdit'
 import { useDocumentTitle } from '@hooks/useDocumentTitle'
 import { UserEditContextProvider } from '../components/UserEdit/UserEdit.Context'
 import { PageContent } from '@layouts/PageContent'
-import { useFetchUserById } from '@store/users/users.hooks'
+import { useFetchUserById } from '@store/users/users.query'
 
 export function UserEditPage() {
   const { id } = useParams()
-  const { item: user } = useFetchUserById(id as string)
+  const { data } = useFetchUserById(id as string)
+  const user = data?.item
+
   useDocumentTitle('Редактирование')
 
   if (!id) {

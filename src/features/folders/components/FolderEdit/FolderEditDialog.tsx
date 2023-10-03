@@ -3,10 +3,10 @@ import { Spiner } from '@components/Spiner'
 import { Button, Dialog, Input } from '@features/ui'
 import { IDialogProps } from '@features/ui/components/Dialog'
 import { useLoading } from '@hooks/useLoading'
-import { useFolderControl } from '@store/folders/folders.hooks'
 import { useAuth } from '@store/auth'
 import { useParams } from 'react-router-dom'
 import { IFolder } from '@models/Folder'
+import { useUpsertFolder } from '@store/folders'
 
 interface IFolderEditDialogProps extends IDialogProps {
   item?: IFolder
@@ -16,7 +16,7 @@ interface IFolderEditDialogProps extends IDialogProps {
 export function FolderEditDialog({ item, isOpen, close }: IFolderEditDialogProps) {
   const { user } = useAuth()
   const { loading, loadingStart, loadingEnd } = useLoading()
-  const { upsert } = useFolderControl()
+  const { mutateAsync: upsert } = useUpsertFolder()
   const { folderId } = useParams()
 
   async function submitHandler(event: React.FormEvent<HTMLFormElement>) {

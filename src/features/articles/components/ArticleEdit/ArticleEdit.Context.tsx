@@ -10,10 +10,10 @@ import { toast } from '@lib/Toast'
 import { useNavigate, useParams } from 'react-router-dom'
 import { IFile } from '@models/File'
 import { IArticle } from '@models/Article'
-import { useArticleControl, useFetchArticleById } from '@store/articles/articles.hooks'
 import { showAsyncError } from '@utils/helpers/errors'
 import { AxiosError } from 'axios'
 import { linksApi } from '@store/links/links.api'
+import { useFetchArticleById, useUpsertArticle } from '@store/articles/articles.query'
 
 export const ArticleEditMainContext = createContext<IArticleMainContextValue>({} as IArticleMainContextValue)
 export const ArticleEditUtilsContext = createContext<IArticleUtilsContextValue>({} as IArticleUtilsContextValue)
@@ -27,8 +27,9 @@ export function ArticleEditContextProvider({ children, articleId }: IArticleEdit
   const { user } = useAuth()
   const { folderId } = useParams()
 
-  const { item: article } = useFetchArticleById(articleId || '')
-  const { upsert: upsertArticle } = useArticleControl()
+  const { data } = useFetchArticleById(articleId || '')
+  const article = data?.item
+  const { mutateAsync: upsertArticle } = useUpsertArticle()
 
   const initialArticle = useMemo(() => {
     return {
@@ -111,24 +112,27 @@ export function ArticleEditContextProvider({ children, articleId }: IArticleEdit
             const result = await filesApi().upload(filesFormData)
             const items = result.data.items
 
-            const updatedEditorContent = editorContentUpdate(JSON.parse(editableArticle.contentJson || '{}'), (item) => {
-              if (item.type === 'image') {
-                const uploadedFileIndex = uploadedFileItems.findIndex((fileItem) => fileItem.src === item.attrs.src)
+            const updatedEditorContent = editorContentUpdate(
+              JSON.parse(editableArticle.contentJson || '{}'),
+              (item) => {
+                if (item.type === 'image') {
+                  const uploadedFileIndex = uploadedFileItems.findIndex((fileItem) => fileItem.src === item.attrs.src)
 
-                if (uploadedFileIndex >= 0) {
-                  return {
-                    ...item,
-                    attrs: {
-                      ...item.attrs,
-                      src: items[uploadedFileIndex].src,
-                      id: items[uploadedFileIndex].id,
-                    },
+                  if (uploadedFileIndex >= 0) {
+                    return {
+                      ...item,
+                      attrs: {
+                        ...item.attrs,
+                        src: items[uploadedFileIndex].src,
+                        id: items[uploadedFileIndex].id,
+                      },
+                    }
                   }
                 }
-              }
 
-              return item
-            })
+                return item
+              }
+            )
 
             formData.set('content', JSON.stringify(updatedEditorContent))
 
@@ -178,7 +182,8 @@ export function ArticleEditContextProvider({ children, articleId }: IArticleEdit
         }
       }
 
-      const updatedArticle = await upsertArticle(formData)
+      const { item: updatedArticle } = await upsertArticle(formData)
+
       loadingEnd()
 
       if (updatedArticle?.id) {
@@ -190,7 +195,9 @@ export function ArticleEditContextProvider({ children, articleId }: IArticleEdit
 
   return (
     <ArticleEditMainContext.Provider value={{ article: editableArticle, loading, update }}>
-      <ArticleEditUtilsContext.Provider value={{ loadingStart, loadingEnd, getFormData, submitHandler }}>{children}</ArticleEditUtilsContext.Provider>
+      <ArticleEditUtilsContext.Provider value={{ loadingStart, loadingEnd, getFormData, submitHandler }}>
+        {children}
+      </ArticleEditUtilsContext.Provider>
     </ArticleEditMainContext.Provider>
   )
 }

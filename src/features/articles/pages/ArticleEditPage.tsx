@@ -17,9 +17,8 @@ export function ArticleEditPage() {
         <ToLeftIcon className="mr-2" />
         Назад
       </Button>
-      <ArticleEditContextProvider articleId={id}>
-        <ArticleEdit articleId={id} />
-      </ArticleEditContextProvider>
+
+      <ArticleEdit articleId={id} />
     </PageContent>
   )
 }

@@ -3,13 +3,13 @@ import { useEditableEntity } from '@hooks/useEditableEntity'
 import { useLoading } from '@hooks/useLoading'
 import { IUser } from '@models/User'
 import { ICreateRequest, IUpdateRequest } from '@store/users/users.api'
-import { useUserControl } from '@store/users/users.hooks'
 import { useNavigate } from 'react-router-dom'
 import { getRoute } from '@utils/index'
 import { dateToSQLFormatString } from '@utils/helpers/dates'
 import { EMPTY_OBJECT } from '@utils/const'
 import { useAuth } from '@store/auth'
 import { isUser } from '@features/users'
+import { useUpsertUser } from '@store/users/users.query'
 
 export const UserEditContext = createContext<IUserEditContextValue>({} as IUserEditContextValue)
 export const useUserEditContext = () => useContext(UserEditContext)
@@ -17,7 +17,7 @@ export const useUserEditContext = () => useContext(UserEditContext)
 export function UserEditContextProvider({ children, user }: IUserEditContextProviderProps) {
   const [editableUser, update] = useEditableEntity<IEditableUser>(user || EMPTY_OBJECT)
   const { loading, loadingStart, loadingEnd } = useLoading()
-  const { upsert: upsertUser } = useUserControl()
+  const { mutateAsync: upsertUser } = useUpsertUser()
   const navigate = useNavigate()
 
   const { user: currentUser } = useAuth()
@@ -64,7 +64,7 @@ export function UserEditContextProvider({ children, user }: IUserEditContextProv
     const formData = getFormData()
 
     loadingStart()
-    const updatedUser = await upsertUser(formData)
+    const { item: updatedUser } = await upsertUser(formData)
     loadingEnd()
 
     if ((updatedUser as IUser).id) {
