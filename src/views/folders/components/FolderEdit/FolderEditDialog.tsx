@@ -14,7 +14,8 @@ interface IFolderEditDialogProps extends IDialogProps {
 }
 
 export function FolderEditDialog({ item, isOpen, close }: IFolderEditDialogProps) {
-  const { user } = useAuth()
+  const { data: auth } = useAuth()
+  const user = auth?.user
   const { loading, loadingStart, loadingEnd } = useLoading()
   const { mutateAsync: upsert } = useUpsertFolder()
   const { folderId } = useParams()

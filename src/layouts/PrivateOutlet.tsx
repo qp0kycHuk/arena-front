@@ -1,14 +1,13 @@
-import React from 'react'
-import { useAuth, useUserQuery } from '@store/auth'
+import { useAuth as useAuthQuery } from '@/store/auth/auth.query'
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 
 export function PrivateOutlet() {
-  // initial user data load
-  useUserQuery(null, {
-    refetchOnMountOrArgChange: true,
-  })
-  const auth = useAuth()
   const location = useLocation()
+  const { data: auth, isLoading } = useAuthQuery()
+
+  if (!auth || isLoading) {
+    return null
+  }
 
   if (!auth.isLogedIn) {
     return <Navigate to="/login" state={{ from: location }} replace />

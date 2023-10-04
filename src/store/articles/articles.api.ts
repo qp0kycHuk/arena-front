@@ -1,6 +1,6 @@
 import type { IArticle } from '@models/Article'
 import { EntityId } from '@reduxjs/toolkit'
-import { EntitiesApi, IEntitiesApiConfig, createEntityApi } from '@store/utils/EntitiesApi'
+import { IEntitiesApiConfig, createEntityApi } from '@store/utils/EntitiesApi'
 import { createRootApi } from '../utils/createRootApi'
 import { getEntities, getIds } from '@/utils/helpers/entity'
 
@@ -21,15 +21,11 @@ export type IUpdateRequest = TypedFormData<UpdateParams>
 
 const ROOT_ENDPOINT_URL = process.env.REACT_APP_API_URL + '/api/articles'
 
-class ArticlesApi<EntityType, C, U> extends EntitiesApi<EntityType, C, U> {
-  constructor(params: IEntitiesApiConfig) {
-    super(params)
-  }
-
-  async fetchByUserId(id: EntityId) {
-    return await this.rootApi().post(this.ROOT_ENDPOINT_URL + '/list', { id })
-  }
-}
+// class ArticlesApi<EntityType, C, U> extends EntitiesApi<EntityType, C, U> {
+//   constructor(params: IEntitiesApiConfig) {
+//     super(params)
+//   }
+// }
 
 export const articlesApi = {
   ...createEntityApi<IArticle, ICreateRequest, IUpdateRequest>({ url: ROOT_ENDPOINT_URL }),

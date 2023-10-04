@@ -17,7 +17,8 @@ interface IUserViewProps {
 }
 
 export function UserView({ user }: IUserViewProps) {
-  const { user: currentUser } = useAuth()
+  const { data: auth } = useAuth()
+  const currentUser = auth?.user
   const isCurrentUserRole = isUser(currentUser)
   const isCurrentUser = currentUser?.id === user?.id
 

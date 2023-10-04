@@ -24,7 +24,8 @@ export const useArticleEditUtilsContext = () => useContext(ArticleEditUtilsConte
 export function ArticleEditContextProvider({ children, articleId }: IArticleEditContextProviderProps) {
   const navigate = useNavigate()
   const { loading, loadingStart, loadingEnd } = useLoading()
-  const { user } = useAuth()
+  const { data: auth } = useAuth()
+  const user = auth?.user
   const { folderId } = useParams()
 
   const { data } = useFetchArticleById(articleId || '')
@@ -173,7 +174,7 @@ export function ArticleEditContextProvider({ children, articleId }: IArticleEdit
 
           const linksResult = await Promise.all(promises)
           linksResult.forEach((res) => {
-            formData.append('links[]', res.data.item.id as string)
+            formData.append('links[]', res.item.id as string)
           })
         } catch (error) {
           showAsyncError((error as AxiosError).response?.data as IErrorData)

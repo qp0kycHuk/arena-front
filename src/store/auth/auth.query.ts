@@ -1,27 +1,85 @@
-import { useQuery } from '@tanstack/react-query'
-import { newAuthApi } from './auth.api'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { ILoginRequest, newAuthApi as authApi } from './auth.api'
 import Cookies from 'js-cookie'
+import { IUser } from '@/models/User'
+
+export const AUTH_QUERY_KEY = 'auth'
+
+interface IAuthResult {
+  user: IUser | null
+  token?: string | null
+  isLogedIn?: boolean
+}
 
 export function useAuth() {
-  return useQuery(
-    ['auth-user'],
-    () =>
-      newAuthApi.user().then((user) => ({
-        user,
+  const queryClient = useQueryClient()
+  return useQuery<IAuthResult>([AUTH_QUERY_KEY], authApi.user, {
+    retry: false,
+    onSuccess(data) {
+      queryClient.setQueryData([AUTH_QUERY_KEY], {
+        user: data.user,
         token: Cookies.get(process.env.REACT_APP_CSRF_COOKIE_NAME as string) || null,
-        isLogedIn: user ? true : false,
-      })),
+        isLogedIn: data.user ? true : false,
+      })
+    },
+    onError() {
+      queryClient.setQueryData([AUTH_QUERY_KEY], {
+        user: null,
+        token: null,
+        isLogedIn: false,
+      })
+
+      Cookies.remove(process.env.REACT_APP_CSRF_COOKIE_NAME as string)
+    },
+  })
+}
+
+export function useLogin() {
+  const queryClient = useQueryClient()
+
+  return useMutation(
+    async (formData: ILoginRequest) => {
+      return await authApi.login(formData)
+    },
     {
-      placeholderData: () => {
-        return {
-          token: Cookies.get(process.env.REACT_APP_CSRF_COOKIE_NAME as string) || null,
-          isLogedIn: Cookies.get(process.env.REACT_APP_CSRF_COOKIE_NAME as string) ? true : false,
-        }
+      onSuccess() {
+        queryClient.setQueryData([AUTH_QUERY_KEY], {
+          user: null,
+          token: null,
+          isLogedIn: true,
+        })
+        queryClient.invalidateQueries([AUTH_QUERY_KEY])
       },
     }
   )
 }
 
-export function useCurrentUser() {
-  return useQuery(['auth-user'], newAuthApi.user)
+export function useRegister() {
+  const queryClient = useQueryClient()
+
+  return useMutation(authApi.register, {
+    onSuccess() {
+      queryClient.setQueryData([AUTH_QUERY_KEY], {
+        user: null,
+        token: null,
+        isLogedIn: true,
+      })
+      queryClient.invalidateQueries([AUTH_QUERY_KEY])
+    },
+  })
+}
+
+export function useLogout() {
+  const queryClient = useQueryClient()
+
+  return useMutation(authApi.logout, {
+    onSuccess() {
+      queryClient.setQueryData([AUTH_QUERY_KEY], {
+        user: null,
+        token: null,
+        isLogedIn: false,
+      })
+      queryClient.invalidateQueries([AUTH_QUERY_KEY])
+    },
+  })
 }
