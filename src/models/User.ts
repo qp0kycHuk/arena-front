@@ -1,6 +1,6 @@
 import { EntityId } from '@reduxjs/toolkit'
 import { IPosition } from './Position'
-import { roles } from '@features/users'
+import { roles } from '@views/users'
 
 export interface IUser {
   id: EntityId

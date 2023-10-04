@@ -4,7 +4,6 @@ import type { Editor } from '@tiptap/react'
 import { Plugin, PluginKey } from 'prosemirror-state'
 import { filterFiles } from '@utils/index'
 import { imageExtention, docExtention } from '@utils/const/extentions'
-import { IFile } from '@models/File'
 
 export interface FilePasteOptions {
   render?: () => {
@@ -58,10 +57,6 @@ function pasteDocHandler(files: File[]): any[] {
       name: file.name,
     },
   }))
-}
-
-interface IImageNode {
-  src: string
 }
 
 interface IFilePastePluginProps {

@@ -1,7 +1,7 @@
 import React from 'react'
 import { CrossIcon } from '@assets/icons/stroke'
 import { Button } from '@features/ui'
-import { CloseButtonProps, ToastContainer as Container, IconProps, ToastContainerProps } from 'react-toastify'
+import { CloseButtonProps, ToastContainer as Container, ToastContainerProps } from 'react-toastify'
 
 export { toast } from 'react-toastify'
 
@@ -23,15 +23,16 @@ const CloseButton = ({ closeToast, type }: CloseButtonProps) => {
 }
 
 // TODO
-const CustomIcon = (props: IconProps) => {
-  return <div className="self-start">{props.type}</div>
-}
+// const CustomIcon = (props: IconProps) => {
+//   return <div className="self-start">{props.type}</div>
+// }
 
 export function ToastContainer(props: ToastContainerProps & React.RefAttributes<HTMLDivElement>) {
   return (
     <Container
       toastClassName={(context) =>
-        contextClass[context?.type || 'default'] + ' min-h-[62px] shadow-lg p-3 relative flex mb-3 rounded-md overflow-hidden cursor-pointer text-sm font-semibold'
+        contextClass[context?.type || 'default'] +
+        ' min-h-[62px] shadow-lg p-3 relative flex mb-3 rounded-md overflow-hidden cursor-pointer text-sm font-semibold'
       }
       bodyClassName={() => 'flex items-center flex-grow'}
       // icon={CustomIcon}

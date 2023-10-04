@@ -1,4 +1,3 @@
-import React from 'react'
 import { Button } from '@features/ui'
 import { CrossIcon, DocumentIcon, ImageIcon } from '@assets/icons/stroke'
 
@@ -18,7 +17,11 @@ export function UploaderItem({ item, extention, rounded, sign, update, remove }:
     <div className={`relative z-10 ${rounded ? 'w-24' : 'w-32'}`}>
       <div className="relative w-full h-24">
         {(item.preview || item.src) && isMedia ? (
-          <img className={`object-cover w-full h-full ${rounded ? 'rounded-full' : 'rounded-xl'}`} src={item.preview || item.src} alt="" />
+          <img
+            className={`object-cover w-full h-full ${rounded ? 'rounded-full' : 'rounded-xl'}`}
+            src={item.preview || item.src}
+            alt=""
+          />
         ) : (
           <div className={`flex w-full h-full p-2 ${rounded ? 'rounded-full' : 'rounded-xl'} bg-primary bg-opacity-10`}>
             <div className="max-w-full m-auto">
@@ -33,11 +36,28 @@ export function UploaderItem({ item, extention, rounded, sign, update, remove }:
             </div>
           </div>
         )}
-        <Button onClick={() => remove(item)} className="absolute right-1 top-1" color="gray" size="xs" variant="whitebg" icon rounded shadow>
+        <Button
+          onClick={() => remove(item)}
+          className="absolute right-1 top-1"
+          color="gray"
+          size="xs"
+          variant="whitebg"
+          icon
+          rounded
+          shadow
+        >
           <CrossIcon />
         </Button>
       </div>
-      {isMedia && sign ? <input type="text" defaultValue={item.name} readOnly className="max-w-full mt-2 text-xs border-0" placeholder="Добавить название..." /> : null}
+      {isMedia && sign ? (
+        <input
+          type="text"
+          defaultValue={item.name}
+          readOnly
+          className="max-w-full mt-2 text-xs border-0"
+          placeholder="Добавить название..."
+        />
+      ) : null}
     </div>
   )
 }

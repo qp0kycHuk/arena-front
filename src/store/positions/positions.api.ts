@@ -1,5 +1,5 @@
 import { IPosition } from '@models/Position'
-import { EntitesApi } from '@store/utils/EntitesApi'
+import { createEntityApi } from '@store/utils/EntitiesApi'
 
 type CreateParams = keyof IPosition
 type UpdateParams = CreateParams
@@ -8,6 +8,6 @@ export type IUpdateRequest = TypedFormData<UpdateParams>
 
 const ROOT_ENDPOINT_URL = process.env.REACT_APP_API_URL + '/api/positions'
 
-export const positionsApi = new EntitesApi<IPosition, ICreateRequest, IUpdateRequest>({
+export const positionsApi = createEntityApi<IPosition, ICreateRequest, IUpdateRequest>({
   url: ROOT_ENDPOINT_URL,
 })

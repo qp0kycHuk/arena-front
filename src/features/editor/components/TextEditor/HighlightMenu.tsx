@@ -18,7 +18,9 @@ export function HighlightMenu({ editor }: IHighlightMenuProps) {
         <input
           className="absolute inset-0 opacity-0 pointer-events-none"
           type="color"
-          onInput={(event: React.ChangeEvent<HTMLInputElement>) => editor.chain().focus().setHighlight({ color: event.target.value }).run()}
+          onInput={(event: React.ChangeEvent<HTMLInputElement>) =>
+            editor.chain().focus().setHighlight({ color: event.target.value }).run()
+          }
           value={rgb2hex(currentColor)}
         />
       </label>
