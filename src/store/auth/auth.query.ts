@@ -1,10 +1,10 @@
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 import { newAuthApi } from './auth.api'
 import Cookies from 'js-cookie'
 
 export function useAuth() {
   return useQuery(
-    'auth-user',
+    ['auth-user'],
     () =>
       newAuthApi.user().then((user) => ({
         user,
@@ -23,5 +23,5 @@ export function useAuth() {
 }
 
 export function useCurrentUser() {
-  return useQuery('auth-user', newAuthApi.user)
+  return useQuery(['auth-user'], newAuthApi.user)
 }

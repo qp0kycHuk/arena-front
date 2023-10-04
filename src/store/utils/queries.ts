@@ -1,5 +1,5 @@
 import { EntityId } from '@reduxjs/toolkit'
-import { useQuery, useQueryClient, useMutation } from 'react-query'
+import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
 import { IEntityApi } from './EntitesApi'
 
 interface IParams<EntityType, C, U> {
@@ -19,7 +19,7 @@ export function createQueries<EntityType extends { id: EntityId }, C, U>({ key, 
       placeholderData: () => {
         return {
           item: queryClient
-            .getQueryData<IListResponse<EntityType>>(key)
+            .getQueryData<IListResponse<EntityType>>([key])
             ?.items.find((d) => d.id?.toString() === id?.toString()),
         }
       },

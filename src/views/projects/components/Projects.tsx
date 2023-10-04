@@ -68,8 +68,8 @@ export function Projects() {
         {!loading && foldersItems.length + articlesItems.length === 0 ? (
           <div className="text-center text-gray dark:text-gray-300">Пустая папка</div>
         ) : null}
-        <FolderList items={foldersItems} loading={false} />
-        <ArticleList items={articlesItems} loading={false} />
+        <FolderList items={foldersItems} loading={loading} />
+        <ArticleList items={articlesItems} loading={loading} />
       </PageContent>
       {folderData?.item ? (
         <FolderEditDialog isOpen={isUpdateFolderOpen} close={closeUpdateFolderOpen} item={folderData?.item} />
