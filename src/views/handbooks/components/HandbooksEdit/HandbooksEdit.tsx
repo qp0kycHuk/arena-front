@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react'
 
 interface IHandbooksEditProps {
   initialHandbooks?: Partial<IEditHandbook>[]
-  onSubmit?(handbooks: Partial<IEditHandbook>[], removedIds: EntityId[]): Promise<any>
+  onSubmit?(handbooks: Partial<IEditHandbook>[], removedIds: EntityId[]): Promise<unknown>
 }
 
 interface IEditHandbook extends IHandbook {
@@ -82,7 +82,11 @@ export function HandbooksEdit({ initialHandbooks, onSubmit }: IHandbooksEditProp
         <div className="flex mb-4" key={handbook.id || handbook.key}>
           <div>
             {/* <div className="mb-2 text-sm font-medium">Заголовок</div> */}
-            <Input className="w-96" value={handbook.name} onChange={(event) => updateHandbookName(handbook.id || handbook.key, event.target.value)} />
+            <Input
+              className="w-96"
+              value={handbook.name}
+              onChange={(event) => updateHandbookName(handbook.id || handbook.key, event.target.value)}
+            />
           </div>
           <Button onClick={() => removeHandler(handbook)} color="red" variant="light" icon className="self-end ml-6">
             <TrashIcon className="text-2xl" />

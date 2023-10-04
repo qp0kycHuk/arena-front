@@ -106,5 +106,5 @@ export interface IEntityApi<EntityType, C, U> {
   update: (formData: U) => Promise<IItemResponse<EntityType>>
   upsert: (formData: U | C) => Promise<IItemResponse<EntityType>>
   fetchById: (id: EntityId) => Promise<IItemResponse<EntityType>>
-  remove: (id: EntityId) => Promise<any>
+  remove: (id: EntityId) => Promise<unknown>
 }

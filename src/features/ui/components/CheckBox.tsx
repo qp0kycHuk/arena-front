@@ -1,6 +1,5 @@
+import React, { ReactNode } from 'react'
 import { GalOchkaIcon } from '@assets/icons/stroke'
-import React from 'react'
-import { ReactNode, useRef } from 'react'
 import { Color, Size } from '../types'
 import { ripplePointerdownHandler } from '../utils/ripple'
 import classNames from 'classnames'

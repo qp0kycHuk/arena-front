@@ -38,7 +38,7 @@ export function FolderEditDialog({ item, isOpen, close }: IFolderEditDialogProps
       formData.append('id', item.id.toString())
     }
 
-    const response = await upsert(formData)
+    await upsert(formData)
 
     close()
     loadingEnd()

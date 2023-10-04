@@ -1,5 +1,5 @@
 import { IUser } from '@models/User'
-import { EntitesApi, createEntityApi } from '@store/utils/EntitesApi'
+import { createEntityApi } from '@store/utils/EntitesApi'
 
 type CreateParams = keyof IUser | 'positions[]'
 type UpdateParams = CreateParams | 'id' | 'image_delete'

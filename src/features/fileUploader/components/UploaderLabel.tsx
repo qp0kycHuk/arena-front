@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react'
+import { ChangeEvent } from 'react'
 import { PlusIcon } from '@assets/icons/stroke'
 import { Button } from '@features/ui'
 import classNames from 'classnames'
@@ -19,7 +19,13 @@ export function UploaderLabel({ uploader }: IUploaderLabelProps) {
         uploader.rounded ? 'rounded-full w-24' : 'rounded-xl w-32'
       )}
     >
-      <input type="file" multiple={uploader.multiple} accept={uploader.extention.accept} onChange={changeHandler} className="absolute inset-0 opacity-0 pointer-events-none" />
+      <input
+        type="file"
+        multiple={uploader.multiple}
+        accept={uploader.extention.accept}
+        onChange={changeHandler}
+        className="absolute inset-0 opacity-0 pointer-events-none"
+      />
       <Button as="div" className="m-auto" variant="whitebg" shadow rounded icon>
         <PlusIcon className="text-2xl" />
       </Button>

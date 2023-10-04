@@ -1,4 +1,3 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '@store/auth'
 import { Button, CheckBox } from '@features/ui'
@@ -16,7 +15,7 @@ export function Header() {
       <div className="mr-auto">
         <img src={headerLogo} alt="" className="h-[26px]" />
       </div>
-      <CheckBox defaultChecked={theme === 'DARK'} onChange={(event) => toggleTheme()} className="mr-5" label="Dark mode" />
+      <CheckBox defaultChecked={theme === 'DARK'} onChange={() => toggleTheme()} className="mr-5" label="Dark mode" />
 
       <Button variant="contur" size="sm" color="gray">
         <BookmarkIcon className="text-2xl" />

@@ -1,5 +1,4 @@
 import { Uploader } from '@features/fileUploader'
-import { IUser } from '@models/User'
 import React, { useMemo } from 'react'
 import { useUserEditContext } from './UserEdit.Context'
 import { getFilePreview } from '@utils/index'

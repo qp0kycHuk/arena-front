@@ -1,5 +1,5 @@
 import { ITag } from '@models/Tag'
-import { EntitesApi, createEntityApi } from '@store/utils/EntitesApi'
+import { createEntityApi } from '@store/utils/EntitesApi'
 
 type CreateParams = keyof ITag
 type UpdateParams = CreateParams

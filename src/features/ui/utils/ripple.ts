@@ -11,12 +11,6 @@ interface ITouch {
   pageY: number
 }
 
-interface ITouchList {
-  length: number
-  item(index: number): ITouch
-  identifiedTouch(identifier: number): Touch
-}
-
 interface IRippleEvent extends React.PointerEvent<HTMLElement> {
   touches?: ITouch[]
 }

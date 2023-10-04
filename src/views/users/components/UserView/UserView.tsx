@@ -1,6 +1,4 @@
-import React from 'react'
 import { Button } from '@features/ui'
-import { useDocumentTitle } from '@hooks/useDocumentTitle'
 import { PageContent } from '@layouts/PageContent'
 import { IUser } from '@models/User'
 import { getRoute } from '@utils/index'
@@ -29,7 +27,9 @@ export function UserView({ user }: IUserViewProps) {
         </div>
 
         {user?.created_at ? (
-          <div className="max-w-full px-5 py-2 mt-8 text-xs rounded-full bg-gray bg-opacity-10 text-gray w-max">В STDKIT с {new Date(user.created_at).toLocaleDateString()}</div>
+          <div className="max-w-full px-5 py-2 mt-8 text-xs rounded-full bg-gray bg-opacity-10 text-gray w-max">
+            В STDKIT с {new Date(user.created_at).toLocaleDateString()}
+          </div>
         ) : null}
 
         {user?.date_of_birth ? (

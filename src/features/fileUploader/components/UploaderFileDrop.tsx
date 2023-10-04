@@ -1,4 +1,3 @@
-import React, { DragEvent } from 'react'
 import { PlusIcon } from '@assets/icons/stroke'
 import { FileDrop } from 'react-file-drop'
 
@@ -7,7 +6,7 @@ interface IUploaderFileDropProps {
 }
 
 export function UploaderFileDrop({ uploader }: IUploaderFileDropProps) {
-  function dropHandler(files: FileList | null, event: DragEvent<HTMLDivElement>) {
+  function dropHandler(files: FileList | null) {
     uploader.addItems(Array.from(files || []))
   }
 

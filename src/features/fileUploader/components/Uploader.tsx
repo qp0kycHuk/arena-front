@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react'
+import { PropsWithChildren } from 'react'
 import { UploaderFileDrop } from './UploaderFileDrop'
 import { UploaderItems } from './UploaderItems'
 import { UploaderLabel } from './UploaderLabel'
@@ -14,7 +14,16 @@ interface IUploaderProps extends PropsWithChildren {
   onRemove?: (fileItem: IFileItem) => unknown
 }
 
-export function Uploader({ fileItems, extention, multiple, rounded, sign, onChange, onRemove, children }: IUploaderProps) {
+export function Uploader({
+  fileItems,
+  extention,
+  multiple,
+  rounded,
+  sign,
+  onChange,
+  onRemove,
+  children,
+}: IUploaderProps) {
   const uploader = useUploader({
     multiple,
     rounded,
