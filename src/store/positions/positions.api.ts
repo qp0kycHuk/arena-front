@@ -1,5 +1,5 @@
 import { IPosition } from '@models/Position'
-import { createEntityApi } from '@store/utils/EntitesApi'
+import { createEntityApi } from '@store/utils/EntitiesApi'
 
 type CreateParams = keyof IPosition
 type UpdateParams = CreateParams

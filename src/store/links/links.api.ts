@@ -1,5 +1,5 @@
 import { ILink } from '@models/Link'
-import { EntitesApi } from '@store/utils/EntitesApi'
+import { EntitiesApi } from '@store/utils/EntitiesApi'
 
 type CreateParams = keyof ILink
 type UpdateParams = CreateParams
@@ -8,6 +8,6 @@ export type IUpdateRequest = TypedFormData<UpdateParams>
 
 const ROOT_ENDPOINT_URL = process.env.REACT_APP_API_URL + '/api/links'
 
-export const linksApi = new EntitesApi<ILink, ICreateRequest, IUpdateRequest>({
+export const linksApi = new EntitiesApi<ILink, ICreateRequest, IUpdateRequest>({
   url: ROOT_ENDPOINT_URL,
 })

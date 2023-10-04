@@ -24,7 +24,7 @@ type PartialRecord<K extends keyof any, T> = {
   [P in K]?: T
 }
 
-interface IEntitesAdapter<T> {
+interface IEntitiesAdapter<T> {
   ids: EntityId[]
   entities: Record<EntityId, T>
 }

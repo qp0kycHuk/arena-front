@@ -8,6 +8,9 @@ import { UserViewName } from './UserView.Name'
 import { CakeIcon } from '@assets/icons/stroke'
 import { useAuth } from '@store/auth'
 import { isUser } from '@views/users/utils/isUser'
+import { useFetchArticlesByUserId } from '@/store/articles/articles.query'
+import { EntityId } from '@reduxjs/toolkit'
+import { ArticleList } from '@/views/articles'
 
 interface IUserViewProps {
   user?: IUser
@@ -18,9 +21,13 @@ export function UserView({ user }: IUserViewProps) {
   const isCurrentUserRole = isUser(currentUser)
   const isCurrentUser = currentUser?.id === user?.id
 
+  const { data: articlesData, isFetching } = useFetchArticlesByUserId(user?.id as EntityId, {
+    enabled: !!user?.id,
+  })
+
   return (
     <PageContent className="flex">
-      <div className="w-[360px] px-8 py-12 border-r border-gray border-opacity-30">
+      <div className="w-[360px] flex-shrink-0 px-8 py-12 border-r border-gray border-opacity-30">
         <div className="flex items-center">
           <UserViewImage className="mr-3" user={user} />
           <UserViewName user={user} />
@@ -61,7 +68,7 @@ export function UserView({ user }: IUserViewProps) {
         )}
       </div>
       <div className="flex-grow p-8">
-        <pre>{JSON.stringify(user, null, 2)}</pre>
+        <ArticleList items={articlesData?.items} loading={isFetching} />
       </div>
     </PageContent>
   )

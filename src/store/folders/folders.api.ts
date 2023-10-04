@@ -1,5 +1,5 @@
 import { IFolder } from '@models/Folder'
-import { createEntityApi } from '@store/utils/EntitesApi'
+import { createEntityApi } from '@store/utils/EntitiesApi'
 
 type CreateParams = 'owner_id' | 'name'
 type UpdateParams = CreateParams | 'id' | 'image_delete'

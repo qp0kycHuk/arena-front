@@ -1,6 +1,6 @@
 import { EntityId } from '@reduxjs/toolkit'
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
-import { IEntityApi } from './EntitesApi'
+import { IEntityApi } from './EntitiesApi'
 
 interface IParams<EntityType, C, U> {
   key: string

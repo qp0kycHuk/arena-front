@@ -12,7 +12,7 @@ export function ArticleItem({ article }: IArticleItemProps) {
 
   return (
     <div className="flex items-center px-4 py-3 -mx-4 rounded-2xl hover:bg-primary hover:bg-opacity-10">
-      <div className="w-24 h-[76px] rounded-xl relative overflow-hidden flex bg-gray bg-opacity-10">
+      <div className="w-24 flex-shrink-0 h-[76px] rounded-xl relative overflow-hidden flex bg-gray bg-opacity-10">
         {imageSrc && <img src={imageSrc} alt="" className="absolute object-cover w-full h-full" />}
         {!imageSrc && <ImageIcon className="m-auto text-3xl text-gray" />}
       </div>
@@ -21,8 +21,12 @@ export function ArticleItem({ article }: IArticleItemProps) {
         <div className="text-xs text-gray dark:text-gray-300">{article.excerpt}</div>
       </div>
       <div className="ml-auto text-right whitespace-nowrap">
-        <div className="text-xs text-gray dark:text-gray-300">Созд: {new Date(article.created_at).toLocaleDateString()}</div>
-        <div className="text-xs text-gray dark:text-gray-300">Ред: {new Date(article.updated_at).toLocaleDateString()}</div>
+        <div className="text-xs text-gray dark:text-gray-300">
+          Созд: {new Date(article.created_at).toLocaleDateString()}
+        </div>
+        <div className="text-xs text-gray dark:text-gray-300">
+          Ред: {new Date(article.updated_at).toLocaleDateString()}
+        </div>
       </div>
       <Button variant="text" size="sm" color="gray" className="px-3 ml-3">
         <BookmarkIcon className="text-2xl fill-primary text-primary" />

@@ -6,17 +6,17 @@ import { getEntities, getIds } from '@utils/helpers/entity'
 // C - Create FormData type
 // U - Update FormData type
 
-export interface IEntitesApiConfig {
+export interface IEntitiesApiConfig {
   url: string
 }
 
 type UpsertResponse<EntityType> = AxiosResponse<IItemResponse<EntityType>, unknown>
 
 // for rtk
-export class EntitesApi<EntityType, C, U> {
+export class EntitiesApi<EntityType, C, U> {
   protected ROOT_ENDPOINT_URL: string
 
-  constructor({ url }: IEntitesApiConfig) {
+  constructor({ url }: IEntitiesApiConfig) {
     this.ROOT_ENDPOINT_URL = url
   }
 
@@ -48,14 +48,14 @@ export class EntitesApi<EntityType, C, U> {
 }
 
 // for react query
-export function createEntityApi<EntityType, C, U>({ url }: IEntitesApiConfig): IEntityApi<EntityType, C, U> {
-  async function fetch(): Promise<IListResponse<EntityType> & IEntitesAdapter<EntityType>> {
+export function createEntityApi<EntityType, C, U>({ url }: IEntitiesApiConfig): IEntityApi<EntityType, C, U> {
+  async function fetch(): Promise<IListResponse<EntityType> & IEntitiesAdapter<EntityType>> {
     const { data } = await createRootApi().get(url)
 
     return {
       ...data,
       ids: getIds(data.items),
-      entites: getEntities(data.items),
+      entities: getEntities(data.items),
     }
   }
 
@@ -101,7 +101,7 @@ export function createEntityApi<EntityType, C, U>({ url }: IEntitesApiConfig): I
 }
 
 export interface IEntityApi<EntityType, C, U> {
-  fetch: () => Promise<IListResponse<EntityType> & IEntitesAdapter<EntityType>>
+  fetch: () => Promise<IListResponse<EntityType> & IEntitiesAdapter<EntityType>>
   create: (formData: C) => Promise<IItemResponse<EntityType>>
   update: (formData: U) => Promise<IItemResponse<EntityType>>
   upsert: (formData: U | C) => Promise<IItemResponse<EntityType>>
