@@ -55,8 +55,7 @@ export function Projects() {
               </MenuItem>
               <Link to={folderId ? getRoute().projects(folderId + '/article/create') : getRoute().articles.create()}>
                 <Button className="justify-start w-full" size="sm" color="gray" variant="text">
-                  {' '}
-                  <FileTextIcon className="mr-2" /> Статья{' '}
+                  <FileTextIcon className="mr-2" /> Статья
                 </Button>
               </Link>
             </Menu>
