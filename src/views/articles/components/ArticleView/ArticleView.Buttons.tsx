@@ -4,7 +4,7 @@ import { Button } from '@features/ui'
 import { IArticle } from '@models/Article'
 import { getRoute } from '@utils/index'
 import { Link } from 'react-router-dom'
-import { isUser } from '@features/users'
+import { isUser } from '@views/users'
 import { useAuth } from '@store/auth'
 
 interface IArticleViewButtonsProps {

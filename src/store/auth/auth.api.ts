@@ -1,5 +1,6 @@
 import { IUser } from '@models/User'
 import { rootApi } from '../api'
+import { createRootApi } from '../utils/createRootApi'
 
 export interface ILoginRequest {
   phone: string
@@ -61,4 +62,18 @@ export const authApi = taggetRootApi.injectEndpoints({
   }),
 })
 
-export const { useLoginMutation, useRegisterMutation, useLogoutMutation, useInitCsrfQuery, useLazyInitCsrfQuery, useUserQuery } = authApi
+export const newAuthApi = {
+  async user() {
+    const { data } = await createRootApi().get<IUser>(process.env.REACT_APP_API_URL + USER_ENDPOINT_URL)
+    return data
+  },
+}
+
+export const {
+  useLoginMutation,
+  useRegisterMutation,
+  useLogoutMutation,
+  useInitCsrfQuery,
+  useLazyInitCsrfQuery,
+  useUserQuery,
+} = authApi

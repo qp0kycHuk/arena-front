@@ -1,7 +1,7 @@
 import { Select } from '@features/ui'
 import { useUserEditContext } from './UserEdit.Context'
 import React from 'react'
-import { roles } from '@features/users'
+import { roles } from '@views/users'
 
 export function UserEditRoles() {
   const { user, update, isCurrentUserRole } = useUserEditContext()

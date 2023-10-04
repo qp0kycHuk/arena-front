@@ -34,9 +34,14 @@ export function LoginForm() {
   }
 
   return (
-    <form onSubmit={submitHundler} className="bg-white dark:bg-black dark:text-white m-auto rounded-3xl px-8 py-10 w-[400px]">
+    <form
+      onSubmit={submitHundler}
+      className="bg-white dark:bg-black dark:text-white m-auto rounded-3xl px-8 py-10 w-[400px]"
+    >
       <h1 className="mb-10 text-2xl font-semibold text-center">Авторизация</h1>
-      {errorMessage && !loading ? <div className="p-4 mb-4 text-sm font-semibold rounded bg-red bg-opacity-10 text-red">{errorMessage}</div> : null}
+      {errorMessage && !loading ? (
+        <div className="p-4 mb-4 text-sm font-semibold rounded bg-red bg-opacity-10 text-red">{errorMessage}</div>
+      ) : null}
       <label className="block">
         <div className="mb-2 text-sm font-medium">Логин</div>
         <PhoneInput className="w-full" name="phone" required onChange={changeHandler} />
@@ -50,7 +55,10 @@ export function LoginForm() {
       </Button>
       <div className="mt-5 text-center">
         Я ещё не зарегистрировался <br />
-        <Link to="/registration" className="font-semibold underline text-primary underline-offset-4 decoration-dashed decoration-1">
+        <Link
+          to="/registration"
+          className="font-semibold underline text-primary underline-offset-4 decoration-dashed decoration-1"
+        >
           Зарегистрироваться
         </Link>
       </div>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { ArticleView } from '@features/articles'
+import { ArticleView } from '@views/articles'
 import { useParams } from 'react-router-dom'
 
 export function ArticleViewPage() {

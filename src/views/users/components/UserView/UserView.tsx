@@ -9,7 +9,7 @@ import { UserViewImage } from './UserView.Image'
 import { UserViewName } from './UserView.Name'
 import { CakeIcon } from '@assets/icons/stroke'
 import { useAuth } from '@store/auth'
-import { isUser } from '@features/users/utils/isUser'
+import { isUser } from '@views/users/utils/isUser'
 
 interface IUserViewProps {
   user?: IUser

@@ -8,7 +8,7 @@ import { Spiner } from '@components/Spiner'
 import { UserEditPosition } from './UserEdit.Position'
 import { UserEditRoles } from './UserEdit.Roles'
 import { dateToSQLFormatString } from '@utils/helpers/dates'
-import { isUser } from '@features/users/utils/isUser'
+import { isUser } from '@views/users/utils/isUser'
 import { IUser } from '@models/User'
 
 export function UserEdit() {

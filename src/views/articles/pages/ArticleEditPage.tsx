@@ -1,6 +1,6 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { ArticleEdit } from '@features/articles'
+import { ArticleEdit } from '@views/articles'
 import { Button } from '@features/ui'
 import { ToLeftIcon } from '@assets/icons/stroke'
 import { ArticleEditContextProvider } from '../components/ArticleEdit/ArticleEdit.Context'

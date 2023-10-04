@@ -2,25 +2,16 @@ import React, { useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { ToastContainer } from '@lib/Toast'
 import { MainLayout } from '@layouts/MainLayout'
-import {
-  ArticleEditPage,
-  ArticleViewPage,
-  Home,
-  Login,
-  Registration,
-  UserViewPage,
-  UserEditPage,
-  HandbooksEditPage,
-  UserListPage,
-  Projects,
-  NotFoundPage,
-} from '@pages/index'
+import { Home, Login, Registration, HandbooksEditPage, NotFoundPage } from '@pages/index'
 import { AuthLayout } from '@layouts/AuthLayout'
 import { getRoute } from './utils'
 import { useToggleTheme } from '@store/theme/theme.hooks'
 
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
+import { ArticleEditPage, ArticleViewPage } from '@views/articles/pages'
+import { UserEditPage, UserListPage, UserViewPage } from '@views/users/pages'
+import { Projects } from '@views/projects/pages'
 
 const queryClient = new QueryClient({
   defaultOptions: {

@@ -13,7 +13,17 @@ export function createQueries<EntityType extends { id: EntityId }, C, U>({ key, 
   }
 
   function useFetchById(id: EntityId) {
-    return useQuery([key, id?.toString()], api.fetchById.bind(null, id))
+    const queryClient = useQueryClient()
+
+    return useQuery([key, id?.toString()], api.fetchById.bind(null, id), {
+      placeholderData: () => {
+        return {
+          item: queryClient
+            .getQueryData<IListResponse<EntityType>>(key)
+            ?.items.find((d) => d.id?.toString() === id?.toString()),
+        }
+      },
+    })
   }
 
   function useUpsert() {
