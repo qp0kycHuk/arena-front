@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { IRegisterRequest, useRegistration } from '@store/auth'
+import { IRegisterRequest } from '@store/auth'
 import { useForm } from '@hooks/useForm'
 import { useErrorMessage } from '@hooks/useErrorMessage'
 import { PhoneInput } from '@components/PhoneInput'
 import { Spiner } from '@components/Spiner'
 import { Button, Input } from '@features/ui'
 import { getUnmaskedPhoneValue } from '@utils/index'
+import { useRegister } from '@/store/auth/auth.query'
 
 const initialFormState: IRegisterRequest = {
   phone: '',
@@ -18,7 +19,7 @@ const initialFormState: IRegisterRequest = {
 
 export function RegistrationForm() {
   const [formState, changeHandler] = useForm<IRegisterRequest>(initialFormState)
-  const [register, { error }] = useRegistration()
+  const { mutateAsync: register, error } = useRegister()
   const [loading, setLoading] = useState(false)
   const errorMessage = useErrorMessage(error)
 
@@ -37,9 +38,14 @@ export function RegistrationForm() {
   }
 
   return (
-    <form onSubmit={submitHundler} className="bg-white dark:bg-black dark:text-white m-auto rounded-3xl px-8 py-10 w-[400px]">
+    <form
+      onSubmit={submitHundler}
+      className="bg-white dark:bg-black dark:text-white m-auto rounded-3xl px-8 py-10 w-[400px]"
+    >
       <h1 className="mb-10 text-2xl font-semibold text-center">Регистрация</h1>
-      {errorMessage && !loading ? <div className="p-4 mb-4 text-sm font-semibold rounded bg-red bg-opacity-10 text-red">{errorMessage}</div> : null}
+      {errorMessage && !loading ? (
+        <div className="p-4 mb-4 text-sm font-semibold rounded bg-red bg-opacity-10 text-red">{errorMessage}</div>
+      ) : null}
       <div className="space-y-4">
         <label className="block">
           <div className="mb-2 text-sm font-medium">Телефон</div>
@@ -67,7 +73,10 @@ export function RegistrationForm() {
       </Button>
       <div className="mt-5 text-center">
         Уже есть аккаунт <br />
-        <Link to="/login" className="font-semibold underline text-primary underline-offset-4 decoration-dashed decoration-1">
+        <Link
+          to="/login"
+          className="font-semibold underline text-primary underline-offset-4 decoration-dashed decoration-1"
+        >
           Войти
         </Link>
       </div>

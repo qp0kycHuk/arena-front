@@ -1,5 +1,4 @@
 import type { EntityId } from '@reduxjs/toolkit'
-import type { AxiosResponse } from 'axios'
 import { createRootApi } from './createRootApi'
 import { getEntities, getIds } from '@utils/helpers/entity'
 
@@ -8,43 +7,6 @@ import { getEntities, getIds } from '@utils/helpers/entity'
 
 export interface IEntitiesApiConfig {
   url: string
-}
-
-type UpsertResponse<EntityType> = AxiosResponse<IItemResponse<EntityType>, unknown>
-
-// for rtk
-export class EntitiesApi<EntityType, C, U> {
-  protected ROOT_ENDPOINT_URL: string
-
-  constructor({ url }: IEntitiesApiConfig) {
-    this.ROOT_ENDPOINT_URL = url
-  }
-
-  async fetch(): Promise<AxiosResponse<IListResponse<EntityType>, unknown>> {
-    return await this.rootApi().get(this.ROOT_ENDPOINT_URL)
-  }
-
-  async create(formData: C): Promise<UpsertResponse<EntityType>> {
-    return await this.rootApi().post(this.ROOT_ENDPOINT_URL, formData)
-  }
-
-  async update(formData: U): Promise<UpsertResponse<EntityType>> {
-    ;(formData as FormData).append('_method', 'PUT')
-
-    return await this.rootApi().post(this.ROOT_ENDPOINT_URL + '/' + (formData as FormData).get('id'), formData)
-  }
-
-  async fetchById(id: EntityId) {
-    return await this.rootApi().get(this.ROOT_ENDPOINT_URL + '/' + id)
-  }
-
-  async remove(id: EntityId) {
-    return await this.rootApi().delete(this.ROOT_ENDPOINT_URL + '/' + id)
-  }
-
-  protected rootApi() {
-    return createRootApi()
-  }
 }
 
 // for react query

@@ -13,7 +13,8 @@ interface IArticleViewButtonsProps {
 }
 
 export function ArticleViewButtons({ article, isLoading }: IArticleViewButtonsProps) {
-  const { user: currentUser } = useAuth()
+  const { data: auth } = useAuth()
+  const currentUser = auth?.user
   const isCurrentUserRole = isUser(currentUser)
 
   if (!article || isLoading) {

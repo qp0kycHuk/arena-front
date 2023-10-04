@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ILoginRequest, useLogin } from '@store/auth'
+// import { ILoginRequest, useLogin } from '@store/auth'
 import { useForm } from '@hooks/useForm'
 import { useErrorMessage } from '@hooks/useErrorMessage'
 import { PhoneInput } from '@components/PhoneInput'
 import { Spiner } from '@components/Spiner'
 import { Button, Input } from '@features/ui'
 import { getUnmaskedPhoneValue } from '@utils/index'
+import { useLogin } from '@/store/auth/auth.query'
+import { ILoginRequest } from '@/store/auth'
 
 const initialFormState: ILoginRequest = {
   phone: '',
@@ -15,7 +17,8 @@ const initialFormState: ILoginRequest = {
 
 export function LoginForm() {
   const [formState, changeHandler] = useForm<ILoginRequest>(initialFormState)
-  const [login, { error }] = useLogin()
+  // const [login, { error }] = useLogin()
+  const { mutateAsync: login, error } = useLogin()
   const [loading, setLoading] = useState(false)
   const errorMessage = useErrorMessage(error)
 

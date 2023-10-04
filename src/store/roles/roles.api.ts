@@ -1,5 +1,5 @@
 import { IRole } from '@models/Role'
-import { EntitiesApi, createEntityApi } from '@store/utils/EntitiesApi'
+import { createEntityApi } from '@store/utils/EntitiesApi'
 
 type CreateParams = keyof IRole
 type UpdateParams = CreateParams

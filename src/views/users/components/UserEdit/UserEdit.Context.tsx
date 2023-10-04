@@ -7,9 +7,10 @@ import { useNavigate } from 'react-router-dom'
 import { getRoute } from '@utils/index'
 import { dateToSQLFormatString } from '@utils/helpers/dates'
 import { EMPTY_OBJECT } from '@utils/const'
-import { useAuth } from '@store/auth'
+import { AUTH_QUERY_KEY, useAuth } from '@store/auth'
 import { isUser } from '@views/users'
 import { useUpsertUser } from '@store/users/'
+import { useQueryClient } from '@tanstack/react-query'
 
 export const UserEditContext = createContext<IUserEditContextValue>({} as IUserEditContextValue)
 export const useUserEditContext = () => useContext(UserEditContext)
@@ -20,7 +21,10 @@ export function UserEditContextProvider({ children, user }: IUserEditContextProv
   const { mutateAsync: upsertUser } = useUpsertUser()
   const navigate = useNavigate()
 
-  const { user: currentUser } = useAuth()
+  const queryClient = useQueryClient()
+
+  const { data } = useAuth()
+  const currentUser = data?.user
   const isCurrentUserRole = isUser(currentUser)
   const isCurrentUser = currentUser?.id === user?.id
 
@@ -66,6 +70,8 @@ export function UserEditContextProvider({ children, user }: IUserEditContextProv
     loadingStart()
     const { item: updatedUser } = await upsertUser(formData)
     loadingEnd()
+
+    queryClient.invalidateQueries([AUTH_QUERY_KEY])
 
     if ((updatedUser as IUser).id) {
       navigate(getRoute().users((updatedUser as IUser).id))
