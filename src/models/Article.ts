@@ -1,4 +1,3 @@
-import { EntityId } from '@reduxjs/toolkit'
 import { ICategory } from './Category'
 import { IFile } from './File'
 import { ITag } from './Tag'

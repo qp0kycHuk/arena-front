@@ -1,7 +1,6 @@
 import React from 'react'
 import { HashIcon } from '@assets/icons/stroke'
 import { HandbooksEdit } from './HandbooksEdit'
-import { EntityId } from '@reduxjs/toolkit'
 import { IUpdateRequest } from '@store/tags/tags.api'
 import { IHandbook } from '@models/Handbook'
 import { useDeleteTag, useFetchTags, useUpsertTag } from '@store/tags/'

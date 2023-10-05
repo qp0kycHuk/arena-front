@@ -1,4 +1,3 @@
-import { EntityId } from '@reduxjs/toolkit'
 import { IArticle } from './Article'
 
 export interface IFolder {

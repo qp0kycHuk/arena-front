@@ -1,5 +1,3 @@
-import { EntityId } from '@reduxjs/toolkit'
-
 export function getIds<T extends { id?: EntityId; ID?: EntityId }>(items: T[]) {
   return items.map((item) => (item.id || item.ID) as EntityId)
 }

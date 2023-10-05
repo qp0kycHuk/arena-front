@@ -1,4 +1,3 @@
-import type { EntityId } from '@reduxjs/toolkit'
 import type { IHandbook } from './Handbook'
 
 export interface ILink extends IHandbook {

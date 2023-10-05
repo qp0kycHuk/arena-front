@@ -1,4 +1,3 @@
-import { EntityId } from '@reduxjs/toolkit'
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
 import { IEntityApi } from './EntitiesApi'
 
@@ -31,6 +30,7 @@ export function createQueries<EntityType extends { id: EntityId }, C, U>({ key, 
 
     return useMutation(api.upsert, {
       onSuccess: (data) => {
+        queryClient.invalidateQueries([key])
         queryClient.setQueryData([key, data.item.id.toString()], data)
       },
     })
@@ -41,6 +41,7 @@ export function createQueries<EntityType extends { id: EntityId }, C, U>({ key, 
 
     return useMutation(api.remove, {
       onSuccess: (data, id) => {
+        queryClient.invalidateQueries([key])
         queryClient.setQueryData([key, id.toString()], null)
       },
     })

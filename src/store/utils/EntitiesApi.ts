@@ -1,4 +1,3 @@
-import type { EntityId } from '@reduxjs/toolkit'
 import { createRootApi } from './createRootApi'
 import { getEntities, getIds } from '@utils/helpers/entity'
 

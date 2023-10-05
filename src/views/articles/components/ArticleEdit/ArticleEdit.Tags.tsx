@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react'
-import { EntityId } from '@reduxjs/toolkit'
 import { Tag } from '@components/Tag'
 import { Button, getInputClassname } from '@features/ui'
 import { Combobox, Transition } from '@headlessui/react'

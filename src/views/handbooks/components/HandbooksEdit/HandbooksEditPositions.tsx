@@ -1,7 +1,6 @@
 import React from 'react'
 import { BriefcaseIcon } from '@assets/icons/stroke'
 import { HandbooksEdit } from './HandbooksEdit'
-import { EntityId } from '@reduxjs/toolkit'
 import { IHandbook } from '@models/Handbook'
 import { IUpdateRequest } from '@store/positions/positions.api'
 import { useDeletePosition, useFetchPositions, useUpsertPosition } from '@store/positions/'

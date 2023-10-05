@@ -1,6 +1,5 @@
 import type { IArticle } from '@models/Article'
-import { EntityId } from '@reduxjs/toolkit'
-import { IEntitiesApiConfig, createEntityApi } from '@store/utils/EntitiesApi'
+import { createEntityApi } from '@store/utils/EntitiesApi'
 import { createRootApi } from '../utils/createRootApi'
 import { getEntities, getIds } from '@/utils/helpers/entity'
 
@@ -29,6 +28,7 @@ const ROOT_ENDPOINT_URL = process.env.REACT_APP_API_URL + '/api/articles'
 
 export const articlesApi = {
   ...createEntityApi<IArticle, ICreateRequest, IUpdateRequest>({ url: ROOT_ENDPOINT_URL }),
+
   async fetchByUserId(userId: EntityId): Promise<IListResponse<IArticle> & IEntitiesAdapter<IArticle>> {
     const { data } = await createRootApi().post(ROOT_ENDPOINT_URL + '/list/', { id: userId })
 

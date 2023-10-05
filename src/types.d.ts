@@ -20,6 +20,8 @@ declare module '*.module.scss' {
   export default classes
 }
 
+type EntityId = string | number
+
 type PartialRecord<K extends keyof any, T> = {
   [P in K]?: T
 }
