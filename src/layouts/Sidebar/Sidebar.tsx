@@ -1,9 +1,17 @@
-import React from 'react'
-import { BriefcaseIcon, CrownIcon, DocumentIcon, FoldersIcon, HandbooksIcon, ToTopIcon, UsersIcon } from '@assets/icons/stroke'
-import { Tag } from '@components/Tag'
+import {
+  BriefcaseIcon,
+  CrownIcon,
+  DocumentIcon,
+  FoldersIcon,
+  HandbooksIcon,
+  ToTopIcon,
+  UsersIcon,
+} from '@assets/icons/stroke'
 import { Button } from '@features/ui'
 import { getRoute } from '@utils/index'
 import { SidebarButton } from './SidebarButton'
+import { Tags } from './Sidebar.Tags'
+import { Folders } from './Sidebar.Folders'
 
 export function Sidebar() {
   return (
@@ -13,24 +21,12 @@ export function Sidebar() {
         <SidebarButton title="Пользователи" icon={UsersIcon} link={getRoute().users()} />
         <SidebarButton title="Статьи" icon={DocumentIcon} link={getRoute().projects()} />
         <SidebarButton title="Справочник" icon={HandbooksIcon} link="handbooks" />
-        <SidebarButton title="База знаний" icon={BriefcaseIcon}>
-          <ToTopIcon className="ml-auto text-base text-gray dark:text-white" />
-        </SidebarButton>
-        <SidebarButton title="Проекты" icon={FoldersIcon} className="pl-8" />
-        <SidebarButton title="Дизайн" icon={FoldersIcon} className="pl-8" />
-        <SidebarButton title="Проекты за 2022" icon={FoldersIcon} className="pl-8" />
+
+        <Folders />
       </div>
       <div className="mt-3 mb-5 border-t border-gray border-opacity-20"></div>
 
-      <div className="flex flex-wrap gap-2">
-        <Tag>#Figma</Tag>
-        <Tag>#Анимация</Tag>
-        <Tag>#Фронт</Tag>
-        <Tag>#ДирижерСада</Tag>
-        <Tag>#Бэк</Tag>
-        <Tag>#Дизайн</Tag>
-        <Tag>#Команда</Tag>
-      </div>
+      <Tags />
       <Button variant="text" size="sm" className="justify-start w-auto mt-5 -ml-2 -mr-2">
         Показать всё
       </Button>
