@@ -1,14 +1,17 @@
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
 import { IEntityApi } from './EntitiesApi'
 
-interface IParams<EntityType, C, U> {
+interface IParams<EntityType, C, U, F> {
   key: string
-  api: IEntityApi<EntityType, C, U>
+  api: IEntityApi<EntityType, C, U, F>
 }
 
-export function createQueries<EntityType extends { id: EntityId }, C, U>({ key, api }: IParams<EntityType, C, U>) {
-  function useFetch() {
-    return useQuery([key], api.fetch)
+export function createQueries<EntityType extends { id: EntityId }, C, U, F = Record<string, string>>({
+  key,
+  api,
+}: IParams<EntityType, C, U, F>) {
+  function useFetch(params: F = {} as F) {
+    return useQuery([key, params], api.fetch.bind(null, params))
   }
 
   function useFetchById(id: EntityId) {

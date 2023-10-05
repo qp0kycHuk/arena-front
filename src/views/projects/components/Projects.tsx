@@ -5,6 +5,7 @@ import { ArticleList } from '@/views/articles'
 import { ProjectsContextProvider, useProjectsContext } from './Projects.Context'
 import { Head } from './Projects.Head/Projects.Head'
 import { Empty } from '@/components/Empty'
+import { Search } from './Projects.Search'
 
 function ProjectsInner() {
   useDocumentTitle('Статьи')
@@ -16,10 +17,7 @@ function ProjectsInner() {
     <>
       <PageContent className="p-8">
         <Head />
-        {/* <Search
-          onChange={debouncedChangeHandler}
-          initialValue={searchParams.get(SEARCH_QUERY_NAME) || ''}
-          className='mb-4' /> */}
+        {/* <Search /> */}
         {isFolderEmpty && <Empty />}
         <FolderList items={folders} loading={loading} />
         <ArticleList items={articles} loading={loading} />
