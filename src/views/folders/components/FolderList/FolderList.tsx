@@ -15,7 +15,7 @@ export function FolderList({ loading, items }: IFolderListProps) {
   return (
     <>
       {loading &&
-        new Array(3).fill(1).map((_, index) => (
+        new Array(2).fill(1).map((_, index) => (
           <React.Fragment key={index}>
             <FolderItemPlacehlder />
             <div className="border-t border-gray border-opacity-20"></div>
