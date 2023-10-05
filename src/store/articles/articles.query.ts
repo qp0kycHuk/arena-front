@@ -1,7 +1,6 @@
 import { UseQueryOptions, useQuery, useQueryClient } from '@tanstack/react-query'
 import { articlesApi } from './articles.api'
 import { createQueries } from '@store/utils/queries'
-import { EntityId } from '@reduxjs/toolkit'
 import { IArticle } from '@/models/Article'
 import { getEntities, getIds } from '@/utils/helpers/entity'
 

@@ -1,5 +1,3 @@
-import { EntityId } from '@reduxjs/toolkit'
-
 export interface IFile {
   id: EntityId
   name?: string

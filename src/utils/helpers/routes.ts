@@ -1,5 +1,3 @@
-import { EntityId } from '@reduxjs/toolkit'
-
 type IRouteCreator = {
   edit(id?: EntityId): string
   create(): string

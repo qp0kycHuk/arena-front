@@ -2,7 +2,7 @@ import React from 'react'
 import classnames from 'classnames'
 import type { Color, Size } from '../types'
 
-const baseClassName = 'input rounded-lg bg-transparent'
+const baseClassName = 'input rounded-lg '
 
 const colorClassNames: PartialRecord<Color, string> = {
   white: 'input-white',

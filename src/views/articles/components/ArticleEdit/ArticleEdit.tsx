@@ -12,7 +12,6 @@ import {
   useArticleEditMainContext,
   useArticleEditUtilsContext,
 } from './ArticleEdit.Context'
-import { EntityId } from '@reduxjs/toolkit'
 
 interface IArticleEditProps {
   articleId?: EntityId

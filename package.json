@@ -5,6 +5,7 @@
   "dependencies": {
     "@headlessui/react": "^1.7.8",
     "@popperjs/core": "^2.11.6",
+    "@qpokychuk/tailwind-ratio-plugin": "^2.0.0",
     "@reduxjs/toolkit": "^1.9.1",
     "@szhsin/react-menu": "^3.3.1",
     "@tanstack/react-query": "^4.35.7",

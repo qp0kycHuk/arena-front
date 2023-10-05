@@ -3,15 +3,16 @@ import { Button } from '@features/ui'
 import { useDocumentTitle } from '@hooks/useDocumentTitle'
 import { PageContent } from '@layouts/PageContent'
 import { Link } from 'react-router-dom'
+import { Empty } from '@/components/Empty'
 
 export function NotFoundPage() {
   useDocumentTitle('Страница не найдена')
 
   return (
     <PageContent className="p-8">
-      <div className="text-3xl font-semibold">Страница не найдена</div>
+      <Empty title="Страница не найдена" />
       <Link to={'/'}>
-        <Button className="mt-6">На главную</Button>
+        <Button className="mt-6 mx-auto">На главную</Button>
       </Link>
     </PageContent>
   )

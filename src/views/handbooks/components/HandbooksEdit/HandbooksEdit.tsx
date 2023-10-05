@@ -3,7 +3,6 @@ import { Spiner } from '@components/Spiner'
 import { Button, Input } from '@features/ui'
 import { useLoading } from '@hooks/useLoading'
 import { IHandbook } from '@models/Handbook'
-import { EntityId } from '@reduxjs/toolkit'
 import { getRandomUUID } from '@utils/index'
 import React, { useEffect, useState } from 'react'
 

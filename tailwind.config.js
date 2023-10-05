@@ -24,5 +24,9 @@ module.exports = {
       variants: ['hover'],
     },
   ],
-  plugins: [require('@qpokychuk/tailwind-button-plugin'), require('./tailwind.input')],
+  plugins: [
+    require('@qpokychuk/tailwind-button-plugin'),
+    require('@qpokychuk/tailwind-ratio-plugin'),
+    require('./tailwind.input'),
+  ],
 }

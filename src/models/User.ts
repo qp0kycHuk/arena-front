@@ -1,4 +1,3 @@
-import { EntityId } from '@reduxjs/toolkit'
 import { IPosition } from './Position'
 import { roles } from '@views/users'
 

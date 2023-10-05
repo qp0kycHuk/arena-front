@@ -1,18 +1,20 @@
-import type { EntityId } from '@reduxjs/toolkit'
 import { createRootApi } from './createRootApi'
 import { getEntities, getIds } from '@utils/helpers/entity'
 
 // C - Create FormData type
 // U - Update FormData type
+// F - Fetch params
 
 export interface IEntitiesApiConfig {
   url: string
 }
 
 // for react query
-export function createEntityApi<EntityType, C, U>({ url }: IEntitiesApiConfig): IEntityApi<EntityType, C, U> {
-  async function fetch(): Promise<IListResponse<EntityType> & IEntitiesAdapter<EntityType>> {
-    const { data } = await createRootApi().get(url)
+export function createEntityApi<EntityType, C, U, F = Record<string, string>>({
+  url,
+}: IEntitiesApiConfig): IEntityApi<EntityType, C, U, F> {
+  async function fetch(params: F = {} as F): Promise<IListResponse<EntityType> & IEntitiesAdapter<EntityType>> {
+    const { data } = await createRootApi().get(url, { params })
 
     return {
       ...data,
@@ -62,8 +64,8 @@ export function createEntityApi<EntityType, C, U>({ url }: IEntitiesApiConfig): 
   }
 }
 
-export interface IEntityApi<EntityType, C, U> {
-  fetch: () => Promise<IListResponse<EntityType> & IEntitiesAdapter<EntityType>>
+export interface IEntityApi<EntityType, C, U, F> {
+  fetch: (params?: F) => Promise<IListResponse<EntityType> & IEntitiesAdapter<EntityType>>
   create: (formData: C) => Promise<IItemResponse<EntityType>>
   update: (formData: U) => Promise<IItemResponse<EntityType>>
   upsert: (formData: U | C) => Promise<IItemResponse<EntityType>>

@@ -11,3 +11,16 @@ export function Tag({ children, className, ...props }: ITagProps) {
     </Button>
   )
 }
+
+export function TagPlaceholder({ children, className, ...props }: ITagProps) {
+  return (
+    <Button
+      color="gray"
+      variant="light"
+      size="xs"
+      rounded
+      className={'px-3 h-7 w-16 animate-pulse ' + className}
+      {...props}
+    />
+  )
+}

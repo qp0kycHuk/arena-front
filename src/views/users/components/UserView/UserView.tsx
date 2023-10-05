@@ -9,7 +9,6 @@ import { CakeIcon } from '@assets/icons/stroke'
 import { useAuth } from '@store/auth'
 import { isUser } from '@views/users/utils/isUser'
 import { useFetchArticlesByUserId } from '@/store/articles/articles.query'
-import { EntityId } from '@reduxjs/toolkit'
 import { ArticleList } from '@/views/articles'
 
 interface IUserViewProps {

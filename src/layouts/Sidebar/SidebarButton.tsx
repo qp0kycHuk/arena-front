@@ -2,21 +2,23 @@ import React from 'react'
 import { Button } from '@features/ui'
 import { NavLink } from 'react-router-dom'
 
-interface ISidebarButtonProps extends React.PropsWithChildren {
+interface ISidebarButtonProps extends Omit<React.ComponentProps<typeof Button>, 'icon'> {
   title: string
   icon: React.FC<React.HTMLProps<HTMLDivElement>>
   link?: string
   className?: string
 }
 
-export function SidebarButton({ link, icon: Icon, title, children, className }: ISidebarButtonProps) {
+export function SidebarButton({ link, icon: Icon, title, children, className, ...props }: ISidebarButtonProps) {
   if (link) {
     return (
       <NavLink to={link}>
         {({ isActive }) => (
-          <Button className={'w-full ' + className} variant="text" size="sm">
+          <Button className={'w-full text-left ' + className} variant="text" size="sm" {...props}>
             <Icon className={`mr-2 text-lg ${isActive ? 'text-primary' : 'text-gray dark:text-white'}`} />
-            <div className={`mr-auto ${isActive ? '' : 'font-normal'} text-black dark:text-white`}>{title}</div>
+            <div className={`mr-auto ${isActive ? '' : 'font-normal'} text-black dark:text-white truncate`}>
+              {title}
+            </div>
 
             {children}
           </Button>
@@ -26,9 +28,9 @@ export function SidebarButton({ link, icon: Icon, title, children, className }: 
   }
 
   return (
-    <Button className={'w-full ' + className} variant="text" size="sm">
+    <Button className={'w-full text-left ' + className} variant="text" size="sm" {...props}>
       <Icon className="mr-2 text-lg text-gray dark:text-white" />
-      <div className="mr-auto font-normal text-black dark:text-white">{title}</div>
+      <div className="mr-auto font-normal text-black dark:text-white truncate">{title}</div>
 
       {children}
     </Button>

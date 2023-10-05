@@ -15,7 +15,7 @@ export function ArticleList({ loading, items }: IArticleListProps) {
   return (
     <>
       {loading &&
-        new Array(5).fill(1).map((_, index) => (
+        new Array(4).fill(1).map((_, index) => (
           <React.Fragment key={index}>
             <ArticleItemPlacehlder />
             <div className="border-t border-gray border-opacity-20"></div>
