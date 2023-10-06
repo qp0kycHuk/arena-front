@@ -6,8 +6,8 @@ export type ITagProps = ButtonProps
 
 export function Tag({ children, className, ...props }: ITagProps) {
   return (
-    <Button color="gray" variant="light" size="xs" rounded className={'px-3 ' + className} {...props}>
-      <span className="flex items-center text-xs font-normal">{children}</span>
+    <Button color="gray" variant="light" size="xs" rounded className={'px-3 max-w-full ' + className} {...props}>
+      <span className="flex items-center text-xs font-normal truncate">{children}</span>
     </Button>
   )
 }

@@ -39,6 +39,7 @@ module.exports = plugin.withOptions(
           height: sizeVar,
           border: "1px solid theme('colors.gray.DEFAULT / 20%')",
           outline: 'none !important',
+          background: 'rgba(0, 0, 0, 0)',
           lineHeight: '1',
           padding: 'calc((var(--tw-input-size) - 1.2em) / 2) 15px',
           ...options.baseCss,

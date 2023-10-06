@@ -9,7 +9,7 @@ import { Search } from './Projects.Search'
 
 function ProjectsInner() {
   useDocumentTitle('Статьи')
-  const { loading, folders, articles } = useProjectsContext()
+  const { loading, folders, articles, tagsQuery } = useProjectsContext()
 
   const isFolderEmpty = !loading && folders.length + articles.length === 0
 
@@ -17,7 +17,8 @@ function ProjectsInner() {
     <>
       <PageContent className="p-8">
         <Head />
-        {/* <Search /> */}
+        <Search />
+        {JSON.stringify(tagsQuery)}
         {isFolderEmpty && <Empty />}
         <FolderList items={folders} loading={loading} />
         <ArticleList items={articles} loading={loading} />

@@ -14,12 +14,15 @@ export function FolderItem({ folder }: IFolderItemProps) {
         {(folder.articles?.length || 0) + (folder.children?.length || 0)}
       </div>
       <div className="font-semibold">{folder.name}</div>
-      {/*
-        <div className="ml-auto text-right whitespace-nowrap">
-            <div className="text-xs text-gray dark:text-gray-300">Созд: 04.06.2020</div>
-            <div className="text-xs text-gray dark:text-gray-300">Ред: 12.06.2022</div>
+
+      {/* <div className="ml-auto text-right whitespace-nowrap">
+        <div className="text-xs text-gray dark:text-gray-300">
+          Созд: {new Date(folder.created_at).toLocaleDateString()}
         </div>
-      */}
+        <div className="text-xs text-gray dark:text-gray-300">
+          Ред: {new Date(folder.updated_at).toLocaleDateString()}
+        </div>
+      </div> */}
     </div>
   )
 }
