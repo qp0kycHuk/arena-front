@@ -1,5 +1,6 @@
 import { useQuery, useQueryClient, useMutation, UseQueryOptions } from '@tanstack/react-query'
 import { IEntityApi } from './EntitiesApi'
+import { toast } from '@/lib/Toast'
 
 interface IParams<EntityType, C, U, F> {
   key: string
@@ -23,9 +24,11 @@ export function createQueries<EntityType extends { id: EntityId }, C, U, F = Rec
       enabled: options?.enabled || !!id,
       placeholderData: () => {
         return {
-          item: queryClient
-            .getQueryData<IListResponse<EntityType>>([key])
-            ?.items.find((d) => d.id?.toString() === id?.toString()),
+          item:
+            queryClient.getQueryData<IItemResponse<EntityType>>([key, id?.toString()])?.item ||
+            queryClient
+              .getQueryData<IListResponse<EntityType>>([key])
+              ?.items.find((d) => d.id?.toString() === id?.toString()),
         }
       },
     })
@@ -38,6 +41,8 @@ export function createQueries<EntityType extends { id: EntityId }, C, U, F = Rec
       onSuccess: (data) => {
         queryClient.invalidateQueries([key])
         queryClient.setQueryData([key, data.item.id.toString()], data)
+        // TODO
+        // queryClient.setQueryData([key], queryClient.getQueryData([key]))
       },
     })
   }
