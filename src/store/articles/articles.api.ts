@@ -4,7 +4,6 @@ import { createRootApi } from '../utils/createRootApi'
 import { getEntities, getIds } from '@/utils/helpers/entity'
 
 type CreateParams =
-  | 'owner_id'
   | 'content'
   | 'excerpt'
   | 'name'
@@ -13,7 +12,7 @@ type CreateParams =
   | 'attachment[]'
   | 'parent_id'
   | 'folders[]'
-  | 'links[]'
+  | 'links[]' // | 'owner_id'
 type UpdateParams = CreateParams | 'id' | 'image_delete'
 export type ICreateRequest = TypedFormData<CreateParams>
 export type IUpdateRequest = TypedFormData<UpdateParams>

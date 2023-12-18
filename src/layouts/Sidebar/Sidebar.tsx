@@ -19,7 +19,7 @@ export function Sidebar() {
       <div className="space-y-1">
         <SidebarButton title="Главная" icon={CrownIcon} link="/" />
         <SidebarButton title="Пользователи" icon={UsersIcon} link={getRoute().users()} />
-        <SidebarButton title="Статьи" icon={DocumentIcon} link={getRoute().projects()} />
+        {/* <SidebarButton title="Статьи" icon={DocumentIcon} link={getRoute().articles()} /> */}
         <SidebarButton title="Справочник" icon={HandbooksIcon} link="handbooks" />
 
         <Folders />

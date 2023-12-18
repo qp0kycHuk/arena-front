@@ -16,7 +16,7 @@ function ProjectsInner() {
       <PageContent className="p-8">
         <Head />
         <Search />
-        {JSON.stringify(tagsQuery)}
+
         {isEmpty && <Empty />}
         <FolderList items={folders} loading={fetching} />
         <ArticleList items={articles} loading={fetching} />

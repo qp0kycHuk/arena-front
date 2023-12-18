@@ -30,7 +30,7 @@ export function FolderEditDialog({ item, isOpen, close }: IFolderEditDialogProps
     const formData = new FormData(event.target as HTMLFormElement)
 
     if (user) {
-      formData.append('owner_id', user.id.toString())
+      // formData.append('owner_id', user.id.toString())
     } else {
       return
     }

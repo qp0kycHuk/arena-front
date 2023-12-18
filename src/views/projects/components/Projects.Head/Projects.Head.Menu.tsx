@@ -10,6 +10,19 @@ export function HeadMenu() {
   const { folderId, fetching } = useProjectsContext()
   const [isCreateFolderOpen, , openCreateFolderOpen, closeCreateFolderOpen] = useToggle(false)
   const articleCreateRoute = folderId ? getRoute().projects(folderId + '/article/create') : getRoute().articles.create()
+
+  if (!folderId) {
+    return (
+      <>
+        <Button className="ml-4 px-7" disabled={fetching} onClick={openCreateFolderOpen}>
+          Добавить
+        </Button>
+
+        <FolderEditDialog isOpen={isCreateFolderOpen} close={closeCreateFolderOpen} />
+      </>
+    )
+  }
+
   return (
     <>
       <Menu

@@ -6,6 +6,6 @@ export function Name() {
   return fetching ? (
     <div className="w-64 h-6 mt-2  bg-opacity-50 animate-pulse bg-gray" />
   ) : (
-    <div className="text-2xl font-semibold">{folder?.name ? folder.name : 'Статьи'}</div>
+    <div className="text-2xl font-semibold">{folder?.name ? folder.name : 'База знаний'}</div>
   )
 }

@@ -43,8 +43,8 @@ export function createEntityApi<EntityType, C, U, F = Record<string, string>>({
     }
   }
 
-  async function fetchById(id: EntityId): Promise<IItemResponse<EntityType>> {
-    const { data } = await createRootApi().get(url + '/' + id)
+  async function fetchById(id: EntityId, params: F = {} as F): Promise<IItemResponse<EntityType>> {
+    const { data } = await createRootApi().get(url + '/' + id, { params })
 
     return data
   }

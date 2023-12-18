@@ -1,7 +1,7 @@
 import { IFolder } from '@models/Folder'
 import { createEntityApi } from '@store/utils/EntitiesApi'
 
-type CreateParams = 'owner_id' | 'name'
+type CreateParams = 'name'
 type UpdateParams = CreateParams | 'id' | 'image_delete'
 export type ICreateRequest = TypedFormData<CreateParams>
 export type IUpdateRequest = TypedFormData<UpdateParams>

@@ -58,9 +58,9 @@ export function ArticleEditContextProvider({ children, articleId }: IArticleEdit
       formData.append('folders[]', folderId)
     }
 
-    if (!editableArticle.id) {
-      formData.append('owner_id', user.id.toString())
-    }
+    // if (!editableArticle.id) {
+    //   formData.append('owner_id', user.id.toString())
+    // }
 
     if (editableArticle.imageFile) {
       formData.append('image', editableArticle.imageFile)
@@ -167,7 +167,7 @@ export function ArticleEditContextProvider({ children, articleId }: IArticleEdit
                   throw new Error('user is undefined')
                 }
 
-                linkFormData.append('owner_id', user.id.toString())
+                // linkFormData.append('owner_id', user.id.toString())
                 return linksApi.create(linkFormData)
               }
             })
@@ -195,11 +195,11 @@ export function ArticleEditContextProvider({ children, articleId }: IArticleEdit
   )
 
   return (
-    <ArticleEditMainContext.Provider value={{ article: editableArticle, loading, update }}>
-      <ArticleEditUtilsContext.Provider value={{ loadingStart, loadingEnd, getFormData, submitHandler }}>
+    <ArticleEditUtilsContext.Provider value={{ loadingStart, loadingEnd, getFormData, submitHandler }}>
+      <ArticleEditMainContext.Provider value={{ article: editableArticle, loading, update }}>
         {children}
-      </ArticleEditUtilsContext.Provider>
-    </ArticleEditMainContext.Provider>
+      </ArticleEditMainContext.Provider>
+    </ArticleEditUtilsContext.Provider>
   )
 }
 

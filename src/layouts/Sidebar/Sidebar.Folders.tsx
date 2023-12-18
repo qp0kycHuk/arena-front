@@ -4,22 +4,28 @@ import { useFetchFolders } from '@/store/folders'
 import { getRoute } from '@/utils'
 import { useToggle } from '@/hooks/useToggle'
 import classNames from 'classnames'
+import { Button } from '@/features/ui'
 
 export function Folders() {
   const { data: foldersData } = useFetchFolders()
   const sortedFolders = foldersData?.items || []
-  const [expanded, toggleExpanded] = useToggle()
+  const [expanded, toggleExpanded] = useToggle(true)
 
   return (
     <>
-      <SidebarButton onClick={toggleExpanded} title="База знаний" icon={BriefcaseIcon}>
-        <ToTopIcon
-          className={classNames(
-            expanded ? '' : 'rotate-90',
-            'ml-auto text-base text-gray dark:text-white transition-transform'
-          )}
-        />
-      </SidebarButton>
+      <div className="relative">
+        <SidebarButton link={getRoute().projects()} title="База знаний" icon={BriefcaseIcon}></SidebarButton>
+        <div className="absolute right-1 top-1/2 -translate-y-1/2 z-[2]">
+          <Button icon variant="text" className="" size="xs" onClick={toggleExpanded}>
+            <ToTopIcon
+              className={classNames(
+                expanded ? '' : 'rotate-90',
+                'text-base text-gray dark:text-white transition-transform'
+              )}
+            />
+          </Button>
+        </div>
+      </div>
       {expanded &&
         sortedFolders.map((folder) => (
           <SidebarButton
