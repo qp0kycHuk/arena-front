@@ -12,8 +12,8 @@ const Context = createContext<IValue>({} as IValue)
 export const useProjectsContext = () => useContext(Context)
 
 export function ProjectsContextProvider({ children }: React.PropsWithChildren) {
-  const [searchQuery, changeSearchQuery] = useSearchQuery()
-  const [tagsQuery, changeTagsQuery] = useTagsQuery()
+  const [searchQuery, changeSearchQuery] = useSearchQuery({ savedKeys: ['tags'] })
+  const [tagsQuery, changeTagsQuery] = useTagsQuery({ savedKeys: ['search'] })
 
   const { folderId } = useParams()
 

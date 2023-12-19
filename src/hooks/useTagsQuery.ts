@@ -9,7 +9,7 @@ interface IPops {
 
 type IResult = [string[], (query: string[]) => void]
 
-export function useTagsQuery({ key = 'tags', savedKeys = [], saveAll = false }: IPops = {}): IResult {
+export function useTagsQuery({ key = 'tags', savedKeys = ['search'], saveAll = false }: IPops = {}): IResult {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const tagsQuery = searchParams.getAll(key) || []
