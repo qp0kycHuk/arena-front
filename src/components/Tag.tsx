@@ -2,17 +2,24 @@ import * as React from 'react'
 import { Button } from '@features/ui'
 import { ButtonProps } from '@features/ui/components/Button'
 
-export type ITagProps = ButtonProps
+export type ITagProps = ButtonProps & { active?: boolean }
 
-export function Tag({ children, className, ...props }: ITagProps) {
+export function Tag({ children, className, active, ...props }: ITagProps) {
   return (
-    <Button color="gray" variant="light" size="xs" rounded className={'px-3 max-w-full ' + className} {...props}>
+    <Button
+      color={active ? 'primary' : 'gray'}
+      variant={active ? 'fill' : 'light'}
+      size="xs"
+      rounded
+      className={'px-3 max-w-full ' + className}
+      {...props}
+    >
       <span className="flex items-center text-xs font-normal truncate">{children}</span>
     </Button>
   )
 }
 
-export function TagPlaceholder({ children, className, ...props }: ITagProps) {
+export function TagPlaceholder({ className, ...props }: ITagProps) {
   return (
     <Button
       color="gray"

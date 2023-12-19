@@ -1,3 +1,4 @@
+import { AxiosRequestConfig } from 'axios'
 import { createRootApi } from './createRootApi'
 import { getEntities, getIds } from '@utils/helpers/entity'
 
@@ -13,8 +14,11 @@ export interface IEntitiesApiConfig {
 export function createEntityApi<EntityType, C, U, F = Record<string, string>>({
   url,
 }: IEntitiesApiConfig): IEntityApi<EntityType, C, U, F> {
-  async function fetch(params: F = {} as F): Promise<IListResponse<EntityType> & IEntitiesAdapter<EntityType>> {
-    const { data } = await createRootApi().get(url, { params })
+  async function fetch(
+    params: F = {} as F,
+    config: AxiosRequestConfig<any> = {}
+  ): Promise<IListResponse<EntityType> & IEntitiesAdapter<EntityType>> {
+    const { data } = await createRootApi().get(url, { params, ...config })
 
     return {
       ...data,
@@ -43,8 +47,12 @@ export function createEntityApi<EntityType, C, U, F = Record<string, string>>({
     }
   }
 
-  async function fetchById(id: EntityId, params: F = {} as F): Promise<IItemResponse<EntityType>> {
-    const { data } = await createRootApi().get(url + '/' + id, { params })
+  async function fetchById(
+    id: EntityId,
+    params: F = {} as F,
+    config: AxiosRequestConfig<any> = {}
+  ): Promise<IItemResponse<EntityType>> {
+    const { data } = await createRootApi().get(url + '/' + id, { params, ...config })
 
     return data
   }
@@ -65,10 +73,13 @@ export function createEntityApi<EntityType, C, U, F = Record<string, string>>({
 }
 
 export interface IEntityApi<EntityType, C, U, F> {
-  fetch: (params?: F) => Promise<IListResponse<EntityType> & IEntitiesAdapter<EntityType>>
+  fetch: (
+    params?: F,
+    config?: AxiosRequestConfig<any>
+  ) => Promise<IListResponse<EntityType> & IEntitiesAdapter<EntityType>>
   create: (formData: C) => Promise<IItemResponse<EntityType>>
   update: (formData: U) => Promise<IItemResponse<EntityType>>
   upsert: (formData: U | C) => Promise<IItemResponse<EntityType>>
-  fetchById: (id: EntityId) => Promise<IItemResponse<EntityType>>
+  fetchById: (id: EntityId, params?: F, config?: AxiosRequestConfig<any>) => Promise<IItemResponse<EntityType>>
   remove: (id: EntityId) => Promise<unknown>
 }

@@ -12,15 +12,15 @@ export function createQueries<EntityType extends { id: EntityId }, C, U, F = Rec
   api,
 }: IParams<EntityType, C, U, F>) {
   function useFetch(params: F = {} as F, options?: UseQueryOptions) {
-    return useQuery([key, params], api.fetch.bind(null, params), {
-      enabled: options?.enabled || true,
+    return useQuery([key, params], ({ signal }) => api.fetch(params, { signal }), {
+      enabled: options?.enabled,
     })
   }
 
-  function useFetchById(id: EntityId, options?: UseQueryOptions) {
+  function useFetchById(id: EntityId, params: F = {} as F, options?: UseQueryOptions) {
     const queryClient = useQueryClient()
 
-    return useQuery([key, id?.toString()], api.fetchById.bind(null, id), {
+    return useQuery([key, id?.toString(), params], ({ signal }) => api.fetchById(id, params, { signal }), {
       enabled: options?.enabled || !!id,
       placeholderData: () => {
         return {

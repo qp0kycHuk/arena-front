@@ -13,7 +13,11 @@ export function Tags() {
 
   function clickHandler(id: EntityId) {
     const path = getRoute().projects()
-    const newTags = Array.from(new Set([...tagsQuery, id.toString()]))
+    let newTags = Array.from(new Set([...tagsQuery, id.toString()]))
+
+    if (tagsQuery.includes(id.toString())) {
+      newTags = newTags.filter((tagId) => tagId != id)
+    }
 
     if (!pathname.includes(path)) {
       navigate(
@@ -34,7 +38,7 @@ export function Tags() {
       {!isFetching &&
         sortedTags.map((tag) => {
           return (
-            <Tag onClick={() => clickHandler(tag.id)} key={tag.id}>
+            <Tag active={tagsQuery.includes(tag.id.toString())} onClick={() => clickHandler(tag.id)} key={tag.id}>
               #{tag.name}
             </Tag>
           )

@@ -58,6 +58,12 @@ export function ArticleEditContextProvider({ children, articleId }: IArticleEdit
       formData.append('folders[]', folderId)
     }
 
+    if (editableArticle.folders) {
+      editableArticle.folders.forEach(({ id }) => {
+        formData.append('folders[]', id.toString())
+      })
+    }
+
     // if (!editableArticle.id) {
     //   formData.append('owner_id', user.id.toString())
     // }

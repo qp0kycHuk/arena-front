@@ -17,7 +17,7 @@ export function ProjectsContextProvider({ children }: React.PropsWithChildren) {
 
   const { folderId } = useParams()
 
-  const params = { search: searchQuery }
+  const params = { name: searchQuery, tags: tagsQuery }
   const options = { enabled: !folderId }
 
   const { data: foldersData, isLoading: foldersLoading, isFetching: foldersFetching } = useFetchFolders(params, options)
@@ -32,7 +32,7 @@ export function ProjectsContextProvider({ children }: React.PropsWithChildren) {
     data: folderData,
     isLoading: folderLoading,
     isFetching: folderFetching,
-  } = useFetchFolderById(folderId as EntityId, {
+  } = useFetchFolderById(folderId as EntityId, params, {
     enabled: !!folderId,
   })
 
@@ -40,8 +40,8 @@ export function ProjectsContextProvider({ children }: React.PropsWithChildren) {
   const fetching = folderFetching || foldersFetching || articlesFetching
 
   const folders = (folderId ? folderData?.item?.children : foldersData?.items) || []
-  const articles = (folderId ? folderData?.item?.articles : []) || []
-  // const articles = (folderId ? folderData?.item?.articles : articlesData?.items) || []
+  // const articles = (folderId ? folderData?.item?.articles : []) || []
+  const articles = (folderId ? folderData?.item?.articles : articlesData?.items) || []
 
   const isEmpty = !fetching && folders.length + articles.length === 0
 
