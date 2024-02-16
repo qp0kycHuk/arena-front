@@ -12,6 +12,7 @@ import {
   useArticleEditMainContext,
   useArticleEditUtilsContext,
 } from './ArticleEdit.Context'
+import { ArticleEditDocuments } from './ArticleEdit.Documents'
 
 interface IArticleEditProps {
   articleId?: EntityId
@@ -40,10 +41,10 @@ function ArticleEditInner() {
         <div className="px-8 py-6">
           <ArticleEditImages />
         </div>
-        {/* <div className="border-t border-gray border-opacity-30"></div>
+        <div className="border-t border-gray border-opacity-30"></div>
         <div className="px-8 py-6">
           <ArticleEditDocuments />
-        </div> */}
+        </div>
         <div className="border-t border-gray border-opacity-30"></div>
         <div className="px-8 py-6">
           <ArticleEditLinks />

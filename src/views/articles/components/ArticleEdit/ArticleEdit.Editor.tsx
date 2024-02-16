@@ -9,6 +9,9 @@ import { IOptions } from '@features/editor/hooks/useEditor'
 import { getFileItems } from '@utils/helpers/files'
 import { useDebouncedCallback } from 'use-debounce'
 import { ILink } from '@models/Link'
+import { FileDrop } from 'react-file-drop'
+import { PlusIcon } from '@/assets/icons/stroke'
+import { toast } from '@lib/Toast'
 
 // TODO try remove duplicate with ArticleEditImages component
 
@@ -45,11 +48,15 @@ export function ArticleEditEditor() {
 
   const insertImages = useCallback(
     async (files: File[]) => {
+      if (files.length === 0) return
+
       const images = filterFiles(files, [imageExtention.regex])
+      const id = toast.loading('Загрузка изображения')
       const pastedFileItems = await getFileItems(images)
+      toast.update(id, { render: 'Изображение загружено', type: 'success', isLoading: false, autoClose: 2000 })
 
       // file items to editor images format
-      const insertImages = pastedFileItems.map((item) => ({
+      const insertedImages = pastedFileItems.map((item) => ({
         type: 'image',
         attrs: {
           src: item.src,
@@ -60,7 +67,7 @@ export function ArticleEditEditor() {
       editor
         ?.chain()
         .focus()
-        .insertContent(insertImages || [])
+        .insertContent(insertedImages || [])
         .run()
 
       update({
@@ -72,10 +79,12 @@ export function ArticleEditEditor() {
 
   const insertDocuments = useCallback(
     async (files: File[]) => {
-      const images = filterFiles(files, [docExtention.regex])
-      const pastedFileItems = await getFileItems(images)
+      const documents = filterFiles(files, [docExtention.regex])
+      const id = toast.loading('Загрузка документа')
+      const pastedFileItems = await getFileItems(documents)
+      toast.update(id, { render: 'Документ загружен', type: 'success', isLoading: false, autoClose: 2000 })
 
-      // file items to editor images format
+      // file items to editor documents format
       const insertDocuments = pastedFileItems.map((item) => ({
         type: 'fileBlock',
         attrs: {
@@ -91,7 +100,7 @@ export function ArticleEditEditor() {
         .run()
 
       update({
-        files: [...(article?.files || []), ...pastedFileItems],
+        docs: [...(article?.docs || []), ...pastedFileItems],
       })
     },
     [editor, article]
@@ -125,10 +134,43 @@ export function ArticleEditEditor() {
     })
   }
 
+  function dropHandler(fileList: FileList | null) {
+    if (!fileList) return
+
+    const files = Array.from(fileList)
+
+    const images = filterFiles(files, [imageExtention.regex])
+    const documents = filterFiles(files, [docExtention.regex])
+
+    insertDocuments(documents)
+    insertImages(images)
+  }
+
   return (
-    <div>
-      <EditorControl onLink={linkAddHandler} onImageAdd={insertImages} editor={editor} className="sticky z-10 -ml-4 -mr-4 top-16" />
-      <Editor onLink={linkAddHandler} onPaste={filePasteHandler} editor={editor} className="min-h-[260px] flex flex-col" />
+    <div className="relative">
+      <EditorControl
+        onLink={linkAddHandler}
+        onImageAdd={insertImages}
+        editor={editor}
+        className="sticky z-10 -ml-4 -mr-4 top-16"
+      />
+      <div className="relative">
+        <FileDrop
+          className="absolute -inset-4"
+          targetClassName="filedrop-target"
+          draggingOverFrameClassName="over-frame"
+          draggingOverTargetClassName="over-target"
+          onDrop={dropHandler}
+        >
+          <PlusIcon className="m-auto text-4xl text-primary" />
+        </FileDrop>
+        <Editor
+          onLink={linkAddHandler}
+          onPaste={filePasteHandler}
+          editor={editor}
+          className="min-h-[260px] flex flex-col"
+        />
+      </div>
     </div>
   )
 }

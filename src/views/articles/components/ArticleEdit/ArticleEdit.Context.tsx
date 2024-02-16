@@ -14,6 +14,7 @@ import { showAsyncError } from '@utils/helpers/errors'
 import { AxiosError } from 'axios'
 import { linksApi } from '@store/links/links.api'
 import { useFetchArticleById, useUpsertArticle } from '@store/articles/'
+import { docsApi } from '@/store/files/docs.api'
 
 export const ArticleEditMainContext = createContext<IArticleMainContextValue>({} as IArticleMainContextValue)
 export const ArticleEditUtilsContext = createContext<IArticleUtilsContextValue>({} as IArticleUtilsContextValue)
@@ -64,10 +65,6 @@ export function ArticleEditContextProvider({ children, articleId }: IArticleEdit
       })
     }
 
-    // if (!editableArticle.id) {
-    //   formData.append('owner_id', user.id.toString())
-    // }
-
     if (editableArticle.imageFile) {
       formData.append('image', editableArticle.imageFile)
     }
@@ -93,6 +90,12 @@ export function ArticleEditContextProvider({ children, articleId }: IArticleEdit
 
       if (!editableArticle.name) {
         toast.error('Введите название статьи')
+
+        return
+      }
+
+      if (!editableArticle.content || !editableArticle.contentJson) {
+        toast.error('Введите тело статьи')
 
         return
       }
@@ -123,7 +126,7 @@ export function ArticleEditContextProvider({ children, articleId }: IArticleEdit
               JSON.parse(editableArticle.contentJson || '{}'),
               (item) => {
                 if (item.type === 'image') {
-                  const uploadedFileIndex = uploadedFileItems.findIndex((fileItem) => fileItem.src === item.attrs.src)
+                  const uploadedFileIndex = uploadedFileItems.findIndex((fileItem) => fileItem.id === item.attrs.id)
 
                   if (uploadedFileIndex >= 0) {
                     return {
@@ -145,6 +148,60 @@ export function ArticleEditContextProvider({ children, articleId }: IArticleEdit
 
             items.forEach((fileItem) => {
               formData.append('attachment[]', fileItem.id as string)
+            })
+          } catch (error) {
+            showAsyncError((error as AxiosError).response?.data as IErrorData)
+            loadingEnd()
+            return
+          }
+        }
+      }
+
+      // upload docs and update content with images src`s
+      {
+        const uploadedFileItems: IFile[] = []
+        const docsFormData: IUploadRequest = new FormData()
+
+        editableArticle.docs?.forEach((item) => {
+          if (item.file) {
+            docsFormData.append('files[]', item.file)
+            uploadedFileItems.push(item)
+          } else {
+            formData.append('attachment[]', item.id as string)
+          }
+        })
+
+        if (docsFormData.has('files[]')) {
+          try {
+            const result = await docsApi().upload(docsFormData)
+            const items = result.data.items
+
+            const updatedEditorContent = editorContentUpdate(
+              JSON.parse(editableArticle.contentJson || '{}'),
+              (item) => {
+                if (item.type === 'fileBlock') {
+                  const uploadedFileIndex = uploadedFileItems.findIndex((fileItem) => fileItem.id === item.attrs.id)
+
+                  if (uploadedFileIndex >= 0) {
+                    return {
+                      ...item,
+                      attrs: {
+                        ...item.attrs,
+                        src: items[uploadedFileIndex].src,
+                        id: items[uploadedFileIndex].id,
+                      },
+                    }
+                  }
+                }
+
+                return item
+              }
+            )
+
+            formData.set('content', JSON.stringify(updatedEditorContent))
+
+            items.forEach((fileItem) => {
+              formData.append('docs[]', fileItem.id as string)
             })
           } catch (error) {
             showAsyncError((error as AxiosError).response?.data as IErrorData)

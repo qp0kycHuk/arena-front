@@ -20,6 +20,9 @@ export const FileBlockExtension = Node.create<IOptions>({
       id: {
         default: '',
       },
+      src: {
+        default: '',
+      },
     }
   },
 
@@ -32,6 +35,7 @@ export const FileBlockExtension = Node.create<IOptions>({
   },
 
   renderHTML({ HTMLAttributes }) {
+    // TODO
     return ['file-block', mergeAttributes(HTMLAttributes)]
   },
 

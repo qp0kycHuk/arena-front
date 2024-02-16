@@ -12,6 +12,16 @@ export function Tags() {
     changeTagsQuery([])
   }
 
+  function clickHandler(id: EntityId) {
+    let newTags = Array.from(new Set([...tagsQuery, id.toString()]))
+
+    if (tagsQuery.includes(id.toString())) {
+      newTags = newTags.filter((tagId) => tagId != id)
+    }
+
+    changeTagsQuery(newTags)
+  }
+
   if (tagsQuery.length === 0) {
     return null
   }
@@ -24,8 +34,9 @@ export function Tags() {
         <CrossIcon className="ml-2" />
       </Button>
       {tagsQuery.map((id) => (
-        <Tag active key={id}>
-          #{tagData?.entities[id].name}
+        <Tag active key={id} onClick={() => clickHandler(id)}>
+          #{tagData?.entities[id]?.name}
+          <CrossIcon className="ml-2" />
         </Tag>
       ))}
     </div>

@@ -10,6 +10,7 @@ type CreateParams =
   | 'image'
   | 'tags[]'
   | 'attachment[]'
+  | 'docs[]'
   | 'parent_id'
   | 'folders[]'
   | 'links[]' // | 'owner_id'

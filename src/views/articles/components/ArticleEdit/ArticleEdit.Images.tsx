@@ -32,7 +32,7 @@ export function ArticleEditImages() {
   function removeHandler(fileItem: IFileItem) {
     const filteredContent = editorContentFilter(JSON.parse(article?.contentJson || '{}'), (item) => {
       if (item.type === 'image') {
-        return fileItem.src !== item.attrs.src
+        return fileItem.id !== item.attrs.id
       }
 
       return true

@@ -13,8 +13,10 @@ export function changeSearchParams(
       Object.entries(prevParams).forEach(([k, v]) => (params[k] = v))
     } else {
       savedKeys.forEach((k) => {
-        if (prevParams[k]) {
-          params[k] = prevParams[k]
+        const value = prev.getAll(k)
+
+        if (prevParams[k] && value[0]) {
+          params[k] = value.length > 1 ? value : value[0]
         }
       })
     }
