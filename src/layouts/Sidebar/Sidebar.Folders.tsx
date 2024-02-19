@@ -17,7 +17,9 @@ export function Folders() {
     <>
       <div className="relative">
         <SidebarButton
-          active={location.pathname.includes(getRoute().projects())}
+          active={
+            location.pathname.includes(getRoute().projects()) || location.pathname.includes(getRoute().articles())
+          }
           link={getRoute().projects()}
           title="База знаний"
           icon={BriefcaseIcon}
