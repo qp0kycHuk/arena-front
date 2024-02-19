@@ -16,13 +16,16 @@ export function ArticleViewButtons({ article, isLoading }: IArticleViewButtonsPr
   const { data: auth } = useAuth()
   const currentUser = auth?.user
   const isCurrentUserRole = isUser(currentUser)
+  const isCanEdit = article?.owner_id === currentUser?.id || isCurrentUserRole.admin
 
   if (!article || isLoading) {
     return (
       <div className="flex gap-4">
-        <Button variant="contur" color="default" disabled>
-          <PencilIcon className="text-2xl opacity-60" />
-        </Button>
+        {isCanEdit && (
+          <Button variant="contur" color="default" disabled>
+            <PencilIcon className="text-2xl opacity-60" />
+          </Button>
+        )}
         <Button variant="contur" color="default" disabled>
           <BookmarkIcon className="text-2xl opacity-60" />
         </Button>
@@ -32,7 +35,7 @@ export function ArticleViewButtons({ article, isLoading }: IArticleViewButtonsPr
 
   return (
     <div className="flex gap-4">
-      {(article.owner_id === currentUser?.id || isCurrentUserRole.admin) && (
+      {isCanEdit && (
         <Link to={getRoute().articles.edit(article.id)}>
           <Button variant="contur" color="default">
             <PencilIcon className="text-2xl opacity-60" />
