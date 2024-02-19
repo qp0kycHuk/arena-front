@@ -7,16 +7,17 @@ interface ISidebarButtonProps extends Omit<React.ComponentProps<typeof Button>, 
   icon: React.FC<React.HTMLProps<HTMLDivElement>>
   link?: string
   className?: string
+  active?: boolean
 }
 
-export function SidebarButton({ link, icon: Icon, title, children, className, ...props }: ISidebarButtonProps) {
+export function SidebarButton({ link, icon: Icon, title, children, className, active, ...props }: ISidebarButtonProps) {
   if (link) {
     return (
       <NavLink to={link}>
         {({ isActive }) => (
           <Button className={'w-full text-left ' + className} variant="text" size="sm" {...props}>
-            <Icon className={`mr-2 text-lg ${isActive ? 'text-primary' : 'text-default/60 '}`} />
-            <div className={`mr-auto ${isActive ? '' : 'font-normal'} text-default truncate`}>{title}</div>
+            <Icon className={`mr-2 text-lg ${isActive || active ? 'text-primary' : 'text-default/60 '}`} />
+            <div className={`mr-auto ${isActive || active ? '' : 'font-normal'} text-default truncate`}>{title}</div>
 
             {children}
           </Button>

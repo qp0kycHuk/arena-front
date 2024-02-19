@@ -206,14 +206,14 @@ body {
     height        : 0;
     float         : left;
     pointer-events: none;
-    @apply text-gray;
+    color: theme('colors.default / 40%');
   }
 }
 
 .width-placeholder[data-placeholder]:empty:before {
   content       : attr(data-placeholder);
   pointer-events: none;
-  @apply text-gray;
+  color: theme('colors.default / 40%')
 }
 
 .filedrop {
@@ -272,5 +272,12 @@ body {
     &:hover {
       background: theme('colors.primary / 15%');
     }
+  }
+}
+
+.with-mark-query {
+  b{
+    font-weight: 600;
+    color: theme('colors.primary');
   }
 }

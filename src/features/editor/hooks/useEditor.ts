@@ -81,17 +81,6 @@ const CustomImage = Image.extend({
       },
     }
   },
-  renderHTML({ HTMLAttributes }) {
-    return [
-      'a',
-      mergeAttributes({
-        href: HTMLAttributes.src,
-        class: 'article-body-image-wrapper',
-        ['data-fancybox']: 'true',
-      }),
-      ['img', mergeAttributes(HTMLAttributes)],
-    ]
-  },
 })
 
 export const editorExtensions = [
@@ -105,7 +94,6 @@ export const editorExtensions = [
   TextAlign.configure({ types: ['heading', 'paragraph'] }),
   Highlight.configure({ multicolor: true }),
 
-  CustomImage.configure({ allowBase64: true }),
   LowlightCustom,
   FileBlockExtension.configure({
     component: FileBlock,
@@ -133,6 +121,7 @@ export function useEditor(options?: IOptions, deps?: any[]) {
             return /^https?:\/\//.test(url)
           },
         }),
+        CustomImage.configure({ allowBase64: true }),
       ],
 
       ...configMerge,
@@ -152,6 +141,28 @@ export function useInitialContent(content?: string, dependeties: any[] = []) {
 
   return initialContent
 }
+
+const CustomImageHTML = Image.extend({
+  addAttributes() {
+    return {
+      ...this.parent?.(),
+      id: {
+        default: 'null',
+      },
+    }
+  },
+  renderHTML({ HTMLAttributes }) {
+    return [
+      'a',
+      mergeAttributes({
+        href: HTMLAttributes.src,
+        class: 'article-body-image-wrapper',
+        ['data-fancybox']: 'true',
+      }),
+      ['img', mergeAttributes(HTMLAttributes)],
+    ]
+  },
+})
 
 export function useGenerateHtml(content = ''): string {
   const html = useMemo(() => {
@@ -173,7 +184,13 @@ export function useGenerateHtml(content = ''): string {
         })
       }
 
-      return json ? generateHTML(json, [...editorExtensions, Link.configure({})]) : ''
+      return json
+        ? generateHTML(json, [
+            ...editorExtensions,
+            Link.configure({}),
+            CustomImageHTML.configure({ allowBase64: true }),
+          ])
+        : ''
     } catch (error) {
       return content ? content : ''
     }

@@ -18,7 +18,7 @@ export function FolderList({ loading, items }: IFolderListProps) {
         new Array(2).fill(1).map((_, index) => (
           <React.Fragment key={index}>
             <FolderItemPlacehlder />
-            <div className="border-t border-gray border-opacity-20"></div>
+            <div className="border-t border-default/10" />
           </React.Fragment>
         ))}
       {isItemsReady &&
@@ -27,7 +27,7 @@ export function FolderList({ loading, items }: IFolderListProps) {
             <Link className="peer" to={getRoute().projects(folder.id)}>
               <FolderItem folder={folder} />
             </Link>
-            <div className="border-t border-gray border-opacity-20"></div>
+            <div className="border-t border-default/10" />
           </React.Fragment>
         ))}
     </>

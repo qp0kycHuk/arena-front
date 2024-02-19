@@ -27,20 +27,20 @@ export function UserView({ user }: IUserViewProps) {
 
   return (
     <PageContent className="flex">
-      <div className="w-[360px] flex-shrink-0 px-8 py-12 border-r border-gray border-opacity-30">
+      <div className="w-[360px] flex-shrink-0 px-8 py-12 border-r border-default/20">
         <div className="flex items-center">
           <UserViewImage className="mr-3" user={user} />
           <UserViewName user={user} />
         </div>
 
         {user?.created_at ? (
-          <div className="max-w-full px-5 py-2 mt-8 text-xs rounded-full bg-gray bg-opacity-10 text-gray w-max">
+          <div className="max-w-full px-5 py-2 mt-8 text-xs rounded-full bg-default/5 text-default/70 w-max">
             В STDKIT с {new Date(user.created_at).toLocaleDateString()}
           </div>
         ) : null}
 
         {user?.date_of_birth ? (
-          <div className="flex items-center mt-6 text-sm text-gray">
+          <div className="flex items-center mt-6 text-sm text-default/70">
             <CakeIcon className="mr-2 text-2xl " />
             День рождения: {new Date(user.date_of_birth).toLocaleDateString()}
           </div>
@@ -48,14 +48,14 @@ export function UserView({ user }: IUserViewProps) {
 
         <div className="flex flex-col gap-2 mt-6">
           {user?.email ? (
-            <div className="flex items-center text-sm text-gray">
+            <div className="flex items-center text-sm text-default/70">
               <img src="/img/email.svg" alt="" className="w-6 h-6 mr-2" />
               {user.email}
             </div>
           ) : null}
 
           {user?.telegram ? (
-            <div className="flex items-center text-sm text-gray">
+            <div className="flex items-center text-sm text-default/70">
               <img src="/img/telegram.svg" alt="" className="w-6 h-6 mr-2" />
               {user.telegram}
             </div>

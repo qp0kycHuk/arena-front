@@ -12,14 +12,14 @@ export function UserList() {
         new Array(5).fill(1).map((_, index) => (
           <div key={index}>
             <UserItemPlaceholder />
-            <div className="border-t border-gray border-opacity-20"></div>
+            <div className="border-t border-default/10"></div>
           </div>
         ))}
       {users?.length && users?.length <= 0 && !loading && 'Здесь ничего нет'}
       {users?.map((user) => (
         <div key={user.id}>
           <UserItem user={user} />
-          <div className="border-t border-gray border-opacity-20"></div>
+          <div className="border-t border-default/10"></div>
         </div>
       ))}
     </div>

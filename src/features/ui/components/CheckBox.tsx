@@ -36,7 +36,7 @@ export function CheckBox({ icon, size, color, label, ...props }: ICheckBoxProps)
         <div
           onPointerDown={ripplePointerdownHandler}
           className={classNames(
-            'bg-gray bg-opacity-0 w-12 h-12 rounded-full absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 transition-opacity',
+            'bg-default bg-opacity-0 w-12 h-12 rounded-full absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 transition-opacity',
             'peer-checked:bg-opacity-0 peer-checked:hover:bg-opacity-10 group-hover:bg-opacity-10',
             `peer-checked:bg-${color}`
           )}

@@ -11,7 +11,7 @@ export function HandbooksEditPage() {
     <PageContent className="p-8">
       <div className="mb-10 text-2xl font-semibold">Справочники</div>
       <HandbooksEditTags />
-      <div className="my-6 border-t border-gray border-opacity-20"></div>
+      <div className="my-6 border-t border-default/10"></div>
       <HandbooksEditPositions />
     </PageContent>
   )

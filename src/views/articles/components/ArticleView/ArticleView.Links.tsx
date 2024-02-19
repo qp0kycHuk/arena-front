@@ -8,7 +8,11 @@ interface IArticleViewLinksProps {
   className?: string
 }
 
-export function ArticleViewLinks({ article, className }: IArticleViewLinksProps) {
+export function ArticleViewLinks({ article, className, isLoading }: IArticleViewLinksProps) {
+  if (!article || isLoading) {
+    return null
+  }
+
   if (article?.links.length === 0) {
     return null
   }

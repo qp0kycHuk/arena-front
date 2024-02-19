@@ -17,14 +17,14 @@ export function Header() {
 
       <ThemeToggle className="mr-5 text-4xl" />
 
-      <Button variant="contur" size="sm" color="gray">
-        <BookmarkIcon className="text-2xl" />
+      <Button variant="contur" size="sm" color="default">
+        <BookmarkIcon className="text-2xl opacity-60" />
       </Button>
       {auth?.user ? (
         <HeaderUser />
       ) : (
         <Link to="login" className="mx-2">
-          <Button variant="contur" size="sm" color="gray">
+          <Button variant="contur" size="sm" color="default">
             Login
           </Button>
         </Link>

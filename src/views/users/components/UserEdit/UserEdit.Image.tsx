@@ -10,13 +10,11 @@ export function UserEditImage() {
 
   if (!isCurrentUser) {
     return (
-      <div
-        className={classNames('relative w-24 h-24 rounded-full', !user.image_src ? 'bg-gray bg-opacity-20 flex' : null)}
-      >
+      <div className={classNames('relative w-24 h-24 rounded-full', !user.image_src ? 'bg-default/10 flex' : null)}>
         {user.image_src ? (
           <img className="object-cover w-full h-full rounded-full" src={user.image_src} alt="" />
         ) : (
-          <UserIcon className="m-auto text-3xl text-gray" />
+          <UserIcon className="m-auto text-3xl text-default/60" />
         )}
       </div>
     )

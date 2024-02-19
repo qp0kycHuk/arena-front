@@ -18,7 +18,7 @@ interface IArticleViewProps {
 }
 
 export function ArticleView({ articleId }: IArticleViewProps) {
-  const { data } = useFetchArticleById(articleId)
+  const { data, isFetching } = useFetchArticleById(articleId)
 
   const article = data?.item
   useDocumentTitle(article?.name)
@@ -27,19 +27,19 @@ export function ArticleView({ articleId }: IArticleViewProps) {
     <PageContent className="flex">
       <div className="flex-1 p-8">
         <div className="flex items-center mb-7">
-          <ArticleViewImage article={article} />
-          <ArticleViewTitle article={article} />
+          <ArticleViewImage article={article} isLoading={isFetching} />
+          <ArticleViewTitle article={article} isLoading={isFetching} />
         </div>
-        <ArticleViewBody article={article} className="mb-8" />
-        <ArticleViewLinks article={article} className="mb-8" />
-        <ArticleViewImages article={article} className="mb-8" />
-        <Documents article={article} />
+        <ArticleViewBody article={article} isLoading={isFetching} className="mb-8" />
+        <ArticleViewLinks article={article} isLoading={isFetching} className="mb-8" />
+        <ArticleViewImages article={article} isLoading={isFetching} className="mb-8" />
+        <Documents article={article} isLoading={isFetching} />
       </div>
-      <div className="min-w-[266px] w-[266px] py-8 px-6 border-l border-gray border-opacity-30">
-        <ArticleViewButtons article={article} />
-        <ArticleViewAuthor article={article} className="mt-8" />
+      <div className="min-w-[266px] w-[266px] py-8 px-6 border-l border-default/20">
+        <ArticleViewButtons article={article} isLoading={isFetching} />
+        <ArticleViewAuthor article={article} isLoading={isFetching} className="mt-8" />
         <div className="my-8">
-          <ArticleViewDates article={article} />
+          <ArticleViewDates article={article} isLoading={isFetching} />
         </div>
         <div className="flex flex-wrap gap-2">
           {article?.tags.map((tag) => (

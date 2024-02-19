@@ -1,5 +1,6 @@
 import React from 'react'
 import { IUser } from '@models/User'
+import { Skeleton } from '@/components/Skeleton'
 
 interface IUserViewNameProps {
   user?: IUser
@@ -11,8 +12,8 @@ export function UserViewName({ user, isLoading }: IUserViewNameProps) {
   if (!user || isLoading) {
     return (
       <div>
-        <div className="w-32 h-3 bg-opacity-50 animate-pulse bg-gray "></div>
-        <div className="w-24 h-3 mt-2 bg-opacity-50 animate-pulse bg-gray"></div>
+        <Skeleton className="w-32 h-3" />
+        <Skeleton className="w-24 h-3 mt-2" />
       </div>
     )
   }
