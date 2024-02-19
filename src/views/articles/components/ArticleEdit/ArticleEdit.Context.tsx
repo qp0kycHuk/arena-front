@@ -246,12 +246,17 @@ export function ArticleEditContextProvider({ children, articleId }: IArticleEdit
         }
       }
 
-      const { item: updatedArticle } = await upsertArticle(formData)
+      try {
+        const { item: updatedArticle } = await upsertArticle(formData)
+        loadingEnd()
 
-      loadingEnd()
-
-      if (updatedArticle?.id) {
-        navigate(getRoute().articles(updatedArticle.id))
+        if (updatedArticle?.id) {
+          navigate(getRoute().articles(updatedArticle.id))
+        }
+      } catch (error) {
+        showAsyncError((error as AxiosError).response?.data as IErrorData)
+        loadingEnd()
+        return
       }
     },
     [getFormData]

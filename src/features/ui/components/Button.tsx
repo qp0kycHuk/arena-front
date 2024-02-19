@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Color, Size } from '../types'
+import { twMerge } from 'tailwind-merge'
 import { ripplePointerdownHandler } from '../utils/ripple'
 
 type Variant = 'fill' | 'light' | 'contur' | 'text' | 'whitebg'
@@ -17,7 +18,7 @@ interface IProps {
 export type ButtonProps = IProps & Omit<React.ButtonHTMLAttributes<HTMLElement>, keyof IProps>
 export type ButtonRef = React.ForwardedRef<HTMLElement>
 
-const baseClassNames = 'btn'
+const baseClassNames = 'btn '
 
 const sizeClassNames: Record<Size, string> = {
   xs: 'btn-xs',
@@ -28,6 +29,7 @@ const sizeClassNames: Record<Size, string> = {
 
 const colorClassNames: PartialRecord<Color, string> = {
   primary: 'btn-primary',
+  default: 'btn-default',
   gray: 'btn-gray',
   red: 'btn-red',
   green: 'btn-green',
@@ -43,25 +45,39 @@ const variantClassNames: Record<Variant, string> = {
 }
 
 function ButtonComponent(
-  { children, color = 'primary', size = 'base', variant = 'fill', as: ButtonTag = 'button', rounded = false, shadow = false, icon = false, ...props }: ButtonProps,
+  {
+    children,
+    color = 'primary',
+    size = 'base',
+    variant = 'fill',
+    as: ButtonTag = 'button',
+    rounded = false,
+    shadow = false,
+    icon = false,
+    ...props
+  }: ButtonProps,
   ref: ButtonRef
 ) {
-  const classNames = [
+  const classNames = twMerge(
     baseClassNames,
     sizeClassNames[size],
     variantClassNames[variant],
     colorClassNames[color],
     rounded ? 'rounded-full' : 'rounded-lg',
     shadow ? 'shadow-md' : '',
-    icon ? 'btn-icon' : '',
-    icon || props.className?.includes('px-') ? '' : props.className?.includes('pl-') ? '' : 'pl-4',
-    icon || props.className?.includes('px-') ? '' : props.className?.includes('pr-') ? '' : 'pr-4',
-    props.className?.includes('justify-') ? '' : 'justify-center',
-    props.className,
-  ].join(' ')
+    icon ? 'btn-icon' : 'pl-4 pr-4',
+    props.className
+  )
 
   return (
-    <ButtonTag ref={ref} tabIndex={0} type="button" {...props} onPointerDown={ripplePointerdownHandler} className={classNames}>
+    <ButtonTag
+      ref={ref}
+      tabIndex={0}
+      type="button"
+      {...props}
+      onPointerDown={ripplePointerdownHandler}
+      className={classNames}
+    >
       {children}
     </ButtonTag>
   )

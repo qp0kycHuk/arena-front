@@ -10,7 +10,7 @@
     border: none;
     min-width: 10rem;
     
-    @apply bg-white dark:bg-black;
+    @apply bg-l3;
     @apply p-2 shadow-md rounded-2xl;
 }
 
@@ -22,7 +22,7 @@
     box-sizing: border-box;
     width: 0.75rem;
     height: 0.75rem;
-    @apply bg-white dark:bg-black;
+    @apply bg-l3;
     border: 1px solid transparent;
     border-left-color: rgba(0, 0, 0, 0.1);
     border-top-color: rgba(0, 0, 0, 0.1);

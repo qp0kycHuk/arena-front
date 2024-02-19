@@ -1,12 +1,34 @@
+@import 'functions';
+
+:root {
+  --green-rgb  : #{cl(#009432)};
+  --yellow-rgb : #{cl(#f79f1f)};
+  --primary-rgb: #{cl(#199afc)};
+  --red-rgb    : #{cl(#d63031)};
+  --gray-rgb   : #{cl(#6a707e)};
+
+  // colors
+  --bg1-rgb     : #{cl(#f0f1f2)};
+  --bg2-rgb     : #{cl(#f4f4f4)};
+  --bg3-rgb     : #{cl(#fff)};
+  --default-rgb : #{cl(#112)};
+  --white-rgb   : #{cl(#fff)};
+  --black-rgb   : #{cl(#000)};
+}
+
+.dark {
+  --bg1-rgb     : #{cl(#181818)};
+  --bg2-rgb     : #{cl(#282828)};
+  --bg3-rgb     : #{cl(#323232)};
+  --default-rgb : #{cl(#fff)};
+}
+
 body {
   display       : flex;
   flex-direction: column;
   min-height    : 100vh;
-  @apply bg-gray-100 text-black;
-
-  &.dark {
-    @apply bg-black text-white;
-  }
+  background    : theme('colors.l1');
+  color         : theme('colors.default');
 
   * {
     outline: none;
@@ -210,21 +232,21 @@ body {
 
 
 .air-datepicker {
-  --adp-accent-color                        : theme(colors.primary.DEFAULT);
-  --adp-cell-background-color-selected      : theme(colors.primary.DEFAULT);
-  --adp-cell-background-color-selected-hover: theme(colors.primary.700);
-  --adp-day-name-color                      : theme(colors.yellow.DEFAULT);
-  --adp-day-name-color-hover                : theme(colors.primary.DEFAULT / 10%);
+  --adp-accent-color                        : theme('colors.primary');
+  --adp-cell-background-color-selected      : theme('colors.primary');
+  --adp-cell-background-color-selected-hover: color-mix(in srgb, theme('colors.primary') 85%, black);
+  --adp-day-name-color                      : theme('colors.yellow');
+  --adp-day-name-color-hover                : theme('colors.primary / 10%');
 }
 
 .article-body-image-wrapper {
-  width: max-content;
+  width    : max-content;
   max-width: 100%;
-  display: block;
+  display  : block;
 }
 
 .article-body-doc {
-  background   : theme('colors.primary.DEFAULT / 10%');
+  background   : theme('colors.primary / 10%');
   border-radius: 10px;
   padding      : 15px;
   margin-top   : 15px;
@@ -236,19 +258,19 @@ body {
   text-overflow: ellipsis;
 
   &::before {
-    content   : '';
-    width     : 24px;
-    height    : 24px;
-    mask: url("../assets/icons/stroke/document.svg") no-repeat center / contain;
-    background: currentColor;
-    display: inline-block;
-    flex-shrink: 0;
+    content       : '';
+    width         : 24px;
+    height        : 24px;
+    mask          : url("../assets/icons/stroke/document.svg") no-repeat center / contain;
+    background    : currentColor;
+    display       : inline-block;
+    flex-shrink   : 0;
     vertical-align: middle;
   }
 
   @media(hover) {
     &:hover {
-      background: theme('colors.primary.DEFAULT / 15%');
+      background: theme('colors.primary / 15%');
     }
   }
 }

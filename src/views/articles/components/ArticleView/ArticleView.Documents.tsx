@@ -1,4 +1,5 @@
 import { DocumentIcon } from '@/assets/icons/stroke'
+import { Skeleton } from '@/components/Skeleton'
 import { IArticle } from '@/models/Article'
 import classNames from 'classnames'
 
@@ -13,11 +14,7 @@ export function Documents({ article, isLoading, className }: IDocumentsProps) {
     return (
       <div className={classNames(className, 'flex flex-wrap gap-6')}>
         {new Array(3).fill(1).map((_, index) => {
-          return (
-            <div className="h-40 overflow-hidden bg-opacity-50 w-52 rounded-xl animate-pulse bg-gray" key={index}>
-              {' '}
-            </div>
-          )
+          return <Skeleton className="h-40 w-52 rounded-xl " key={index} />
         })}
       </div>
     )

@@ -36,15 +36,10 @@ export function Search({ className, onChange, value, placeholder = 'Поиск' 
       <Button variant="text" color="gray" size="sm" className="px-3 absolute left-1 top-1.5">
         <AdjustmentsHorizontalIcon className="text-2xl" />
       </Button>
-      <Input
-        placeholder={placeholder}
-        className="w-full pl-14 bg-gray bg-opacity-10"
-        defaultValue={value}
-        ref={inputRef}
-      />
+      <Input placeholder={placeholder} className="w-full pl-14 bg-default/5" defaultValue={value} ref={inputRef} />
       <div className="flex absolute right-2 top-1.5">
-        <Button type="submit" variant="text" color="gray" size="sm" className="px-3 ">
-          <SearchIcon className="text-lg" />
+        <Button type="submit" variant="text" size="sm" className="px-3">
+          <SearchIcon className="text-lg text-default/80" />
         </Button>
         {value.length > 0 && (
           <Button color="red" icon variant="text" size="sm" onClick={searchClearHandler}>

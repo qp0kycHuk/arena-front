@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { ImageIcon } from '@assets/icons/stroke'
 import { IArticle } from '@models/Article'
+import { Skeleton } from '@/components/Skeleton'
 
 interface IArticleViewImageProps {
   article?: IArticle
@@ -12,7 +13,7 @@ export function ArticleViewImage({ article, isLoading }: IArticleViewImageProps)
   const imageSrc = article?.image_src ? article.image_src : ''
 
   if (!article || isLoading) {
-    return <div className={imageClassName + ' animate-pulse bg-gray bg-opacity-50'}> </div>
+    return <Skeleton className={imageClassName} />
   }
 
   if (!imageSrc) {

@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { IArticle } from '@models/Article'
+import { Skeleton } from '@/components/Skeleton'
 
 interface IArticleViewDatesProps {
   article?: IArticle
@@ -14,12 +15,12 @@ export function ArticleViewDates({ article, isLoading }: IArticleViewDatesProps)
       <>
         <div className="flex items-center">
           <div className="text-xs text-gray dark:text-gray-300">Создано:</div>
-          <div className="w-16 h-5 ml-auto bg-opacity-50 animate-pulse bg-gray"></div>
+          <Skeleton className="w-16 h-5 ml-auto" />
         </div>
         <div className={separatorClassName}></div>
         <div className="flex items-center">
           <div className="text-xs text-gray dark:text-gray-300">Редактирование:</div>
-          <div className="w-16 h-5 ml-auto bg-opacity-50 animate-pulse bg-gray"></div>
+          <Skeleton className="w-16 h-5 ml-auto" />
         </div>
       </>
     )

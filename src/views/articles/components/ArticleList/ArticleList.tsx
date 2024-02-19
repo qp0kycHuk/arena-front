@@ -18,7 +18,7 @@ export function ArticleList({ loading, items }: IArticleListProps) {
         new Array(4).fill(1).map((_, index) => (
           <React.Fragment key={index}>
             <ArticleItemPlacehlder />
-            <div className="border-t border-gray border-opacity-20"></div>
+            <div className="border-t border-default/10"></div>
           </React.Fragment>
         ))}
       {isItemsReady &&
@@ -27,7 +27,7 @@ export function ArticleList({ loading, items }: IArticleListProps) {
             <Link className="peer" to={getRoute().articles(article.id)}>
               <ArticleItem article={article} />
             </Link>
-            <div className="border-t border-gray border-opacity-20 peer-hover:opacity-0"></div>
+            <div className="border-t border-default/10 peer-hover:opacity-0"></div>
           </div>
         ))}
     </>

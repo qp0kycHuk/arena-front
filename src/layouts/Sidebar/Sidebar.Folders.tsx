@@ -18,10 +18,7 @@ export function Folders() {
         <div className="absolute right-1 top-1/2 -translate-y-1/2 z-[2]">
           <Button icon variant="text" className="" size="xs" onClick={toggleExpanded}>
             <ToTopIcon
-              className={classNames(
-                expanded ? '' : 'rotate-90',
-                'text-base text-gray dark:text-white transition-transform'
-              )}
+              className={classNames(expanded ? '' : 'rotate-90', 'text-base text-default/80 transition-transform')}
             />
           </Button>
         </div>

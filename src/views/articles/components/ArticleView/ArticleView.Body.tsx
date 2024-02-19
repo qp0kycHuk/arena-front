@@ -3,6 +3,7 @@ import { useGenerateHtml } from '@features/editor'
 import { IArticle } from '@models/Article'
 import classNames from 'classnames'
 import { Fancybox } from '@/lib/Fancybox'
+import { Skeleton } from '@/components/Skeleton'
 
 export interface IArticleViewBodyProps {
   article?: IArticle
@@ -16,12 +17,12 @@ export function ArticleViewBody({ article, isLoading, className }: IArticleViewB
   if (!article || isLoading) {
     return (
       <div className={classNames('space-y-2', className)}>
-        <div className="h-3 bg-opacity-50 animate-pulse bg-gray w-[500px] "></div>
-        <div className="w-64 h-3 bg-opacity-50 animate-pulse bg-gray "></div>
-        <div className="h-3 bg-opacity-50 animate-pulse bg-gray w-96 "></div>
-        <div className="w-64 h-3 bg-opacity-50 animate-pulse bg-gray "></div>
-        <div className="h-3 bg-opacity-50 animate-pulse bg-gray w-96 "></div>
-        <div className="w-64 h-3 bg-opacity-50 animate-pulse bg-gray "></div>
+        <Skeleton className="h-3 w-[500px] " />
+        <Skeleton className="w-64 h-3" />
+        <Skeleton className="h-3 w-96" />
+        <Skeleton className="w-64 h-3" />
+        <Skeleton className="h-3" />
+        <Skeleton className="w-64 h-3" />
       </div>
     )
   }

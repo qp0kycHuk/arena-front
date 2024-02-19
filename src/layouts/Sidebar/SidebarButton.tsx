@@ -15,10 +15,8 @@ export function SidebarButton({ link, icon: Icon, title, children, className, ..
       <NavLink to={link}>
         {({ isActive }) => (
           <Button className={'w-full text-left ' + className} variant="text" size="sm" {...props}>
-            <Icon className={`mr-2 text-lg ${isActive ? 'text-primary' : 'text-gray dark:text-white'}`} />
-            <div className={`mr-auto ${isActive ? '' : 'font-normal'} text-black dark:text-white truncate`}>
-              {title}
-            </div>
+            <Icon className={`mr-2 text-lg ${isActive ? 'text-primary' : 'text-default/60 '}`} />
+            <div className={`mr-auto ${isActive ? '' : 'font-normal'} text-default truncate`}>{title}</div>
 
             {children}
           </Button>
@@ -29,8 +27,8 @@ export function SidebarButton({ link, icon: Icon, title, children, className, ..
 
   return (
     <Button className={'w-full text-left ' + className} variant="text" size="sm" {...props}>
-      <Icon className="mr-2 text-lg text-gray dark:text-white" />
-      <div className="mr-auto font-normal text-black dark:text-white truncate">{title}</div>
+      <Icon className="mr-2 text-lg text-default/60" />
+      <div className="mr-auto font-normal text-default truncate">{title}</div>
 
       {children}
     </Button>

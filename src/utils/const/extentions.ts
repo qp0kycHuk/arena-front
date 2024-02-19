@@ -14,5 +14,5 @@ export const docExtention: IExtention = {
   type: 'doc',
   accept: 'application/msword, application/pdf, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain',
   regex:
-    /^(application|text)\/(msword|pdf|vnd\.ms-excel|vnd\.ms-powerpoint|plain|xlsx|xls|vnd\.openxmlformats-officedocument\.spreadsheetml\.sheet)/i,
+    /^(application|text)\/(msword|pdf|vnd\.ms-excel|vnd\.ms-powerpoint|plain|xlsx|xls|vnd\.openxmlformats-officedocument\.spreadsheetml\.sheet|vnd\.openxmlformats-officedocument\.wordprocessingml\.document)/i,
 }

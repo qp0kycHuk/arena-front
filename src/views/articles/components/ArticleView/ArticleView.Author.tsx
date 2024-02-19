@@ -2,6 +2,7 @@ import React from 'react'
 import { UserIcon } from '@assets/icons/fill'
 import { IArticle } from '@models/Article'
 import { useFetchUserById } from '@store/users/'
+import { Skeleton } from '@/components/Skeleton'
 
 interface IArticleViewAuthorProps {
   article?: IArticle
@@ -18,10 +19,10 @@ export function ArticleViewAuthor({ article, isLoading, className }: IArticleVie
   if (!article || !user || isLoading) {
     return (
       <div className={'flex items-center ' + className}>
-        <div className={imageClassName + ' animate-pulse bg-gray bg-opacity-50'}> </div>
+        <Skeleton className={imageClassName} />
         <div>
-          <div className="w-24 h-3 bg-opacity-50 animate-pulse bg-gray"></div>
-          <div className="w-32 h-3 mt-1 bg-opacity-50 animate-pulse bg-gray "></div>
+          <Skeleton className="w-24 h-3" />
+          <Skeleton className="w-32 h-3 mt-1" />
         </div>
       </div>
     )
@@ -30,17 +31,17 @@ export function ArticleViewAuthor({ article, isLoading, className }: IArticleVie
   return (
     <div className={'flex items-center ' + className}>
       {imageSrc ? (
-        <div className={imageClassName + ' bg-gray bg-opacity-50'}>
+        <div className={imageClassName + ' bg-default/40'}>
           <img src={user?.image_src} alt="" className="object-cover w-full h-full" />
         </div>
       ) : (
-        <div className={imageClassName + ' flex bg-gray bg-opacity-10'}>
-          <UserIcon className="m-auto text-2xl text-gray dark:text-gray-300" />
+        <div className={imageClassName + ' flex bg-default/5'}>
+          <UserIcon className="m-auto text-2xl text-default/80" />
         </div>
       )}
 
       <div>
-        <div className="text-xs text-gray dark:text-gray-300">Автор:</div>
+        <div className="text-xs text-default/80">Автор:</div>
         <div className="text-sm font-semibold">
           {user.last_name} {user.first_name}
         </div>

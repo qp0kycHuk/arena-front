@@ -3,6 +3,7 @@ import { ImageLightBox } from '@features/ui'
 import { IArticle } from '@models/Article'
 import { Fancybox } from '@/lib/Fancybox'
 import classNames from 'classnames'
+import { Skeleton } from '@/components/Skeleton'
 
 interface IArticleViewImagesProps {
   article?: IArticle
@@ -15,11 +16,7 @@ export function ArticleViewImages({ article, isLoading, className }: IArticleVie
     return (
       <div className={classNames(className, 'flex flex-wrap gap-6')}>
         {new Array(3).fill(1).map((_, index) => {
-          return (
-            <div className="h-40 overflow-hidden bg-opacity-50 w-52 rounded-xl animate-pulse bg-gray" key={index}>
-              {' '}
-            </div>
-          )
+          return <Skeleton className="h-40 w-52 rounded-xl " key={index} />
         })}
       </div>
     )
