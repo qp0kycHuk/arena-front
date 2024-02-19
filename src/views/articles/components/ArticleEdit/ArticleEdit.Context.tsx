@@ -94,7 +94,7 @@ export function ArticleEditContextProvider({ children, articleId }: IArticleEdit
         return
       }
 
-      if (!editableArticle.content || !editableArticle.contentJson) {
+      if (!editableArticle.contentJson) {
         toast.error('Введите тело статьи')
 
         return
@@ -167,7 +167,7 @@ export function ArticleEditContextProvider({ children, articleId }: IArticleEdit
             docsFormData.append('files[]', item.file)
             uploadedFileItems.push(item)
           } else {
-            formData.append('attachment[]', item.id as string)
+            formData.append('docs[]', item.id as string)
           }
         })
 

@@ -36,7 +36,16 @@ export const FileBlockExtension = Node.create<IOptions>({
 
   renderHTML({ HTMLAttributes }) {
     // TODO
-    return ['file-block', mergeAttributes(HTMLAttributes)]
+    return [
+      'a',
+      mergeAttributes({
+        href: HTMLAttributes.src,
+        target: '_blank',
+        class: 'article-body-doc',
+        title: HTMLAttributes.name,
+      }),
+      HTMLAttributes.name,
+    ]
   },
 
   addNodeView() {

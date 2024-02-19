@@ -6,8 +6,8 @@ import { ILink } from '@models/Link'
 interface IEditorProps extends Partial<React.MemoExoticComponent<typeof PureEditorContent>> {
   editor: EditorClass | null
   className?: string
-  onPaste(event: React.ClipboardEvent): void
-  onLink(link: Partial<ILink>): void
+  onPaste?(event: React.ClipboardEvent): void
+  onLink?(link: Partial<ILink>): void
 }
 
 export function Editor({ editor, className, onPaste }: IEditorProps) {

@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useEditor as useEditorConfig, EditorOptions, generateHTML, JSONContent, Editor } from '@tiptap/react'
-import { Node } from '@tiptap/core'
+import { mergeAttributes, Node } from '@tiptap/core'
 import StarterKit from '@tiptap/starter-kit'
 import Underline from '@tiptap/extension-underline'
 import TextStyle from '@tiptap/extension-text-style'
@@ -40,8 +40,8 @@ export interface IOptions {
 }
 
 const defaultOptions = {
-  config: {},
-  placeholder: 'Type here',
+  config: { editable: true } as Partial<EditorOptions>,
+  placeholder: '',
   uploadFunction: undefined,
   onLink: undefined,
 }
@@ -81,6 +81,17 @@ const CustomImage = Image.extend({
       },
     }
   },
+  renderHTML({ HTMLAttributes }) {
+    return [
+      'a',
+      mergeAttributes({
+        href: HTMLAttributes.src,
+        class: 'article-body-image-wrapper',
+        ['data-fancybox']: 'true',
+      }),
+      ['img', mergeAttributes(HTMLAttributes)],
+    ]
+  },
 })
 
 export const editorExtensions = [
@@ -104,13 +115,18 @@ export const editorExtensions = [
 export function useEditor(options?: IOptions, deps?: any[]) {
   const { config, placeholder, onLink } = options || defaultOptions
 
+  const configMerge = {
+    ...defaultOptions.config,
+    ...config,
+  }
+
   return useEditorConfig(
     {
       extensions: [
         ...editorExtensions,
         Placeholder.configure({ placeholder: placeholder }),
         Link.configure({
-          openOnClick: false,
+          openOnClick: !configMerge?.editable,
           validate(url) {
             onLink?.({ url })
 
@@ -119,7 +135,7 @@ export function useEditor(options?: IOptions, deps?: any[]) {
         }),
       ],
 
-      ...config,
+      ...configMerge,
     },
     [config, ...(deps || [])]
   )
@@ -185,5 +201,7 @@ export function editorContentFilter(editorJson: any, filterFn: (item: any) => an
 }
 
 export function getEditorSelection(editor: Editor): string {
-  return editor.view.state.selection.content().content.textBetween(0, editor.view.state.selection.content().content.size)
+  return editor.view.state.selection
+    .content()
+    .content.textBetween(0, editor.view.state.selection.content().content.size)
 }

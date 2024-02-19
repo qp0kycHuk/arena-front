@@ -11,6 +11,7 @@ import { PageContent } from '@layouts/PageContent'
 import { ArticleViewAuthor } from './ArticleView.Author'
 import { ArticleViewLinks } from './ArticleView.Links'
 import { useFetchArticleById } from '@store/articles/'
+import { Documents } from './ArticleView.Documents'
 
 interface IArticleViewProps {
   articleId: EntityId
@@ -29,9 +30,10 @@ export function ArticleView({ articleId }: IArticleViewProps) {
           <ArticleViewImage article={article} />
           <ArticleViewTitle article={article} />
         </div>
-        <ArticleViewBody article={article} />
-        <ArticleViewLinks article={article} />
-        <ArticleViewImages article={article} />
+        <ArticleViewBody article={article} className="mb-8" />
+        <ArticleViewLinks article={article} className="mb-8" />
+        <ArticleViewImages article={article} className="mb-8" />
+        <Documents article={article} />
       </div>
       <div className="min-w-[266px] w-[266px] py-8 px-6 border-l border-gray border-opacity-30">
         <ArticleViewButtons article={article} />

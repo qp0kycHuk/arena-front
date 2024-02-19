@@ -79,6 +79,8 @@ export function ArticleEditEditor() {
 
   const insertDocuments = useCallback(
     async (files: File[]) => {
+      if (files.length === 0) return
+
       const documents = filterFiles(files, [docExtention.regex])
       const id = toast.loading('Загрузка документа')
       const pastedFileItems = await getFileItems(documents)
