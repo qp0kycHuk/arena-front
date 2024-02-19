@@ -3,7 +3,6 @@ import { ReactComponent as FolderIcon } from '@assets/img/folder.svg'
 import { IFolder } from '@models/Folder'
 import { Skeleton } from '@/components/Skeleton'
 import { markFromQuery } from '@/utils/helpers/markFromQuery'
-import { useSearchQuery } from '@/hooks/useSearchQuery'
 import { useProjectsContext } from '@/views/projects/components/Projects.Context'
 
 interface IFolderItemProps {

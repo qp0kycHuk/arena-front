@@ -1,11 +1,10 @@
+import * as React from 'react'
 import { Skeleton } from '@/components/Skeleton'
-import { useSearchQuery } from '@/hooks/useSearchQuery'
 import { markFromQuery } from '@/utils/helpers/markFromQuery'
 import { useProjectsContext } from '@/views/projects/components/Projects.Context'
 import { BookmarkIcon, ImageIcon } from '@assets/icons/stroke'
 import { Button } from '@features/ui'
 import { IArticle } from '@models/Article'
-import * as React from 'react'
 
 interface IArticleItemProps {
   article: IArticle
