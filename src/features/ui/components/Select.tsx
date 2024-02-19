@@ -28,7 +28,7 @@ export function SelectComponent({ color = 'primary', size = 'base', children, ..
         {children}
       </select>
       <div className="absolute -translate-y-1/2 pointer-events-none right-2 top-1/2">
-        <ToRightIcon className="text-gray" />
+        <ToRightIcon className="text-default/60" />
       </div>
     </div>
   )

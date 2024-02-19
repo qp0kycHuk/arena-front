@@ -32,8 +32,8 @@ export function HeaderUser() {
       align="end"
       menuButton={
         <Button variant="text" size="sm" className="px-3 ml-4" rounded shadow color="gray">
-          <ToDownIcon className="text-base" />
-          <div className="w-[22px] h-[22px] flex ml-2 text-white rounded-full bg-gray overflow-hidden">
+          <ToDownIcon className="text-base text-default/80" />
+          <div className="w-[22px] h-[22px] flex ml-2 text-white rounded-full bg-l3 overflow-hidden">
             {user?.image_src ? (
               <img src={user?.image_src} alt="" className="object-cover w-full h-full" />
             ) : (
@@ -44,10 +44,7 @@ export function HeaderUser() {
       }
     >
       <div className="w-48 p-2">
-        <Link
-          to={getRoute().users(user?.id)}
-          className="block mb-1 text-xs font-semibold text-gray dark:text-gray-300 opacity-90"
-        >
+        <Link to={getRoute().users(user?.id)} className="block mb-1 text-xs font-semibold text-default/80">
           {user?.first_name} {user?.last_name}
         </Link>
         <div className="mb-4 text-sm">{getMaskedPhoneValue(user?.phone)}</div>

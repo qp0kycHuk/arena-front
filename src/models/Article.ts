@@ -2,6 +2,7 @@ import { ICategory } from './Category'
 import { IFile } from './File'
 import { ITag } from './Tag'
 import { ILink } from './Link'
+import { Connection } from './Connection'
 
 export interface IArticle {
   id: EntityId
@@ -16,5 +17,7 @@ export interface IArticle {
   categories: ICategory[]
   tags: ITag[]
   files: IFile[]
+  docs: IFile[]
   links: Partial<ILink>[]
+  folders: Connection[]
 }

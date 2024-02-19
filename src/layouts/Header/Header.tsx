@@ -10,7 +10,7 @@ export function Header() {
   const { data: auth } = useAuth()
 
   return (
-    <header className="sticky top-0 z-20 flex items-center px-8 py-2 bg-white shadow-sm dark:bg-opacity-5">
+    <header className="sticky top-0 z-20 flex items-center px-8 py-2 bg-l3 shadow-sm ">
       <div className="mr-auto">
         <img src={headerLogo} alt="" className="h-[26px]" />
       </div>

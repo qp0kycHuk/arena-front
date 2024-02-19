@@ -28,6 +28,7 @@ export function Uploader({
     multiple,
     rounded,
     sign,
+    extention,
     initialFiles: fileItems,
     onChange,
     onRemove,

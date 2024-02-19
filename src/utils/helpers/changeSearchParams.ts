@@ -1,6 +1,10 @@
 import type { URLSearchParamsInit } from 'react-router-dom'
 
-export function changeSearchParams([key, value]: [string, string], saveAll = false, savedKeys: string[] = []) {
+export function changeSearchParams(
+  [key, value]: [string, string | string[]],
+  saveAll = false,
+  savedKeys: string[] = []
+) {
   return (prev: URLSearchParams) => {
     const prevParams = Object.fromEntries(prev)
     const params: URLSearchParamsInit = {}
@@ -9,8 +13,10 @@ export function changeSearchParams([key, value]: [string, string], saveAll = fal
       Object.entries(prevParams).forEach(([k, v]) => (params[k] = v))
     } else {
       savedKeys.forEach((k) => {
-        if (prevParams[k]) {
-          params[k] = prevParams[k]
+        const value = prev.getAll(k)
+
+        if (prevParams[k] && value[0]) {
+          params[k] = value.length > 1 ? value : value[0]
         }
       })
     }

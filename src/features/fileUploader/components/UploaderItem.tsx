@@ -26,10 +26,10 @@ export function UploaderItem({ item, extention, rounded, sign, update, remove }:
           <div className={`flex w-full h-full p-2 ${rounded ? 'rounded-full' : 'rounded-xl'} bg-primary bg-opacity-10`}>
             <div className="max-w-full m-auto">
               {isMedia ? (
-                <ImageIcon className="text-3xl text-gray" />
+                <ImageIcon className="text-3xl text-default/75" />
               ) : (
                 <div className="flex flex-col items-center">
-                  <DocumentIcon className="mb-2 text-3xl text-gray" />
+                  <DocumentIcon className="mb-2 text-3xl text-default/75" />
                   <div className="w-full text-xs text-center truncate">{item.name}</div>
                 </div>
               )}

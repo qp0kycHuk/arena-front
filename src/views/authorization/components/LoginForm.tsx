@@ -37,10 +37,7 @@ export function LoginForm() {
   }
 
   return (
-    <form
-      onSubmit={submitHundler}
-      className="bg-white dark:bg-black dark:text-white m-auto rounded-3xl px-8 py-10 w-[400px]"
-    >
+    <form onSubmit={submitHundler} className="bg-l3 m-auto rounded-3xl px-8 py-10 w-[400px]">
       <h1 className="mb-10 text-2xl font-semibold text-center">Авторизация</h1>
       {errorMessage && !loading ? (
         <div className="p-4 mb-4 text-sm font-semibold rounded bg-red bg-opacity-10 text-red">{errorMessage}</div>

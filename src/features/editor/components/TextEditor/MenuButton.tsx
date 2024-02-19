@@ -10,7 +10,13 @@ type IMenuButtonProps = ButtonProps & Props
 
 export function MenuButton({ children, isActive, ...props }: IMenuButtonProps) {
   return (
-    <Button {...props} className={'px-2 ' + props.className} size="sm" color={isActive ? 'primary' : 'gray'} variant={isActive ? 'light' : 'text'}>
+    <Button
+      {...props}
+      className={'px-2 text-default/60 ' + props.className}
+      size="sm"
+      color={isActive ? 'primary' : 'gray'}
+      variant={isActive ? 'light' : 'text'}
+    >
       {children}
     </Button>
   )

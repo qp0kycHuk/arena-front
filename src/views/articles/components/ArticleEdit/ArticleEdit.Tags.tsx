@@ -69,7 +69,7 @@ export function ArticleEditTags() {
 
   return (
     <div className="flex items-center">
-      <HashIcon className="mr-1 text-2xl text-gray" />
+      <HashIcon className="mr-1 text-2xl text-default/80" />
       <div className="relative mr-1">
         {/* TODO move Combobox to @features/ui  */}
         <Combobox value={name} onChange={(id) => addTag(tagsData?.entities[id])}>
@@ -101,7 +101,7 @@ export function ArticleEditTags() {
               leaveTo="opacity-0"
               show={name.length >= 3 && isOpen && !!tagsFilteredByName?.length}
             >
-              <Combobox.Options className="absolute z-10 w-full py-1 ml-1 overflow-auto -translate-y-1/2 bg-white rounded-md shadow-md max-h-60 left-full top-1/2 focus:outline-none">
+              <Combobox.Options className="absolute z-10 w-full py-1 ml-1 overflow-auto -translate-y-1/2 bg-l3 rounded-md shadow-md max-h-60 left-full top-1/2 focus:outline-none">
                 {tagsFilteredByName?.map((id) => (
                   <Combobox.Option
                     key={id}

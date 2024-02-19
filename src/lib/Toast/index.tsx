@@ -10,7 +10,7 @@ const contextClass = {
   error: 'bg-red text-white',
   info: 'bg-primary text-white',
   warning: 'bg-yellow text-white',
-  default: 'bg-white dark:bg-gray-900 text-black dark:text-white',
+  default: 'bg-l3 text-default',
   dark: 'bg-black text-white',
 }
 

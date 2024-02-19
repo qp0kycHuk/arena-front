@@ -12,7 +12,7 @@ export interface ICheckBoxProps extends React.HTMLAttributes<HTMLInputElement> {
 }
 
 const inputBaseClasses =
-  'peer relative appearance-none  border rounded-md border-gray-300 cursor-pointer transition-all '
+  'peer relative appearance-none  border rounded-md border-default/40 cursor-pointer transition-all '
 
 const sizeClasses: Record<Size, string> = {
   xs: 'w-3 h-3',

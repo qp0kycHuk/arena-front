@@ -6,21 +6,22 @@ import { ProjectsContextProvider, useProjectsContext } from './Projects.Context'
 import { Head } from './Projects.Head/Projects.Head'
 import { Empty } from '@/components/Empty'
 import { Search } from './Projects.Search'
+import { Tags } from './Projects.Tags'
 
 function ProjectsInner() {
   useDocumentTitle('Статьи')
-  const { loading, folders, articles } = useProjectsContext()
-
-  const isFolderEmpty = !loading && folders.length + articles.length === 0
+  const { fetching, folders, articles, isEmpty } = useProjectsContext()
 
   return (
     <>
       <PageContent className="p-8">
         <Head />
-        {/* <Search /> */}
-        {isFolderEmpty && <Empty />}
-        <FolderList items={folders} loading={loading} />
-        <ArticleList items={articles} loading={loading} />
+        <Tags />
+        <Search />
+
+        {isEmpty && <Empty />}
+        <FolderList items={folders} loading={fetching} />
+        <ArticleList items={articles} loading={fetching} />
       </PageContent>
     </>
   )

@@ -7,6 +7,9 @@ import { useAuth } from '@store/auth'
 import { useParams } from 'react-router-dom'
 import { IFolder } from '@models/Folder'
 import { useUpsertFolder } from '@store/folders'
+import { toast } from '@/lib/Toast'
+import { showAsyncError } from '@/utils/helpers/errors'
+import { AxiosError } from 'axios'
 
 interface IFolderEditDialogProps extends IDialogProps {
   item?: IFolder
@@ -14,11 +17,12 @@ interface IFolderEditDialogProps extends IDialogProps {
 }
 
 export function FolderEditDialog({ item, isOpen, close }: IFolderEditDialogProps) {
-  const { data: auth } = useAuth()
-  const user = auth?.user
+  const { folderId } = useParams()
   const { loading, loadingStart, loadingEnd } = useLoading()
   const { mutateAsync: upsert } = useUpsertFolder()
-  const { folderId } = useParams()
+  const { data: auth } = useAuth()
+  const user = auth?.user
+  const dialogTitle = item ? 'Редактировать' : 'Создать папку'
 
   async function submitHandler(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -26,7 +30,7 @@ export function FolderEditDialog({ item, isOpen, close }: IFolderEditDialogProps
     const formData = new FormData(event.target as HTMLFormElement)
 
     if (user) {
-      formData.append('owner_id', user.id.toString())
+      // formData.append('owner_id', user.id.toString())
     } else {
       return
     }
@@ -39,9 +43,14 @@ export function FolderEditDialog({ item, isOpen, close }: IFolderEditDialogProps
       formData.append('id', item.id.toString())
     }
 
-    await upsert(formData)
+    try {
+      await upsert(formData)
+      toast.success('Успешно сохранено')
+      close()
+    } catch (error) {
+      showAsyncError(((error as AxiosError).response?.data || error) as IErrorData)
+    }
 
-    close()
     loadingEnd()
   }
 
@@ -49,7 +58,7 @@ export function FolderEditDialog({ item, isOpen, close }: IFolderEditDialogProps
     <Dialog isOpen={isOpen} close={close}>
       <div className="overflow-hidden bg-white dark:bg-black w-80 rounded-2xl">
         <div className="p-4 text-center bg-gray-200 dark:bg-gray-900">
-          <div className="text-2xl font-semibold">Создать папку</div>
+          <div className="text-2xl font-semibold">{dialogTitle}</div>
         </div>
         <form onSubmit={submitHandler} className="px-6 py-8">
           <label className="block">

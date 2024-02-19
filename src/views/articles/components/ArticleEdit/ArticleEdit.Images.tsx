@@ -30,18 +30,30 @@ export function ArticleEditImages() {
   }
 
   function removeHandler(fileItem: IFileItem) {
+    let isImageInContent = false
+
     const filteredContent = editorContentFilter(JSON.parse(article?.contentJson || '{}'), (item) => {
       if (item.type === 'image') {
-        return fileItem.src !== item.attrs.src
+        if (fileItem.id == item.attrs.id) {
+          isImageInContent = true
+        }
+
+        return fileItem.id !== item.attrs.id
       }
 
       return true
     })
 
+    const updatedContent = isImageInContent
+      ? {
+          content: filteredContent,
+          contentJson: JSON.stringify(filteredContent),
+        }
+      : {}
+
     update({
-      content: filteredContent,
-      contentJson: JSON.stringify(filteredContent),
       files: article?.files?.filter((item) => item.id !== fileItem.id),
+      ...updatedContent,
     })
   }
 

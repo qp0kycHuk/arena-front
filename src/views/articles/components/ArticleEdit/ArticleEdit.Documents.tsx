@@ -3,6 +3,7 @@ import { Uploader } from '@features/fileUploader'
 import { editorContentFilter } from '@features/editor/hooks/useEditor'
 import { useArticleEditMainContext, useArticleEditUtilsContext } from './ArticleEdit.Context'
 import { getFileItems } from '@utils/helpers/files'
+import { docExtention } from '@/utils/const/extentions'
 
 // control upload and remove images
 export function ArticleEditDocuments() {
@@ -10,7 +11,7 @@ export function ArticleEditDocuments() {
   const { loadingStart, loadingEnd } = useArticleEditUtilsContext()
 
   const fileItems = useMemo(() => {
-    return article?.files?.map((item) => ({
+    return article?.docs?.map((item) => ({
       id: item.id,
       src: item.src,
       name: item.name,
@@ -25,14 +26,14 @@ export function ArticleEditDocuments() {
     loadingEnd()
 
     update({
-      files: [...(article?.files || []), ...updatedFiles],
+      docs: [...(article?.docs || []), ...updatedFiles],
     })
   }
 
   function removeHandler(fileItem: IFileItem) {
     const filteredContent = editorContentFilter(JSON.parse(article?.contentJson || '{}'), (item) => {
-      if (item.type === 'image') {
-        return fileItem.src !== item.attrs.src
+      if (item.type === 'fileBlock') {
+        return fileItem.id !== item.attrs.id
       }
 
       return true
@@ -41,12 +42,12 @@ export function ArticleEditDocuments() {
     update({
       content: filteredContent,
       contentJson: JSON.stringify(filteredContent),
-      files: article?.files?.filter((item) => item.id !== fileItem.id),
+      docs: article?.docs?.filter((item) => item.id !== fileItem.id),
     })
   }
 
   return (
-    <Uploader fileItems={fileItems} onChange={changeHandler} onRemove={removeHandler}>
+    <Uploader fileItems={fileItems} onChange={changeHandler} onRemove={removeHandler} extention={docExtention}>
       <div className="font-semibold">Документы</div>
     </Uploader>
   )

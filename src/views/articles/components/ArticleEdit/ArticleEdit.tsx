@@ -12,6 +12,7 @@ import {
   useArticleEditMainContext,
   useArticleEditUtilsContext,
 } from './ArticleEdit.Context'
+import { ArticleEditDocuments } from './ArticleEdit.Documents'
 
 interface IArticleEditProps {
   articleId?: EntityId
@@ -27,28 +28,28 @@ function ArticleEditInner() {
   return (
     <form className="" onSubmit={submitHandler}>
       <div className="text-[26px] font-semibold mb-7">Новая статья</div>
-      <div className="border border-gray border-opacity-30 rounded-2xl">
+      <div className="border border-default/20 rounded-2xl">
         <div className="px-8 py-6">
           <ArticleEditTitle />
           <ArticleEditEditor />
         </div>
-        <div className="border-t border-gray border-opacity-30"></div>
+        <div className="border-t border-default/20"></div>
         <div className="px-8 py-6">
           <ArticleEditAnons />
         </div>
-        <div className="border-t border-gray border-opacity-30"></div>
+        <div className="border-t border-default/20"></div>
         <div className="px-8 py-6">
           <ArticleEditImages />
         </div>
-        {/* <div className="border-t border-gray border-opacity-30"></div>
+        <div className="border-t border-default/20"></div>
         <div className="px-8 py-6">
           <ArticleEditDocuments />
-        </div> */}
-        <div className="border-t border-gray border-opacity-30"></div>
+        </div>
+        <div className="border-t border-default/20"></div>
         <div className="px-8 py-6">
           <ArticleEditLinks />
         </div>
-        <div className="border-t border-gray border-opacity-30"></div>
+        <div className="border-t border-default/20"></div>
         <div className="px-8 py-6">
           <ArticleEditTags />
         </div>

@@ -4,21 +4,21 @@ import { createRootApi } from '../utils/createRootApi'
 import { getEntities, getIds } from '@/utils/helpers/entity'
 
 type CreateParams =
-  | 'owner_id'
   | 'content'
   | 'excerpt'
   | 'name'
   | 'image'
   | 'tags[]'
   | 'attachment[]'
+  | 'docs[]'
   | 'parent_id'
   | 'folders[]'
-  | 'links[]'
+  | 'links[]' // | 'owner_id'
 type UpdateParams = CreateParams | 'id' | 'image_delete'
 export type ICreateRequest = TypedFormData<CreateParams>
 export type IUpdateRequest = TypedFormData<UpdateParams>
 export type IFetchParams = {
-  search?: string
+  name?: string
 }
 
 const ROOT_ENDPOINT_URL = process.env.REACT_APP_API_URL + '/api/articles'

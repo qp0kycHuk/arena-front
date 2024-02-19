@@ -5,13 +5,6 @@ const { parseColor, formatColor } = require('tailwindcss/lib/util/color')
 const defaultOptions = {
   className: 'input',
   disabledOpacity: 0.6,
-  // colorHoverOffset: 25,
-  // lightColorOpacity: 0.1,
-  // lightColorOpacityHover: 0.2,
-  // transition: '.2s ease',
-  // withFocusStyles: false,
-  // targetGroupSelector: '.btn-group',
-  // targetPeerSelector: '.btn-peer',
   baseCss: {},
 }
 
@@ -30,20 +23,21 @@ module.exports = plugin.withOptions(
       addBase({
         ':root': {
           [sizeName]: theme('inputSize.base'),
-          [colorName]: theme('colors.primary.DEFAULT'),
+          [colorName]: theme('colors.primary'),
         },
       })
       addComponents({
         [`.${options.className}`]: {
           display: 'block',
           height: sizeVar,
-          border: "1px solid theme('colors.gray.DEFAULT / 20%')",
+          border: "1px solid theme('colors.default / 40%')",
           outline: 'none !important',
+          background: "theme('colors.l3')",
           lineHeight: '1',
-          padding: 'calc((var(--tw-input-size) - 1.2em) / 2) 15px',
+          padding: 'calc((var(--tw-input-size) - 1.2em) / 2) 1em',
           ...options.baseCss,
 
-          '&:focus, &:focus-within': {
+          '&:focus, &:focus-within, &:is(.dark &):focus, &:is(.dark &):focus-within': {
             borderColor: colorVar,
             boxShadow: '0 0 0 1px ' + colorVar,
             zIndex: 2,
@@ -60,7 +54,12 @@ module.exports = plugin.withOptions(
         {
           [options.className]: (size) => {
             // check is not color
-            const string = size.DEFAULT || size[500] || size
+            let string = size.DEFAULT || size[500] || size
+
+            if (typeof size == 'function') {
+              string = size({})
+            }
+
             const parsed = parseColor(string)
             if (!!parsed?.color) return null
 
@@ -75,7 +74,12 @@ module.exports = plugin.withOptions(
         {
           [options.className]: (color) => {
             // check is color
-            const string = color.DEFAULT || color[500] || color
+            let string = color.DEFAULT || color[500] || color
+
+            if (typeof color == 'function') {
+              string = color({})
+            }
+
             const parsed = parseColor(string)
             if (!parsed?.color) return null
 
