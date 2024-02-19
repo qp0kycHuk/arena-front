@@ -1,4 +1,7 @@
 import { Skeleton } from '@/components/Skeleton'
+import { useSearchQuery } from '@/hooks/useSearchQuery'
+import { markFromQuery } from '@/utils/helpers/markFromQuery'
+import { useProjectsContext } from '@/views/projects/components/Projects.Context'
 import { BookmarkIcon, ImageIcon } from '@assets/icons/stroke'
 import { Button } from '@features/ui'
 import { IArticle } from '@models/Article'
@@ -10,6 +13,7 @@ interface IArticleItemProps {
 
 export function ArticleItem({ article }: IArticleItemProps) {
   const imageSrc = article?.image_src ? article.image_src : ''
+  const { searchQuery } = useProjectsContext()
 
   return (
     <div className="flex items-center px-4 py-3 -mx-4 rounded-2xl hover:bg-primary hover:bg-opacity-10">
@@ -18,7 +22,10 @@ export function ArticleItem({ article }: IArticleItemProps) {
         {!imageSrc && <ImageIcon className="m-auto text-3xl text-default/60" />}
       </div>
       <div className="max-w-5xl ml-4">
-        <div className="mb-2 font-semibold">{article.name}</div>
+        <div
+          className="mb-2 font-semibold with-mark-query"
+          dangerouslySetInnerHTML={{ __html: markFromQuery(article.name, searchQuery) }}
+        ></div>
         <div className="text-xs text-default/70">{article.excerpt}</div>
       </div>
       <div className="ml-auto text-right whitespace-nowrap">

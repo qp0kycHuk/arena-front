@@ -274,3 +274,10 @@ body {
     }
   }
 }
+
+.with-mark-query {
+  b{
+    font-weight: 600;
+    color: theme('colors.primary');
+  }
+}
