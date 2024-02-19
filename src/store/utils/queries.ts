@@ -40,6 +40,8 @@ export function createQueries<EntityType extends { id: EntityId }, C, U, F = Rec
     return useMutation(api.upsert, {
       onSuccess: (data) => {
         queryClient.invalidateQueries([key])
+        queryClient.invalidateQueries([key, data.item.id.toString()])
+        queryClient.invalidateQueries([key, data.item.id.toString(), {}])
         queryClient.setQueryData([key, data.item.id.toString()], data)
         // TODO
         // queryClient.setQueryData([key], queryClient.getQueryData([key]))

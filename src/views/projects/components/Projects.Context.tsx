@@ -40,8 +40,8 @@ export function ProjectsContextProvider({ children }: React.PropsWithChildren) {
   const fetching = folderFetching || foldersFetching || articlesFetching
 
   const folders = tagsQuery.length === 0 ? (folderId ? folderData?.item?.children : foldersData?.items) || [] : []
-  // const articles = (folderId ? folderData?.item?.articles : []) || []
-  const articles = (folderId ? folderData?.item?.articles : articlesData?.items) || []
+  const articles = (folderId ? folderData?.item?.articles : tagsQuery.length === 0 ? [] : articlesData?.items) || []
+  // const articles = (folderId ? folderData?.item?.articles : articlesData?.items) || []
 
   const isEmpty = !fetching && folders.length + articles.length === 0
 

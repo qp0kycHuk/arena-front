@@ -37,7 +37,7 @@ export function HandbooksEditPositions() {
   return (
     <div>
       <div className="flex items-center mb-7">
-        <BriefcaseIcon className="mr-2 text-2xl text-gray" />
+        <BriefcaseIcon className="mr-2 text-2xl text-default/70" />
         <div className="font-semibold">Должности</div>
       </div>
       <HandbooksEdit onSubmit={submitHandler} initialHandbooks={positionsData?.items} />

@@ -64,7 +64,7 @@ export function UserEdit() {
             <UserEditPosition />
           </div>
         </div>
-        <div className="mx-12 border-r border-gray border-opacity-20"></div>
+        <div className="mx-12 border-r border-default/10"></div>
         <div className="w-[360px] ">
           <div className="mb-8 text-2xl font-semibold">Контакты</div>
           <div className="flex flex-col gap-5">
@@ -90,7 +90,7 @@ export function UserEdit() {
             <UserEditRoles />
           </div>
         </div>
-        <div className="mx-12 border-r border-gray border-opacity-20"></div>
+        <div className="mx-12 border-r border-default/10"></div>
         <div className="w-[360px] ">
           <div className="mb-8 text-2xl font-semibold">Данные для входа в ЛК</div>
           <div className="flex flex-col gap-5">

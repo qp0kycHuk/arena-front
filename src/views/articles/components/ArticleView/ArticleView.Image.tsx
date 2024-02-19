@@ -18,8 +18,8 @@ export function ArticleViewImage({ article, isLoading }: IArticleViewImageProps)
 
   if (!imageSrc) {
     return (
-      <div className={imageClassName + ' flex bg-gray bg-opacity-10'}>
-        <ImageIcon className="m-auto text-3xl text-gray" />
+      <div className={imageClassName + ' flex bg-default/5'}>
+        <ImageIcon className="m-auto text-3xl text-default/70" />
       </div>
     )
   }

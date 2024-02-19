@@ -1,5 +1,4 @@
 import React from 'react'
-import { ImageLightBox } from '@features/ui'
 import { IArticle } from '@models/Article'
 import { Fancybox } from '@/lib/Fancybox'
 import classNames from 'classnames'
@@ -32,7 +31,7 @@ export function ArticleViewImages({ article, isLoading, className }: IArticleVie
       <Fancybox className="flex flex-wrap gap-6">
         {article?.files.map((item) => (
           <a key={item.id} href={item.src || ''} data-fancybox>
-            <div className="h-40 overflow-hidden w-52 rounded-xl bg-gray bg-opacity-10">
+            <div className="h-40 overflow-hidden w-52 rounded-xl bg-default/5">
               <img src={item.src} alt="" className="object-cover w-full h-full" />
             </div>
           </a>

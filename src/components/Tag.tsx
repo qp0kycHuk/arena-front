@@ -7,7 +7,7 @@ export type ITagProps = ButtonProps & { active?: boolean }
 export function Tag({ children, className, active, ...props }: ITagProps) {
   return (
     <Button
-      color={active ? 'primary' : 'gray'}
+      color={active ? 'primary' : 'default'}
       variant={active ? 'fill' : 'light'}
       size="xs"
       rounded
@@ -22,7 +22,7 @@ export function Tag({ children, className, active, ...props }: ITagProps) {
 export function TagPlaceholder({ className, ...props }: ITagProps) {
   return (
     <Button
-      color="gray"
+      color="default"
       variant="light"
       size="xs"
       rounded

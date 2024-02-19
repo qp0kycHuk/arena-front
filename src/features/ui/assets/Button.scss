@@ -5,4 +5,8 @@
   &-gray.btn-contur {
     border-color: theme('colors.gray / 30%');
   }
+  
+  &-default.btn-contur {
+    border-color: theme('colors.default / 20%');
+  }
 }

@@ -12,8 +12,8 @@ export function FolderSettings() {
 
   return (
     <>
-      <Button variant="contur" color="gray" onClick={openUpdateFolderOpen} disabled={fetching}>
-        <SettingsIcon className="text-2xl" />
+      <Button variant="contur" color="default" onClick={openUpdateFolderOpen} disabled={fetching}>
+        <SettingsIcon className="text-2xl opacity-60" />
       </Button>
 
       {folder ? <FolderEditDialog isOpen={isUpdateFolderOpen} close={closeUpdateFolderOpen} item={folder} /> : null}

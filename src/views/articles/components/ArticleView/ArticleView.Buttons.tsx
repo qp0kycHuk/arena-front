@@ -20,11 +20,11 @@ export function ArticleViewButtons({ article, isLoading }: IArticleViewButtonsPr
   if (!article || isLoading) {
     return (
       <div className="flex gap-4">
-        <Button variant="contur" color="gray" disabled>
-          <PencilIcon className="text-2xl" />
+        <Button variant="contur" color="default" disabled>
+          <PencilIcon className="text-2xl opacity-60" />
         </Button>
-        <Button variant="contur" color="gray" disabled>
-          <BookmarkIcon className="text-2xl" />
+        <Button variant="contur" color="default" disabled>
+          <BookmarkIcon className="text-2xl opacity-60" />
         </Button>
       </div>
     )
@@ -34,13 +34,13 @@ export function ArticleViewButtons({ article, isLoading }: IArticleViewButtonsPr
     <div className="flex gap-4">
       {(article.owner_id === currentUser?.id || isCurrentUserRole.admin) && (
         <Link to={getRoute().articles.edit(article.id)}>
-          <Button variant="contur" color="gray">
-            <PencilIcon className="text-2xl" />
+          <Button variant="contur" color="default">
+            <PencilIcon className="text-2xl opacity-60" />
           </Button>
         </Link>
       )}
-      <Button variant="contur" color="gray">
-        <BookmarkIcon className="text-2xl" />
+      <Button variant="contur" color="default">
+        <BookmarkIcon className="text-2xl opacity-60" />
       </Button>
     </div>
   )

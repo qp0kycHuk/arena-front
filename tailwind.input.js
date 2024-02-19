@@ -30,7 +30,7 @@ module.exports = plugin.withOptions(
         [`.${options.className}`]: {
           display: 'block',
           height: sizeVar,
-          border: "1px solid theme('colors.default / 40%')",
+          border: "1px solid theme('colors.default / 20%')",
           outline: 'none !important',
           background: "theme('colors.l3')",
           lineHeight: '1',

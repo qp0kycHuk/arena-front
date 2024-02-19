@@ -1,3 +1,4 @@
+import { Skeleton } from '@/components/Skeleton'
 import { BookmarkIcon, ImageIcon } from '@assets/icons/stroke'
 import { Button } from '@features/ui'
 import { IArticle } from '@models/Article'
@@ -34,17 +35,17 @@ export function ArticleItem({ article }: IArticleItemProps) {
 export function ArticleItemPlacehlder() {
   return (
     <div className="flex items-center py-3">
-      <div className="w-24 h-[76px] rounded-xl bg-default/30  animate-pulse" />
+      <Skeleton className="w-24 h-[76px] rounded-xl" />
       <div className="max-w-5xl ml-4">
-        <div className="w-64 h-5 mb-3  animate-pulse bg-default/30" />
+        <Skeleton className="w-64 h-5 mb-3" />
         <div className="max-w-md ">
-          <div className="w-64 h-2 mb-2  animate-pulse bg-default/30" />
-          <div className="w-64 h-2  animate-pulse bg-default/30" />
+          <Skeleton className="w-64 h-2 mb-2" />
+          <Skeleton className="w-64 h-2" />
         </div>
       </div>
       <div className="ml-auto">
-        <div className="w-24 h-3 mb-1 ml-1  animate-pulse bg-default/30" />
-        <div className="w-24 h-3 ml-1  animate-pulse bg-default/30" />
+        <Skeleton className="w-24 h-3 mb-1 ml-1" />
+        <Skeleton className="w-24 h-3 ml-1" />
       </div>
       <Button variant="text" size="sm" color="default" className="px-3 ml-3" disabled>
         <BookmarkIcon className="text-2xl" />

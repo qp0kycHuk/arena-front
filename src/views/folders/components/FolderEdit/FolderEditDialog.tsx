@@ -56,8 +56,8 @@ export function FolderEditDialog({ item, isOpen, close }: IFolderEditDialogProps
 
   return (
     <Dialog isOpen={isOpen} close={close}>
-      <div className="overflow-hidden bg-white dark:bg-black w-80 rounded-2xl">
-        <div className="p-4 text-center bg-gray-200 dark:bg-gray-900">
+      <div className="overflow-hidden bg-l3 w-80 rounded-2xl">
+        <div className="p-4 text-center bg-default/5">
           <div className="text-2xl font-semibold">{dialogTitle}</div>
         </div>
         <form onSubmit={submitHandler} className="px-6 py-8">
