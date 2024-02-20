@@ -12,6 +12,8 @@ import { ArticleViewAuthor } from './ArticleView.Author'
 import { ArticleViewLinks } from './ArticleView.Links'
 import { useFetchArticleById } from '@store/articles/'
 import { Documents } from './ArticleView.Documents'
+import { Navigate } from 'react-router-dom'
+import { getRoute } from '@/utils'
 
 interface IArticleViewProps {
   articleId: EntityId
@@ -22,6 +24,10 @@ export function ArticleView({ articleId }: IArticleViewProps) {
 
   const article = data?.item
   useDocumentTitle(article?.name)
+
+  if (!isFetching && !data?.item) {
+    return <Navigate to={getRoute().projects()} />
+  }
 
   return (
     <PageContent className="flex">

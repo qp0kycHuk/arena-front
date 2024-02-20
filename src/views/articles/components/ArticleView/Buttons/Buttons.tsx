@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { BookmarkIcon, PencilIcon } from '@assets/icons/stroke'
+import { BookmarkIcon, PencilIcon, TrashIcon } from '@assets/icons/stroke'
 import { Button } from '@features/ui'
 import { IArticle } from '@models/Article'
 import { getRoute } from '@utils/index'
@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import { isUser } from '@views/users'
 import { useAuth } from '@store/auth'
 import { Favorite } from './Buttons.Favorite'
+import { Remove } from './Buttons.Remove'
 
 interface IArticleViewButtonsProps {
   article?: IArticle
@@ -30,6 +31,11 @@ export function Buttons({ article, isLoading }: IArticleViewButtonsProps) {
         <Button variant="contur" color="default" disabled>
           <BookmarkIcon className="text-2xl opacity-60" />
         </Button>
+        {isCanEdit && (
+          <Button variant="contur" color="default" disabled>
+            <TrashIcon className="text-2xl opacity-60" />
+          </Button>
+        )}
       </div>
     )
   }
@@ -42,6 +48,7 @@ export function Buttons({ article, isLoading }: IArticleViewButtonsProps) {
         </Button>
       )}
       <Favorite article={article} />
+      {isCanEdit && <Remove article={article} />}
     </div>
   )
 }

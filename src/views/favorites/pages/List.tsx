@@ -15,6 +15,7 @@ export function FavoriteListPage() {
 
   return (
     <PageContent className="p-8">
+      <div className="text-2xl font-semibold mb-8">Избранное</div>
       {articles?.length > 0 ? <ArticleList items={articles} loading={isLoading} /> : <Empty />}
     </PageContent>
   )
