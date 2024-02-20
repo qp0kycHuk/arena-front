@@ -2,21 +2,7 @@ import * as React from 'react'
 import { Color, Size } from '../types'
 import { twMerge } from 'tailwind-merge'
 import { ripplePointerdownHandler } from '../utils/ripple'
-
-type Variant = 'fill' | 'light' | 'contur' | 'text' | 'whitebg'
-
-interface IProps {
-  color?: Color
-  size?: Size
-  variant?: Variant
-  as?: React.ElementType
-  rounded?: boolean
-  shadow?: boolean
-  icon?: boolean
-}
-
-export type ButtonProps = IProps & Omit<React.ButtonHTMLAttributes<HTMLElement>, keyof IProps>
-export type ButtonRef = React.ForwardedRef<HTMLElement>
+import BaseButton, { BaseComponentProps, BaseComponent } from './Base'
 
 const baseClassNames = 'btn '
 
@@ -44,7 +30,7 @@ const variantClassNames: Record<Variant, string> = {
   text: '',
 }
 
-function ButtonComponent(
+function ButtonComponent<C extends BaseComponent = 'button'>(
   {
     children,
     color = 'primary',
@@ -55,7 +41,7 @@ function ButtonComponent(
     shadow = false,
     icon = false,
     ...props
-  }: ButtonProps,
+  }: ButtonProps<C>,
   ref: ButtonRef
 ) {
   const classNames = twMerge(
@@ -84,3 +70,17 @@ function ButtonComponent(
 }
 
 export const Button = React.forwardRef(ButtonComponent)
+
+type Variant = 'fill' | 'light' | 'contur' | 'text' | 'whitebg'
+
+interface IProps {
+  color?: keyof typeof colorClassNames
+  size?: keyof typeof sizeClassNames
+  variant?: Variant
+  rounded?: boolean
+  shadow?: boolean
+  icon?: boolean
+}
+
+export type ButtonProps<C extends BaseComponent = 'button'> = BaseComponentProps<C> & IProps
+export type ButtonRef = React.ForwardedRef<HTMLElement>
