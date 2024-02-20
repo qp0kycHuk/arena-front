@@ -54,6 +54,10 @@ body {
     margin-top: 0.5em;
   }
 
+  &>* {
+    min-height: 1em;
+  }
+
   pre {
     width      : 100%;
     max-width  : 1000px;
@@ -206,14 +210,14 @@ body {
     height        : 0;
     float         : left;
     pointer-events: none;
-    color: theme('colors.default / 40%');
+    color         : theme('colors.default / 40%');
   }
 }
 
 .width-placeholder[data-placeholder]:empty:before {
   content       : attr(data-placeholder);
   pointer-events: none;
-  color: theme('colors.default / 40%')
+  color         : theme('colors.default / 40%')
 }
 
 .filedrop {
@@ -276,8 +280,8 @@ body {
 }
 
 .with-mark-query {
-  b{
+  b {
     font-weight: 600;
-    color: theme('colors.primary');
+    color      : theme('colors.primary');
   }
 }
