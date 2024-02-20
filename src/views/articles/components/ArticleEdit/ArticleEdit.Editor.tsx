@@ -25,7 +25,6 @@ export function ArticleEditEditor() {
     (event: EditorEvents['update']) => {
       update({
         contentJson: JSON.stringify(event.editor.getJSON()),
-        excerpt: event.editor.getText(),
       })
     },
     [update]
