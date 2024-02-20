@@ -22,14 +22,17 @@ export function ArticleList({ loading, items }: IArticleListProps) {
           </React.Fragment>
         ))}
       {isItemsReady &&
-        items.map((article) => (
-          <div key={article.id}>
-            <Link className="peer" to={getRoute().articles(article.id)}>
-              <ArticleItem article={article} />
-            </Link>
-            <div className="border-t border-default/10 peer-hover:opacity-0"></div>
-          </div>
-        ))}
+        items.map(
+          (article) =>
+            article && (
+              <div key={article.id}>
+                <Link className="peer" to={getRoute().articles(article.id)}>
+                  <ArticleItem article={article} />
+                </Link>
+                <div className="border-t border-default/10 peer-hover:opacity-0"></div>
+              </div>
+            )
+        )}
     </>
   )
 }

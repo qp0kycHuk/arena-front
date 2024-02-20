@@ -1,4 +1,7 @@
-export { Dialog } from './components/Dialog'
+export { Dialog } from './components/Dialog/Dialog'
+export { DialogHeader } from './components/Dialog/DialogHeader'
+export { DialogTitle } from './components/Dialog/DialogTitle'
+export { DialogErrors } from './components/Dialog/DialogErrors'
 export { DatePicker } from './components/DatePicker'
 export { Input, getInputClassname } from './components/Input'
 export { Select } from './components/Select'

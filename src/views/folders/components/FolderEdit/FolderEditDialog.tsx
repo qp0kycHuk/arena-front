@@ -1,6 +1,6 @@
 import React from 'react'
 import { Spiner } from '@components/Spiner'
-import { Button, Dialog, Input } from '@features/ui'
+import { Button, Dialog, DialogHeader, DialogTitle, Input } from '@features/ui'
 import { IDialogProps } from '@features/ui/components/Dialog'
 import { useLoading } from '@hooks/useLoading'
 import { useAuth } from '@store/auth'
@@ -55,11 +55,11 @@ export function FolderEditDialog({ item, isOpen, close }: IFolderEditDialogProps
   }
 
   return (
-    <Dialog isOpen={isOpen} close={close}>
-      <div className="overflow-hidden bg-l3 w-80 rounded-2xl">
-        <div className="p-4 text-center bg-default/5">
-          <div className="text-2xl font-semibold">{dialogTitle}</div>
-        </div>
+    <Dialog isOpen={isOpen} onClose={close}>
+      <div className="w-80">
+        <DialogHeader>
+          <DialogTitle>{dialogTitle}</DialogTitle>
+        </DialogHeader>
         <form onSubmit={submitHandler} className="px-6 py-8">
           <label className="block">
             <div className="mb-2 text-sm font-semibold">Название</div>
