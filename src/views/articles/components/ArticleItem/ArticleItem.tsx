@@ -5,6 +5,8 @@ import { useProjectsContext } from '@/views/projects/components/Projects.Context
 import { BookmarkIcon, ImageIcon } from '@assets/icons/stroke'
 import { Button } from '@features/ui'
 import { IArticle } from '@models/Article'
+import { useArticleFavorite } from '@/store/favorites/favorites.hooks'
+import classNames from 'classnames'
 
 interface IArticleItemProps {
   article: IArticle
@@ -13,6 +15,13 @@ interface IArticleItemProps {
 export function ArticleItem({ article }: IArticleItemProps) {
   const imageSrc = article?.image_src ? article.image_src : ''
   const { searchQuery } = useProjectsContext()
+  const { isFavorite, toggle, loading } = useArticleFavorite(article)
+
+  function favoriteClickHandler(event: Event) {
+    event.preventDefault()
+    event.stopPropagation()
+    toggle()
+  }
 
   return (
     <div className="flex items-center px-4 py-3 -mx-4 rounded-2xl hover:bg-primary hover:bg-opacity-10">
@@ -31,8 +40,15 @@ export function ArticleItem({ article }: IArticleItemProps) {
         <div className="text-xs text-default/70">Созд: {new Date(article.created_at).toLocaleDateString()}</div>
         <div className="text-xs text-default/70">Ред: {new Date(article.updated_at).toLocaleDateString()}</div>
       </div>
-      <Button variant="text" size="sm" color="gray" className="px-3 ml-3">
-        <BookmarkIcon className="text-2xl fill-primary text-primary" />
+      <Button
+        variant="text"
+        size="sm"
+        color="gray"
+        className="px-3 ml-3"
+        disabled={loading}
+        onClick={favoriteClickHandler}
+      >
+        <BookmarkIcon className={classNames('text-2xl ', isFavorite ? 'fill-primary text-primary' : '')} />
       </Button>
     </div>
   )

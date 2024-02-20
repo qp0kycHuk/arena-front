@@ -10,6 +10,7 @@ import { ArticleEditPage, ArticleViewPage } from '@views/articles/pages'
 import { UserEditPage, UserListPage, UserViewPage } from '@views/users/pages'
 import { Projects } from '@views/projects/pages'
 import { ThemeContextProvider } from './store/theme/ThemeContext'
+import { FavoriteListPage } from './views/favorites/pages/List'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -42,6 +43,8 @@ function App() {
                 <Route path={getRoute().users.edit(':id')} element={<UserEditPage />} />
 
                 <Route path="handbooks" element={<HandbooksEditPage />}></Route>
+
+                <Route path="favorites" element={<FavoriteListPage />}></Route>
               </Route>
               <Route path="/" element={<AuthLayout />}>
                 <Route path="login/" element={<Login />} />

@@ -1,6 +1,5 @@
 import { useQuery, useQueryClient, useMutation, UseQueryOptions } from '@tanstack/react-query'
 import { IEntityApi } from './EntitiesApi'
-import { toast } from '@/lib/Toast'
 
 interface IParams<EntityType, C, U, F> {
   key: string
