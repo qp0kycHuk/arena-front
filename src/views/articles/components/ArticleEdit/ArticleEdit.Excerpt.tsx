@@ -9,6 +9,7 @@ export function Excerpt() {
       <textarea
         className="input w-full rounded-lg h-40 resize-none"
         value={article?.excerpt}
+        required
         onChange={(e) => update({ excerpt: e.target.value })}
       ></textarea>
     </>
