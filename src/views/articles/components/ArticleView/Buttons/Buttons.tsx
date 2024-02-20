@@ -6,13 +6,14 @@ import { getRoute } from '@utils/index'
 import { Link } from 'react-router-dom'
 import { isUser } from '@views/users'
 import { useAuth } from '@store/auth'
+import { Favorite } from './Buttons.Favorite'
 
 interface IArticleViewButtonsProps {
   article?: IArticle
   isLoading?: boolean
 }
 
-export function ArticleViewButtons({ article, isLoading }: IArticleViewButtonsProps) {
+export function Buttons({ article, isLoading }: IArticleViewButtonsProps) {
   const { data: auth } = useAuth()
   const currentUser = auth?.user
   const isCurrentUserRole = isUser(currentUser)
@@ -36,15 +37,11 @@ export function ArticleViewButtons({ article, isLoading }: IArticleViewButtonsPr
   return (
     <div className="flex gap-4">
       {isCanEdit && (
-        <Link to={getRoute().articles.edit(article.id)}>
-          <Button variant="contur" color="default">
-            <PencilIcon className="text-2xl opacity-60" />
-          </Button>
-        </Link>
+        <Button as={Link} to={getRoute().articles.edit(article.id)} variant="contur" color="default">
+          <PencilIcon className="text-2xl opacity-60" />
+        </Button>
       )}
-      <Button variant="contur" color="default">
-        <BookmarkIcon className="text-2xl opacity-60" />
-      </Button>
+      <Favorite article={article} />
     </div>
   )
 }

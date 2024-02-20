@@ -3,7 +3,7 @@ import { ArticleViewImage } from './ArticleView.Image'
 import { ArticleViewTitle } from './ArticleView.Title'
 import { ArticleViewBody } from './ArticleView.Body'
 import { ArticleViewDates } from './ArticleView.Dates'
-import { ArticleViewButtons } from './ArticleView.Buttons'
+import { Buttons } from './Buttons/Buttons'
 import { ArticleViewImages } from './ArticleView.Images'
 import { Tag } from '@components/Tag'
 import { useDocumentTitle } from '@hooks/useDocumentTitle'
@@ -36,7 +36,7 @@ export function ArticleView({ articleId }: IArticleViewProps) {
         <Documents article={article} isLoading={isFetching} />
       </div>
       <div className="min-w-[266px] w-[266px] py-8 px-6 border-l border-default/20">
-        <ArticleViewButtons article={article} isLoading={isFetching} />
+        <Buttons article={article} isLoading={isFetching} />
         <ArticleViewAuthor article={article} isLoading={isFetching} className="mt-8" />
         <div className="my-8">
           <ArticleViewDates article={article} isLoading={isFetching} />

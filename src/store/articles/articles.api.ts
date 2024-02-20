@@ -3,24 +3,6 @@ import { createEntityApi } from '@store/utils/EntitiesApi'
 import { createRootApi } from '../utils/createRootApi'
 import { getEntities, getIds } from '@/utils/helpers/entity'
 
-type CreateParams =
-  | 'content'
-  | 'excerpt'
-  | 'name'
-  | 'image'
-  | 'tags[]'
-  | 'attachment[]'
-  | 'docs[]'
-  | 'parent_id'
-  | 'folders[]'
-  | 'links[]' // | 'owner_id'
-type UpdateParams = CreateParams | 'id' | 'image_delete'
-export type ICreateRequest = TypedFormData<CreateParams>
-export type IUpdateRequest = TypedFormData<UpdateParams>
-export type IFetchParams = {
-  name?: string
-}
-
 const ROOT_ENDPOINT_URL = process.env.REACT_APP_API_URL + '/api/articles'
 
 // class ArticlesApi<EntityType, C, U> extends EntitiesApi<EntityType, C, U> {
@@ -41,4 +23,22 @@ export const articlesApi = {
       entities: getEntities(data.items),
     }
   },
+}
+
+type CreateParams =
+  | 'content'
+  | 'excerpt'
+  | 'name'
+  | 'image'
+  | 'tags[]'
+  | 'attachment[]'
+  | 'docs[]'
+  | 'parent_id'
+  | 'folders[]'
+  | 'links[]'
+type UpdateParams = CreateParams | 'id' | 'image_delete'
+export type ICreateRequest = TypedFormData<CreateParams>
+export type IUpdateRequest = TypedFormData<UpdateParams>
+export type IFetchParams = {
+  name?: string
 }
