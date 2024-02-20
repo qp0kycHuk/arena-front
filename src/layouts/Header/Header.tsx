@@ -17,7 +17,7 @@ export function Header() {
 
       <ThemeToggle className="mr-5 text-4xl" />
 
-      <Button variant="contur" size="sm" color="default">
+      <Button as={Link} to="favorites" variant="contur" size="sm" color="default">
         <BookmarkIcon className="text-2xl opacity-60" />
       </Button>
       {auth?.user ? (
