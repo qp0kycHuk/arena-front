@@ -14,5 +14,12 @@ export function ArticleEditTitle() {
 
   const debouncedChangeHandler = useDebouncedCallback(changeHandler, 800)
 
-  return <ContentEditable className="mb-8 text-3xl width-placeholder" data-placeholder="Введите название статьи" value={article?.name || ''} onChange={debouncedChangeHandler} />
+  return (
+    <ContentEditable
+      className="mb-8 text-3xl width-placeholder"
+      data-placeholder="Введите название статьи"
+      value={article?.name || ''}
+      onChange={debouncedChangeHandler}
+    />
+  )
 }

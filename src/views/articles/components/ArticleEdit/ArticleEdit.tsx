@@ -13,6 +13,7 @@ import {
   useArticleEditUtilsContext,
 } from './ArticleEdit.Context'
 import { ArticleEditDocuments } from './ArticleEdit.Documents'
+import { Excerpt } from './ArticleEdit.Excerpt'
 
 interface IArticleEditProps {
   articleId?: EntityId
@@ -32,6 +33,10 @@ function ArticleEditInner() {
         <div className="px-8 py-6">
           <ArticleEditTitle />
           <ArticleEditEditor />
+        </div>
+        <div className="border-t border-default/20"></div>
+        <div className="px-8 py-6">
+          <Excerpt />
         </div>
         <div className="border-t border-default/20"></div>
         <div className="px-8 py-6">
