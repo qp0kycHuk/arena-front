@@ -18,7 +18,7 @@ export function UserEditPage() {
   }
 
   return (
-    <PageContent className="p-8">
+    <PageContent className="sm:p-8">
       <div className="mb-10 text-2xl font-semibold">Редактирование</div>
       <UserEditContextProvider user={user}>
         <UserEdit />

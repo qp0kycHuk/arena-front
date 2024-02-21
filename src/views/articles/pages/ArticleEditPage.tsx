@@ -11,7 +11,7 @@ export function ArticleEditPage() {
   useDocumentTitle(id ? 'Редактировать' : 'Создать')
 
   return (
-    <PageContent className="p-8">
+    <PageContent className="sm:p-8">
       <div className="flex mb-5 -ml-4">
         <Button as={Link} to={getRoute().articles(id)} variant="text" size="sm">
           <ToLeftIcon className="mr-2" />

@@ -7,7 +7,7 @@ export function UserListPage() {
   useDocumentTitle('Пользователи')
 
   return (
-    <PageContent className="p-8">
+    <PageContent className="sm:p-8">
       <div className="mb-10 text-2xl font-semibold">Пользователи</div>
 
       <UserList />

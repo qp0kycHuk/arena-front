@@ -14,7 +14,7 @@ function ProjectsInner() {
 
   return (
     <>
-      <PageContent className="p-8">
+      <PageContent className="sm:p-8">
         <Head />
         <Tags />
         <Search />

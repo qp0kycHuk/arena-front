@@ -8,7 +8,7 @@ export function HandbooksEditPage() {
   useDocumentTitle('Справочники')
 
   return (
-    <PageContent className="p-8">
+    <PageContent className="sm:p-8">
       <div className="mb-10 text-2xl font-semibold">Справочники</div>
       <HandbooksEditTags />
       <div className="my-6 border-t border-default/10"></div>

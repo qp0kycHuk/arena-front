@@ -15,8 +15,7 @@ export function useArticleRemove(article: IArticle) {
     await articlesApi.remove(article.id)
     toast.update(id, { render: 'Статья удалена', type: 'warning', isLoading: false, autoClose: 2000 })
     loadingEnd()
-    // navigate(-1)
-    navigate(getRoute().projects(article.folders[0].id || ''))
+    navigate(getRoute().projects(article.folders[0]?.id || ''))
   }
 
   return {

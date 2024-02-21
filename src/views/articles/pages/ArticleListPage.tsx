@@ -7,7 +7,7 @@ export function ArticleListPage() {
   useDocumentTitle('Статьи')
 
   return (
-    <PageContent className="p-8">
+    <PageContent className="sm:p-8">
       <ListComponent />
     </PageContent>
   )
