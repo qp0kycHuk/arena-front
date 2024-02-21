@@ -12,6 +12,9 @@ import { Projects } from '@views/projects/pages'
 import { ThemeContextProvider } from './store/theme/ThemeContext'
 import { FavoriteListPage } from './views/favorites/pages/List'
 
+import { Provider } from 'react-redux'
+import { store } from './store'
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -22,7 +25,7 @@ const queryClient = new QueryClient({
 
 function App() {
   return (
-    <>
+    <Provider store={store}>
       <ThemeContextProvider>
         <QueryClientProvider client={queryClient}>
           <BrowserRouter>
@@ -56,7 +59,7 @@ function App() {
         </QueryClientProvider>
         <ToastContainer />
       </ThemeContextProvider>
-    </>
+    </Provider>
   )
 }
 

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { AdjustmentsHorizontalIcon, CrossIcon, SearchIcon } from '@assets/icons/stroke'
+import { CrossIcon, SearchIcon } from '@assets/icons/stroke'
 import { Button, Input } from '@features/ui'
 
 interface ISearchProps {
