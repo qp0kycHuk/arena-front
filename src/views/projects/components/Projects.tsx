@@ -7,10 +7,12 @@ import { Head } from './Projects.Head/Projects.Head'
 import { Empty } from '@/components/Empty'
 import { Search } from './Projects.Search'
 import { Tags } from './Projects.Tags'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 function ProjectsInner() {
   useDocumentTitle('Статьи')
-  const { fetching, folders, articles, isEmpty } = useProjectsContext()
+  const { fetching, loading, folder, folderId, folders, articles, isEmpty } = useProjectsContext()
 
   return (
     <>
@@ -19,9 +21,22 @@ function ProjectsInner() {
         <Tags />
         <Search />
 
+        <DndProvider backend={HTML5Backend}>
+          <FolderList
+            draggable
+            parent={folder}
+            items={folders}
+            loading={loading || (!folder && fetching && folders.length == 0)}
+          />
+          {folderId && (
+            <ArticleList
+              draggable
+              items={articles}
+              loading={loading || (!folder && fetching && articles.length == 0)}
+            />
+          )}
+        </DndProvider>
         {isEmpty && <Empty />}
-        <FolderList items={folders} loading={fetching} />
-        <ArticleList items={articles} loading={fetching} />
       </PageContent>
     </>
   )

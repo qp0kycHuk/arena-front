@@ -2,9 +2,9 @@ import { Skeleton } from '@/components/Skeleton'
 import { useProjectsContext } from '../Projects.Context'
 
 export function Name() {
-  const { folder, fetching } = useProjectsContext()
+  const { folder, loading } = useProjectsContext()
 
-  if (fetching) {
+  if (loading) {
     return <Skeleton className="w-64 h-6 mt-2" />
   }
 
