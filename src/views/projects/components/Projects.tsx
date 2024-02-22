@@ -12,7 +12,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 
 function ProjectsInner() {
   useDocumentTitle('Статьи')
-  const { articlesLoading, folderLoading, folder, folderId, folders, articles, isEmpty } = useProjectsContext()
+  const { loading, folder, folderId, folders, articles, isEmpty } = useProjectsContext()
 
   return (
     <>
@@ -22,8 +22,8 @@ function ProjectsInner() {
         <Search />
 
         <DndProvider backend={HTML5Backend}>
-          <FolderList draggable parent={folder} items={folders} loading={folderLoading} />
-          {folderId && <ArticleList draggable items={articles} loading={articlesLoading} />}
+          <FolderList draggable parent={folder} items={folders} loading={loading} />
+          {folderId && <ArticleList draggable items={articles} loading={loading} />}
         </DndProvider>
         {isEmpty && <Empty />}
       </PageContent>

@@ -38,17 +38,14 @@ export function ProjectsContextProvider({ children }: React.PropsWithChildren) {
     isFetching: isFolderFetching,
   } = useFetchFolderById(folderId as EntityId, params, { enabled: !!folderId })
 
-  const loading = isFolderLoading || foldersLoading || isArticlesLoading
-  const fetching = isFolderFetching || foldersFetching || isArticlesFetching
-
   const folders = tagsQuery.length === 0 ? (folderId ? folderData?.item?.children : foldersData?.items) || [] : []
   const articles =
     (folderId ? folderData?.item?.articles : tagsQuery.length === 0 && !searchQuery ? [] : articlesData?.items) || []
   // const articles = (folderId ? folderData?.item?.articles : articlesData?.items) || []
 
+  const fetching = isFolderFetching || foldersFetching || isArticlesFetching
+  const loading = (isArticlesLoading && isFolderLoading) || (!folderData?.item && fetching && folders.length == 0)
   const isEmpty = !fetching && folders.length + articles.length === 0
-  const articlesLoading = isArticlesLoading || (!folderData?.item && fetching && folders.length == 0)
-  const folderLoading = isFolderLoading || (!folderData?.item && fetching && folders.length == 0)
 
   const value = {
     folderId,
@@ -58,8 +55,6 @@ export function ProjectsContextProvider({ children }: React.PropsWithChildren) {
     isEmpty,
     loading,
     fetching,
-    articlesLoading,
-    folderLoading,
 
     searchQuery,
     changeSearchQuery,
@@ -79,8 +74,6 @@ interface IValue {
   isEmpty: boolean
   loading: boolean
   fetching: boolean
-  articlesLoading: boolean
-  folderLoading: boolean
 
   searchQuery: ReturnType<typeof useSearchQuery>[0]
   changeSearchQuery: ReturnType<typeof useSearchQuery>[1]
