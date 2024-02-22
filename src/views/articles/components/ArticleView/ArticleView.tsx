@@ -16,6 +16,8 @@ import { Link, Navigate } from 'react-router-dom'
 import { getRoute } from '@/utils'
 import { ToLeftIcon } from '@/assets/icons/stroke'
 import { Button } from '@/features/ui'
+import { Breadcrumps } from '@/components/Breadcrumps/Breadcrumps'
+import { IFolder } from '@/models/Folder'
 
 interface IArticleViewProps {
   articleId: EntityId
@@ -34,6 +36,11 @@ export function ArticleView({ articleId }: IArticleViewProps) {
   return (
     <PageContent className="flex">
       <div className="flex-1 p-8 pt-3">
+        <Breadcrumps item={article?.folders[0] as IFolder}>
+          <Link to={getRoute().articles(article?.id)} className="hover:underline">
+            {article?.name}
+          </Link>
+        </Breadcrumps>
         <div className="flex mb-5 -ml-4">
           <Button as={Link} to={getRoute().projects(article?.folders[0]?.id || '')} variant="text" size="sm">
             <ToLeftIcon className="mr-2" />
