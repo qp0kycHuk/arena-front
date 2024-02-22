@@ -20,18 +20,19 @@ export const elementsSizes = {
   lg: '54px',
 }
 
-export const screens = {
+export const container = {
   xs: 420 + 29.98 + 'px',
   sm: 580 + 29.98 + 'px',
   md: 720 + 29.98 + 'px',
   lg: 1170 + 29.98 + 'px',
 }
 
-export const container = {
+export const screens = {
   xs: 420 + 'px',
   sm: 580 + 'px',
   md: 720 + 'px',
-  lg: 1366 + 'px',
+  lg: 1170 + 'px',
+  xl: 1366 + 'px',
 }
 
 export const ui = {

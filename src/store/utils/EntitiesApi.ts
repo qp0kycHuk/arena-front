@@ -14,10 +14,7 @@ export interface IEntitiesApiConfig {
 export function createEntityApi<EntityType, C, U, F = Record<string, string>>({
   url,
 }: IEntitiesApiConfig): IEntityApi<EntityType, C, U, F> {
-  async function fetch(
-    params: F = {} as F,
-    config: AxiosRequestConfig<any> = {}
-  ): Promise<IListResponse<EntityType> & IEntitiesAdapter<EntityType>> {
+  const fetch = async (params: F | null = {} as F, config = {}) => {
     const { data } = await createRootApi().get(url, { params, ...config })
 
     return {
@@ -47,11 +44,7 @@ export function createEntityApi<EntityType, C, U, F = Record<string, string>>({
     }
   }
 
-  async function fetchById(
-    id: EntityId,
-    params: F = {} as F,
-    config: AxiosRequestConfig<any> = {}
-  ): Promise<IItemResponse<EntityType>> {
+  const fetchById = async (id: EntityId, params: F | null = {} as F, config = {}) => {
     const { data } = await createRootApi().get(url + '/' + id, { params, ...config })
 
     return data
@@ -74,12 +67,12 @@ export function createEntityApi<EntityType, C, U, F = Record<string, string>>({
 
 export interface IEntityApi<EntityType, C, U, F> {
   fetch: (
-    params?: F,
+    params?: F | null,
     config?: AxiosRequestConfig<any>
   ) => Promise<IListResponse<EntityType> & IEntitiesAdapter<EntityType>>
   create: (formData: C) => Promise<IItemResponse<EntityType>>
   update: (formData: U) => Promise<IItemResponse<EntityType>>
   upsert: (formData: U | C) => Promise<IItemResponse<EntityType>>
-  fetchById: (id: EntityId, params?: F, config?: AxiosRequestConfig<any>) => Promise<IItemResponse<EntityType>>
+  fetchById: (id: EntityId, params?: F | null, config?: AxiosRequestConfig<any>) => Promise<IItemResponse<EntityType>>
   remove: (id: EntityId) => Promise<unknown>
 }

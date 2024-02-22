@@ -14,6 +14,10 @@
   --default-rgb : #{cl(#112)};
   --white-rgb   : #{cl(#fff)};
   --black-rgb   : #{cl(#000)};
+
+
+  // font
+  --font-base: 'Inter', arial, helvetica, sans-serif;
 }
 
 .dark {
@@ -29,6 +33,7 @@ body {
   min-height    : 100vh;
   background    : theme('colors.l1');
   color         : theme('colors.default');
+  font-family   : var(--font-base);
 
   * {
     outline: none;
@@ -283,5 +288,54 @@ body {
   b {
     font-weight: 600;
     color      : theme('colors.primary');
+  }
+}
+
+.sidebar {
+  width         : 266px;
+  flex-shrink   : 0;
+  border-radius : 16px;
+  background    : theme('colors.l3');
+  position      : sticky;
+  top           : 64px;
+  display       : flex;
+  flex-direction: column;
+
+  @media (max-width:theme('screens.xl')) {
+    position     : fixed;
+    left         : 0;
+    top          : 0;
+    height       : 100%;
+    overflow     : auto;
+    border-radius: 0;
+    z-index      : 325;
+    transition: .2s ease;
+
+    &:not(.active) {
+      transform     : translateX(-100%);
+      pointer-events: none;
+    }
+  }
+
+  &-content {
+    padding: 24px 16px 16px;
+  }
+
+  &-shadow {
+    @media (max-width:theme('screens.xl')) {
+      position  : fixed;
+      inset     : 0;
+      z-index   : 324;
+      background: rgba(0, 0, 0, 0.5);
+      transition: .2s;
+    }
+
+  }
+
+  &:not(.active)~&-shadow {
+    @media (max-width:theme('screens.xl')) {
+      opacity       : 0;
+      pointer-events: none;
+    }
   }
 }

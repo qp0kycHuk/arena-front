@@ -3,13 +3,15 @@ import { Link } from 'react-router-dom'
 import { getRoute } from '@utils/index'
 import React from 'react'
 import { IArticle } from '@models/Article'
+import { ArticleitemDragDrop } from '../ArticleItem/ArticleItem.DragDrop'
 
 interface IArticleListProps {
   loading?: boolean
   items?: IArticle[]
+  draggable?: boolean
 }
 
-export function ArticleList({ loading, items }: IArticleListProps) {
+export function ArticleList({ loading, items, draggable }: IArticleListProps) {
   const isItemsReady = items && items?.length > 0 && !loading
 
   return (
@@ -27,7 +29,7 @@ export function ArticleList({ loading, items }: IArticleListProps) {
             article && (
               <div key={article.id}>
                 <Link className="peer" to={getRoute().articles(article.id)}>
-                  <ArticleItem article={article} />
+                  {draggable ? <ArticleitemDragDrop article={article} /> : <ArticleItem article={article} />}
                 </Link>
                 <div className="border-t border-default/10 peer-hover:opacity-0"></div>
               </div>

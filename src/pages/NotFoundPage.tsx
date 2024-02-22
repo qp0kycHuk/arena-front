@@ -9,7 +9,7 @@ export function NotFoundPage() {
   useDocumentTitle('Страница не найдена')
 
   return (
-    <PageContent className="p-8">
+    <PageContent className="sm:p-8">
       <Empty title="Страница не найдена" />
       <Link to={'/'}>
         <Button className="mt-6 mx-auto">На главную</Button>

@@ -6,6 +6,7 @@ module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     colors: ui.colors,
+    screens: ui.screens,
     extend: {
       btnSize: ui.btnSize,
       inputSize: ui.inputSize,

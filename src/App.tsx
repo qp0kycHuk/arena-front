@@ -12,6 +12,9 @@ import { Projects } from '@views/projects/pages'
 import { ThemeContextProvider } from './store/theme/ThemeContext'
 import { FavoriteListPage } from './views/favorites/pages/List'
 
+// import { Provider } from 'react-redux'
+// import { store } from './store'
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -20,43 +23,44 @@ const queryClient = new QueryClient({
   },
 })
 
+// <Provider store={store}>
+// </Provider>
+
 function App() {
   return (
-    <>
-      <ThemeContextProvider>
-        <QueryClientProvider client={queryClient}>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<MainLayout />}>
-                <Route path="*" element={<NotFoundPage />} />
-                <Route index element={<Home />} />
-                <Route path={getRoute().projects()} element={<Projects />} />
-                <Route path={getRoute().projects(':folderId')} element={<Projects />} />
-                <Route path={getRoute().projects(':folderId/article/create')} element={<ArticleEditPage />} />
+    <ThemeContextProvider>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<MainLayout />}>
+              <Route path="*" element={<NotFoundPage />} />
+              <Route index element={<Home />} />
+              <Route path={getRoute().projects()} element={<Projects />} />
+              <Route path={getRoute().projects(':folderId')} element={<Projects />} />
+              <Route path={getRoute().projects(':folderId/article/create')} element={<ArticleEditPage />} />
 
-                <Route path={getRoute().articles(':id')} element={<ArticleViewPage />} />
-                <Route path={getRoute().articles.edit(':id')} element={<ArticleEditPage />} />
-                <Route path={getRoute().articles.create()} element={<ArticleEditPage />} />
+              <Route path={getRoute().articles(':id')} element={<ArticleViewPage />} />
+              <Route path={getRoute().articles.edit(':id')} element={<ArticleEditPage />} />
+              <Route path={getRoute().articles.create()} element={<ArticleEditPage />} />
 
-                <Route path={getRoute().users()} element={<UserListPage />} />
-                <Route path={getRoute().users(':id')} element={<UserViewPage />} />
-                <Route path={getRoute().users.edit(':id')} element={<UserEditPage />} />
+              <Route path={getRoute().users()} element={<UserListPage />} />
+              <Route path={getRoute().users(':id')} element={<UserViewPage />} />
+              <Route path={getRoute().users.edit(':id')} element={<UserEditPage />} />
 
-                <Route path="handbooks" element={<HandbooksEditPage />}></Route>
+              <Route path="handbooks" element={<HandbooksEditPage />}></Route>
 
-                <Route path="favorites" element={<FavoriteListPage />}></Route>
-              </Route>
-              <Route path="/" element={<AuthLayout />}>
-                <Route path="login/" element={<Login />} />
-                <Route path="registration/" element={<Registration />} />
-              </Route>
-            </Routes>
-          </BrowserRouter>
-          <ReactQueryDevtools position="bottom-right" />
-        </QueryClientProvider>
-        <ToastContainer />
-      </ThemeContextProvider>
-    </>
+              <Route path="favorites" element={<FavoriteListPage />}></Route>
+            </Route>
+            <Route path="/" element={<AuthLayout />}>
+              <Route path="login/" element={<Login />} />
+              <Route path="registration/" element={<Registration />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+        <ReactQueryDevtools position="bottom-right" />
+      </QueryClientProvider>
+      <ToastContainer />
+    </ThemeContextProvider>
   )
 }
 

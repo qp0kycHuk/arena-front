@@ -77,6 +77,18 @@ export function ArticleEditContextProvider({ children, articleId }: IArticleEdit
       ;(formData as IUpdateRequest).append('id', article.id.toString())
     }
 
+    editableArticle.files?.forEach((item) => {
+      if (!item.file) {
+        formData.append('attachment[]', item.id as string)
+      }
+    })
+
+    editableArticle.docs?.forEach((item) => {
+      if (!item.file) {
+        formData.append('docs[]', item.id as string)
+      }
+    })
+
     editableArticle.tags?.forEach(({ id: tagId }) => {
       formData.append('tags[]', tagId.toString())
     })
@@ -112,8 +124,6 @@ export function ArticleEditContextProvider({ children, articleId }: IArticleEdit
           if (item.file) {
             filesFormData.append('files[]', item.file)
             uploadedFileItems.push(item)
-          } else {
-            formData.append('attachment[]', item.id as string)
           }
         })
 
@@ -150,6 +160,7 @@ export function ArticleEditContextProvider({ children, articleId }: IArticleEdit
               formData.append('attachment[]', fileItem.id as string)
             })
           } catch (error) {
+            console.log('error', error)
             showAsyncError((error as AxiosError).response?.data as IErrorData)
             loadingEnd()
             return
@@ -166,8 +177,6 @@ export function ArticleEditContextProvider({ children, articleId }: IArticleEdit
           if (item.file) {
             docsFormData.append('files[]', item.file)
             uploadedFileItems.push(item)
-          } else {
-            formData.append('docs[]', item.id as string)
           }
         })
 
@@ -240,6 +249,8 @@ export function ArticleEditContextProvider({ children, articleId }: IArticleEdit
             formData.append('links[]', res.item.id as string)
           })
         } catch (error) {
+          console.log('error', error)
+
           showAsyncError((error as AxiosError).response?.data as IErrorData)
           loadingEnd()
           return

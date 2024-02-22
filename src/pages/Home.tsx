@@ -7,7 +7,7 @@ export function Home() {
   useDocumentTitle('Главная')
 
   return (
-    <PageContent className="p-8">
+    <PageContent className="sm:p-8">
       <div className="text-3xl font-semibold">Home page</div>
       <Empty></Empty>
     </PageContent>

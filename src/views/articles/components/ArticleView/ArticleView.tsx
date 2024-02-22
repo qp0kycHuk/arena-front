@@ -12,8 +12,10 @@ import { ArticleViewAuthor } from './ArticleView.Author'
 import { ArticleViewLinks } from './ArticleView.Links'
 import { useFetchArticleById } from '@store/articles/'
 import { Documents } from './ArticleView.Documents'
-import { Navigate } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { getRoute } from '@/utils'
+import { ToLeftIcon } from '@/assets/icons/stroke'
+import { Button } from '@/features/ui'
 
 interface IArticleViewProps {
   articleId: EntityId
@@ -31,7 +33,13 @@ export function ArticleView({ articleId }: IArticleViewProps) {
 
   return (
     <PageContent className="flex">
-      <div className="flex-1 p-8">
+      <div className="flex-1 p-8 pt-3">
+        <div className="flex mb-5 -ml-4">
+          <Button as={Link} to={getRoute().projects(article?.folders[0]?.id || '')} variant="text" size="sm">
+            <ToLeftIcon className="mr-2" />
+            Назад
+          </Button>
+        </div>
         <div className="flex items-center mb-7">
           <ArticleViewImage article={article} isLoading={isFetching} />
           <ArticleViewTitle article={article} isLoading={isFetching} />
@@ -41,7 +49,7 @@ export function ArticleView({ articleId }: IArticleViewProps) {
         <ArticleViewImages article={article} isLoading={isFetching} className="mb-8" />
         <Documents article={article} isLoading={isFetching} />
       </div>
-      <div className="min-w-[266px] w-[266px] py-8 px-6 border-l border-default/20">
+      <div className="flex-shrink-0 w-[266px] py-8 px-6 border-l border-default/20">
         <Buttons article={article} isLoading={isFetching} />
         <ArticleViewAuthor article={article} isLoading={isFetching} className="mt-8" />
         <div className="my-8">

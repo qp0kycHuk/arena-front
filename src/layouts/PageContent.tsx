@@ -5,5 +5,5 @@ interface IPageContentProps extends React.PropsWithChildren {
 }
 
 export function PageContent({ children, className }: IPageContentProps) {
-  return <div className={'relative flex-grow bg-l3 rounded-2xl ' + className}>{children}</div>
+  return <div className={'relative flex-grow sm:bg-l3 sm:rounded-2xl ' + className}>{children}</div>
 }

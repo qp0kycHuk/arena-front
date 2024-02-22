@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { AdjustmentsHorizontalIcon, CrossIcon, SearchIcon } from '@assets/icons/stroke'
+import { CrossIcon, SearchIcon } from '@assets/icons/stroke'
 import { Button, Input } from '@features/ui'
 
 interface ISearchProps {
@@ -33,10 +33,10 @@ export function Search({ className, onChange, value, placeholder = 'Поиск' 
 
   return (
     <form onSubmit={searchSubmitHandler} className={'relative ' + className}>
-      <Button variant="text" color="gray" size="sm" className="px-3 absolute left-1 top-1.5">
+      {/* <Button variant="text" color="gray" size="sm" className="px-3 absolute left-1 top-1.5">
         <AdjustmentsHorizontalIcon className="text-2xl" />
-      </Button>
-      <Input placeholder={placeholder} className="w-full pl-14 bg-default/5" defaultValue={value} ref={inputRef} />
+      </Button> */}
+      <Input placeholder={placeholder} className="w-full bg-default/5" defaultValue={value} ref={inputRef} />
       <div className="flex absolute right-2 top-1.5">
         <Button type="submit" variant="text" size="sm" className="px-3">
           <SearchIcon className="text-lg text-default/80" />
