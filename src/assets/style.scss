@@ -15,9 +15,9 @@
   --white-rgb   : #{cl(#fff)};
   --black-rgb   : #{cl(#000)};
 
-  
+
   // font
-  --font-base   : 'Inter', arial, helvetica, sans-serif;
+  --font-base: 'Inter', arial, helvetica, sans-serif;
 }
 
 .dark {
@@ -294,7 +294,6 @@ body {
 .sidebar {
   width         : 266px;
   flex-shrink   : 0;
-  padding       : 24px 16px 16px;
   border-radius : 16px;
   background    : theme('colors.l3');
   position      : sticky;
@@ -310,11 +309,16 @@ body {
     overflow     : auto;
     border-radius: 0;
     z-index      : 325;
+    transition: .2s ease;
 
     &:not(.active) {
       transform     : translateX(-100%);
       pointer-events: none;
     }
+  }
+
+  &-content {
+    padding: 24px 16px 16px;
   }
 
   &-shadow {
