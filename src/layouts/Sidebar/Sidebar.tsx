@@ -14,7 +14,7 @@ export function Sidebar() {
   return (
     <>
       <div className={classNames('sidebar', isOpen ? 'active' : null)}>
-        <header className="sticky top-0 z-20 flex items-center px-3 xl:px-8 py-2 bg-l3 shadow-sm ">
+        <header className="sticky top-0 z-20 flex items-center px-3 xl:px-8 py-2 bg-l3 shadow-sm xl:hidden">
           <Button className="xl:hidden mr-3 -ml-2" size="sm" variant="text" onClick={closeSidebar}>
             <CrossIcon className="text-2xl" />
           </Button>

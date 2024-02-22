@@ -23,7 +23,7 @@ function ProjectsInner() {
 
         <DndProvider backend={HTML5Backend}>
           <FolderList draggable parent={folder} items={folders} loading={loading} />
-          {folderId && <ArticleList draggable items={articles} loading={loading} />}
+          <ArticleList draggable items={articles} loading={loading} />
         </DndProvider>
         {isEmpty && <Empty />}
       </PageContent>
