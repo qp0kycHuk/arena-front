@@ -24,20 +24,20 @@ export function ProjectsContextProvider({ children }: React.PropsWithChildren) {
 
   const {
     data: articlesData,
-    isLoading: articlesLoading,
-    isFetching: articlesFetching,
+    isLoading: isArticlesLoading,
+    isFetching: isArticlesFetching,
   } = useFetchArticles(params, options)
 
   const {
     data: folderData,
-    isLoading: folderLoading,
-    isFetching: folderFetching,
+    isLoading: isFolderLoading,
+    isFetching: isFolderFetching,
   } = useFetchFolderById(folderId as EntityId, params, {
     enabled: !!folderId,
   })
 
-  const loading = folderLoading || foldersLoading || articlesLoading
-  const fetching = folderFetching || foldersFetching || articlesFetching
+  const loading = isFolderLoading || foldersLoading || isArticlesLoading
+  const fetching = isFolderFetching || foldersFetching || isArticlesFetching
 
   const folders = tagsQuery.length === 0 ? (folderId ? folderData?.item?.children : foldersData?.items) || [] : []
   const articles =
@@ -45,11 +45,15 @@ export function ProjectsContextProvider({ children }: React.PropsWithChildren) {
   // const articles = (folderId ? folderData?.item?.articles : articlesData?.items) || []
 
   const isEmpty = !fetching && folders.length + articles.length === 0
+  const articlesLoading = isArticlesLoading || (!folderData?.item && fetching && folders.length == 0)
+  const folderLoading = isFolderLoading || (!folderData?.item && fetching && folders.length == 0)
 
   const value = {
     folderId,
     loading,
     fetching,
+    articlesLoading,
+    folderLoading,
     folder: folderData?.item,
     folders,
     articles,
@@ -69,6 +73,8 @@ interface IValue {
   folderId: string | undefined
   loading: boolean
   fetching: boolean
+  articlesLoading: boolean
+  folderLoading: boolean
   folder: IFolder | undefined
   folders: IFolder[]
   articles: IArticle[]
