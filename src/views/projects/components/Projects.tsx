@@ -9,6 +9,7 @@ import { Search } from './Projects.Search'
 import { Tags } from './Projects.Tags'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
+import { Breadcrumps } from '@/components/Breadcrumps/Breadcrumps'
 
 function ProjectsInner() {
   useDocumentTitle('Статьи')
@@ -17,6 +18,7 @@ function ProjectsInner() {
   return (
     <>
       <PageContent className="sm:p-8">
+        <Breadcrumps item={folder} />
         <Head />
         <Tags />
         <Search />
