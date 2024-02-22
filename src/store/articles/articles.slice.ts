@@ -1,16 +1,10 @@
-import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit'
-import { articlesApi } from './articles.api'
-import { IArticle } from '@/models/Article'
-import { RootState } from '@/store/'
-import { useSelector } from 'react-redux'
+import { createSlice } from '@reduxjs/toolkit'
+import { adapter } from './articles.adapter'
+import { fetchAll } from './articles.thunk'
 
-type Item = IArticle
 const KEY = 'ARTICLES'
 
-export const fetch = createAsyncThunk(KEY + '/fetchAll', articlesApi.fetch)
-
-export const adapter = createEntityAdapter<Item>()
-const initialState = adapter.getInitialState({ loading: false })
+const initialState = adapter.getInitialState()
 
 const slice = createSlice({
   name: KEY,
@@ -21,14 +15,13 @@ const slice = createSlice({
     // delete(state, action) {},
   },
   extraReducers(builder) {
-    builder.addCase(fetch.fulfilled, (state, action) => adapter.upsertMany(state, action.payload.items))
+    // fetchAll
+    builder.addCase(fetchAll.fulfilled, (state, action) => adapter.upsertMany(state, action.payload.items))
+
+    // fetchById
   },
 })
 
+export type SliceState = typeof initialState
+
 export const reducer = slice.reducer
-
-export const { selectById, selectIds, selectEntities, selectAll, selectTotal } = adapter.getSelectors<RootState>(
-  (state) => state.articles
-)
-
-export const useArticles = () => useSelector(selectAll)
