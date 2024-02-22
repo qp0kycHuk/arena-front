@@ -8,33 +8,35 @@ import { useFetchArticles } from '@/store/articles'
 import { useFetchFolderById, useFetchFolders } from '@/store/folders'
 
 const Context = createContext<IValue>({} as IValue)
-
 export const useProjectsContext = () => useContext(Context)
 
 export function ProjectsContextProvider({ children }: React.PropsWithChildren) {
   const [searchQuery, changeSearchQuery] = useSearchQuery({ savedKeys: ['tags'] })
   const [tagsQuery, changeTagsQuery] = useTagsQuery({ savedKeys: ['search'] })
-
   const { folderId } = useParams()
 
   const params = { name: searchQuery, tags: tagsQuery }
-  const options = { enabled: !folderId }
 
-  const { data: foldersData, isLoading: foldersLoading, isFetching: foldersFetching } = useFetchFolders(params, options)
+  // folders data - top level
+  const {
+    data: foldersData,
+    isLoading: foldersLoading,
+    isFetching: foldersFetching,
+  } = useFetchFolders(params, { enabled: !folderId })
 
+  // articles data - top level
   const {
     data: articlesData,
     isLoading: isArticlesLoading,
     isFetching: isArticlesFetching,
-  } = useFetchArticles(params, options)
+  } = useFetchArticles(params, { enabled: !folderId })
 
+  // folder data - if in folder
   const {
     data: folderData,
     isLoading: isFolderLoading,
     isFetching: isFolderFetching,
-  } = useFetchFolderById(folderId as EntityId, params, {
-    enabled: !!folderId,
-  })
+  } = useFetchFolderById(folderId as EntityId, params, { enabled: !!folderId })
 
   const loading = isFolderLoading || foldersLoading || isArticlesLoading
   const fetching = isFolderFetching || foldersFetching || isArticlesFetching
@@ -50,14 +52,14 @@ export function ProjectsContextProvider({ children }: React.PropsWithChildren) {
 
   const value = {
     folderId,
-    loading,
-    fetching,
-    articlesLoading,
-    folderLoading,
     folder: folderData?.item,
     folders,
     articles,
     isEmpty,
+    loading,
+    fetching,
+    articlesLoading,
+    folderLoading,
 
     searchQuery,
     changeSearchQuery,
@@ -71,14 +73,14 @@ export function ProjectsContextProvider({ children }: React.PropsWithChildren) {
 
 interface IValue {
   folderId: string | undefined
-  loading: boolean
-  fetching: boolean
-  articlesLoading: boolean
-  folderLoading: boolean
   folder: IFolder | undefined
   folders: IFolder[]
   articles: IArticle[]
   isEmpty: boolean
+  loading: boolean
+  fetching: boolean
+  articlesLoading: boolean
+  folderLoading: boolean
 
   searchQuery: ReturnType<typeof useSearchQuery>[0]
   changeSearchQuery: ReturnType<typeof useSearchQuery>[1]
