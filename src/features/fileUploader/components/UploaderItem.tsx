@@ -38,12 +38,11 @@ export function UploaderItem({ item, extention, rounded, sign, update, remove }:
         )}
         <Button
           onClick={() => remove(item)}
-          className="absolute right-1 top-1"
+          className="absolute right-1 top-1 rounded-full"
           color="gray"
           size="xs"
           variant="whitebg"
           icon
-          rounded
           shadow
         >
           <CrossIcon />

@@ -14,7 +14,7 @@ export function HeadMenu() {
   if (!folderId) {
     return (
       <>
-        <Button className="ml-4 px-7" disabled={fetching} onClick={openCreateFolderOpen}>
+        <Button className="px-7 flex-grow" disabled={fetching} onClick={openCreateFolderOpen}>
           Добавить
         </Button>
 
@@ -28,7 +28,7 @@ export function HeadMenu() {
       <Menu
         align="end"
         menuButton={
-          <Button className="ml-4 px-7" disabled={fetching}>
+          <Button className="px-7 flex-grow" disabled={fetching}>
             Добавить
           </Button>
         }

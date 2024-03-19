@@ -11,14 +11,14 @@ export function Head() {
   const { folder } = useProjectsContext()
 
   return (
-    <div className="flex gap-3 items-center mb-8">
+    <div className="flex gap-3 sm:items-center mb-8 max-sm:flex-col">
       {folder && (
         <Button as={Link} to={getRoute().projects(folder?.parent_id || '')} icon variant="text" size="sm">
           <ToLeftIcon />
         </Button>
       )}
       <Name />
-      <div className="flex ml-auto">
+      <div className="flex sm:ml-auto">
         <FolderSettings />
         <HeadMenu />
       </div>

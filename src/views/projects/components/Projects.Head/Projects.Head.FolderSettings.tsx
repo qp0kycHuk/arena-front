@@ -12,7 +12,7 @@ export function FolderSettings() {
 
   return (
     <>
-      <Button variant="contur" color="default" onClick={openUpdateFolderOpen} disabled={fetching}>
+      <Button variant="contur" color="default" onClick={openUpdateFolderOpen} disabled={fetching} className="mr-4">
         <SettingsIcon className="text-2xl opacity-60" />
       </Button>
 

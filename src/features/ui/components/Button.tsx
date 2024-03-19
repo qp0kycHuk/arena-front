@@ -74,7 +74,6 @@ interface IProps {
   color?: keyof typeof colorClassNames
   size?: keyof typeof sizeClassNames
   variant?: Variant
-  rounded?: boolean
   shadow?: boolean
   icon?: boolean
 }
