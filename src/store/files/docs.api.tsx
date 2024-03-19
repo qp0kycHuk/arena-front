@@ -2,7 +2,7 @@ import { IFile } from '@models/File'
 import { createRootApi } from '@store/utils/createRootApi'
 import { AxiosResponse } from 'axios'
 
-const ROOT_ENDPOINT_URL = process.env.REACT_APP_API_URL + '/api/docs'
+const ROOT_ENDPOINT_URL = import.meta.env.VITE_API_URL + '/api/docs'
 
 type UploadParams = 'files[]'
 export type IUploadRequest = TypedFormData<UploadParams>

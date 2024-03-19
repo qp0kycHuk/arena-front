@@ -1,6 +1,5 @@
 import { IFolder } from '@/models/Folder'
 import { useFetchFolderById } from '@/store/folders'
-import { getRoute } from '@/utils'
 import { Link } from './Breadcrumps.Link'
 
 interface IItemProps {
@@ -9,7 +8,6 @@ interface IItemProps {
 
 export function Item({ item }: IItemProps) {
   const { data } = useFetchFolderById(item?.parent_id || '')
-  console.log(data?.item?.name)
 
   if (!data?.item) {
     return (

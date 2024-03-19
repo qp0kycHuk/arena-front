@@ -18,7 +18,7 @@ export function useAuth() {
     onSuccess(data) {
       queryClient.setQueryData([AUTH_QUERY_KEY], {
         user: data.user,
-        token: Cookies.get(process.env.REACT_APP_CSRF_COOKIE_NAME as string) || null,
+        token: Cookies.get(import.meta.env.VITE_CSRF_COOKIE_NAME as string) || null,
         isLogedIn: data.user ? true : false,
       })
     },
@@ -29,7 +29,7 @@ export function useAuth() {
         isLogedIn: false,
       })
 
-      Cookies.remove(process.env.REACT_APP_CSRF_COOKIE_NAME as string)
+      Cookies.remove(import.meta.env.VITE_CSRF_COOKIE_NAME as string)
     },
   })
 }

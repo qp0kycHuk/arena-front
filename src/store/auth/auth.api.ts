@@ -15,15 +15,15 @@ export interface IRegisterRequest {
   password_confirmation: string
 }
 
-const LOGIN_ENDPOINT_URL = process.env.REACT_APP_API_URL + '/api/login'
-const REGISTER_ENDPOINT_URL = process.env.REACT_APP_API_URL + '/api/register'
-const LOGOUT_ENDPOINT_URL = process.env.REACT_APP_API_URL + '/api/logout'
-const USER_ENDPOINT_URL = process.env.REACT_APP_API_URL + '/api/user'
-const TOKEN_ENDPOINT_URL = process.env.REACT_APP_API_URL + '/sanctum/csrf-cookie'
+const LOGIN_ENDPOINT_URL = import.meta.env.VITE_API_URL + '/api/login'
+const REGISTER_ENDPOINT_URL = import.meta.env.VITE_API_URL + '/api/register'
+const LOGOUT_ENDPOINT_URL = import.meta.env.VITE_API_URL + '/api/logout'
+const USER_ENDPOINT_URL = import.meta.env.VITE_API_URL + '/api/user'
+const TOKEN_ENDPOINT_URL = import.meta.env.VITE_API_URL + '/sanctum/csrf-cookie'
 
 async function initToken() {
   await createRootApi().get<IUser>(TOKEN_ENDPOINT_URL)
-  const token = Cookies.get(process.env.REACT_APP_CSRF_COOKIE_NAME as string)
+  const token = Cookies.get(import.meta.env.VITE_CSRF_COOKIE_NAME as string)
 
   return { token }
 }

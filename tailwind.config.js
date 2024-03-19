@@ -3,7 +3,7 @@ const { ui } = require('./src/features/ui/config.ts')
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: 'class',
-  content: ['./src/**/*.{js,jsx,ts,tsx}'],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     colors: ui.colors,
     screens: ui.screens,

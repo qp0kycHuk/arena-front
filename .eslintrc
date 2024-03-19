@@ -15,7 +15,8 @@
     "tailwind.form.js",
     "tailwind.button.js",
     "tailwind.input.js",
-    "craco.config.js"
+    "craco.config.js",
+    "vite.config.ts",
   ],
   "overrides": [],
   "parser": "@typescript-eslint/parser",

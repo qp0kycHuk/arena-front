@@ -5,7 +5,7 @@ export function useDocumentTitle(title?: string, prevailOnUnmount = false) {
 
   useEffect(() => {
     if (title) {
-      document.title = title + ' ' + process.env.REACT_APP_TITLE_POSTFIX
+      document.title = title + ' ' + import.meta.env.VITE_TITLE_POSTFIX
     }
   }, [title])
 

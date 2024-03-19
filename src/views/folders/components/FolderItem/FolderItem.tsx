@@ -1,5 +1,5 @@
 import React from 'react'
-import { ReactComponent as FolderIcon } from '@assets/img/folder.svg'
+import { default as FolderIcon } from '@assets/img/folder.svg?react'
 import { IFolder } from '@models/Folder'
 import { Skeleton } from '@/components/Skeleton'
 import { markFromQuery } from '@/utils/helpers/markFromQuery'

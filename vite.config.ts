@@ -1,9 +1,19 @@
-const path = require('path')
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react-swc'
+import svgr from 'vite-plugin-svgr'
+import path from 'path'
 
 const resolvePath = (p) => path.resolve(__dirname, p)
 
-module.exports = {
-  webpack: {
+// https://vitejs.dev/config/
+export default defineConfig({
+  base: '/',
+  server: {
+    port: 3000,
+    host: '127.0.0.1',
+  },
+  plugins: [react(), svgr()],
+  resolve: {
     alias: {
       '@': resolvePath('./src/'),
       '@assets': resolvePath('./src/assets'),
@@ -20,4 +30,4 @@ module.exports = {
       '@views': resolvePath('./src/views'),
     },
   },
-}
+})

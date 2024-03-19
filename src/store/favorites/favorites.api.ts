@@ -1,7 +1,7 @@
 import { IArticle } from '@/models/Article'
 import { createRootApi } from '../utils/createRootApi'
 
-const ROOT_ENDPOINT_URL = process.env.REACT_APP_API_URL + '/api/bookmarks'
+const ROOT_ENDPOINT_URL = import.meta.env.VITE_API_URL + '/api/bookmarks'
 
 export const favoritesApi = {
   async add(articleId: EntityId) {
