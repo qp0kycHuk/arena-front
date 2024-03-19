@@ -26,7 +26,7 @@ export function UploaderLabel({ uploader }: IUploaderLabelProps) {
         onChange={changeHandler}
         className="absolute inset-0 opacity-0 pointer-events-none"
       />
-      <Button as="div" className="m-auto" variant="whitebg" shadow rounded icon>
+      <Button as="div" className="m-auto rounded-full" variant="whitebg" shadow icon>
         <PlusIcon className="text-2xl" />
       </Button>
     </label>

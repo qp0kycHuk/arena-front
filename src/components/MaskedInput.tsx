@@ -1,7 +1,7 @@
-import { Input, InputProps } from '@features/ui/'
+import { Input } from '@features/ui/'
 import * as React from 'react'
 
-interface IMaskedInputProps extends InputProps {
+interface IMaskedInputProps extends React.ComponentProps<typeof Input> {
   getMaskedValue: (s: string) => string
   isComplete: (s: string) => boolean
 }
@@ -24,7 +24,14 @@ export function MaskedInput({ getMaskedValue, isComplete, onChange, onBlur, valu
     onBlur?.(event)
   }
 
-  return <Input defaultValue={getMaskedValue(value?.toString() || '')} {...props} onChange={changeHandler} onBlur={blurHandler} />
+  return (
+    <Input
+      defaultValue={getMaskedValue(value?.toString() || '')}
+      {...props}
+      onChange={changeHandler}
+      onBlur={blurHandler}
+    />
+  )
 }
 
 MaskedInput.defaultProps = Input.defaultProps

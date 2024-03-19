@@ -17,7 +17,9 @@ module.exports = {
   },
   plugins: [
     require('@qpokychuk/tailwind-button-plugin'),
+    require('@qpokychuk/tailwind-input-plugin')({
+      border: "1px solid theme('colors.default / 20%')",
+    }),
     require('@qpokychuk/tailwind-ratio-plugin'),
-    require('./tailwind.input'),
   ],
 }

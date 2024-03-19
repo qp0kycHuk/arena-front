@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Button } from '@features/ui'
 import { ButtonProps } from '@features/ui/components/Button'
+import { twMerge } from 'tailwind-merge'
 
 export type ITagProps = ButtonProps & { active?: boolean }
 
@@ -10,8 +11,7 @@ export function Tag({ children, className, active, ...props }: ITagProps) {
       color={active ? 'primary' : 'default'}
       variant={active ? 'fill' : 'light'}
       size="xs"
-      rounded
-      className={'px-3 max-w-full ' + className}
+      className={twMerge('px-3 max-w-full rounded-full ', className)}
       {...props}
     >
       <span className="flex items-center text-xs font-normal truncate">{children}</span>
@@ -25,8 +25,7 @@ export function TagPlaceholder({ className, ...props }: ITagProps) {
       color="default"
       variant="light"
       size="xs"
-      rounded
-      className={'px-3 h-7 w-16 animate-pulse ' + className}
+      className={twMerge('px-3 h-7 w-16 animate-pulse rounded-full', className)}
       {...props}
     />
   )
