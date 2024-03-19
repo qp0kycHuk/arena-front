@@ -11,17 +11,10 @@ import { UserEditPage, UserListPage, UserViewPage } from '@views/users/pages'
 import { Projects } from '@views/projects/pages'
 import { ThemeContextProvider } from './store/theme/ThemeContext'
 import { FavoriteListPage } from './views/favorites/pages/List'
+import { queryClient } from './query'
 
 // import { Provider } from 'react-redux'
 // import { store } from './store'
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-    },
-  },
-})
 
 // <Provider store={store}>
 // </Provider>
