@@ -3,7 +3,7 @@ import { createEntityApi } from '@store/utils/EntitiesApi'
 import { createRootApi } from '../utils/createRootApi'
 import { getEntities, getIds } from '@/utils/helpers/entity'
 
-const ROOT_ENDPOINT_URL = process.env.REACT_APP_API_URL + '/api/articles'
+const ROOT_ENDPOINT_URL = import.meta.env.VITE_API_URL + '/api/articles'
 
 // class ArticlesApi<EntityType, C, U> extends EntitiesApi<EntityType, C, U> {
 //   constructor(params: IEntitiesApiConfig) {

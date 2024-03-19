@@ -3,7 +3,7 @@ const { ui } = require('./src/features/ui/config.ts')
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: 'class',
-  content: ['./src/**/*.{js,jsx,ts,tsx}'],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     colors: ui.colors,
     screens: ui.screens,
@@ -17,7 +17,9 @@ module.exports = {
   },
   plugins: [
     require('@qpokychuk/tailwind-button-plugin'),
+    require('@qpokychuk/tailwind-input-plugin')({
+      border: "1px solid theme('colors.default / 20%')",
+    }),
     require('@qpokychuk/tailwind-ratio-plugin'),
-    require('./tailwind.input'),
   ],
 }

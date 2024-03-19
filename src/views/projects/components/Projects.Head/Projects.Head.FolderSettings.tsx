@@ -16,7 +16,7 @@ export function FolderSettings() {
         <SettingsIcon className="text-2xl opacity-60" />
       </Button>
 
-      {folder ? <FolderEditDialog isOpen={isUpdateFolderOpen} close={closeUpdateFolderOpen} item={folder} /> : null}
+      {folder ? <FolderEditDialog isOpen={isUpdateFolderOpen} onClose={closeUpdateFolderOpen} item={folder} /> : null}
     </>
   )
 }

@@ -8,12 +8,20 @@ interface IUploaderParams {
   multiple?: boolean
   rounded?: boolean
   sign?: boolean
-  onChange?: (fileItems: IFileItem[]) => any
-  onRemove?: (fileItem: IFileItem) => any
+  onChange?: (fileItems: IFileItem[]) => void
+  onRemove?: (fileItem: IFileItem) => void
   // onChange?: (fileItems: IFileItem[]) => any
 }
 
-export function useUploader({ initialFiles = [], extention = imageExtention, multiple = true, rounded = false, sign = true, onChange, onRemove }: IUploaderParams): IUplodaer {
+export function useUploader({
+  initialFiles = [],
+  extention = imageExtention,
+  multiple = true,
+  rounded = false,
+  sign = true,
+  onChange,
+  onRemove,
+}: IUploaderParams): IUplodaer {
   const fileItems = initialFiles
 
   useEffect(() => {
@@ -22,7 +30,11 @@ export function useUploader({ initialFiles = [], extention = imageExtention, mul
 
   const addItems = useCallback(
     (items: File[]) => {
-      const newItems = filterFiles(items, extention ? [extention.regex] : []).map((file) => ({ key: getRandomUUID(), file, title: file.name }))
+      const newItems = filterFiles(items, extention ? [extention.regex] : []).map((file) => ({
+        key: getRandomUUID(),
+        file,
+        title: file.name,
+      }))
 
       onChange?.([...(multiple ? newItems : newItems[0] ? [newItems[0]] : [])])
     },

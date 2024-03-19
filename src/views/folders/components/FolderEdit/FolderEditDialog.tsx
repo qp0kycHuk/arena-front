@@ -1,7 +1,6 @@
 import React from 'react'
 import { Spiner } from '@components/Spiner'
 import { Button, Dialog, DialogHeader, DialogTitle, Input } from '@features/ui'
-import { IDialogProps } from '@features/ui/components/Dialog'
 import { useLoading } from '@hooks/useLoading'
 import { useAuth } from '@store/auth'
 import { useParams } from 'react-router-dom'
@@ -11,12 +10,12 @@ import { toast } from '@/lib/Toast'
 import { showAsyncError } from '@/utils/helpers/errors'
 import { AxiosError } from 'axios'
 
-interface IFolderEditDialogProps extends IDialogProps {
+interface IFolderEditDialogProps extends React.ComponentProps<typeof Dialog> {
   item?: IFolder
   onCancel?(): unknown
 }
 
-export function FolderEditDialog({ item, isOpen, close }: IFolderEditDialogProps) {
+export function FolderEditDialog({ item, isOpen, onClose }: IFolderEditDialogProps) {
   const { folderId } = useParams()
   const { loading, loadingStart, loadingEnd } = useLoading()
   const { mutateAsync: upsert } = useUpsertFolder()

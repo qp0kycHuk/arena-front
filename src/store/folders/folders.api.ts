@@ -10,7 +10,7 @@ export type IFetchParams = {
   tags?: string[]
 }
 
-const ROOT_ENDPOINT_URL = process.env.REACT_APP_API_URL + '/api/folders'
+const ROOT_ENDPOINT_URL = import.meta.env.VITE_API_URL + '/api/folders'
 
 export const foldersApi = createEntityApi<IFolder, ICreateRequest, IUpdateRequest, IFetchParams>({
   url: ROOT_ENDPOINT_URL,

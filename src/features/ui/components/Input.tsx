@@ -1,6 +1,6 @@
 import React from 'react'
-import classnames from 'classnames'
 import type { Color, Size } from '../types'
+import { twMerge } from 'tailwind-merge'
 
 const baseClassName = 'input rounded-lg '
 
@@ -27,17 +27,17 @@ function InputComponent({ color = 'primary', size, type = 'text', className, ...
   return <input placeholder="" {...props} type={type} ref={ref} className={classNames} />
 }
 
-export function getInputClassname({ color = 'primary', size, className }: InputProps) {
-  return classnames(baseClassName, color ? colorClassNames[color] : null, size ? sizeClassNames[size] : null, className)
-}
-
 export const Input = React.forwardRef(InputComponent)
 
-export interface IProps {
+export function getInputClassname({ color = 'primary', size, className }: InputProps) {
+  return twMerge(baseClassName, colorClassNames[color] || null, size ? sizeClassNames[size] : null, className)
+}
+
+interface IProps {
   color?: keyof typeof colorClassNames
   size?: keyof typeof sizeClassNames
   className?: string
 }
 
-export type InputProps = IProps & Omit<React.InputHTMLAttributes<HTMLInputElement>, keyof IProps>
-export type InputRef = React.ForwardedRef<HTMLInputElement>
+type InputProps = IProps & Omit<React.InputHTMLAttributes<HTMLInputElement>, keyof IProps>
+type InputRef = React.ForwardedRef<HTMLInputElement>

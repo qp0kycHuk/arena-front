@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 
 interface ISidebarButtonProps extends Omit<React.ComponentProps<typeof Button>, 'icon'> {
   title: string
-  icon: React.FC<React.HTMLProps<HTMLDivElement>>
+  icon: React.FC<React.SVGProps<SVGSVGElement>>
   link?: string
   className?: string
   active?: boolean

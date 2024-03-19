@@ -26,10 +26,24 @@ export function LinksItem({ link, updateLink, removeLink }: ILinksItemProps) {
       </div>
       <div>
         <div className="mb-2 text-sm font-medium">Ссылка</div>
-        <Input className="w-96" name="url" value={link.url} onChange={changeHandler} required={Boolean(formState.name)} />
+        <Input
+          className="w-96"
+          name="url"
+          value={link.url}
+          onChange={changeHandler}
+          required={Boolean(formState.name)}
+        />
       </div>
       {(formState.name || formState.url) && (
-        <Button onClick={() => removeLink(link)} icon rounded shadow color="gray" variant="whitebg" size="xs" className="mt-6 ml-2">
+        <Button
+          onClick={() => removeLink(link)}
+          icon
+          shadow
+          color="gray"
+          variant="whitebg"
+          size="xs"
+          className="mt-6 ml-2 rounded-full"
+        >
           <CrossIcon className="text-sm"></CrossIcon>
         </Button>
       )}

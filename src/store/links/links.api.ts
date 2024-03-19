@@ -6,7 +6,7 @@ type UpdateParams = CreateParams
 export type ICreateRequest = TypedFormData<CreateParams>
 export type IUpdateRequest = TypedFormData<UpdateParams>
 
-const ROOT_ENDPOINT_URL = process.env.REACT_APP_API_URL + '/api/links'
+const ROOT_ENDPOINT_URL = import.meta.env.VITE_API_URL + '/api/links'
 
 export const linksApi = createEntityApi<ILink, ICreateRequest, IUpdateRequest>({
   url: ROOT_ENDPOINT_URL,

@@ -1,6 +1,6 @@
 import AirDatepicker, { AirDatepickerOptions } from 'air-datepicker'
 import localeRu from 'air-datepicker/locale/ru'
-import { Input, InputProps } from './Input'
+import { Input } from './Input'
 import React, { useEffect, useRef } from 'react'
 
 export function DatePicker({
@@ -52,6 +52,8 @@ export function DatePicker({
   return <Input readOnly {...props} ref={inputRef} />
 }
 
-interface IDatePickerProps extends Partial<AirDatepickerOptions>, Omit<InputProps, 'onFocus' | 'onSelect' | 'value'> {
+interface IDatePickerProps
+  extends Partial<AirDatepickerOptions>,
+    Omit<React.ComponentProps<typeof Input>, 'onFocus' | 'onSelect' | 'value'> {
   value?: string | string[] | Date | Date[]
 }

@@ -8,10 +8,10 @@ interface IProps {
   size?: Size
 }
 
-export type InputProps = IProps & Omit<React.InputHTMLAttributes<HTMLSelectElement>, keyof IProps>
-export type InputRef = React.ForwardedRef<HTMLSelectElement>
+type InputProps = IProps & Omit<React.InputHTMLAttributes<HTMLSelectElement>, keyof IProps>
+type InputRef = React.ForwardedRef<HTMLSelectElement>
 
-export function SelectComponent({ color = 'primary', size = 'base', children, ...props }: InputProps, ref: InputRef) {
+function SelectComponent({ color = 'primary', size = 'base', children, ...props }: InputProps, ref: InputRef) {
   return (
     <div className="relative">
       <select
