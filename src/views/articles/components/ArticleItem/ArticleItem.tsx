@@ -34,9 +34,9 @@ export function ArticleItem({ article }: IArticleItemProps) {
           className="mb-2 font-semibold with-mark-query"
           dangerouslySetInnerHTML={{ __html: markFromQuery(article.name, searchQuery) }}
         ></div>
-        <div className="text-xs text-default/70">{article.excerpt}</div>
+        <div className="text-xs text-default/70 max-sm:hidden">{article.excerpt}</div>
       </div>
-      <div className="ml-auto text-right whitespace-nowrap">
+      <div className="ml-auto text-right whitespace-nowrap max-sm:hidden">
         <div className="text-xs text-default/70">Созд: {new Date(article.created_at).toLocaleDateString()}</div>
         <div className="text-xs text-default/70">Ред: {new Date(article.updated_at).toLocaleDateString()}</div>
       </div>
@@ -44,7 +44,7 @@ export function ArticleItem({ article }: IArticleItemProps) {
         variant="text"
         size="sm"
         color="gray"
-        className="px-3 ml-3"
+        className="px-3 ml-auto sm:ml-3"
         disabled={loading}
         onClick={favoriteClickHandler}
       >
@@ -62,10 +62,10 @@ export function ArticleItemPlacehlder() {
         <Skeleton className="w-64 h-5 mb-3" />
         <div className="max-w-md ">
           <Skeleton className="w-64 h-2 mb-2" />
-          <Skeleton className="w-64 h-2" />
+          <Skeleton className="w-64 h-2 max-sm:hidden" />
         </div>
       </div>
-      <div className="ml-auto">
+      <div className="ml-auto max-sm:hidden">
         <Skeleton className="w-24 h-3 mb-1 ml-1" />
         <Skeleton className="w-24 h-3 ml-1" />
       </div>

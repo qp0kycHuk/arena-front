@@ -308,7 +308,7 @@ body {
     height       : 100%;
     overflow     : auto;
     border-radius: 0;
-    z-index      : 325;
+    z-index      : 45;
     transition: .2s ease;
 
     &:not(.active) {
@@ -325,7 +325,7 @@ body {
     @media (max-width:theme('screens.xl')) {
       position  : fixed;
       inset     : 0;
-      z-index   : 324;
+      z-index   : 44;
       background: rgba(0, 0, 0, 0.5);
       transition: .2s;
     }

@@ -27,8 +27,8 @@ export function Tags() {
   }
 
   return (
-    <div className="flex items-center gap-2 mb-4">
-      <div>Выбранные тэги</div>
+    <div className="flex items-center gap-2 mb-4 flex-wrap">
+      <div className="max-sm:w-full">Выбранные тэги</div>
       <Button color="primary" variant="light" size="xs" className="px-3 max-w-full rounded-full" onClick={clear}>
         <span className="flex items-center text-xs font-normal truncate">Очистить всё</span>
         <CrossIcon className="ml-2" />

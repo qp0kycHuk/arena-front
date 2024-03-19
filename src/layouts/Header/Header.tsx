@@ -13,12 +13,12 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-20 flex items-center px-3 xl:px-8 py-2 bg-l3 shadow-sm ">
-      <Button className="xl:hidden mr-3 -ml-2" size="sm" variant="text" onClick={toggleSidebar}>
+      <Button className="xl:hidden mr-1 sm:mr-3 -ml-2" size="sm" variant="text" onClick={toggleSidebar}>
         <MenuIcon className="text-2xl" />
       </Button>
-      <div className="mr-auto">
+      <Link to="/" className="mr-auto">
         <img src={headerLogo} alt="" className="h-[26px]" />
-      </div>
+      </Link>
 
       <ThemeToggle className="mr-5 text-4xl" />
 

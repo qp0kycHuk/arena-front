@@ -15,7 +15,7 @@ export function Sidebar() {
     <>
       <div className={classNames('sidebar', isOpen ? 'active' : null)}>
         <header className="sticky top-0 z-20 flex items-center px-3 xl:px-8 py-2 bg-l3 shadow-sm xl:hidden">
-          <Button className="xl:hidden mr-3 -ml-2" size="sm" variant="text" onClick={closeSidebar}>
+          <Button className="xl:hidden mr-1 sm:mr-3 -ml-2" size="sm" variant="text" onClick={closeSidebar}>
             <CrossIcon className="text-2xl" />
           </Button>
           <div className="mr-auto">
@@ -34,9 +34,6 @@ export function Sidebar() {
           <div className="mt-3 mb-5 border-t border-default/20"></div>
 
           <Tags />
-          <Button variant="text" size="sm" className="justify-start w-auto mt-5 -ml-2 -mr-2">
-            Показать всё
-          </Button>
         </div>
       </div>
       <div className="sidebar-shadow" onClick={closeSidebar}></div>
