@@ -7,9 +7,14 @@ import { Folders } from './Sidebar.Folders'
 import { useSidebarContext } from './SidebarContext'
 import classNames from 'classnames'
 import headerLogo from '@assets/img/header-logo.png'
+import { isUser } from '@/views/users'
+import { useAuth } from '@/store/auth'
 
 export function Sidebar() {
   const { isOpen, closeSidebar } = useSidebarContext()
+  const { data: auth } = useAuth()
+  const currentUser = auth?.user
+  const isCurrentUserRole = isUser(currentUser)
 
   return (
     <>
@@ -27,7 +32,7 @@ export function Sidebar() {
             <SidebarButton title="Главная" icon={CrownIcon} link="/" />
             <SidebarButton title="Пользователи" icon={UsersIcon} link={getRoute().users()} />
             {/* <SidebarButton title="Статьи" icon={DocumentIcon} link={getRoute().articles()} /> */}
-            <SidebarButton title="Справочник" icon={HandbooksIcon} link="handbooks" />
+            {isCurrentUserRole.admin && <SidebarButton title="Справочник" icon={HandbooksIcon} link="handbooks" />}
 
             <Folders />
           </div>
