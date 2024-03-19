@@ -6,9 +6,9 @@ import { Tags } from './Sidebar.Tags'
 import { Folders } from './Sidebar.Folders'
 import { useSidebarContext } from './SidebarContext'
 import classNames from 'classnames'
-import headerLogo from '@assets/img/header-logo.png'
 import { isUser } from '@/views/users'
 import { useAuth } from '@/store/auth'
+import { Logo } from '@/components/Logo'
 
 export function Sidebar() {
   const { isOpen, closeSidebar } = useSidebarContext()
@@ -24,7 +24,7 @@ export function Sidebar() {
             <CrossIcon className="text-2xl" />
           </Button>
           <div className="mr-auto">
-            <img src={headerLogo} alt="" className="h-[26px]" />
+            <Logo className="h-[26px]" />
           </div>
         </header>
         <div className="sidebar-content">
