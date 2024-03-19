@@ -9,6 +9,8 @@ import { UserEditRoles } from './UserEdit.Roles'
 import { dateToSQLFormatString } from '@utils/helpers/dates'
 import { isUser } from '@views/users/utils/isUser'
 import { IUser } from '@models/User'
+import { getRoute } from '@/utils'
+import { Link } from 'react-router-dom'
 
 export function UserEdit() {
   const { user, update, loading, submitHandler, isCurrentUser, isCurrentUserRole, toggleStatus } = useUserEditContext()
@@ -105,7 +107,9 @@ export function UserEdit() {
         <Button type="submit" disabled={loading}>
           {loading ? <Spiner /> : 'Сохранить'}
         </Button>
-        <Button variant="light">Отмена</Button>
+        <Button as={Link} to={getRoute().users(user.id)} variant="light">
+          Отмена
+        </Button>
         {isCurrentUserRole.admin && !isUser(user as IUser).admin && (
           <Button
             disabled={loading}

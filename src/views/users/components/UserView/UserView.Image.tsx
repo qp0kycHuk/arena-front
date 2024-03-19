@@ -2,6 +2,7 @@ import React from 'react'
 import { UserIcon } from '@assets/icons/fill'
 import { IUser } from '@models/User'
 import { Skeleton } from '@/components/Skeleton'
+import { Fancybox } from '@/lib/Fancybox'
 
 interface IUserViewImageProps {
   user?: IUser
@@ -10,7 +11,7 @@ interface IUserViewImageProps {
 }
 
 export function UserViewImage({ user, isLoading, className }: IUserViewImageProps) {
-  const imageClassName = 'w-[52px] h-[52px] rounded-full overflow-hidden'
+  const imageClassName = 'size-14 block rounded-full overflow-hidden'
   const imageSrc = user?.image_src ? user.image_src : ''
 
   if (!user || isLoading) {
@@ -26,8 +27,10 @@ export function UserViewImage({ user, isLoading, className }: IUserViewImageProp
   }
 
   return (
-    <div className={imageClassName + ' bg-default/40 ' + className}>
-      <img src={user?.image_src} alt="" className="object-cover w-full h-full" />
-    </div>
+    <Fancybox>
+      <a href={user?.image_src} data-fancybox className={imageClassName + ' bg-default/40 ' + className}>
+        <img src={user?.image_src} alt="" className="object-cover w-full h-full" />
+      </a>
+    </Fancybox>
   )
 }
