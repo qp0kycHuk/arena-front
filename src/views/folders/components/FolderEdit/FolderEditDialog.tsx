@@ -45,7 +45,7 @@ export function FolderEditDialog({ item, isOpen, onClose }: IFolderEditDialogPro
     try {
       await upsert(formData)
       toast.success('Успешно сохранено')
-      close()
+      onClose()
     } catch (error) {
       showAsyncError(((error as AxiosError).response?.data || error) as IErrorData)
     }
@@ -54,7 +54,7 @@ export function FolderEditDialog({ item, isOpen, onClose }: IFolderEditDialogPro
   }
 
   return (
-    <Dialog isOpen={isOpen} onClose={close}>
+    <Dialog isOpen={isOpen} onClose={onClose}>
       <div className="w-80">
         <DialogHeader>
           <DialogTitle>{dialogTitle}</DialogTitle>
@@ -68,7 +68,7 @@ export function FolderEditDialog({ item, isOpen, onClose }: IFolderEditDialogPro
             <Button type="submit" disabled={loading}>
               {loading ? <Spiner /> : 'Сохранить'}
             </Button>
-            <Button variant="light" onClick={close}>
+            <Button variant="light" onClick={onClose}>
               Отмена
             </Button>
           </div>
