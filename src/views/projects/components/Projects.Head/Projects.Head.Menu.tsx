@@ -18,7 +18,7 @@ export function HeadMenu() {
           Добавить
         </Button>
 
-        <FolderEditDialog isOpen={isCreateFolderOpen} close={closeCreateFolderOpen} />
+        <FolderEditDialog isOpen={isCreateFolderOpen} onClose={closeCreateFolderOpen} />
       </>
     )
   }
@@ -45,7 +45,7 @@ export function HeadMenu() {
         </Link>
       </Menu>
 
-      <FolderEditDialog isOpen={isCreateFolderOpen} close={closeCreateFolderOpen} />
+      <FolderEditDialog isOpen={isCreateFolderOpen} onClose={closeCreateFolderOpen} />
     </>
   )
 }
