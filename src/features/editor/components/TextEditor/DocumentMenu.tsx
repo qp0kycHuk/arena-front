@@ -2,16 +2,16 @@ import React from 'react'
 import type { Editor } from '@tiptap/react'
 import { MenuButton } from './MenuButton'
 import { DocumentIcon } from '@assets/icons/stroke'
-import { filePasteHandler } from '../../lib/file-paste-extension'
 
 interface IDocumentMenuProps {
   editor: Editor
+  onDocAdd?(file: File[]): void
 }
 
-export function DocumentMenu({ editor }: IDocumentMenuProps) {
+export function DocumentMenu({ editor, onDocAdd }: IDocumentMenuProps) {
   function changeHandler(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files) {
-      filePasteHandler(Array.from(event.target.files), editor)
+      onDocAdd?.(Array.from(event.target.files))
     }
   }
 

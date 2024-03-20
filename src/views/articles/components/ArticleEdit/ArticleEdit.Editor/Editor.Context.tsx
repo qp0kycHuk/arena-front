@@ -1,41 +1,35 @@
-import { useCallback, useMemo } from 'react'
-import { Editor, EditorControl, useEditor, useInitialContent } from '@features/editor'
-import { docExtention, imageExtention } from '@utils/const/extentions'
-import { filterFiles, getRandomUUID } from '@utils/index'
-import type { EditorEvents, Editor as EditorType } from '@tiptap/react'
-import React from 'react'
-import { useArticleEditMainContext } from './ArticleEdit.Context'
-import { IOptions } from '@features/editor/hooks/useEditor'
-import { getFileItems } from '@utils/helpers/files'
+import { createContext, useCallback, useContext, useMemo } from 'react'
+import { useArticleEditMainContext } from '../ArticleEdit.Context'
+import { useInitialContent } from '@/features/editor'
 import { useDebouncedCallback } from 'use-debounce'
-import { ILink } from '@models/Link'
-import { FileDrop } from 'react-file-drop'
-import { PlusIcon } from '@/assets/icons/stroke'
-import { toast } from '@lib/Toast'
+import { IOptions, useEditor } from '@/features/editor/hooks/useEditor'
+import { Editor, EditorEvents } from '@tiptap/react'
+import { ILink } from '@/models/Link'
+import { filterFiles, getRandomUUID } from '@/utils'
+import { docExtention, imageExtention } from '@/utils/const/extentions'
+import { toast } from '@/lib/Toast'
+import { getFileItems } from '@/utils/helpers/files'
 
-// TODO try remove duplicate with ArticleEditImages component
+const Context = createContext<Value>({} as Value)
 
-export type ArticleEditEditorRef = React.ForwardedRef<EditorType | null>
+export const useArticleEditor = () => useContext(Context)
 
-export function ArticleEditEditor() {
+export function EdditorContextProvider({ children }: Props) {
   const { article, update } = useArticleEditMainContext()
   const initialEditorContent = useInitialContent(article?.content, [article?.content])
 
-  const updateHandler = useCallback(
-    (event: EditorEvents['update']) => {
-      update({
-        contentJson: JSON.stringify(event.editor.getJSON()),
-      })
-    },
-    [update]
-  )
+  const updateHandler = (event: EditorEvents['update']) => {
+    update({
+      contentJson: JSON.stringify(event.editor.getJSON()),
+    })
+  }
 
   const debouncedUpdateHandler = useDebouncedCallback(updateHandler, 800)
 
   const options: IOptions = useMemo(() => {
     return {
       placeholder: 'Напишите статью...',
-      onLink: linkAddHandler,
+      onLink: insertLink,
       config: {
         content: initialEditorContent,
         onUpdate: debouncedUpdateHandler,
@@ -107,17 +101,7 @@ export function ArticleEditEditor() {
     [editor, article]
   )
 
-  function filePasteHandler(event: React.ClipboardEvent) {
-    const files = Array.from(event.clipboardData.files)
-
-    const images = filterFiles(files, [imageExtention.regex])
-    const documents = filterFiles(files, [docExtention.regex])
-
-    insertDocuments(documents)
-    insertImages(images)
-  }
-
-  function linkAddHandler(link: Partial<ILink>) {
+  function insertLink(link: Partial<ILink>) {
     update((prev) => {
       const newLinks: Partial<ILink>[] = (prev?.links || []).filter((link) => link.name || link.url)
 
@@ -135,43 +119,24 @@ export function ArticleEditEditor() {
     })
   }
 
-  function dropHandler(fileList: FileList | null) {
-    if (!fileList) return
-
-    const files = Array.from(fileList)
-
-    const images = filterFiles(files, [imageExtention.regex])
-    const documents = filterFiles(files, [docExtention.regex])
-
-    insertDocuments(documents)
-    insertImages(images)
-  }
-
   return (
-    <div className="relative">
-      <EditorControl
-        onLink={linkAddHandler}
-        onImageAdd={insertImages}
-        editor={editor}
-        className="sticky z-10 -ml-4 -mr-4 top-16"
-      />
-      <div className="relative">
-        <FileDrop
-          className="absolute -inset-4"
-          targetClassName="filedrop-target"
-          draggingOverFrameClassName="over-frame"
-          draggingOverTargetClassName="over-target"
-          onDrop={dropHandler}
-        >
-          <PlusIcon className="m-auto text-4xl text-primary" />
-        </FileDrop>
-        <Editor
-          onLink={linkAddHandler}
-          onPaste={filePasteHandler}
-          editor={editor}
-          className="min-h-[260px] flex flex-col"
-        />
-      </div>
-    </div>
+    <Context.Provider
+      value={{
+        editor,
+        insertDocuments,
+        insertImages,
+        insertLink,
+      }}
+    >
+      {children}
+    </Context.Provider>
   )
+}
+
+type Props = React.PropsWithChildren
+type Value = {
+  editor: Editor | null
+  insertDocuments: (files: File[]) => Promise<void>
+  insertImages: (files: File[]) => Promise<void>
+  insertLink: (link: Partial<ILink>) => void
 }

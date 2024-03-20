@@ -116,7 +116,6 @@ export function filterFiles(data: File[], fileMatchRegex?: RegExp[]): File[] {
       if (fileMatchRegex && fileMatchRegex.length > 0) {
         for (let i = 0; i < fileMatchRegex.length; i++) {
           const regExp = fileMatchRegex[i]
-          console.log(item.type)
 
           if (item.type.match(regExp)) {
             return item

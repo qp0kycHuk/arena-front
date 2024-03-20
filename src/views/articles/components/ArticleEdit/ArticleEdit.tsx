@@ -4,7 +4,6 @@ import { Spiner } from '@components/Spiner'
 import { ArticleEditImages } from './ArticleEdit.Images'
 import { ArticleEditAnons } from './ArticleEdit.Anons'
 import { ArticleEditTags } from './ArticleEdit.Tags'
-import { ArticleEditEditor } from './ArticleEdit.Editor'
 import { ArticleEditTitle } from './ArticleEdit.Title'
 import { ArticleEditLinks } from './ArticleEdit.Links'
 import {
@@ -14,6 +13,7 @@ import {
 } from './ArticleEdit.Context'
 import { ArticleEditDocuments } from './ArticleEdit.Documents'
 import { Excerpt } from './ArticleEdit.Excerpt'
+import { ArticleEditor } from './ArticleEdit.Editor/Editor'
 
 interface IArticleEditProps {
   articleId?: EntityId
@@ -31,7 +31,7 @@ function ArticleEditInner() {
       <div className="border border-default/20 rounded-2xl">
         <div className="px-8 py-6">
           <ArticleEditTitle />
-          <ArticleEditEditor />
+          <ArticleEditor />
         </div>
         <div className="border-t border-default/20"></div>
         <div className="px-8 py-6">

@@ -32,13 +32,6 @@ lowlight.registerLanguage('js', js)
 lowlight.registerLanguage('ts', ts)
 lowlight.registerLanguage('php', php)
 
-export interface IOptions {
-  config?: Partial<EditorOptions> | undefined
-  placeholder?: string
-  uploadFunction?(files: File[]): Promise<IFile[] | undefined>
-  onLink?(link: Partial<ILink>): void
-}
-
 const defaultOptions = {
   config: { editable: true } as Partial<EditorOptions>,
   placeholder: '',
@@ -221,4 +214,11 @@ export function getEditorSelection(editor: Editor): string {
   return editor.view.state.selection
     .content()
     .content.textBetween(0, editor.view.state.selection.content().content.size)
+}
+
+export interface IOptions {
+  config?: Partial<EditorOptions> | undefined
+  placeholder?: string
+  uploadFunction?(files: File[]): Promise<IFile[] | undefined>
+  onLink?(link: Partial<ILink>): void
 }
