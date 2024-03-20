@@ -136,7 +136,9 @@ export function ArticleEditContextProvider({ children, articleId }: IArticleEdit
               JSON.parse(editableArticle.contentJson || '{}'),
               (item) => {
                 if (item.type === 'image') {
-                  const uploadedFileIndex = uploadedFileItems.findIndex((fileItem) => fileItem.id === item.attrs.id)
+                  const uploadedFileIndex = uploadedFileItems.findIndex(
+                    (fileItem) => fileItem.id === item.attrs.id || fileItem.src === item.attrs.src
+                  )
 
                   if (uploadedFileIndex >= 0) {
                     return {

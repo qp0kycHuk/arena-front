@@ -22,14 +22,14 @@ export function LinksItem({ link, updateLink, removeLink }: ILinksItemProps) {
     <div className="flex items-center gap-4">
       <div>
         <div className="mb-2 text-sm font-medium">Заголовок</div>
-        <Input className="w-96" name="name" value={link.name} onChange={changeHandler} />
+        <Input className="w-96" name="name" defaultValue={link.name} onChange={changeHandler} />
       </div>
       <div>
         <div className="mb-2 text-sm font-medium">Ссылка</div>
         <Input
           className="w-96"
           name="url"
-          value={link.url}
+          defaultValue={link.url}
           onChange={changeHandler}
           required={Boolean(formState.name)}
         />
