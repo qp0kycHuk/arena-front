@@ -3,7 +3,9 @@ import { CrossIcon } from '@assets/icons/stroke'
 import { Button } from '@features/ui'
 import { CloseButtonProps, ToastContainer as Container, ToastContainerProps } from 'react-toastify'
 
-export { toast } from 'react-toastify'
+import { toast as toastCore } from 'react-toastify'
+
+export const toast = toastCore
 
 const contextClass = {
   success: 'bg-green text-white',

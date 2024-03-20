@@ -24,10 +24,11 @@ import { ILink } from '@models/Link'
 interface IEditorControlProps extends React.HTMLProps<HTMLDivElement> {
   editor: Editor | null
   onImageAdd?(file: File[]): void
+  onDocAdd?(file: File[]): void
   onLink(link: Partial<ILink>): void
 }
 
-export function EditorControl({ editor, className, onImageAdd, onLink }: IEditorControlProps) {
+export function EditorControl({ editor, className, onImageAdd, onDocAdd, onLink }: IEditorControlProps) {
   if (!editor) {
     return null
   }
@@ -94,7 +95,7 @@ export function EditorControl({ editor, className, onImageAdd, onLink }: IEditor
       <ImageMenu onImageAdd={onImageAdd} editor={editor} />
       <LinkMenu editor={editor} onLink={onLink} />
 
-      <DocumentMenu editor={editor} />
+      <DocumentMenu onDocAdd={onDocAdd} editor={editor} />
       {/* TODO */}
       <MenuButton title="Видео" disabled>
         <VideoIcon className="text-2xl" />

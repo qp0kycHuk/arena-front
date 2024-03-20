@@ -2,6 +2,31 @@
   "name": "arena",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "dependencies": {
     "@qpokychuk/fonts": "^1.0.10",
     "@fancyapps/ui": "^5.0.33",
@@ -48,31 +73,6 @@
     "tailwind-merge": "^2.2.1",
     "use-debounce": "^9.0.3",
     "web-vitals": "^2.1.4"
-  },
-  "scripts": {
-    "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
