@@ -9,28 +9,46 @@ interface IAuthResult {
   user: IUser | null
   token?: string | null
   isLogedIn?: boolean
+  loading?: boolean
 }
 
 export function useAuth() {
   const queryClient = useQueryClient()
+
+  const errorHandler = () => {
+    queryClient.setQueryData([AUTH_QUERY_KEY], {
+      user: null,
+      token: null,
+      isLogedIn: false,
+      loading: false,
+    })
+
+    Cookies.remove(import.meta.env.VITE_CSRF_COOKIE_NAME as string)
+  }
+
   return useQuery<IAuthResult>([AUTH_QUERY_KEY], authApi.user, {
     retry: true,
     refetchOnWindowFocus: true,
+    placeholderData: {
+      user: null,
+      token: null,
+      isLogedIn: false,
+      loading: true,
+    },
     onSuccess(data) {
+      if (!data.user) {
+        errorHandler()
+      }
+
       queryClient.setQueryData([AUTH_QUERY_KEY], {
         user: data.user,
         token: Cookies.get(import.meta.env.VITE_CSRF_COOKIE_NAME as string) || null,
         isLogedIn: data.user ? true : false,
+        loading: false,
       })
     },
     onError() {
-      queryClient.setQueryData([AUTH_QUERY_KEY], {
-        user: null,
-        token: null,
-        isLogedIn: false,
-      })
-
-      Cookies.remove(import.meta.env.VITE_CSRF_COOKIE_NAME as string)
+      errorHandler()
     },
   })
 }
@@ -43,13 +61,13 @@ export function useLogin() {
       return await authApi.login(formData)
     },
     {
-      onSuccess() {
+      onSuccess(data) {
         queryClient.setQueryData([AUTH_QUERY_KEY], {
-          user: null,
-          token: null,
+          user: data.user,
+          token: Cookies.get(import.meta.env.VITE_CSRF_COOKIE_NAME as string),
           isLogedIn: true,
+          loading: false,
         })
-        queryClient.invalidateQueries([AUTH_QUERY_KEY])
       },
     }
   )

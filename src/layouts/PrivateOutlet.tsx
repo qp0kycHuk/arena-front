@@ -5,8 +5,8 @@ export function PrivateOutlet() {
   const location = useLocation()
   const { data: auth, isLoading } = useAuthQuery()
 
-  if (!auth || isLoading) {
-    return null
+  if (!auth || auth.loading || isLoading) {
+    return 'Загрузка...'
   }
 
   if (!auth.isLogedIn) {

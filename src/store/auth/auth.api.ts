@@ -30,14 +30,20 @@ async function initToken() {
 
 async function user() {
   await initToken()
-  const { data } = await createRootApi().get<IUser>(USER_ENDPOINT_URL)
-  return { user: data }
+
+  try {
+    const { data } = await createRootApi().get<IUser>(USER_ENDPOINT_URL)
+    return { user: data }
+  } catch {
+    return { user: null }
+  }
 }
 
 async function login(formData: ILoginRequest) {
   await initToken()
-  const { data } = await createRootApi().post(LOGIN_ENDPOINT_URL, formData)
-  return data
+  await createRootApi().post(LOGIN_ENDPOINT_URL, formData)
+  const { data } = await createRootApi().get<IUser>(USER_ENDPOINT_URL)
+  return { user: data }
 }
 
 async function register(formData: IRegisterRequest) {

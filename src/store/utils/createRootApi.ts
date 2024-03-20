@@ -1,7 +1,5 @@
-import { queryClient } from '@/query'
 import axios from 'axios'
 import Cookies from 'js-cookie'
-import { AUTH_QUERY_KEY } from '../auth'
 
 export function createRootApi() {
   const token = Cookies.get(import.meta.env.VITE_CSRF_COOKIE_NAME as string)
