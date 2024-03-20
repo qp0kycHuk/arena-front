@@ -4,7 +4,7 @@ import { MainLayout } from '@layouts/MainLayout'
 import { Home, Login, Registration, HandbooksEditPage, NotFoundPage } from '@pages/index'
 import { AuthLayout } from '@layouts/AuthLayout'
 import { getRoute } from './utils'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { ArticleEditPage, ArticleViewPage } from '@views/articles/pages'
 import { UserEditPage, UserListPage, UserViewPage } from '@views/users/pages'
@@ -12,12 +12,6 @@ import { Projects } from '@views/projects/pages'
 import { ThemeContextProvider } from './store/theme/ThemeContext'
 import { FavoriteListPage } from './views/favorites/pages/List'
 import { queryClient } from './query'
-
-// import { Provider } from 'react-redux'
-// import { store } from './store'
-
-// <Provider store={store}>
-// </Provider>
 
 function App() {
   return (
