@@ -14,7 +14,8 @@ interface IAuthResult {
 export function useAuth() {
   const queryClient = useQueryClient()
   return useQuery<IAuthResult>([AUTH_QUERY_KEY], authApi.user, {
-    retry: false,
+    retry: true,
+    refetchOnWindowFocus: true,
     onSuccess(data) {
       queryClient.setQueryData([AUTH_QUERY_KEY], {
         user: data.user,

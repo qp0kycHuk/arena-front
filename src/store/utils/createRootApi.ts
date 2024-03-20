@@ -10,20 +10,6 @@ export function createRootApi() {
     headers: {
       [import.meta.env.VITE_CSRF_HEADER_NAME as string]: token,
     },
-
-    validateStatus(status) {
-      if (status === 401) {
-        queryClient.setQueryData([AUTH_QUERY_KEY], {
-          user: null,
-          token: null,
-          isLogedIn: false,
-        })
-
-        Cookies.remove(import.meta.env.VITE_CSRF_COOKIE_NAME as string)
-      }
-
-      return true
-    },
   })
 
   return api
